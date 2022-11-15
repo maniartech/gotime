@@ -2,14 +2,14 @@ package dateutils
 
 import (
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestConvertFormat(t *testing.T) {
 	converted := ConvertFormat("dd-mm-yyyy")
 
-	assert.Equal(t, "02-01-2006", converted)
+	if converted != "02-01-2006" {
+		t.Error("Expected 02-01-2006, got ", converted)
+	}
 }
 
 func BenchmarkConvertFormat(b *testing.B) {
