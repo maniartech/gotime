@@ -95,6 +95,13 @@ func ConvertFormat(f string) string {
 			} else {
 				to.WriteString("2")
 			}
+		} else if c == 'w' {
+			if getNext(i, 1) == "w" {
+				to.WriteString("Monday")
+				i++
+			} else {
+				to.WriteString("Mon")
+			}
 		} else if c == 'm' {
 			if getNext(i, 1) == "m" {
 				to.WriteString("01")
@@ -118,7 +125,10 @@ func ConvertFormat(f string) string {
 				i++
 			}
 		} else if c == 'h' {
-			if getNext(i, 1) == "h" {
+			if getNext(i, 2) == "hh" {
+				to.WriteString("15")
+				i += 2
+			} else if getNext(i, 1) == "h" {
 				to.WriteString("03")
 				i++
 			} else {
@@ -151,6 +161,22 @@ func ConvertFormat(f string) string {
 			}
 		} else if c == 'u' {
 			to.WriteString("000000")
+		} else if c == 'z' {
+			if getNext(i, 3) == "zzz" {
+				to.WriteString("GMT-07:00")
+				i += 3
+			} else if getNext(i, 2) == "zz" {
+				to.WriteString("MST")
+				i += 2
+			} else if getNext(i, 1) == "z" {
+				to.WriteString("±07:00")
+				i++
+			} else if getNext(i, 1) == "h" {
+				to.WriteString("±07")
+				i++
+			} else {
+				to.WriteString("±0700")
+			}
 		} else {
 			to.WriteRune(c)
 		}

@@ -41,8 +41,7 @@ A golang library for parsing and parsing, formatting and processing dates and ti
 | **Time**  |
 | h      | Hour in 12 hour format without leading zero | 3 |
 | hh     | Hour in 12 hour format with leading zero | 03 |
-| hhh    | Hour in 24 hour format without leading zero | 3 |
-| hhhh   | Hour in 24 hour format with leading zero | 15 |
+| hhh    | Hour in 24 hour format without leading zero | 15 |
 | a      | am/pm | pm |
 | aa     | AM/PM | PM |
 | i      | Minute without leading zero | 4 |
