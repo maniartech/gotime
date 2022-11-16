@@ -138,13 +138,6 @@ func ConvertFormat(f string) string {
 			to.WriteString("pm")
 		} else if c == 'A' {
 			to.WriteString("PM")
-		} else if c == 'H' {
-			if getNext(i, 1) == "H" {
-				to.WriteString("15")
-				i++
-			} else {
-				to.WriteString("3")
-			}
 		} else if c == 'i' {
 			if getNext(i, 1) == "i" {
 				to.WriteString("04")
