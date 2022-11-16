@@ -42,7 +42,7 @@ func RelativeRange(r string) (time.Time, time.Time, error) {
 	}
 
 	// last-<n>days, return time from n days ago 00:00:00 to end of day
-	if r[:4] == "last" {
+	if r[:5] == "last-" {
 		days, err := strconv.Atoi(r[5 : len(r)-4])
 		if err != nil {
 			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
@@ -53,12 +53,26 @@ func RelativeRange(r string) (time.Time, time.Time, error) {
 
 	// next-<n>days, return time from midnight to next n days. It should
 	// return time from today 00:00:00 to n days from the end of the day
-	if r[:4] == "next" {
+	if r[:5] == "next-" {
 		days, err := strconv.Atoi(r[5 : len(r)-4])
 		if err != nil {
 			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
 		}
 		return todayMidnight, todayMidnight.AddDate(0, 0, days+1), nil
+	}
+
+	if r == "thisweek" {
+		return todayMidnight, todayMidnight.AddDate(0, 0, 7), nil
+	}
+
+	if r == "lastweek" {
+		lastweek := todayMidnight.AddDate(0, 0, -7)
+		return lastweek, todayMidnight, nil
+	}
+
+	if r == "nextweek" {
+		nextweek := todayMidnight.AddDate(0, 0, 7)
+		return nextweek, nextweek.AddDate(0, 0, 7), nil
 	}
 
 	return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)

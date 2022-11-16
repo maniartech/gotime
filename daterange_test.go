@@ -66,6 +66,36 @@ func TestRelativeRange(t *testing.T) {
 		isEqual(t, d2, todayMidnight.AddDate(0, 0, 6))
 	})
 
+	t.Run("thisweek", func(t *testing.T) {
+		// Test case for thisweek
+		d1, d2, err := dateutils.RelativeRange("thisweek")
+		if err != nil {
+			t.Error(err)
+		}
+		isEqual(t, d1, todayMidnight)
+		isEqual(t, d2, todayMidnight.AddDate(0, 0, 7))
+	})
+
+	t.Run("lastweek", func(t *testing.T) {
+		// Test case for lastweek
+		d1, d2, err := dateutils.RelativeRange("lastweek")
+		if err != nil {
+			t.Error(err)
+		}
+		isEqual(t, d1, todayMidnight.AddDate(0, 0, -7))
+		isEqual(t, d2, todayMidnight)
+	})
+
+	t.Run("nextweek", func(t *testing.T) {
+		// Test case for nextweek
+		d1, d2, err := dateutils.RelativeRange("nextweek")
+		if err != nil {
+			t.Error(err)
+		}
+		isEqual(t, d1, todayMidnight.AddDate(0, 0, 7))
+		isEqual(t, d2, d1.AddDate(0, 0, 7))
+	})
+
 }
 
 // isEqual compares two datetime values and returns true if they are equal
