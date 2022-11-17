@@ -1,6 +1,7 @@
 package dateutils_test
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -94,6 +95,27 @@ func TestRelativeRange(t *testing.T) {
 		}
 		isEqual(t, d1, todayMidnight.AddDate(0, 0, 7))
 		isEqual(t, d2, d1.AddDate(0, 0, 7))
+	})
+
+	t.Run("next-<n>weeks", func(t *testing.T) {
+		// Test case for next-<n>weeks
+		d1, d2, err := dateutils.RelativeRange("next-2weeks")
+		if err != nil {
+			t.Error(err)
+		}
+		isEqual(t, d1, todayMidnight.AddDate(0, 0, 7))
+		isEqual(t, d2, d1.AddDate(0, 0, 14))
+	})
+
+	t.Run("last-<n>weeks", func(t *testing.T) {
+		// Test case for last-<n>weeks
+		d1, d2, err := dateutils.RelativeRange("last-2weeks")
+		fmt.Printf("%v\n%v\n", d1, d2)
+		if err != nil {
+			t.Error(err)
+		}
+		isEqual(t, d1, todayMidnight.AddDate(0, 0, -21))
+		isEqual(t, d2, todayMidnight.AddDate(0, 0, -7))
 	})
 
 }
