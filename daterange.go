@@ -75,22 +75,82 @@ func RelativeRange(r string) (time.Time, time.Time, error) {
 		return nextweek, nextweek.AddDate(0, 0, 7), nil
 	}
 
-	if r[:5] == "next-" && r[len(r)-5:] == "weeks" {
-		weeks, err := strconv.Atoi(r[5 : len(r)-5])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
-		}
-		nextweek := todayMidnight.AddDate(0, 0, 7)
-		return nextweek, nextweek.AddDate(0, 0, 7*weeks), nil
-	}
-
 	if r[:5] == "last-" && r[len(r)-5:] == "weeks" {
 		weeks, err := strconv.Atoi(r[5 : len(r)-5])
 		if err != nil {
 			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
 		}
-		lastweek := todayMidnight.AddDate(0, 0, -7)
-		return lastweek.AddDate(0, 0, -7*weeks), lastweek, nil
+		//lastweek := todayMidnight.AddDate(0, 0, -7)
+		return todayMidnight.AddDate(0, 0, -7*weeks), todayMidnight, nil
+	}
+
+	if r[:5] == "next-" && r[len(r)-5:] == "weeks" {
+		weeks, err := strconv.Atoi(r[5 : len(r)-5])
+		if err != nil {
+			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+		}
+		//nextweek := todayMidnight.AddDate(0, 0, 7)
+		return todayMidnight, todayMidnight.AddDate(0, 0, 7*weeks), nil
+	}
+
+	if r == "thismonth" {
+		return todayMidnight, todayMidnight.AddDate(0, 1, 0), nil
+	}
+
+	if r == "lastmonth" {
+		lastmonth := todayMidnight.AddDate(0, -1, 0)
+		return lastmonth, todayMidnight, nil
+	}
+
+	if r == "nextmonth" {
+		nextmonth := todayMidnight.AddDate(0, 1, 0)
+		return nextmonth, nextmonth.AddDate(0, 1, 0), nil
+	}
+
+	if r[:5] == "last-" && r[len(r)-6:] == "months" {
+		months, err := strconv.Atoi(r[5 : len(r)-6])
+		if err != nil {
+			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+		}
+		return todayMidnight.AddDate(0, -months, 0), todayMidnight, nil
+	}
+
+	if r[:5] == "next-" && r[len(r)-6:] == "months" {
+		months, err := strconv.Atoi(r[5 : len(r)-6])
+		if err != nil {
+			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+		}
+		return todayMidnight, todayMidnight.AddDate(0, months, 0), nil
+	}
+
+	if r == "thisyear" {
+		return todayMidnight, todayMidnight.AddDate(1, 0, 0), nil
+	}
+
+	if r == "lastyear" {
+		lastyear := todayMidnight.AddDate(-1, 0, 0)
+		return lastyear, todayMidnight, nil
+	}
+
+	if r == "nextyear" {
+		nextyear := todayMidnight.AddDate(1, 0, 0)
+		return nextyear, nextyear.AddDate(1, 0, 0), nil
+	}
+
+	if r[:5] == "last-" && r[len(r)-5:] == "years" {
+		years, err := strconv.Atoi(r[5 : len(r)-5])
+		if err != nil {
+			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+		}
+		return todayMidnight.AddDate(-years, 0, 0), todayMidnight, nil
+	}
+
+	if r[:5] == "next-" && r[len(r)-5:] == "years" {
+		years, err := strconv.Atoi(r[5 : len(r)-5])
+		if err != nil {
+			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+		}
+		return todayMidnight, todayMidnight.AddDate(years, 0, 0), nil
 	}
 
 	return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
