@@ -41,26 +41,6 @@ func RelativeRange(r string) (time.Time, time.Time, error) {
 		return tomorrow, tomorrow.AddDate(0, 0, 1), nil
 	}
 
-	// last-<n>days, return time from n days ago 00:00:00 to end of day
-	if r[:5] == "last-" && r[len(r)-4:] == "days" {
-		days, err := strconv.Atoi(r[5 : len(r)-4])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
-		}
-		start := todayMidnight.AddDate(0, 0, -days)
-		return start, todayMidnight.AddDate(0, 0, 1), nil
-	}
-
-	// next-<n>days, return time from midnight to next n days. It should
-	// return time from today 00:00:00 to n days from the end of the day
-	if r[:5] == "next-" && r[len(r)-4:] == "days" {
-		days, err := strconv.Atoi(r[5 : len(r)-4])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
-		}
-		return todayMidnight, todayMidnight.AddDate(0, 0, days+1), nil
-	}
-
 	if r == "thisweek" {
 		return todayMidnight, todayMidnight.AddDate(0, 0, 7), nil
 	}
@@ -73,24 +53,6 @@ func RelativeRange(r string) (time.Time, time.Time, error) {
 	if r == "nextweek" {
 		nextweek := todayMidnight.AddDate(0, 0, 7)
 		return nextweek, nextweek.AddDate(0, 0, 7), nil
-	}
-
-	if r[:5] == "last-" && r[len(r)-5:] == "weeks" {
-		weeks, err := strconv.Atoi(r[5 : len(r)-5])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
-		}
-		//lastweek := todayMidnight.AddDate(0, 0, -7)
-		return todayMidnight.AddDate(0, 0, -7*weeks), todayMidnight, nil
-	}
-
-	if r[:5] == "next-" && r[len(r)-5:] == "weeks" {
-		weeks, err := strconv.Atoi(r[5 : len(r)-5])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
-		}
-		//nextweek := todayMidnight.AddDate(0, 0, 7)
-		return todayMidnight, todayMidnight.AddDate(0, 0, 7*weeks), nil
 	}
 
 	if r == "thismonth" {
@@ -107,22 +69,6 @@ func RelativeRange(r string) (time.Time, time.Time, error) {
 		return nextmonth, nextmonth.AddDate(0, 1, 0), nil
 	}
 
-	if r[:5] == "last-" && r[len(r)-6:] == "months" {
-		months, err := strconv.Atoi(r[5 : len(r)-6])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
-		}
-		return todayMidnight.AddDate(0, -months, 0), todayMidnight, nil
-	}
-
-	if r[:5] == "next-" && r[len(r)-6:] == "months" {
-		months, err := strconv.Atoi(r[5 : len(r)-6])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
-		}
-		return todayMidnight, todayMidnight.AddDate(0, months, 0), nil
-	}
-
 	if r == "thisyear" {
 		return todayMidnight, todayMidnight.AddDate(1, 0, 0), nil
 	}
@@ -137,20 +83,64 @@ func RelativeRange(r string) (time.Time, time.Time, error) {
 		return nextyear, nextyear.AddDate(1, 0, 0), nil
 	}
 
-	if r[:5] == "last-" && r[len(r)-5:] == "years" {
-		years, err := strconv.Atoi(r[5 : len(r)-5])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+	// last-<n>days, return time from n days/weeks/months/years ago 00:00:00 to end of day
+	if r[:5] == "last-" {
+		if r[len(r)-4:] == "days" {
+			days, err := strconv.Atoi(r[5 : len(r)-4])
+			if err != nil {
+				return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+			}
+			start := todayMidnight.AddDate(0, 0, -days)
+			return start, todayMidnight.AddDate(0, 0, 1), nil
+		} else if r[len(r)-5:] == "weeks" {
+			weeks, err := strconv.Atoi(r[5 : len(r)-5])
+			if err != nil {
+				return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+			}
+			return todayMidnight.AddDate(0, 0, -7*weeks), todayMidnight, nil
+		} else if r[len(r)-6:] == "months" {
+			months, err := strconv.Atoi(r[5 : len(r)-6])
+			if err != nil {
+				return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+			}
+			return todayMidnight.AddDate(0, -months, 0), todayMidnight, nil
+		} else if r[len(r)-5:] == "years" {
+			years, err := strconv.Atoi(r[5 : len(r)-5])
+			if err != nil {
+				return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+			}
+			return todayMidnight.AddDate(-years, 0, 0), todayMidnight, nil
 		}
-		return todayMidnight.AddDate(-years, 0, 0), todayMidnight, nil
 	}
 
-	if r[:5] == "next-" && r[len(r)-5:] == "years" {
-		years, err := strconv.Atoi(r[5 : len(r)-5])
-		if err != nil {
-			return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+	// next-<n>days, return time from midnight to next n days/weeks/months/years.
+	// It should return time from today 00:00:00 to n days/weeks/months/years from the end of the day.
+	if r[:5] == "next-" {
+		if r[len(r)-4:] == "days" {
+			days, err := strconv.Atoi(r[5 : len(r)-4])
+			if err != nil {
+				return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+			}
+			return todayMidnight, todayMidnight.AddDate(0, 0, days+1), nil
+		} else if r[len(r)-5:] == "weeks" {
+			weeks, err := strconv.Atoi(r[5 : len(r)-5])
+			if err != nil {
+				return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+			}
+			return todayMidnight, todayMidnight.AddDate(0, 0, 7*weeks), nil
+		} else if r[len(r)-6:] == "months" {
+			months, err := strconv.Atoi(r[5 : len(r)-6])
+			if err != nil {
+				return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+			}
+			return todayMidnight, todayMidnight.AddDate(0, months, 0), nil
+		} else if r[len(r)-5:] == "years" {
+			years, err := strconv.Atoi(r[5 : len(r)-5])
+			if err != nil {
+				return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
+			}
+			return todayMidnight, todayMidnight.AddDate(years, 0, 0), nil
 		}
-		return todayMidnight, todayMidnight.AddDate(years, 0, 0), nil
 	}
 
 	return time.Time{}, time.Time{}, errors.New(errs.ErrInvalidArgument)
