@@ -1,6 +1,7 @@
 package dateutils
 
 import (
+	"errors"
 	"strings"
 	"time"
 )
@@ -213,4 +214,32 @@ func ConvertFormat(f string) string {
 	}
 
 	return to.String()
+}
+
+func Convert(date string, format1 string, format2 string) (string, error) {
+	tokens := map[string]string{}
+	dateTokens := strings.Split(date, "-")
+	dateFormat := strings.Split(format1, "-")
+
+	newFormat := []string{}
+
+	if len(dateTokens) != len(dateFormat) {
+		return "", errors.New("Unequal number of fields found.")
+	}
+
+	for index, token := range dateFormat {
+		tokens[token] = dateTokens[index]
+	}
+
+	dateFinalFormat := strings.Split(format2, "/")
+
+	for _, format := range dateFinalFormat {
+		if _, exists := tokens[format]; exists {
+			newFormat = append(newFormat, tokens[format])
+		}
+	}
+
+	finalFormat := strings.Join(newFormat, "/")
+
+	return finalFormat, nil
 }

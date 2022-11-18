@@ -96,6 +96,11 @@ func TestConvertFormat(t *testing.T) {
 	if converted != "Mon Jan _2 15:04:05 MST 2006" {
 		t.Error("Expected Mon Jan _2 15:04:05 MST 2006, got ", converted)
 	}
+
+	date, _ := Convert("2012-01-01", "yyyy-mm-dd", "dd/mm/yyyy")
+	if date != "01/01/2012" {
+		t.Error("Expected 01/01/2012, got ", date)
+	}
 }
 
 func BenchmarkConvertFormat(b *testing.B) {
