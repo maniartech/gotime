@@ -22,6 +22,18 @@ A golang library for parsing and parsing, formatting and processing dates and ti
       // Get the relative date range
       start, end, err := dateutils.RelativeRange("last-week")
 
+      datetime.Today()
+      datetime.EoD()
+      datetime.Yesterday()
+      datetime.Tomorrow()
+      datetime.LastWeek()
+      datetime.LastMonth()
+      datetime.LastYear()
+      datetime.NextWeek()
+      datetime.NextMonth()
+      datetime.NextYear()
+
+
 ## Date Format Table
 
 | Format | Description | Example |
