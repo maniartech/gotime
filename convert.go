@@ -218,8 +218,21 @@ func ConvertFormat(f string) string {
 
 func Convert(date string, format1 string, format2 string) (string, error) {
 	tokens := map[string]string{}
-	dateTokens := strings.Split(date, "-")
-	dateFormat := strings.Split(format1, "-")
+	var firstDelimiter, secondDelimiter string
+	for _, val := range format1 {
+		if val == '-' || val == '/' {
+			firstDelimiter = string(val)
+			break
+		}
+	}
+	for _, val := range format2 {
+		if val == '-' || val == '/' {
+			secondDelimiter = string(val)
+			break
+		}
+	}
+	dateTokens := strings.Split(date, firstDelimiter)
+	dateFormat := strings.Split(format1, firstDelimiter)
 
 	newFormat := []string{}
 
@@ -231,7 +244,7 @@ func Convert(date string, format1 string, format2 string) (string, error) {
 		tokens[token] = dateTokens[index]
 	}
 
-	dateFinalFormat := strings.Split(format2, "/")
+	dateFinalFormat := strings.Split(format2, secondDelimiter)
 
 	for _, format := range dateFinalFormat {
 		if _, exists := tokens[format]; exists {
@@ -239,7 +252,7 @@ func Convert(date string, format1 string, format2 string) (string, error) {
 		}
 	}
 
-	finalFormat := strings.Join(newFormat, "/")
+	finalFormat := strings.Join(newFormat, secondDelimiter)
 
 	return finalFormat, nil
 }

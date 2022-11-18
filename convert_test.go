@@ -82,8 +82,8 @@ func TestConvertFormat(t *testing.T) {
 		t.Error("Expected Mon-PM, got ", converted)
 	}
 
-	converted = ConvertFormat("M-yy")
-	if converted != "Jan-06" {
+	converted = ConvertFormat("M-yy-m")
+	if converted != "Jan-06-1" {
 		t.Error("Expected Jan-06, got ", converted)
 	}
 
@@ -100,6 +100,11 @@ func TestConvertFormat(t *testing.T) {
 	date, _ := Convert("2012-01-01", "yyyy-mm-dd", "dd/mm/yyyy")
 	if date != "01/01/2012" {
 		t.Error("Expected 01/01/2012, got ", date)
+	}
+
+	date, _ = Convert("01/24/1984", "mm/dd/yyyy", "dd-mm-yyyy")
+	if date != "24-01-1984" {
+		t.Error("Expected 24-01-1984, got ", date)
 	}
 }
 
