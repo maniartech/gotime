@@ -5,26 +5,61 @@ import (
 	"time"
 )
 
+// builtInFormats is a map of built-in formats. It is used to
+// check if the specified format is a built-in format.
 var builtInFormats map[string]bool = map[string]bool{
 
-	time.Layout:      true,
-	time.ANSIC:       true,
-	time.UnixDate:    true,
-	time.RubyDate:    true,
-	time.RFC822:      true,
-	time.RFC822Z:     true,
-	time.RFC850:      true,
-	time.RFC1123:     true,
-	time.RFC1123Z:    true,
-	time.RFC3339:     true,
+	// Built-in formats.
+
+	// Layout - 2006-01-02 15:04:05.999999999 -0700 MST
+	time.Layout: true,
+
+	// ANSIC - Mon Jan _2 15:04:05 2006
+	time.ANSIC: true,
+
+	// UnixDate - Mon Jan _2 15:04:05 MST 2006
+	time.UnixDate: true,
+
+	// RubyDate - Mon Jan 02 15:04:05 -0700 2006
+	time.RubyDate: true,
+
+	// RFC822 - 02 Jan 06 15:04 MST
+	time.RFC822: true,
+
+	// RFC822Z - 02 Jan 06 15:04 -0700
+	time.RFC822Z: true,
+
+	// RFC850 - Monday, 02-Jan-06 15:04:05 MST
+	time.RFC850: true,
+
+	// RFC1123 - Mon, 02 Jan 2006 15:04:05 MST
+	time.RFC1123: true,
+
+	// RFC1123Z - Mon, 02 Jan 2006 15:04:05 -0700
+	time.RFC1123Z: true,
+
+	// RFC3339 - 2006-01-02T15:04:05Z07:00
+	time.RFC3339: true,
+
+	// RFC3339Nano - 2006-01-02T15:04:05.999999999Z07:00
 	time.RFC3339Nano: true,
 
 	// Handy time stamps.
-	time.Kitchen:    true,
-	time.Stamp:      true,
+
+	// Kitchen - 3:04PM
+	time.Kitchen: true,
+
+	// Stamp - Jan _2 15:04:05
+	time.Stamp: true,
+
+	// StampMilli - Jan _2 15:04:05.000
 	time.StampMilli: true,
+
+	// StampMicro - Jan _2 15:04:05.000000
 	time.StampMicro: true,
-	time.StampNano:  true,
+
+	// StampNano - Jan _2 15:04:05.000000000
+	time.StampNano: true,
 }
 
 // ConvertFormat converts this library datetime format to a go format.

@@ -1,9 +1,11 @@
 package dateutils
 
-import "time"
+import (
+	"time"
+)
 
 type DateTime interface {
-	time.Time | string | int64
+	time.Time | string | int64 | uint64
 }
 
 func Format() {
