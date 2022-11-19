@@ -24,10 +24,3 @@ func TestTomorrow(t *testing.T) {
 		t.Error("")
 	}
 }
-
-/*func TestToday(t *testing.T) {
-	today := Today()
-	if today != todayMidnight {
-		t.Error("bruh")
-	}
-}*/
