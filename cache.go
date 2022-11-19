@@ -1,7 +1,5 @@
 package dateutils
 
-// This file contains constants that maps django date format to go date format
-
 var cache = map[string]string{}
 
 // DisableCache disables the cache. This is useful for testing or
