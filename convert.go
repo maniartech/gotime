@@ -95,7 +95,7 @@ var builtInFormats map[string]bool = map[string]bool{
 // zzz    -> MST        Timezone abbreviation
 // zzzz   -> GMT-07:00  Timezone in long format
 func ConvertFormat(f string) string {
-	if _, ok := cache[f]; ok {
+	if _, ok := cache[f]; ok && cache != nil {
 		return cache[f]
 	}
 	// If the format is a built-in format, return as is.
@@ -215,7 +215,9 @@ func ConvertFormat(f string) string {
 	}
 
 	goFormat := to.String()
-	cache[f] = goFormat
+	if cache != nil {
+		cache[f] = goFormat
+	}
 
 	return goFormat
 }
