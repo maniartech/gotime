@@ -19,8 +19,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight)
-		isEqual(t, d2, todayMidnight.AddDate(0, 0, 1))
+		isEqual(t, *d1, todayMidnight)
+		isEqual(t, *d2, todayMidnight.AddDate(0, 0, 1))
 	})
 
 	t.Run("yesterday", func(t *testing.T) {
@@ -30,8 +30,8 @@ func TestRelativeRange(t *testing.T) {
 			t.Error(err)
 		}
 		yesterday := todayMidnight.AddDate(0, 0, -1)
-		isEqual(t, d1, yesterday)
-		isEqual(t, d2, todayMidnight)
+		isEqual(t, *d1, yesterday)
+		isEqual(t, *d2, todayMidnight)
 	})
 
 	t.Run("tomorrow", func(t *testing.T) {
@@ -41,8 +41,8 @@ func TestRelativeRange(t *testing.T) {
 			t.Error(err)
 		}
 		tomorrow := todayMidnight.AddDate(0, 0, 1)
-		isEqual(t, d1, tomorrow)
-		isEqual(t, d2, tomorrow.AddDate(0, 0, 1))
+		isEqual(t, *d1, tomorrow)
+		isEqual(t, *d2, tomorrow.AddDate(0, 0, 1))
 	})
 
 	t.Run("last-<n>days", func(t *testing.T) {
@@ -52,8 +52,8 @@ func TestRelativeRange(t *testing.T) {
 			t.Error(err)
 		}
 		last5days := todayMidnight.AddDate(0, 0, -5)
-		isEqual(t, d1, last5days)
-		isEqual(t, d2, todayMidnight.AddDate(0, 0, 1))
+		isEqual(t, *d1, last5days)
+		isEqual(t, *d2, todayMidnight.AddDate(0, 0, 1))
 	})
 
 	t.Run("next-<n>days", func(t *testing.T) {
@@ -62,8 +62,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight)
-		isEqual(t, d2, todayMidnight.AddDate(0, 0, 6))
+		isEqual(t, *d1, todayMidnight)
+		isEqual(t, *d2, todayMidnight.AddDate(0, 0, 6))
 	})
 
 	t.Run("thisweek", func(t *testing.T) {
@@ -72,8 +72,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight)
-		isEqual(t, d2, todayMidnight.AddDate(0, 0, 7))
+		isEqual(t, *d1, todayMidnight)
+		isEqual(t, *d2, todayMidnight.AddDate(0, 0, 7))
 	})
 
 	t.Run("lastweek", func(t *testing.T) {
@@ -82,8 +82,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(0, 0, -7))
-		isEqual(t, d2, todayMidnight)
+		isEqual(t, *d1, todayMidnight.AddDate(0, 0, -7))
+		isEqual(t, *d2, todayMidnight)
 	})
 
 	t.Run("nextweek", func(t *testing.T) {
@@ -92,8 +92,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(0, 0, 7))
-		isEqual(t, d2, todayMidnight.AddDate(0, 0, 14))
+		isEqual(t, *d1, todayMidnight.AddDate(0, 0, 7))
+		isEqual(t, *d2, todayMidnight.AddDate(0, 0, 14))
 	})
 
 	t.Run("last-<n>weeks", func(t *testing.T) {
@@ -102,8 +102,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(0, 0, -14))
-		isEqual(t, d2, todayMidnight)
+		isEqual(t, *d1, todayMidnight.AddDate(0, 0, -14))
+		isEqual(t, *d2, todayMidnight)
 	})
 
 	t.Run("next-<n>weeks", func(t *testing.T) {
@@ -112,8 +112,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight)
-		isEqual(t, d2, todayMidnight.AddDate(0, 0, 14))
+		isEqual(t, *d1, todayMidnight)
+		isEqual(t, *d2, todayMidnight.AddDate(0, 0, 14))
 	})
 
 	t.Run("thismonth", func(t *testing.T) {
@@ -122,10 +122,9 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight)
-		isEqual(t, d2, todayMidnight.AddDate(0, 1, 0))
+		isEqual(t, *d1, todayMidnight)
+		isEqual(t, *d2, todayMidnight.AddDate(0, 1, 0))
 	})
-
 
 	t.Run("lastmonth", func(t *testing.T) {
 		// Test case for lastmonth
@@ -133,8 +132,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(0, -1, 0))
-		isEqual(t, d2, todayMidnight)
+		isEqual(t, *d1, todayMidnight.AddDate(0, -1, 0))
+		isEqual(t, *d2, todayMidnight)
 	})
 
 	t.Run("nextmonth", func(t *testing.T) {
@@ -143,8 +142,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(0, 1, 0))
-		isEqual(t, d2, todayMidnight.AddDate(0, 2, 0))
+		isEqual(t, *d1, todayMidnight.AddDate(0, 1, 0))
+		isEqual(t, *d2, todayMidnight.AddDate(0, 2, 0))
 	})
 
 	t.Run("last-<n>months", func(t *testing.T) {
@@ -153,8 +152,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(0, -2, 0))
-		isEqual(t, d2, todayMidnight)
+		isEqual(t, *d1, todayMidnight.AddDate(0, -2, 0))
+		isEqual(t, *d2, todayMidnight)
 	})
 
 	t.Run("next-<n>months", func(t *testing.T) {
@@ -163,8 +162,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight)
-		isEqual(t, d2, todayMidnight.AddDate(0, 2, 0))
+		isEqual(t, *d1, todayMidnight)
+		isEqual(t, *d2, todayMidnight.AddDate(0, 2, 0))
 	})
 
 	t.Run("thisyear", func(t *testing.T) {
@@ -173,10 +172,9 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight)
-		isEqual(t, d2, todayMidnight.AddDate(1, 0, 0))
+		isEqual(t, *d1, todayMidnight)
+		isEqual(t, *d2, todayMidnight.AddDate(1, 0, 0))
 	})
-
 
 	t.Run("lastyear", func(t *testing.T) {
 		// Test case for lastyear
@@ -184,8 +182,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(-1, 0, 0))
-		isEqual(t, d2, todayMidnight)
+		isEqual(t, *d1, todayMidnight.AddDate(-1, 0, 0))
+		isEqual(t, *d2, todayMidnight)
 	})
 
 	t.Run("nextyear", func(t *testing.T) {
@@ -194,8 +192,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(1, 0, 0))
-		isEqual(t, d2, todayMidnight.AddDate(2, 0, 0))
+		isEqual(t, *d1, todayMidnight.AddDate(1, 0, 0))
+		isEqual(t, *d2, todayMidnight.AddDate(2, 0, 0))
 	})
 
 	t.Run("last-<n>years", func(t *testing.T) {
@@ -204,8 +202,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight.AddDate(-2, 0, 0))
-		isEqual(t, d2, todayMidnight)
+		isEqual(t, *d1, todayMidnight.AddDate(-2, 0, 0))
+		isEqual(t, *d2, todayMidnight)
 	})
 
 	t.Run("next-<n>years", func(t *testing.T) {
@@ -214,8 +212,8 @@ func TestRelativeRange(t *testing.T) {
 		if err != nil {
 			t.Error(err)
 		}
-		isEqual(t, d1, todayMidnight)
-		isEqual(t, d2, todayMidnight.AddDate(2, 0, 0))
+		isEqual(t, *d1, todayMidnight)
+		isEqual(t, *d2, todayMidnight.AddDate(2, 0, 0))
 	})
 
 }
