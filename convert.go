@@ -217,7 +217,7 @@ func ConvertFormat(f string) string {
 	goFormat := to.String()
 	cache[f] = goFormat
 
-	return to.String()
+	return goFormat
 }
 
 // Convert function converts a datetime from one string format to another.
