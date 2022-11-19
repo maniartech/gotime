@@ -1,7 +1,6 @@
 package dateutils
 
 import (
-	"errors"
 	"strings"
 	"time"
 )
@@ -96,7 +95,9 @@ var builtInFormats map[string]bool = map[string]bool{
 // zzz    -> MST        Timezone abbreviation
 // zzzz   -> GMT-07:00  Timezone in long format
 func ConvertFormat(f string) string {
-
+	if _, ok := cache[f]; ok {
+		return cache[f]
+	}
 	// If the format is a built-in format, return as is.
 	if ok := builtInFormats[f]; ok {
 		return f
@@ -213,46 +214,28 @@ func ConvertFormat(f string) string {
 		i += 1
 	}
 
+	goFormat := to.String()
+	cache[f] = goFormat
+
 	return to.String()
 }
 
-func Convert(date string, format1 string, format2 string) (string, error) {
-	tokens := map[string]string{}
-	var firstDelimiter, secondDelimiter string
-	for _, val := range format1 {
-		if val == '-' || val == '/' {
-			firstDelimiter = string(val)
-			break
-		}
-	}
-	for _, val := range format2 {
-		if val == '-' || val == '/' {
-			secondDelimiter = string(val)
-			break
-		}
-	}
-	dateTokens := strings.Split(date, firstDelimiter)
-	dateFormat := strings.Split(format1, firstDelimiter)
-
-	newFormat := []string{}
-
-	if len(dateTokens) != len(dateFormat) {
-		return "", errors.New("Unequal number of fields found.")
+// Convert function converts a datetime from one string format to another.
+// It takes the datetime string in the single format and converts it to the expected output.
+// It returns an error when the format is not supported.
+func Convert(datetime string, from string, to string) (string, error) {
+	if from == to {
+		return datetime, nil
 	}
 
-	for index, token := range dateFormat {
-		tokens[token] = dateTokens[index]
+	// Convert the format to go format.
+	from = ConvertFormat(from)
+	to = ConvertFormat(to)
+
+	parsed, err := time.Parse(from, datetime)
+	if err != nil {
+		return "", err
 	}
 
-	dateFinalFormat := strings.Split(format2, secondDelimiter)
-
-	for _, format := range dateFinalFormat {
-		if _, exists := tokens[format]; exists {
-			newFormat = append(newFormat, tokens[format])
-		}
-	}
-
-	finalFormat := strings.Join(newFormat, secondDelimiter)
-
-	return finalFormat, nil
+	return parsed.Format(to), nil
 }
