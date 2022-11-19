@@ -4,10 +4,6 @@ package dateutils
 
 var cache = map[string]string{}
 
-func ClearCache() {
-	cache = map[string]string{}
-}
-
 // DisableCache disables the cache. This is useful for testing or
 // when you want to make sure that the cache is not used. Generally,
 // many applications do not need to disable the cache due to the limited
