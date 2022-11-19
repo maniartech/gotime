@@ -41,43 +41,52 @@ func RelativeRange(r string) (time.Time, time.Time, error) {
 		return tomorrow, tomorrow.AddDate(0, 0, 1), nil
 	}
 
+	// thisweek, return time from 00:00:00 to next week 00:00:00
 	if r == "thisweek" {
 		return todayMidnight, todayMidnight.AddDate(0, 0, 7), nil
 	}
 
+	// lastweek, return time from lastwek 00:00:00 to today 00:00:00
 	if r == "lastweek" {
 		lastweek := todayMidnight.AddDate(0, 0, -7)
 		return lastweek, todayMidnight, nil
 	}
 
+	// nextweek, return time from next week 00:00:00 to a week later to that 00:00:00
 	if r == "nextweek" {
 		nextweek := todayMidnight.AddDate(0, 0, 7)
 		return nextweek, nextweek.AddDate(0, 0, 7), nil
 	}
 
+	// thismonth, return time from 00:00:00 to next month 00:00:00
 	if r == "thismonth" {
 		return todayMidnight, todayMidnight.AddDate(0, 1, 0), nil
 	}
 
+	// lastmonth, return time from last month 00:00:00 to today 00:00:00
 	if r == "lastmonth" {
 		lastmonth := todayMidnight.AddDate(0, -1, 0)
 		return lastmonth, todayMidnight, nil
 	}
 
+	// nextmonth, return time from next month 00:00:00 to a month later to that 00:00:00
 	if r == "nextmonth" {
 		nextmonth := todayMidnight.AddDate(0, 1, 0)
 		return nextmonth, nextmonth.AddDate(0, 1, 0), nil
 	}
 
+	// thisyear, return time from 00:00:00 to next year 00:00:00
 	if r == "thisyear" {
 		return todayMidnight, todayMidnight.AddDate(1, 0, 0), nil
 	}
 
+	// lastyear, return time from last year 00:00:00 to today 00:00:00
 	if r == "lastyear" {
 		lastyear := todayMidnight.AddDate(-1, 0, 0)
 		return lastyear, todayMidnight, nil
 	}
 
+	// nextyear, return time from next year 00:00:00 to a year later to that 00:00:00
 	if r == "nextyear" {
 		nextyear := todayMidnight.AddDate(1, 0, 0)
 		return nextyear, nextyear.AddDate(1, 0, 0), nil
