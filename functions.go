@@ -11,6 +11,11 @@ func Today() *time.Time {
 	return &todayMidnight
 }
 
+func EoD() *time.Time {
+	eod := todayMidnight.Add(time.Hour*23).Add(time.Minute*59).Add(time.Second*59)
+	return &eod
+}
+
 func Yesterday() *time.Time {
 	yesterday := todayMidnight.AddDate(0, 0, -1)
 	return &yesterday
