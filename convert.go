@@ -95,7 +95,9 @@ var builtInFormats map[string]bool = map[string]bool{
 // zzz    -> MST        Timezone abbreviation
 // zzzz   -> GMT-07:00  Timezone in long format
 func ConvertFormat(f string) string {
-
+	if _, ok := cache[f]; ok && cache != nil {
+		return cache[f]
+	}
 	// If the format is a built-in format, return as is.
 	if ok := builtInFormats[f]; ok {
 		return f
@@ -130,6 +132,13 @@ func ConvertFormat(f string) string {
 			} else {
 				to.WriteString("2")
 			}
+		} else if c == 'w' {
+			if getNext(i, 1) == "w" {
+				to.WriteString("Monday")
+				i++
+			} else {
+				to.WriteString("Mon")
+			}
 		} else if c == 'm' {
 			if getNext(i, 1) == "m" {
 				to.WriteString("01")
@@ -153,7 +162,10 @@ func ConvertFormat(f string) string {
 				i++
 			}
 		} else if c == 'h' {
-			if getNext(i, 1) == "h" {
+			if getNext(i, 2) == "hh" {
+				to.WriteString("15")
+				i += 2
+			} else if getNext(i, 1) == "h" {
 				to.WriteString("03")
 				i++
 			} else {
@@ -163,13 +175,6 @@ func ConvertFormat(f string) string {
 			to.WriteString("pm")
 		} else if c == 'A' {
 			to.WriteString("PM")
-		} else if c == 'H' {
-			if getNext(i, 1) == "H" {
-				to.WriteString("15")
-				i++
-			} else {
-				to.WriteString("3")
-			}
 		} else if c == 'i' {
 			if getNext(i, 1) == "i" {
 				to.WriteString("04")
@@ -186,6 +191,22 @@ func ConvertFormat(f string) string {
 			}
 		} else if c == 'u' {
 			to.WriteString("000000")
+		} else if c == 'z' {
+			if getNext(i, 3) == "zzz" {
+				to.WriteString("GMT-07:00")
+				i += 3
+			} else if getNext(i, 2) == "zz" {
+				to.WriteString("MST")
+				i += 2
+			} else if getNext(i, 1) == "z" {
+				to.WriteString("±07:00")
+				i++
+			} else if getNext(i, 1) == "h" {
+				to.WriteString("±07")
+				i++
+			} else {
+				to.WriteString("±0700")
+			}
 		} else {
 			to.WriteRune(c)
 		}
@@ -193,5 +214,30 @@ func ConvertFormat(f string) string {
 		i += 1
 	}
 
-	return to.String()
+	goFormat := to.String()
+	if cache != nil {
+		cache[f] = goFormat
+	}
+
+	return goFormat
+}
+
+// Convert function converts a datetime from one string format to another.
+// It takes the datetime string in the single format and converts it to the expected output.
+// It returns an error when the format is not supported.
+func Convert(datetime string, from string, to string) (string, error) {
+	if from == to {
+		return datetime, nil
+	}
+
+	// Convert the format to go format.
+	from = ConvertFormat(from)
+	to = ConvertFormat(to)
+
+	parsed, err := time.Parse(from, datetime)
+	if err != nil {
+		return "", err
+	}
+
+	return parsed.Format(to), nil
 }
