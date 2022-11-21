@@ -132,7 +132,7 @@ func TestConvertFormat(t *testing.T) {
 		t.Error("Expected 19/09/1991, got ", date)
 	}
 
-	// Returns empty string and err.
+	// Returns empty string and error.
 	date, err := Convert(time.RFC3339, time.RFC3339, "dd-mm-yyyy")
 	if date != "" && err == nil {
 		t.Errorf("Expected %v, got nil", err)

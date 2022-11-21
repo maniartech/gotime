@@ -34,6 +34,18 @@ func TestFormat(t *testing.T) {
 	if date4Formatted != "04/22/0018" {
 		t.Errorf("Expected 04/22/0018, got %s, ", date4Formatted)
 	}
+
+	// Returns empty string and error.
+	date5, err := Format("2001-01-01T15:04:05Z07:00", "yyyy/mm/dd")
+	if date5 != "" && err == nil {
+		t.Errorf("Expected %v, got nil", err)
+	}
+
+	// Returns empty string and error.
+	date6, err := Format("2001-01-01T15:04:05Z07:00", "yyyy/mm/dd")
+	if date6 != "" && err == nil {
+		t.Errorf("Expected %v, got nil", err)
+	}
 }
 
 func BenchmarkFormat(b *testing.B) {

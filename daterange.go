@@ -4,8 +4,6 @@ import (
 	"errors"
 	"strconv"
 	"time"
-
-	"github.com/maniartech/dateutils/errs"
 )
 
 // RelativeRange returns the range of dates relative to the current date.
@@ -18,7 +16,7 @@ import (
 // 2018-01-01,2018-01-01T00:00:00Z, 2018-01-01T00:00:00.000Z
 func RelativeRange(r string) (*time.Time, *time.Time, error) {
 	if r == "" {
-		return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+		return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 	}
 
 	now := time.Now().UTC()
