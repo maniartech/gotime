@@ -76,59 +76,69 @@ func TestNextYear(t *testing.T) {
 }
 
 func BenchmarkToday(b *testing.B) {
+	// Benchmarking for Today function
 	for i := 0; i < b.N; i++ {
 		Today()
 	}
 }
 func BenchmarkEoD(b *testing.B) {
+	// Benchmarking for EoD function
 	for i := 0; i < b.N; i++ {
 		EoD()
 	}
 }
 
 func BenchmarkYesterday(b *testing.B) {
+	// Benchmarking for Yesterday function
 	for i := 0; i < b.N; i++ {
 		Yesterday()
 	}
 }
 
 func BenchmarkTomorrow(b *testing.B) {
+	// Benchmarking for Tomorrow function
 	for i := 0; i < b.N; i++ {
 		Tomorrow()
 	}
 }
 
 func BenchmarkLastWeek(b *testing.B) {
+	// Benchmarking for LastWeek function
 	for i := 0; i < b.N; i++ {
 		LastWeek()
 	}
 }
 
 func BenchmarkLastMonth(b *testing.B) {
+	// Benchmarking for LastMonth function
 	for i := 0; i < b.N; i++ {
 		LastMonth()
 	}
 }
 
 func BenchmarkLastYear(b *testing.B) {
+	// Benchmarking for LastYear function
 	for i := 0; i < b.N; i++ {
 		LastYear()
 	}
 }
 
 func BenchmarkNextWeek(b *testing.B) {
+	// Benchmarking for NextWeek function
 	for i := 0; i < b.N; i++ {
 		NextWeek()
 	}
 }
 
 func BenchmarkNextMonth(b *testing.B) {
+	// Benchmarking for NextMonth function
 	for i := 0; i < b.N; i++ {
 		NextMonth()
 	}
 }
 
 func BenchmarkNextYear(b *testing.B) {
+	// Benchmarking for NextYear function
 	for i := 0; i < b.N; i++ {
 		NextYear()
 	}

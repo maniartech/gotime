@@ -229,6 +229,7 @@ func isEqual(t *testing.T, d1 time.Time, d2 time.Time) {
 }
 
 func BenchmarkRelativeRange(b *testing.B) {
+	// Benchmarking for RelativeRange function
 	for i := 0; i < b.N; i++ {
 		dateutils.RelativeRange("next-10years")
 	}

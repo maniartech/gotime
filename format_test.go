@@ -37,6 +37,7 @@ func TestFormat(t *testing.T) {
 }
 
 func BenchmarkFormat(b *testing.B) {
+	// Benchmarking for Format function
 	for i := 0; i < b.N; i++ {
 		date := time.Date(12, 12, 2012, 0, 0, 0, 0, time.UTC)
 		Format(date, "yyyy/mm/dd")

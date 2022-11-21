@@ -140,12 +140,14 @@ func TestConvertFormat(t *testing.T) {
 }
 
 func BenchmarkConvertFormat(b *testing.B) {
+	// Benchmarking for ConvertFormat function
 	for i := 0; i < b.N; i++ {
 		ConvertFormat("dd-mm-yyyy")
 	}
 }
 
 func BenchmarkConvert(b *testing.B) {
+	// Benchmarking for Convert function
 	for i := 0; i < b.N; i++ {
 		Convert("01/24/1984", "dd/mm/yyyy", "yyyy/dd/mm")
 	}

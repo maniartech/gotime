@@ -15,6 +15,7 @@ func TestParse(t *testing.T) {
 }
 
 func BenchmarkParse(b *testing.B) {
+	// Benchmarking for Parse function
 	for i := 0; i < b.N; i++ {
 		Parse("24-01-1984", "dd-mm-yyyy")
 	}
