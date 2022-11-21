@@ -103,7 +103,7 @@ func RelativeRange(r string) (*time.Time, *time.Time, error) {
 		if r[len(r)-4:] == "days" {
 			days, err := strconv.Atoi(r[5 : len(r)-4])
 			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 			}
 			start := todayMidnight.AddDate(0, 0, -days)
 			end := todayMidnight.AddDate(0, 0, 1)
@@ -111,21 +111,21 @@ func RelativeRange(r string) (*time.Time, *time.Time, error) {
 		} else if r[len(r)-5:] == "weeks" {
 			weeks, err := strconv.Atoi(r[5 : len(r)-5])
 			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 			}
 			start := todayMidnight.AddDate(0, 0, -7*weeks)
 			return &start, &todayMidnight, nil
 		} else if r[len(r)-6:] == "months" {
 			months, err := strconv.Atoi(r[5 : len(r)-6])
 			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 			}
 			start := todayMidnight.AddDate(0, -months, 0)
 			return &start, &todayMidnight, nil
 		} else if r[len(r)-5:] == "years" {
 			years, err := strconv.Atoi(r[5 : len(r)-5])
 			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 			}
 			start := todayMidnight.AddDate(-years, 0, 0)
 			return &start, &todayMidnight, nil
@@ -138,33 +138,33 @@ func RelativeRange(r string) (*time.Time, *time.Time, error) {
 		if r[len(r)-4:] == "days" {
 			days, err := strconv.Atoi(r[5 : len(r)-4])
 			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 			}
 			end := todayMidnight.AddDate(0, 0, days+1)
 			return &todayMidnight, &end, nil
 		} else if r[len(r)-5:] == "weeks" {
 			weeks, err := strconv.Atoi(r[5 : len(r)-5])
 			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 			}
 			end := todayMidnight.AddDate(0, 0, 7*weeks)
 			return &todayMidnight, &end, nil
 		} else if r[len(r)-6:] == "months" {
 			months, err := strconv.Atoi(r[5 : len(r)-6])
 			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 			}
 			end := todayMidnight.AddDate(0, months, 0)
 			return &todayMidnight, &end, nil
 		} else if r[len(r)-5:] == "years" {
 			years, err := strconv.Atoi(r[5 : len(r)-5])
 			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 			}
 			end := todayMidnight.AddDate(years, 0, 0)
 			return &todayMidnight, &end, nil
 		}
 	}
 
-	return &time.Time{}, &time.Time{}, errors.New(errs.ErrInvalidArgument)
+	return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
 }
