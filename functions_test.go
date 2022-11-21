@@ -74,3 +74,62 @@ func TestNextYear(t *testing.T) {
 		t.Error("")
 	}
 }
+
+func BenchmarkToday(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Today()
+	}
+}
+func BenchmarkEoD(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		EoD()
+	}
+}
+
+func BenchmarkYesterday(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Yesterday()
+	}
+}
+
+func BenchmarkTomorrow(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Tomorrow()
+	}
+}
+
+func BenchmarkLastWeek(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		LastWeek()
+	}
+}
+
+func BenchmarkLastMonth(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		LastMonth()
+	}
+}
+
+func BenchmarkLastYear(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		LastYear()
+	}
+}
+
+func BenchmarkNextWeek(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		NextWeek()
+	}
+}
+
+func BenchmarkNextMonth(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		NextMonth()
+	}
+}
+
+func BenchmarkNextYear(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		NextYear()
+	}
+}

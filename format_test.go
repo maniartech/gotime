@@ -35,3 +35,10 @@ func TestFormat(t *testing.T) {
 		t.Errorf("Expected 04/22/0018, got %s, ", date4Formatted)
 	}
 }
+
+func BenchmarkFormat(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		date := time.Date(12, 12, 2012, 0, 0, 0, 0, time.UTC)
+		Format(date, "yyyy/mm/dd")
+	}
+}

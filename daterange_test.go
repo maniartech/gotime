@@ -227,3 +227,9 @@ func isEqual(t *testing.T, d1 time.Time, d2 time.Time) {
 		t.Error("Expected equal time", d1, d2)
 	}
 }
+
+func BenchmarkRelativeRange(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		dateutils.RelativeRange("next-10years")
+	}
+}

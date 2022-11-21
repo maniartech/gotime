@@ -19,3 +19,15 @@ func TestEnableCache(t *testing.T) {
 		t.Errorf("Expected %v, got, nil", cache)
 	}
 }
+
+func BenchmarkDisableCache(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		DisableCache()
+	}
+}
+
+func BenchmarkEnableCache(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		EnableCache()
+	}
+}

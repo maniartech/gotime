@@ -13,3 +13,9 @@ func TestParse(t *testing.T) {
 		t.Errorf("Expected %v, got, %v", correctTime, format)
 	}
 }
+
+func BenchmarkParse(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Parse("24-01-1984", "dd-mm-yyyy")
+	}
+}
