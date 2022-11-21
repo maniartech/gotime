@@ -1,8 +1,8 @@
 package dateutils
 
 import (
-	"time"
 	"testing"
+	"time"
 )
 
 func TestConvertFormat(t *testing.T) {
@@ -105,6 +105,16 @@ func TestConvertFormat(t *testing.T) {
 	date, _ = Convert("01/24/1984", "mm/dd/yyyy", "dd-mm-yyyy")
 	if date != "24-01-1984" {
 		t.Error("Expected 24-01-1984, got ", date)
+	}
+
+	date, _ = Convert("17/09/1991", "dd/mm/yyyy", "dd/mm/yyyy")
+	if date != "17/09/1991" {
+		t.Error("Expected 19/09/1991, got ", date)
+	}
+
+	date, err := Convert(time.RFC3339, time.RFC3339, "dd-mm-yyyy")
+	if date != "" && err == nil {
+		t.Errorf("Expected %v, got nil", err)
 	}
 }
 

@@ -7,70 +7,70 @@ import (
 
 func TestToday(t *testing.T) {
 	today := *Today()
-	if today != todayMidnight {
+	if !today.Equal(*Today()) {
 		t.Error("")
 	}
 }
 
 func TestEoD(t *testing.T) {
 	eod := *EoD()
-	if eod != todayMidnight.Add(time.Hour*23).Add(time.Minute*59).Add(time.Second*59) {
+	if eod != TodayStart().Add(time.Hour*23).Add(time.Minute*59).Add(time.Second*59) {
 		t.Error("")
 	}
 }
 
 func TestYesterday(t *testing.T) {
 	yesterday := *Yesterday()
-	if yesterday != todayMidnight.AddDate(0, 0, -1) {
+	if yesterday != TodayStart().AddDate(0, 0, -1) {
 		t.Error("")
 	}
 }
 
 func TestTomorrow(t *testing.T) {
 	tomorrow := *Tomorrow()
-	if tomorrow != todayMidnight.AddDate(0, 0, 1) {
+	if tomorrow != TodayStart().AddDate(0, 0, 1) {
 		t.Error("")
 	}
 }
 
-func LastWeekTest(t *testing.T) {
+func TestLastWeek(t *testing.T) {
 	lastWeek := *LastWeek()
-	if lastWeek != todayMidnight.AddDate(0, 0, -1) {
+	if lastWeek != TodayStart().AddDate(0, 0, -7) {
 		t.Error("")
 	}
 }
 
-func LastMonthTest(t *testing.T) {
+func TestLastMonth(t *testing.T) {
 	lastMonth := *LastMonth()
-	if lastMonth != todayMidnight.AddDate(0, -1, 0) {
+	if lastMonth != TodayStart().AddDate(0, -1, 0) {
 		t.Error("")
 	}
 }
 
-func LastYearTest(t *testing.T) {
+func TestLastYear(t *testing.T) {
 	lastYear := *LastYear()
-	if lastYear != todayMidnight.AddDate(-1, 0, 0) {
+	if lastYear != TodayStart().AddDate(-1, 0, 0) {
 		t.Error("")
 	}
 }
 
-func NextWeekTest(t *testing.T) {
+func TestNextWeek(t *testing.T) {
 	nextWeek := *NextWeek()
-	if nextWeek != todayMidnight.AddDate(0, 0, 1) {
+	if nextWeek != TodayStart().AddDate(0, 0, 7) {
 		t.Error("")
 	}
 }
 
-func NextMonthTest(t *testing.T) {
+func TestNextMonth(t *testing.T) {
 	nextMonth := *NextMonth()
-	if nextMonth != todayMidnight.AddDate(0, 1, 0) {
+	if nextMonth != TodayStart().AddDate(0, 1, 0) {
 		t.Error("")
 	}
 }
 
-func NextYearTest(t *testing.T) {
+func TestNextYear(t *testing.T) {
 	nextYear := *NextYear()
-	if nextYear != todayMidnight.AddDate(1, 0, 0) {
+	if nextYear != TodayStart().AddDate(1, 0, 0) {
 		t.Error("")
 	}
 }
