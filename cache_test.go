@@ -5,6 +5,7 @@ import (
 )
 
 func TestDisableCache(t *testing.T) {
+	// Test Case for DisableCache()
 	DisableCache()
 	if cache != nil {
 		t.Error("Expected nil, got, ", cache)
@@ -12,6 +13,7 @@ func TestDisableCache(t *testing.T) {
 }
 
 func TestEnableCache(t *testing.T) {
+	// Test Case for EnableCache()
 	EnableCache()
 	if cache == nil {
 		t.Errorf("Expected %v, got, nil", cache)
