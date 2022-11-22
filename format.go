@@ -11,22 +11,19 @@ import (
 func Format[T DateTime](dt T, format string) (string, error) {
 	convertedFormat := ConvertFormat(format)
 	var dtAny interface{} = dt
+	dtType := fmt.Sprintf("%T", dtAny)
 
-	switch v := dtAny.(type) {
-	case time.Time:
-		return v.Format(convertedFormat), nil
-	case string:
+	if dtType == "time.Time" {
+		return dtAny.(time.Time).Format(convertedFormat), nil
+	} else if dtType == "string" {
 		// Convert string to time.Time using RFC3339 format
-		t, err := time.Parse(time.RFC3339, v)
+		t, err := time.Parse(time.RFC3339, dtAny.(string))
 		if err != nil {
 			return "", err
 		}
 		return t.Format(convertedFormat), nil
-	case int64:
-		return time.Unix(v, 0).Format(convertedFormat), nil
-	case uint64:
-		return time.Unix(int64(v), 0).Format(convertedFormat), nil
-	default:
-		return "", fmt.Errorf(InvalidType, dt)
+	} else if dtType == "int64" {
+		return time.Unix(dtAny.(int64), 0).Format(convertedFormat), nil
 	}
+	return time.Unix(int64(dtAny.(uint64)), 0).Format(convertedFormat), nil
 }
