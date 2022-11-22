@@ -27,6 +27,6 @@ func Format[T DateTime](dt T, format string) (string, error) {
 	case uint64:
 		return time.Unix(int64(v), 0).Format(convertedFormat), nil
 	default:
-		return "", fmt.Errorf("invalid type %T", dt)
+		return "", fmt.Errorf(InvalidType, dt)
 	}
 }
