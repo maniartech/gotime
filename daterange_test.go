@@ -216,6 +216,66 @@ func TestRelativeRange(t *testing.T) {
 		isEqual(t, *d2, todayMidnight.AddDate(2, 0, 0))
 	})
 
+	// Test case for an empty string
+	_, _, err := dateutils.RelativeRange("")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case that leads to error by Atoi function
+	_, _, err = dateutils.RelativeRange("next-xdays")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case that leads to error by Atoi function
+	_, _, err = dateutils.RelativeRange("next-xweeks")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case that leads to error by Atoi function
+	_, _, err = dateutils.RelativeRange("next-xmonths")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case that leads to error by Atoi function
+	_, _, err = dateutils.RelativeRange("next-xyears")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case that leads to error by Atoi function
+	_, _, err = dateutils.RelativeRange("last-xdays")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case that leads to error by Atoi function
+	_, _, err = dateutils.RelativeRange("last-xweeks")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case that leads to error by Atoi function
+	_, _, err = dateutils.RelativeRange("last-xmonths")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case that leads to error by Atoi function
+	_, _, err = dateutils.RelativeRange("last-xyears")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
+	// Test case when no match is found in the branch
+	_, _, err = dateutils.RelativeRange("next-xyzpqr")
+	if err == nil {
+		t.Errorf("Expected %v, got, nil", err)
+	}
+
 }
 
 // isEqual compares two datetime values and returns true if they are equal
@@ -225,5 +285,12 @@ func isEqual(t *testing.T, d1 time.Time, d2 time.Time) {
 	}
 	if d1 != d2 {
 		t.Error("Expected equal time", d1, d2)
+	}
+}
+
+func BenchmarkRelativeRange(b *testing.B) {
+	// Benchmarking for RelativeRange function
+	for i := 0; i < b.N; i++ {
+		dateutils.RelativeRange("next-10years")
 	}
 }
