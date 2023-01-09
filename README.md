@@ -8,7 +8,7 @@ A golang library for parsing and parsing, formatting and processing dates and ti
 
 ## Usage
 
-      import "github.com/lestrrat/datetime"
+      import "github.com/maniartech/datetime"
 
       // Parse a date
       t, err := datetime.Parse("tomorrow")
