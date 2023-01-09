@@ -2,6 +2,10 @@
 
 A golang library for parsing and parsing, formatting and processing dates and times using simple human-friendly formats such as "yesterday", "tomorrow", "dd/mm/yyyy", etc.
 
+💯 **100% test coverage** 💯
+
+✔️ Tinygo Compatible
+
 ## Installation
 
     go get github.com/maniartech/datetime
