@@ -52,6 +52,13 @@ func TestFormat(t *testing.T) {
 	if date7 != "" && err == nil {
 		t.Errorf("Expected %v, got nil", err)
 	}
+
+	// Supplying any other type then time.Time, string, int64, uint64
+	// should return empty string and error.
+	date8, err := Format(123, "yyyy/mm/dd")
+	if date8 != "" && err == nil {
+		t.Errorf("Expected %v, got nil", err)
+	}
 }
 
 func BenchmarkFormat(b *testing.B) {
