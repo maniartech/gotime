@@ -1,4 +1,4 @@
-package dateutils
+package datetime
 
 var cache = map[string]string{}
 

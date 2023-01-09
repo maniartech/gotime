@@ -1,10 +1,10 @@
-package dateutils_test
+package datetime_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/dateutils"
+	"github.com/maniartech/datetime"
 )
 
 // Covers all test cases for the function RelativeRange in daterange.go
@@ -15,7 +15,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("today", func(t *testing.T) {
 		// Test case for today
-		d1, d2, err := dateutils.RelativeRange("today")
+		d1, d2, err := datetime.RelativeRange("today")
 		if err != nil {
 			t.Error(err)
 		}
@@ -25,7 +25,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("yesterday", func(t *testing.T) {
 		// Test case for yesterday
-		d1, d2, err := dateutils.RelativeRange("yesterday")
+		d1, d2, err := datetime.RelativeRange("yesterday")
 		if err != nil {
 			t.Error(err)
 		}
@@ -36,7 +36,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("tomorrow", func(t *testing.T) {
 		// Test case for tomorrow
-		d1, d2, err := dateutils.RelativeRange("tomorrow")
+		d1, d2, err := datetime.RelativeRange("tomorrow")
 		if err != nil {
 			t.Error(err)
 		}
@@ -47,7 +47,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("last-<n>days", func(t *testing.T) {
 		// Test case for last-<n>days
-		d1, d2, err := dateutils.RelativeRange("last-5days")
+		d1, d2, err := datetime.RelativeRange("last-5days")
 		if err != nil {
 			t.Error(err)
 		}
@@ -58,7 +58,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("next-<n>days", func(t *testing.T) {
 		// Test case for next-<n>days
-		d1, d2, err := dateutils.RelativeRange("next-5days")
+		d1, d2, err := datetime.RelativeRange("next-5days")
 		if err != nil {
 			t.Error(err)
 		}
@@ -68,7 +68,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("thisweek", func(t *testing.T) {
 		// Test case for thisweek
-		d1, d2, err := dateutils.RelativeRange("thisweek")
+		d1, d2, err := datetime.RelativeRange("thisweek")
 		if err != nil {
 			t.Error(err)
 		}
@@ -78,7 +78,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("lastweek", func(t *testing.T) {
 		// Test case for lastweek
-		d1, d2, err := dateutils.RelativeRange("lastweek")
+		d1, d2, err := datetime.RelativeRange("lastweek")
 		if err != nil {
 			t.Error(err)
 		}
@@ -88,7 +88,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("nextweek", func(t *testing.T) {
 		// Test case for nextweek
-		d1, d2, err := dateutils.RelativeRange("nextweek")
+		d1, d2, err := datetime.RelativeRange("nextweek")
 		if err != nil {
 			t.Error(err)
 		}
@@ -98,7 +98,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("last-<n>weeks", func(t *testing.T) {
 		// Test case for last-<n>weeks
-		d1, d2, err := dateutils.RelativeRange("last-2weeks")
+		d1, d2, err := datetime.RelativeRange("last-2weeks")
 		if err != nil {
 			t.Error(err)
 		}
@@ -108,7 +108,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("next-<n>weeks", func(t *testing.T) {
 		// Test case for next-<n>weeks
-		d1, d2, err := dateutils.RelativeRange("next-2weeks")
+		d1, d2, err := datetime.RelativeRange("next-2weeks")
 		if err != nil {
 			t.Error(err)
 		}
@@ -118,7 +118,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("thismonth", func(t *testing.T) {
 		// Test case for thismonth
-		d1, d2, err := dateutils.RelativeRange("thismonth")
+		d1, d2, err := datetime.RelativeRange("thismonth")
 		if err != nil {
 			t.Error(err)
 		}
@@ -128,7 +128,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("lastmonth", func(t *testing.T) {
 		// Test case for lastmonth
-		d1, d2, err := dateutils.RelativeRange("lastmonth")
+		d1, d2, err := datetime.RelativeRange("lastmonth")
 		if err != nil {
 			t.Error(err)
 		}
@@ -138,7 +138,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("nextmonth", func(t *testing.T) {
 		// Test case for nextmonth
-		d1, d2, err := dateutils.RelativeRange("nextmonth")
+		d1, d2, err := datetime.RelativeRange("nextmonth")
 		if err != nil {
 			t.Error(err)
 		}
@@ -148,7 +148,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("last-<n>months", func(t *testing.T) {
 		// Test case for last-<n>months
-		d1, d2, err := dateutils.RelativeRange("last-2months")
+		d1, d2, err := datetime.RelativeRange("last-2months")
 		if err != nil {
 			t.Error(err)
 		}
@@ -158,7 +158,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("next-<n>months", func(t *testing.T) {
 		// Test case for next-<n>months
-		d1, d2, err := dateutils.RelativeRange("next-2months")
+		d1, d2, err := datetime.RelativeRange("next-2months")
 		if err != nil {
 			t.Error(err)
 		}
@@ -168,7 +168,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("thisyear", func(t *testing.T) {
 		// Test case for thisyear
-		d1, d2, err := dateutils.RelativeRange("thisyear")
+		d1, d2, err := datetime.RelativeRange("thisyear")
 		if err != nil {
 			t.Error(err)
 		}
@@ -178,7 +178,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("lastyear", func(t *testing.T) {
 		// Test case for lastyear
-		d1, d2, err := dateutils.RelativeRange("lastyear")
+		d1, d2, err := datetime.RelativeRange("lastyear")
 		if err != nil {
 			t.Error(err)
 		}
@@ -188,7 +188,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("nextyear", func(t *testing.T) {
 		// Test case for nextyear
-		d1, d2, err := dateutils.RelativeRange("nextyear")
+		d1, d2, err := datetime.RelativeRange("nextyear")
 		if err != nil {
 			t.Error(err)
 		}
@@ -198,7 +198,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("last-<n>years", func(t *testing.T) {
 		// Test case for last-<n>years
-		d1, d2, err := dateutils.RelativeRange("last-2years")
+		d1, d2, err := datetime.RelativeRange("last-2years")
 		if err != nil {
 			t.Error(err)
 		}
@@ -208,7 +208,7 @@ func TestRelativeRange(t *testing.T) {
 
 	t.Run("next-<n>years", func(t *testing.T) {
 		// Test case for next-<n>years
-		d1, d2, err := dateutils.RelativeRange("next-2years")
+		d1, d2, err := datetime.RelativeRange("next-2years")
 		if err != nil {
 			t.Error(err)
 		}
@@ -217,61 +217,61 @@ func TestRelativeRange(t *testing.T) {
 	})
 
 	// Test case for an empty string
-	_, _, err := dateutils.RelativeRange("")
+	_, _, err := datetime.RelativeRange("")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case that leads to error by Atoi function
-	_, _, err = dateutils.RelativeRange("next-xdays")
+	_, _, err = datetime.RelativeRange("next-xdays")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case that leads to error by Atoi function
-	_, _, err = dateutils.RelativeRange("next-xweeks")
+	_, _, err = datetime.RelativeRange("next-xweeks")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case that leads to error by Atoi function
-	_, _, err = dateutils.RelativeRange("next-xmonths")
+	_, _, err = datetime.RelativeRange("next-xmonths")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case that leads to error by Atoi function
-	_, _, err = dateutils.RelativeRange("next-xyears")
+	_, _, err = datetime.RelativeRange("next-xyears")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case that leads to error by Atoi function
-	_, _, err = dateutils.RelativeRange("last-xdays")
+	_, _, err = datetime.RelativeRange("last-xdays")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case that leads to error by Atoi function
-	_, _, err = dateutils.RelativeRange("last-xweeks")
+	_, _, err = datetime.RelativeRange("last-xweeks")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case that leads to error by Atoi function
-	_, _, err = dateutils.RelativeRange("last-xmonths")
+	_, _, err = datetime.RelativeRange("last-xmonths")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case that leads to error by Atoi function
-	_, _, err = dateutils.RelativeRange("last-xyears")
+	_, _, err = datetime.RelativeRange("last-xyears")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
 
 	// Test case when no match is found in the branch
-	_, _, err = dateutils.RelativeRange("next-xyzpqr")
+	_, _, err = datetime.RelativeRange("next-xyzpqr")
 	if err == nil {
 		t.Errorf("Expected %v, got, nil", err)
 	}
@@ -291,6 +291,6 @@ func isEqual(t *testing.T, d1 time.Time, d2 time.Time) {
 func BenchmarkRelativeRange(b *testing.B) {
 	// Benchmarking for RelativeRange function
 	for i := 0; i < b.N; i++ {
-		dateutils.RelativeRange("next-10years")
+		datetime.RelativeRange("next-10years")
 	}
 }

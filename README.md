@@ -17,10 +17,10 @@ A golang library for parsing and parsing, formatting and processing dates and ti
       s := datetime.Format(t, "yyyy-mm-dd")
 
       // Convert date string to different format
-      s, err := dateutils.Convert("2012-01-01", "yyyy-mm-dd", "dd/mm/yyyy")
+      s, err := datetime.Convert("2012-01-01", "yyyy-mm-dd", "dd/mm/yyyy")
 
       // Get the relative date range
-      start, end, err := dateutils.RelativeRange("last-week")
+      start, end, err := datetime.RelativeRange("last-week")
 
       datetime.Today()
       datetime.EoD()
@@ -67,9 +67,3 @@ A golang library for parsing and parsing, formatting and processing dates and ti
 | zz     | UTC offset with colon | ±07:00 |
 | zzz    | Timezone abbreviation | MST |
 | zzzz   | Timezone in long format | GMT-07:00 |
-
-
-Refs:
-
-https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#date
-https://programming.guide/go/format-parse-string-time-date-example.html
