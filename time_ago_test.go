@@ -8,7 +8,7 @@ import (
 
 func BenchmarkTimeAgo(b *testing.B) {
 	// Benchmark for TimeAgo()
-	date := time.Now().UTC().AddDate(0, 0, 20)
+	date := time.Now().UTC().AddDate(0, 0, -1)
 	for i := 0; i < b.N; i++ {
 		TimeAgo(date)
 	}
