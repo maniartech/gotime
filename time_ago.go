@@ -80,47 +80,24 @@ func TimeAgo(date time.Time) string {
 
 			return "Yesterday"
 		}
-
-		// // Calculating the midnight of the day after tomorrow, tomorrow, yesterday and day before yesterday
-		// tomorrowMidnight, dayAfterTomorrowMidnight, err := RelativeRange("tomorrow")
-		// if err != nil {
-		// 	panic(err)
-		// }
-
-		// dayBeforeYesterdayMidnight, yesterdayMidnight, err := RelativeRange("yesterday")
-		// if err != nil {
-		// 	panic(err)
-		// }
-
-		// //If the date is after tomorrow midnight and before day after tomorrow midnight then print "Tomorrow"
-		// if date.After(*tomorrowMidnight) && date.Before(*dayAfterTomorrowMidnight) {
-
-		// 	return "Tomorrow"
-		// }
-		// if date.After(*dayBeforeYesterdayMidnight) && date.Before(*yesterdayMidnight) {
-
-		// 	return "Yesterday"
-		// }
 	}
+
 	// Printing the time difference
 	// If the time difference is 1, then we need to print singular form of the time scale
-	if timeVal == 1 {
 
-		// Printing the singular form of the time scale
-		if future {
-
+	// Returning the time difference if the date is in the future
+	if future {
+		if timeVal == 1 {
 			return fmt.Sprintf("In a %s", timeScaleVal[:len(timeScaleVal)-1])
 		}
-
-		return fmt.Sprintf("Last %s", timeScaleVal[:len(timeScaleVal)-1])
-	}
-
-	// Printing the plural form of the time scale
-	if future {
 		return fmt.Sprintf("In %d %s", timeVal, timeScaleVal)
 	}
-	return fmt.Sprintf("%d %s ago", timeVal, timeScaleVal)
 
+	// Returning the time difference if the date is in the future
+	if timeVal == 1 {
+		return fmt.Sprintf("Last %s", timeScaleVal[:len(timeScaleVal)-1])
+	}
+	return fmt.Sprintf("%d %s ago", timeVal, timeScaleVal)
 }
 
 func Date(Year, Month, Day int) time.Time {
