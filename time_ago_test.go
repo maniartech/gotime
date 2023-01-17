@@ -8,7 +8,7 @@ import (
 
 func BenchmarkTimeAgo(b *testing.B) {
 	// Benchmark for TimeAgo()
-	date := time.Now().UTC().AddDate(0, 0, -1)
+	date := time.Now().UTC().AddDate(0, 0, 10)
 	for i := 0; i < b.N; i++ {
 		TimeAgo(date)
 	}
@@ -20,8 +20,11 @@ func TestTimeAgo(t *testing.T) {
 	fmt.Println(TimeAgo(time.Date(2022, 1, 1, 19, 40, 0, 0, time.Local)))
 
 	timeAgoTestCase(t, "Just now", time.Now().UTC())
-	timeAgoTestCase(t, "Just now", time.Now().UTC().Add(time.Second*-10))
-	timeAgoTestCase(t, "In a few seconds", time.Now().UTC().Add(time.Second*10))
+	timeAgoTestCase(t, "Just now", time.Now().UTC().Add(time.Second*-9))
+	timeAgoTestCase(t, "In a few seconds", time.Now().UTC().Add(time.Second*9))
+
+	timeAgoTestCase(t, "A minute ago", time.Now().UTC().Add(time.Second*-30))
+	timeAgoTestCase(t, "In a minute", time.Now().UTC().Add(time.Second*30))
 
 	timeAgoTestCase(t, "In a few minutes", time.Now().UTC().Add(time.Minute*2))
 	timeAgoTestCase(t, "Few minutes ago", time.Now().UTC().Add(time.Minute*-2))
