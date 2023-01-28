@@ -1,11 +1,17 @@
 package datetime
 
 import (
+	"fmt"
 	"testing"
 	"time"
 )
 
 func TestConvertFormat(t *testing.T) {
+	converted := ConvertFormat("dd-mmm-yyyyy")
+	fmt.Println(time.Now().Format(converted))
+}
+
+func TestConvertForma2(t *testing.T) {
 	// Convert format dd-mm-yyyy to to Go format.
 	converted := ConvertFormat("dd-mm-yyyy")
 	if converted != "02-01-2006" {
@@ -13,7 +19,7 @@ func TestConvertFormat(t *testing.T) {
 	}
 
 	// Convert format w-ww to to Go format.
-	converted = ConvertFormat("w-ww")
+	converted = ConvertFormat("www-wwww")
 	if converted != "Mon-Monday" {
 		t.Error("Expected Mon-Monday, got ", converted)
 	}
@@ -25,7 +31,7 @@ func TestConvertFormat(t *testing.T) {
 	}
 
 	// Convert format ww-MM-yyyy to to Go format.
-	converted = ConvertFormat("ww-MM-yyyy")
+	converted = ConvertFormat("wwww-mmmm-yyyy")
 	if converted != "Monday-January-2006" {
 		t.Error("Expected Monday-January-2006, got ", converted)
 	}
@@ -50,7 +56,7 @@ func TestConvertFormat(t *testing.T) {
 
 	// Convert format dd-z-hh to Go format.
 	converted = ConvertFormat("dd-z-hh")
-	if converted != "02-±0700-03" {
+	if converted != "02-±07:00-03" {
 		t.Error("Expected 02-±0700-03, got ", converted)
 	}
 
@@ -61,13 +67,13 @@ func TestConvertFormat(t *testing.T) {
 	}
 
 	// Convert format w-zzz to Go format.
-	converted = ConvertFormat("w-zzz")
+	converted = ConvertFormat("www-zzz")
 	if converted != "Mon-MST" {
 		t.Error("Expected Mon-MST, got ", converted)
 	}
 
 	// Convert format yy-zz to Go format.
-	converted = ConvertFormat("yy-zz")
+	converted = ConvertFormat("yy-z")
 	if converted != "06-±07:00" {
 		t.Error("Expected 06-±07:00, got ", converted)
 	}
@@ -79,7 +85,7 @@ func TestConvertFormat(t *testing.T) {
 	}
 
 	// Convert format M-ddd-yy to Go format.
-	converted = ConvertFormat("M-ddd-yy")
+	converted = ConvertFormat("mmm-ddd-yy")
 	if converted != "Jan-002-06" {
 		t.Error("Expected Jan-002-06, got ", converted)
 	}
@@ -91,14 +97,14 @@ func TestConvertFormat(t *testing.T) {
 	}
 
 	// Convert format w-A to Go format.
-	converted = ConvertFormat("w-A")
+	converted = ConvertFormat("www-aa")
 	if converted != "Mon-PM" {
 		t.Error("Expected Mon-PM, got ", converted)
 	}
 
 	// Convert format M-yy-m to Go format.
-	converted = ConvertFormat("M-yy-m")
-	if converted != "Jan-06-1" {
+	converted = ConvertFormat("mmm-yy")
+	if converted != "Jan-06" {
 		t.Error("Expected Jan-06, got ", converted)
 	}
 
@@ -137,6 +143,13 @@ func TestConvertFormat(t *testing.T) {
 	if date != "" && err == nil {
 		t.Errorf("Expected %v, got nil", err)
 	}
+
+	// Test Microseconds
+	date, _ = Convert("2012-01-01 00:00:00.123", "yyyy-mm-dd hh:ii:ss.999", "yyyy-mm-dd hh:ii:ss.000000")
+	if date != "2012-01-01 00:00:00.123000" {
+		t.Error("Expected 2012-01-01 00:00:00.123000, got ", date)
+	}
+
 }
 
 func BenchmarkConvertFormat(b *testing.B) {

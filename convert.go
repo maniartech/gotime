@@ -67,17 +67,17 @@ var builtInFormats map[string]bool = map[string]bool{
 // and checks if it is a valid format character. If it is, it
 // converts it to the go format.
 // The function convert following format:
-// yy     -> 06         Two digit year with leading zero
 // yyyy   -> 2006       Four digit year
-// m      -> 1          Month without leading zero
-// mm     -> 01         Month in two digits with leading zero
-// mmm    -> Jan        Month in short name
+// yy     -> 06         Two digit year with leading zero
 // mmmm   -> January    Month in full name
-// d      -> 2          Day without leading zero
-// dd     -> 02         Day in two digits with leading zero
+// mmm    -> Jan        Month in short name
+// mm     -> 01         Month in two digits with leading zero
+// m      -> 1          Month without leading zero
 // ddd    -> 002        Zero padded day of year
-// w      -> 1          Three letter weekday name
-// ww     -> Monday     Full weekday name
+// dd     -> 02         Day in two digits with leading zero
+// d      -> 2          Day without leading zero
+// wwww   -> Monday     Full weekday name
+// www    -> 1          Three letter weekday name
 // h      -> 3          Hour in 12 hour format without leading zero
 // hh     -> 03         Hour in 12 hour format with leading zero
 // H      -> 3          Hour in 24 hour format without leading zero
@@ -88,138 +88,84 @@ var builtInFormats map[string]bool = map[string]bool{
 // i      -> 4          Minute without leading zero
 // ss     -> 05         Second with leading zero
 // s      -> 5          Second without leading zero
-// u      -> 000000     Microsecond
+// 0      -> 0          Microsecond with leading zero
+// 9      -> 9          Microsecond without leading zero
+
 // z      -> ±0700      UTC offset
 // zh     -> ±07        Numeric timezone hour with hours only
 // zz     -> ±07:00     UTC offset with colon
 // zzz    -> MST        Timezone abbreviation
 // zzzz   -> GMT-07:00  Timezone in long format
 func ConvertFormat(f string) string {
-	if _, ok := cache[f]; ok && cache != nil {
-		return cache[f]
-	}
-	// If the format is a built-in format, return as is.
-	if ok := builtInFormats[f]; ok {
+	// Built-in format, return as is
+	if _, ok := builtInFormats[f]; ok {
 		return f
 	}
 
-	// Otherwise, convert the format.
+	// Initialize a map of format conversions
+	conversions := map[string][][]string{
+		"y": {{"yyyy", "2006"}, {"yy", "06"}},
+		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"m", "1"}},
+		"d": {{"ddd", "002"}, {"dd", "02"}, {"d", "2"}},
+		"w": {{"wwww", "Monday"}, {"www", "Mon"}},
+		"h": {{"hhh", "15"}, {"hh", "03"}, {"h", "3"}},
+		"a": {{"aa", "PM"}, {"a", "pm"}},
+		"i": {{"ii", "04"}, {"i", "4"}},
+		"s": {{"ss", "05"}, {"s", "5"}},
+
+		// Timezone
+		"z": {
+			{"zzzz", "GMT-07:00"},
+			{"zzz", "MST"},
+			{"zhh", "±0700"},
+
+			{"zz", "MST"},
+			{"zh", "±07"},
+
+			{"z", "±07:00"},
+		},
+	}
+
+	// Initialize a new string builder
 	to := strings.Builder{}
 
-	// getNext returns the next characters until the
-	// next count characters are reached.
-	getNext := func(i int, c int) string {
-		start := i + 1
-		end := i + c + 1
-		if end <= len(f) {
-			return f[start:end]
-		}
-		return ""
-	}
-
+	// Loop through the input format
 	i := 0
-	l := len(f)
-	for i < l {
-		c := rune(f[i])
+	for i < len(f) {
+		c := f[i]
 
-		if c == 'd' {
-			if getNext(i, 2) == "dd" {
-				to.WriteString("002")
-				i += 2
-			} else if getNext(i, 1) == "d" {
-				to.WriteString("02")
-				i++
-			} else {
-				to.WriteString("2")
-			}
-		} else if c == 'w' {
-			if getNext(i, 1) == "w" {
-				to.WriteString("Monday")
-				i++
-			} else {
-				to.WriteString("Mon")
-			}
-		} else if c == 'm' {
-			if getNext(i, 1) == "m" {
-				to.WriteString("01")
-				i++
-			} else {
-				to.WriteString("1")
-			}
-		} else if c == 'M' {
-			if getNext(i, 1) == "M" {
-				to.WriteString("January")
-				i++
-			} else {
-				to.WriteString("Jan")
-			}
-		} else if c == 'y' {
-			if getNext(i, 3) == "yyy" {
-				to.WriteString("2006")
-				i += 3
-			} else if getNext(i, 1) == "y" {
-				to.WriteString("06")
-				i++
-			}
-		} else if c == 'h' {
-			if getNext(i, 2) == "hh" {
-				to.WriteString("15")
-				i += 2
-			} else if getNext(i, 1) == "h" {
-				to.WriteString("03")
-				i++
-			} else {
-				to.WriteString("3")
-			}
-		} else if c == 'a' {
-			to.WriteString("pm")
-		} else if c == 'A' {
-			to.WriteString("PM")
-		} else if c == 'i' {
-			if getNext(i, 1) == "i" {
-				to.WriteString("04")
-				i++
-			} else {
-				to.WriteString("4")
-			}
-		} else if c == 's' {
-			if getNext(i, 1) == "s" {
-				to.WriteString("05")
-				i++
-			} else {
-				to.WriteString("5")
-			}
-		} else if c == 'u' {
-			to.WriteString("000000")
-		} else if c == 'z' {
-			if getNext(i, 3) == "zzz" {
-				to.WriteString("GMT-07:00")
-				i += 3
-			} else if getNext(i, 2) == "zz" {
-				to.WriteString("MST")
-				i += 2
-			} else if getNext(i, 1) == "z" {
-				to.WriteString("±07:00")
-				i++
-			} else if getNext(i, 1) == "h" {
-				to.WriteString("±07")
-				i++
-			} else {
-				to.WriteString("±0700")
-			}
-		} else {
-			to.WriteRune(c)
+		// Check if the current character is a valid format character
+		conv, ok := conversions[string(c)]
+		if !ok {
+			// Not a valid format character, add as is
+			to.WriteString(string(c))
+			i++
+			continue
 		}
 
-		i += 1
+		// Valid format character, check for the longest possible match
+		for _, keyVal := range conv {
+			key, val := keyVal[0], keyVal[1]
+			iEnd := i + len(key)
+
+			// Check if the len of key + i is less than the len of the format
+			if iEnd <= len(f) {
+				if f[i:iEnd] == key {
+					to.WriteString(val)
+					i += len(key)
+					break
+				}
+			}
+		}
+
+		// If we get here, we didn't find a match, add the character as is
+		if i < len(f) {
+			to.WriteString(string(f[i]))
+			i++
+		}
 	}
 
-	goFormat := to.String()
-	if cache != nil {
-		cache[f] = goFormat
-	}
-
-	return goFormat
+	return to.String()
 }
 
 // Convert function converts a datetime from one string format to another.
