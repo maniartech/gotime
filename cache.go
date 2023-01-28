@@ -1,4 +1,4 @@
-package datetime
+package temporal
 
 var cache = map[string]string{}
 
