@@ -1,14 +1,19 @@
 package datetime
 
 import (
-	"fmt"
 	"testing"
 	"time"
 )
 
 func TestConvertFormat(t *testing.T) {
-	converted := ConvertFormat("dd-mmm-yyyyy")
-	fmt.Println(time.Now().Format(converted))
+	date, err := Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss.000000")
+	if err != nil {
+		t.Error("Expected no error, got ", err)
+	}
+
+	if date != "2012-06-03 12:00:AM:00.123000" {
+		t.Error("Expected 2012-06-03 12:00:AM:00.123000, got ", date)
+	}
 }
 
 func TestConvertForma2(t *testing.T) {
@@ -49,7 +54,7 @@ func TestConvertForma2(t *testing.T) {
 	}
 
 	// Convert format ss-u to Go format.
-	converted = ConvertFormat("ss-u")
+	converted = ConvertFormat("ss-000000")
 	if converted != "05-000000" {
 		t.Error("Expected 05-000000, got ", converted)
 	}
@@ -145,9 +150,13 @@ func TestConvertForma2(t *testing.T) {
 	}
 
 	// Test Microseconds
-	date, _ = Convert("2012-01-01 00:00:00.123", "yyyy-mm-dd hh:ii:ss.999", "yyyy-mm-dd hh:ii:ss.000000")
-	if date != "2012-01-01 00:00:00.123000" {
-		t.Error("Expected 2012-01-01 00:00:00.123000, got ", date)
+	date, err = Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss.000000")
+	if err != nil {
+		t.Error("Expected no error, got ", err)
+	}
+
+	if date != "2012-06-03 12:00:AM:00.123000" {
+		t.Error("Expected 2012-06-03 12:00:AM:00.123000, got ", date)
 	}
 
 }
