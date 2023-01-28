@@ -67,6 +67,7 @@ func calculateTimeVal(scale int, hours float64, future bool) string {
 	return lastOrNext(timeScaleVal, timeVal, future)
 }
 
+// Returns the string "Just now" or "In a few seconds" depending on the future bool
 func justNow(future bool) string {
 	if future {
 		return "In a few seconds"
@@ -74,6 +75,7 @@ func justNow(future bool) string {
 	return "Just now"
 }
 
+// Returns the string "A minute ago" or "In a minute" depending on the future bool
 func minuteAgo(future bool) string {
 	if future {
 		return "In a minute"
@@ -81,6 +83,7 @@ func minuteAgo(future bool) string {
 	return "A minute ago"
 }
 
+// Returns the string "Few minutes ago" or "In a few minutes" depending on the future bool
 func fewMinutesAgo(future bool) string {
 	if future {
 		return "In a few minutes"
@@ -88,6 +91,7 @@ func fewMinutesAgo(future bool) string {
 	return "Few minutes ago"
 }
 
+// Returns the string "Yesterday" or "Tomorrow" depending on the future bool
 func yesterdayOrTomorrow(date time.Time, future bool) string {
 	now := time.Now().UTC()
 	nowYear, nowMonth, nowDay := now.Date()
@@ -113,6 +117,7 @@ func yesterdayOrTomorrow(date time.Time, future bool) string {
 	return ""
 }
 
+// Returns the string "Last <timeScaleVal>" or "In a <timeScaleVal>" depending on the future bool
 func lastOrNextSingular(timeScaleVal string, future bool) string {
 	if future {
 		return fmt.Sprintf("In a %s", timeScaleVal[:len(timeScaleVal)-1])
