@@ -102,6 +102,9 @@ func ConvertFormat(f string) string {
 		return f
 	}
 
+	// Convert format to lower case for case insensitive matching
+	f = strings.ToLower(f)
+
 	// Initialize a map of format conversions
 	conversions := map[string][][]string{
 		"y": {{"yyyy", "2006"}, {"yy", "06"}},

@@ -1,170 +1,233 @@
 package temporal
 
 import (
-	"errors"
-	"strconv"
 	"time"
 )
 
-// RelativeRange returns the range of dates relative to the current date.
-// It accepts r as string in the following format:
-// today, yesterday, tomorrow, last-<n>days, next-<n>days,
-// thisweek, lastweek, nextweek, last-<n>weeks, next-<n>weeks,
-// thismonth, lastmonth, nextmonth, last-<n>months, next-<n>months,
-// thisyear, lastyear, nextyear, last-<n>years, next-<n>years
-// or absolute dates separated by commas
-// 2018-01-01,2018-01-01T00:00:00Z, 2018-01-01T00:00:00.000Z
-func RelativeRange(r string) (*time.Time, *time.Time, error) {
-	if r == "" {
-		return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
+type dateRange struct {
+	// For is the date to use as the base date for the date range. For example,
+	// if you want to get the date range for yesterday, you can use the current
+	// date as the base date.
+	For time.Time
+
+	// From is the start of the date range
+	From time.Time
+
+	// To is the end of the date range
+	To time.Time
+}
+
+// DateRange returns a struct that contains functions to create date ranges.
+// The functions are chainable and con
+func DateRange(dt ...time.Time) *dateRange {
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+	}
+	return &dateRange{For: t}
+}
+
+func (d *dateRange) Today() *dateRange {
+	d.From = DayStart(d.For)
+	d.To = DayEnd(d.For)
+	return d
+}
+
+func (d *dateRange) Yesterday() *dateRange {
+	d.From = Yesterday(d.For)
+	d.To = DayEnd(d.For)
+	return d
+}
+
+func (d *dateRange) Tomorrow() *dateRange {
+	d.From = DayStart(d.For)
+	d.To = Tomorrow(d.For)
+	return d
+}
+
+// Days returns the date range based of specified number of days. If the number of days is negative,
+// it returns the from date as exactly the specified number of days ago from the base date until the base date. For example,
+// if the base date is 2023-02-06 and the number of days is -2, the from date will be 2023-02-05. If the number of days is
+// positive, it returns the from date as exactly the specified number of days from the base date until the base date. For example,
+// if the base date is 2023-02-06 and the number of days is 2, the from date will be 2023-02-07. The base date is always included
+// in the date range.
+func (d *dateRange) Days(days int) *dateRange {
+	if days < 0 {
+		d.From = DayStart(d.For).AddDate(0, 0, days)
+		d.To = DayEnd(d.For)
+	} else {
+		d.From = DayStart(d.For)
+		d.To = DayEnd(d.For).AddDate(0, 0, days)
+	}
+	return d
+}
+
+// ThisWeek returns the current week's date range. It returns the from date
+// as the start of the current week until the end of the current week.
+func (d *dateRange) ThisWeek() *dateRange {
+	dayStart := DayStart(d.For)
+	weekday := dayStart.Weekday()
+	// From is the start of the week
+	d.From = DayStart(d.For).AddDate(0, 0, -int(weekday))
+
+	// To is the end of the week
+	d.To = DayEnd(d.For).AddDate(0, 0, 6-int(weekday))
+	return d
+}
+
+func (d *dateRange) LastWeek() *dateRange {
+	d.From = LastWeek(d.For)
+	d.To = DayEnd(d.For)
+	return d
+}
+
+func (d *dateRange) NextWeek() *dateRange {
+	nextWeekStart := DayStart(d.For).AddDate(0, 0, 7)
+	d.From = nextWeekStart
+	d.To = DayEnd(d.For).AddDate(0, 0, 13)
+	return d
+}
+
+// Weeks returns the date range based of specified number of weeks. If the number of weeks is negative,
+// it returns the from date as exactly the specified number of weeks ago from the base date until the base date. For example,
+// if the base date is 2023-02-06 and the number of weeks is -2, the from date will be 2023-01-23. If the number of weeks is
+// positive, it returns the from date as exactly the specified number of weeks from the base date until the base date. For example,
+// if the base date is 2023-02-06 and the number of weeks is 2, the from date will be 2023-02-19. The base date is always included
+// in the date range. If the number of weeks is 0, it returns the current week's date range.
+func (d *dateRange) Weeks(weeks int) *dateRange {
+	if weeks == 0 {
+		return d.ThisWeek()
 	}
 
-	now := time.Now().UTC()
-	todayMidnight := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.UTC)
+	// From is the start of the week
+	d.From = DayStart(d.For).AddDate(0, 0, weeks*7)
 
-	// if today, return time from 00:00:00 to next day 00:00:00
-	if r == "today" {
-		nextday := todayMidnight.AddDate(0, 0, 1)
-		return &todayMidnight, &nextday, nil
+	// To is the end of the week
+	d.To = DayEnd(d.For).AddDate(0, 0, weeks*7+6)
+	return d
+}
+
+// This Month returns the current month's date range. It returns the from date
+// as the start of the current month until the end of the current month.
+func (d *dateRange) ThisMonth() *dateRange {
+	dayStart := DayStart(d.For)
+	// first day of the month
+	d.From = time.Date(dayStart.Year(), dayStart.Month(), 1, 0, 0, 0, 0, dayStart.Location())
+
+	// last day of the month is the first day of the next month minus 1 day
+	d.To = time.Date(dayStart.Year(), dayStart.Month()+1, 1, 0, 0, 0, 0, dayStart.Location()).AddDate(0, 0, -1)
+	return d
+}
+
+// LastMonth returns the previous month's date range. It returns the from date
+// as the start of the previous month until the end of the previous month.
+func (d *dateRange) LastMonth() *dateRange {
+	dayStart := DayStart(d.For)
+	// first day of the month
+	d.From = time.Date(dayStart.Year(), dayStart.Month()-1, 1, 0, 0, 0, 0, dayStart.Location())
+
+	// last day of the month is the first day of the next month minus 1 day
+	d.To = time.Date(dayStart.Year(), dayStart.Month(), 1, 0, 0, 0, 0, dayStart.Location()).AddDate(0, 0, -1)
+	return d
+}
+
+// NextMonth returns the next month's date range. It returns the from date
+// as the start of the next month until the end of the next month.
+func (d *dateRange) NextMonth() *dateRange {
+	dayStart := DayStart(d.For)
+	// first day of the month
+	d.From = time.Date(dayStart.Year(), dayStart.Month()+1, 1, 0, 0, 0, 0, dayStart.Location())
+
+	// last day of the month is the first day of the next month minus 1 day
+	d.To = time.Date(dayStart.Year(), dayStart.Month()+2, 1, 0, 0, 0, 0, dayStart.Location()).AddDate(0, 0, -1)
+	return d
+}
+
+// Months returns the date range based of specified number of months. If the number of months is negative,
+// it returns the from date as exactly the specified number of months ago from the base date until the base date. For example,
+// if the base date is 2023-02-06 and the number of months is -2, the from date will be 2022-12-29. If the number of months is
+// positive, it returns the from date as exactly the specified number of months from the base date until the base date. For example,
+// if the base date is 2023-02-06 and the number of months is 2, the from date will be 2023-04-05. The base date is always included
+// in the date range.
+func (d *dateRange) Months(months int) *dateRange {
+	if months == 0 {
+		return d.Today()
 	}
 
-	// yesterday, return time from yesterday 00:00:00 to today 00:00:00
-	if r == "yesterday" {
-		yesterday := todayMidnight.AddDate(0, 0, -1)
-		return &yesterday, &todayMidnight, nil
+	dayStart := DayStart(d.For)
+	d.From = time.Date(dayStart.Year(), dayStart.Month(), 1, 0, 0, 0, 0, dayStart.Location()).AddDate(0, months, 0)
+	d.To = time.Date(dayStart.Year(), dayStart.Month()+1, 1, 0, 0, 0, 0, dayStart.Location()).AddDate(0, months, -1)
+
+	return d
+}
+
+// This Year returns the current year's date range. It returns the from date
+// as the start of the current year until the end of the current year.
+func (d *dateRange) ThisYear() *dateRange {
+	dayStart := DayStart(d.For)
+	// first day of the year
+	d.From = time.Date(dayStart.Year(), 1, 1, 0, 0, 0, 0, dayStart.Location())
+
+	// last day of the year is the first day of the next year minus 1 day
+	d.To = time.Date(dayStart.Year()+1, 1, 1, 0, 0, 0, 0, dayStart.Location()).AddDate(0, 0, -1)
+	return d
+}
+
+// LastYear returns the previous year's date range. It returns the from date
+// as the start of the previous year until the end of the previous year.
+func (d *dateRange) LastYear() *dateRange {
+	dayStart := DayStart(d.For)
+	// first day of the year
+	d.From = time.Date(dayStart.Year()-1, 1, 1, 0, 0, 0, 0, dayStart.Location())
+
+	// last day of the year is the first day of the next year minus 1 day
+	d.To = time.Date(dayStart.Year(), 1, 1, 0, 0, 0, 0, dayStart.Location()).AddDate(0, 0, -1)
+	return d
+}
+
+// NextYear returns the next year's date range. It returns the from date
+// as the start of the next year until the end of the next year.
+func (d *dateRange) NextYear() *dateRange {
+	dayStart := DayStart(d.For)
+	// first day of the year
+	d.From = time.Date(dayStart.Year()+1, 1, 1, 0, 0, 0, 0, dayStart.Location())
+
+	// last day of the year is the first day of the next year minus 1 day
+	d.To = time.Date(dayStart.Year()+2, 1, 1, 0, 0, 0, 0, dayStart.Location()).AddDate(0, 0, -1)
+	return d
+}
+
+// Years returns the date range based of specified number of years. If the number of years is negative,
+// it returns the from date as exactly the specified number of years ago from the base date until the base date. For example,
+// if the base date is 2023-02-06 and the number of years is -2, the from date will be 2021-02-06. If the number of years is
+// positive, it returns the from date as exactly the specified number of years from the base date until the base date. For example,
+// if the base date is 2023-02-06 and the number of years is 2, the from date will be 2025-02-06. The base date is always included
+// in the date range.
+func (d *dateRange) Years(years int) *dateRange {
+	if years == 0 {
+		return d.Today()
 	}
 
-	// tomorrow, return time from tomorrow 00:00:00 to day after tomorrow 00:00:00
-	if r == "tomorrow" {
-		tomorrow := todayMidnight.AddDate(0, 0, 1)
-		dayAfterTomorrow := tomorrow.AddDate(0, 0, 1)
-		return &tomorrow, &dayAfterTomorrow, nil
-	}
+	dayStart := DayStart(d.For)
+	d.From = time.Date(dayStart.Year(), dayStart.Month(), dayStart.Day(), 0, 0, 0, 0, dayStart.Location()).AddDate(years, 0, 0)
+	d.To = time.Date(dayStart.Year()+1, dayStart.Month(), dayStart.Day(), 0, 0, 0, 0, dayStart.Location()).AddDate(years, 0, -1)
 
-	// thisweek, return time from 00:00:00 to next week 00:00:00
-	if r == "thisweek" {
-		nextweek := todayMidnight.AddDate(0, 0, 7)
-		return &todayMidnight, &nextweek, nil
-	}
+	return d
+}
 
-	// lastweek, return time from lastwek 00:00:00 to today 00:00:00
-	if r == "lastweek" {
-		lastweek := todayMidnight.AddDate(0, 0, -7)
-		return &lastweek, &todayMidnight, nil
+// Range returns the date range from the specified time.Time. If time.Time is
+// from the past, the range will be from the past date to the current date.
+// If time.Time is from the future, the range will be from the current date
+// to the future date.
+func (d *dateRange) Range(dt time.Time) *dateRange {
+	if dt.Before(d.For) {
+		d.From = DayStart(dt)
+		d.To = DayEnd(d.For)
+	} else {
+		d.From = DayStart(d.For)
+		d.To = DayEnd(dt)
 	}
-
-	// nextweek, return time from next week 00:00:00 to a week later to that 00:00:00
-	if r == "nextweek" {
-		nextweek := todayMidnight.AddDate(0, 0, 7)
-		secondweek := nextweek.AddDate(0, 0, 7)
-		return &nextweek, &secondweek, nil
-	}
-
-	// thismonth, return time from 00:00:00 to next month 00:00:00
-	if r == "thismonth" {
-		nextmonth := todayMidnight.AddDate(0, 1, 0)
-		return &todayMidnight, &nextmonth, nil
-	}
-
-	// lastmonth, return time from last month 00:00:00 to today 00:00:00
-	if r == "lastmonth" {
-		lastmonth := todayMidnight.AddDate(0, -1, 0)
-		return &lastmonth, &todayMidnight, nil
-	}
-
-	// nextmonth, return time from next month 00:00:00 to a month later to that 00:00:00
-	if r == "nextmonth" {
-		nextmonth := todayMidnight.AddDate(0, 1, 0)
-		secondmonth := nextmonth.AddDate(0, 1, 0)
-		return &nextmonth, &secondmonth, nil
-	}
-
-	// thisyear, return time from 00:00:00 to next year 00:00:00
-	if r == "thisyear" {
-		nextyear := todayMidnight.AddDate(1, 0, 0)
-		return &todayMidnight, &nextyear, nil
-	}
-
-	// lastyear, return time from last year 00:00:00 to today 00:00:00
-	if r == "lastyear" {
-		lastyear := todayMidnight.AddDate(-1, 0, 0)
-		return &lastyear, &todayMidnight, nil
-	}
-
-	// nextyear, return time from next year 00:00:00 to a year later to that 00:00:00
-	if r == "nextyear" {
-		nextyear := todayMidnight.AddDate(1, 0, 0)
-		secondyear := nextyear.AddDate(1, 0, 0)
-		return &nextyear, &secondyear, nil
-	}
-
-	// last-<n>days, return time from n days/weeks/months/years ago 00:00:00 to end of day
-	if r[:5] == "last-" {
-		if r[len(r)-4:] == "days" {
-			days, err := strconv.Atoi(r[5 : len(r)-4])
-			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
-			}
-			start := todayMidnight.AddDate(0, 0, -days)
-			end := todayMidnight.AddDate(0, 0, 1)
-			return &start, &end, nil
-		} else if r[len(r)-5:] == "weeks" {
-			weeks, err := strconv.Atoi(r[5 : len(r)-5])
-			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
-			}
-			start := todayMidnight.AddDate(0, 0, -7*weeks)
-			return &start, &todayMidnight, nil
-		} else if r[len(r)-6:] == "months" {
-			months, err := strconv.Atoi(r[5 : len(r)-6])
-			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
-			}
-			start := todayMidnight.AddDate(0, -months, 0)
-			return &start, &todayMidnight, nil
-		} else if r[len(r)-5:] == "years" {
-			years, err := strconv.Atoi(r[5 : len(r)-5])
-			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
-			}
-			start := todayMidnight.AddDate(-years, 0, 0)
-			return &start, &todayMidnight, nil
-		}
-	}
-
-	// next-<n>days, return time from midnight to next n days/weeks/months/years.
-	// It should return time from today 00:00:00 to n days/weeks/months/years from the end of the day.
-	if r[:5] == "next-" {
-		if r[len(r)-4:] == "days" {
-			days, err := strconv.Atoi(r[5 : len(r)-4])
-			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
-			}
-			end := todayMidnight.AddDate(0, 0, days+1)
-			return &todayMidnight, &end, nil
-		} else if r[len(r)-5:] == "weeks" {
-			weeks, err := strconv.Atoi(r[5 : len(r)-5])
-			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
-			}
-			end := todayMidnight.AddDate(0, 0, 7*weeks)
-			return &todayMidnight, &end, nil
-		} else if r[len(r)-6:] == "months" {
-			months, err := strconv.Atoi(r[5 : len(r)-6])
-			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
-			}
-			end := todayMidnight.AddDate(0, months, 0)
-			return &todayMidnight, &end, nil
-		} else if r[len(r)-5:] == "years" {
-			years, err := strconv.Atoi(r[5 : len(r)-5])
-			if err != nil {
-				return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
-			}
-			end := todayMidnight.AddDate(years, 0, 0)
-			return &todayMidnight, &end, nil
-		}
-	}
-
-	return &time.Time{}, &time.Time{}, errors.New(ErrInvalidArgument)
+	return d
 }
