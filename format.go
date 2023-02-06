@@ -27,5 +27,5 @@ func Format(dt any, format string) (string, error) {
 		return time.Unix(int64(dtType), 0).Format(convertedFormat), nil
 	}
 
-	return "", fmt.Errorf("Invalid type %T, expecting time.Time, string, int64 or uint64", dt)
+	return "", newEror(errInvalidType, errInvalidTypeMsg, fmt.Sprintf("%T", dt))
 }
