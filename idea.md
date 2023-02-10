@@ -26,4 +26,8 @@ temporal.Last().Years(2)
 
 temporal.Format(time.Now(), "YYYY-MM-DD HH:mm:ss")
 
+temporal.FormatStr("2019-01-01 00:00:00 +0000", "YYYY-MM-DD") 
+temporal.FormatStr("2022-02", "DD-MM-YYYY", "YYYY-MM")
+
+temporal.FormatTS(1231232, "dd mmmm, yyyy") // 21 January, 2023
 ```
