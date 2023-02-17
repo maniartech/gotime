@@ -1,5 +1,63 @@
 package temporal
 
+import "testing"
+
+func TestDateMonday(t *testing.T) {
+	d := Date().Monday()
+	e := DayStart().AddDate(0, 0, -int(DayStart().Weekday())+1)
+	if d.Start != e {
+		t.Error("Monday is not the start of the week")
+	}
+}
+
+func TestDateTuesday(t *testing.T) {
+	d := Date().Tuesday()
+	e := DayStart().AddDate(0, 0, -int(DayStart().Weekday())+2)
+	if d.Start != e {
+		t.Error("Tuesday is not the start of the week")
+	}
+}
+
+func TestDateWednesday(t *testing.T) {
+	d := Date().Wednesday()
+	e := DayStart().AddDate(0, 0, -int(DayStart().Weekday())+3)
+	if d.Start != e {
+		t.Error("Wednesday is not the start of the week")
+	}
+}
+
+func TestDateThursday(t *testing.T) {
+	d := Date().Thursday()
+	e := DayStart().AddDate(0, 0, -int(DayStart().Weekday())+4)
+	if d.Start != e {
+		t.Error("Thursday is not the start of the week")
+	}
+}
+
+func TestDateFriday(t *testing.T) {
+	d := Date().Friday()
+	e := DayStart().AddDate(0, 0, -int(DayStart().Weekday())+5)
+	if d.Start != e {
+		t.Error("Friday is not the start of the week")
+	}
+}
+
+func TestDateSaturday(t *testing.T) {
+	d := Date().Saturday()
+	e := DayStart().AddDate(0, 0, -int(DayStart().Weekday())+6)
+	if d.Start != e {
+		t.Error("Saturday is not the start of the week")
+	}
+}
+
+func TestDateSunday(t *testing.T) {
+	d := Date().Sunday()
+	e := DayStart().AddDate(0, 0, -int(DayStart().Weekday())+7)
+	if d.Start != e {
+		t.Error("Sunday is not the start of the week")
+	}
+}
+
 // func TestToday(t testing.T) {
 // 	today := DayStart()
 // 	if !today.Equal(DayStart()) {
