@@ -124,3 +124,191 @@ func TestDateRangeNextWeek(t *testing.T) {
 		t.Error("To date is not this week's end date")
 	}
 }
+
+// Tests for DateRange.Weeks
+func TestDateRangeWeeks(t *testing.T) {
+	d := temporal.DateRange(time.Date(2019, 1, 1, 0, 0, 0, 0, time.UTC)).Weeks(-2)
+	e := time.Date(2018, 12, 18, 0, 0, 0, 0, time.UTC)
+	if d.From != e {
+		t.Error("From date is not 2 weeks ago")
+	}
+	e = temporal.DayEnd(time.Date(2018, 12, 24, 0, 0, 0, 0, time.UTC))
+	if d.To != e {
+		t.Error("To date is not today's end date")
+	}
+
+	d = temporal.DateRange(time.Date(2019, 1, 1, 0, 0, 0, 0, time.UTC)).Weeks(0)
+	e = time.Date(2018,12,30, 0, 0, 0, 0, time.UTC)
+	if d.From != e {
+		t.Error("From date is not 0 weeks from now")
+	}
+
+	e = time.Date(2019, 1, 5, 0, 0, 0, 0, time.UTC)
+	if d.To != e {
+		t.Error("To date is not today's end date")
+	}
+
+}
+
+// Tests for DateRange.LastMonth
+func TestDateRangeLastMonth(t *testing.T) {
+	d := temporal.DateRange().LastMonth()
+	e := temporal.DayStart().AddDate(0, -1, 0)
+	for e.Day() != 1 {
+		e = e.AddDate(0, 0, -1)
+	}
+	// e = e.AddDate(0, 0, -1)
+	if d.From != e {
+		t.Error("From date is not last month's start date")
+	}
+
+	e = e.AddDate(0, 1, 0)
+	for e.Day() != 1 {
+		e = e.AddDate(0, 0, -1)
+	}
+	e = e.AddDate(0, 0, -1)
+	if d.To != e {
+		t.Error("To date is not last month's end date")
+	}
+}
+
+// Tests for DateRange.ThisMonth
+func TestDateRangeThisMonth(t *testing.T) {
+	d := temporal.DateRange().ThisMonth()
+	e := temporal.DayStart()
+	for e.Day() != 1 {
+		e = e.AddDate(0, 0, -1)
+	}
+	if d.From != e {
+		t.Error("From date is not this month's start date")
+	}
+
+	e = e.AddDate(0, 1, 0)
+	for e.Day() != 1 {
+		e = e.AddDate(0, 0, -1)
+	}
+	e = e.AddDate(0, 0, -1)
+	if d.To != e {
+		t.Error("To date is not this month's end date")
+	}
+}
+
+// Tests for DateRange.NextMonth
+func TestDateRangeNextMonth(t *testing.T) {
+	d := temporal.DateRange().NextMonth()
+	e := temporal.DayStart().AddDate(0, 1, 0)
+	for e.Day() != 1 {
+		e = e.AddDate(0, 0, -1)
+	}
+	if d.From != e {
+		t.Error("From date is not next month's start date")
+	}
+
+	e = e.AddDate(0, 1, 0)
+	for e.Day() != 1 {
+		e = e.AddDate(0, 0, -1)
+	}
+	e = e.AddDate(0, 0, -1)
+	if d.To != e {
+		t.Error("To date is not next month's end date")
+	}
+}
+
+// Tests for DateRange.Months
+func TestDateRangeMonths(t *testing.T) {
+	d := temporal.DateRange(time.Date(2023, 2, 14, 0, 0, 0, 0, time.UTC)).Months(-1)
+	e := time.Date(2023, 1, 1, 0, 0, 0, 0, time.UTC)
+	if d.From != e { // -7 because the base date is included
+		t.Error("From date is not correct")
+	}
+
+	// d = temporal.DateRange(time.Date(2023, 1, 31, 0, 0, 0, 0, time.UTC)).Months(2)
+	e = time.Date(2023, 1, 31, 0, 0, 0, 0, time.UTC)
+	if d.To != e {
+		t.Error("From date is not correct")
+	}
+
+	d = temporal.DateRange(time.Date(2023, 1, 31, 0, 0, 0, 0, time.UTC)).Months(0)
+	e = time.Date(2023, 1, 1, 0, 0, 0, 0, time.UTC)
+	if d.From != e {
+		t.Error("From date is not correct")
+	}
+
+	e = time.Date(2023, 1, 31, 0, 0, 0, 0, time.UTC)
+	if d.To != e {
+		t.Error("From date is not correct")
+	}
+
+}
+
+// Tests for DateRange.LastYear
+func TestDateRangeLastYear(t *testing.T) {
+	d := temporal.DateRange(time.Date(2023, 2, 14, 0, 0, 0, 0, time.UTC)).LastYear()
+	e := time.Date(2022, 1, 1, 0, 0, 0, 0, time.UTC)
+
+	if d.From != e {
+		t.Error("From date is not last year's start date")
+	}
+
+	e = e.AddDate(1, 0, -1)
+	if d.To != e {
+		t.Error("To date is not last year's end date")
+	}
+}
+
+// Tests for DateRange.ThisYear
+func TestDateRangeThisYear(t *testing.T) {
+	d := temporal.DateRange(time.Date(2023, 2, 14, 0, 0, 0, 0, time.UTC)).ThisYear()
+	e := time.Date(2023, 1, 1, 0, 0, 0, 0, time.UTC)
+
+	if d.From != e {
+		t.Error("From date is not this year's start date")
+	}
+
+	e = e.AddDate(1, 0, -1)
+	if d.To != e {
+		t.Error("To date is not this year's end date")
+	}
+}
+
+// Tests for DateRange.NextYear
+func TestDateRangeNextYear(t *testing.T) {
+	d := temporal.DateRange(time.Date(2023, 2, 14, 0, 0, 0, 0, time.UTC)).NextYear()
+	e := time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
+
+	if d.From != e {
+		t.Error("From date is not next year's start date")
+	}
+
+	e = e.AddDate(1, 0, -1)
+	if d.To != e {
+		t.Error("To date is not next year's end date")
+	}
+}
+
+// Tests for DateRange.Years
+func TestDateRangeYears(t *testing.T) {
+	d := temporal.DateRange(time.Date(2023, 2, 14, 0, 0, 0, 0, time.UTC)).Years(-1)
+	e := time.Date(2022, 2, 14, 0, 0, 0, 0, time.UTC)
+	if d.From != e { // -7 because the base date is included
+		t.Error("From date is not 2 years ago")
+	}
+
+	d = temporal.DateRange(time.Date(2023, 2, 14, 0, 0, 0, 0, time.UTC)).Years(2)
+	e = time.Date(2026, 2, 13, 0, 0, 0, 0, time.UTC)
+	if d.To != e {
+		t.Error("From date is not 2 years from now")
+	}
+
+	d = temporal.DateRange(time.Date(2023, 2, 14, 0, 0, 0, 0, time.UTC)).Years(0)
+	e = time.Date(2023, 1, 1, 0, 0, 0, 0, time.UTC)
+	if d.From != e {
+		t.Error("From date is not this year's start date")
+	}
+
+	e = e.AddDate(1, 0, -1)
+	if d.To != e {
+		t.Error("To date is not this year's end date")
+	}
+}
+
