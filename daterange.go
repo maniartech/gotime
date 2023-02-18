@@ -91,7 +91,7 @@ func (d *dateRange) LastWeek() *dateRange {
 // NextWeek returns dateRange from the start of the next week until the end of the next week.
 func (d *dateRange) NextWeek() *dateRange {
 	d.From = NextWeek(d.For)
-	
+
 	// Iterating through the days of the week to get the sunday of the week
 	for d.From.Weekday() != time.Sunday {
 		d.From = d.From.AddDate(0, 0, -1)
@@ -164,7 +164,7 @@ func (d *dateRange) NextMonth() *dateRange {
 // in the date range.
 func (d *dateRange) Months(months int) *dateRange {
 	if months == 0 {
-		return d.Today()
+		return d.ThisMonth()
 	}
 
 	dayStart := DayStart(d.For)
@@ -218,7 +218,7 @@ func (d *dateRange) NextYear() *dateRange {
 // in the date range.
 func (d *dateRange) Years(years int) *dateRange {
 	if years == 0 {
-		return d.Today()
+		return d.ThisYear()
 	}
 
 	dayStart := DayStart(d.For)
