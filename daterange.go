@@ -55,11 +55,12 @@ func (d *dateRange) Tomorrow() *dateRange {
 // in the date range.
 func (d *dateRange) Days(days int) *dateRange {
 	if days < 0 {
-		d.From = DayStart(d.For).AddDate(0, 0, days)
+
+		d.From = DayStart(d.For).AddDate(0, 0, days+1) // +1 because the base date is included
 		d.To = DayEnd(d.For)
 	} else {
 		d.From = DayStart(d.For)
-		d.To = DayEnd(d.For).AddDate(0, 0, days)
+		d.To = DayEnd(d.For).AddDate(0, 0, days-1) // -1 because the base date is included
 	}
 	return d
 }
@@ -67,26 +68,36 @@ func (d *dateRange) Days(days int) *dateRange {
 // ThisWeek returns the current week's date range. It returns the from date
 // as the start of the current week until the end of the current week.
 func (d *dateRange) ThisWeek() *dateRange {
-	dayStart := DayStart(d.For)
-	weekday := dayStart.Weekday()
-	// From is the start of the week
-	d.From = DayStart(d.For).AddDate(0, 0, -int(weekday))
-
+	d.From = DayStart(d.For)
+	// Iterating through the days of the week to get the sunday of the week
+	for d.From.Weekday() != time.Sunday {
+		d.From = d.From.AddDate(0, 0, -1)
+	}
 	// To is the end of the week
-	d.To = DayEnd(d.For).AddDate(0, 0, 6-int(weekday))
+	d.To = d.From.AddDate(0, 0, 6)
 	return d
 }
 
 func (d *dateRange) LastWeek() *dateRange {
-	d.From = LastWeek(d.For)
-	d.To = DayEnd(d.For)
+	d.From = DayStart().AddDate(0, 0, -7)
+	// Iterating through the days of the week to get the sunday of the week
+	for d.From.Weekday() != time.Sunday {
+		d.From = d.From.AddDate(0, 0, -1)
+	}
+	d.To = d.From.AddDate(0, 0, 6)
 	return d
 }
 
+// NextWeek returns dateRange from the start of the next week until the end of the next week.
 func (d *dateRange) NextWeek() *dateRange {
-	nextWeekStart := DayStart(d.For).AddDate(0, 0, 7)
-	d.From = nextWeekStart
-	d.To = DayEnd(d.For).AddDate(0, 0, 13)
+	d.From = NextWeek(d.For)
+
+	// Iterating through the days of the week to get the sunday of the week
+	for d.From.Weekday() != time.Sunday {
+		d.From = d.From.AddDate(0, 0, -1)
+	}
+	// To is the end of the week
+	d.To = d.From.AddDate(0, 0, 6)
 	return d
 }
 
@@ -153,7 +164,7 @@ func (d *dateRange) NextMonth() *dateRange {
 // in the date range.
 func (d *dateRange) Months(months int) *dateRange {
 	if months == 0 {
-		return d.Today()
+		return d.ThisMonth()
 	}
 
 	dayStart := DayStart(d.For)
@@ -207,7 +218,7 @@ func (d *dateRange) NextYear() *dateRange {
 // in the date range.
 func (d *dateRange) Years(years int) *dateRange {
 	if years == 0 {
-		return d.Today()
+		return d.ThisYear()
 	}
 
 	dayStart := DayStart(d.For)

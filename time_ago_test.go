@@ -47,6 +47,9 @@ func TestTimeAgo(t *testing.T) {
 	timeAgoTestCase(t, "In 2 years", time.Now().UTC().AddDate(2, 0, 0))
 	timeAgoTestCase(t, "2 years ago", time.Now().UTC().AddDate(-2, 0, -1))
 
+	timeAgoTestCase(t, "In 2 years", time.Now().UTC().AddDate(2, 2, 2))
+	timeAgoTestCase(t, "2 years ago", time.Now().UTC().AddDate(-2, -2, -2))
+
 }
 
 func timeAgoTestCase(t *testing.T, expected string, date time.Time) {
