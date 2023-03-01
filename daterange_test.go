@@ -7,6 +7,27 @@ import (
 	"github.com/maniartech/temporal"
 )
 
+func TestRange(t *testing.T) {
+	ti := time.Date(2019, 1, 1, 0, 0, 0, 0, time.UTC)
+	d := temporal.DateRange().Range(ti)
+	if d.From != temporal.DayStart(ti) {
+		t.Error("From date is not today's start date")
+	}
+	if d.To != temporal.DayEnd() {
+		t.Error("To date is not today's end date")
+	}
+
+	ti = time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
+	d = temporal.DateRange().Range(ti)
+	if d.From != temporal.DayStart() {
+		t.Error("From date is not today's start date")
+	}
+	ti = temporal.DayEnd(ti)
+	if d.To != ti {
+		t.Error("To date is not today's end date")
+	}
+}
+
 // Tests for DateRange.For
 func TestDateRangeFor(t *testing.T) {
 	d := temporal.DateRange()
@@ -138,7 +159,7 @@ func TestDateRangeWeeks(t *testing.T) {
 	}
 
 	d = temporal.DateRange(time.Date(2019, 1, 1, 0, 0, 0, 0, time.UTC)).Weeks(0)
-	e = time.Date(2018,12,30, 0, 0, 0, 0, time.UTC)
+	e = time.Date(2018, 12, 30, 0, 0, 0, 0, time.UTC)
 	if d.From != e {
 		t.Error("From date is not 0 weeks from now")
 	}
@@ -311,4 +332,3 @@ func TestDateRangeYears(t *testing.T) {
 		t.Error("To date is not this year's end date")
 	}
 }
-
