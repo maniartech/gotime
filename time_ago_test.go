@@ -1,23 +1,25 @@
-package temporal
+package temporal_test
 
 import (
 	"fmt"
 	"testing"
 	"time"
+
+	"github.com/maniartech/temporal"
 )
 
 func BenchmarkTimeAgo(b *testing.B) {
 	// Benchmark for TimeAgo()
 	date := time.Now().UTC().AddDate(0, 0, 10)
 	for i := 0; i < b.N; i++ {
-		TimeAgo(date)
+		temporal.TimeAgo(date)
 	}
 }
 
 func TestTimeAgo(t *testing.T) {
 	// Test case for TimeAgo()
 
-	fmt.Println(TimeAgo(time.Date(2022, 1, 1, 19, 40, 0, 0, time.Local)))
+	fmt.Println(temporal.TimeAgo(time.Date(2022, 1, 1, 19, 40, 0, 0, time.Local)))
 
 	timeAgoTestCase(t, "Just now", time.Now().UTC())
 	timeAgoTestCase(t, "Just now", time.Now().UTC().Add(time.Second*-9))
@@ -53,7 +55,7 @@ func TestTimeAgo(t *testing.T) {
 }
 
 func timeAgoTestCase(t *testing.T, expected string, date time.Time) {
-	timeAgo := TimeAgo(date)
+	timeAgo := temporal.TimeAgo(date)
 	if timeAgo != expected {
 		t.Errorf("Expected \"%v\", got, \"%v\"", expected, timeAgo)
 	}
