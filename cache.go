@@ -19,3 +19,9 @@ func DisableCache() {
 func EnableCache() {
 	cache = map[string]string{}
 }
+
+// IsCacheEnabled returns true if the cache is enabled. The cache is
+// enabled by default. See the DisableCache function for more information.
+func IsCacheEnabled() bool {
+	return cache != nil
+}

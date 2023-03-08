@@ -9,16 +9,17 @@ import (
 func TestDisableCache(t *testing.T) {
 	// Test Case for DisableCache()
 	temporal.DisableCache()
-	if cache != nil {
-		t.Error("Expected nil, got, ", cache)
+
+	if temporal.IsCacheEnabled() {
+		t.Errorf("Expected %v, got, %v", false, true)
 	}
 }
 
 func TestEnableCache(t *testing.T) {
 	// Test Case for EnableCache()
 	temporal.EnableCache()
-	if temporal.cache == nil {
-		t.Errorf("Expected %v, got, nil", cache)
+	if !temporal.IsCacheEnabled() {
+		t.Errorf("Expected %v, got, %v", true, false)
 	}
 }
 
