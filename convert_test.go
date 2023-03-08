@@ -7,7 +7,7 @@ import (
 	"github.com/maniartech/temporal"
 )
 
-func TestConvertFormat(t *testing.T) {
+func TestConvert(t *testing.T) {
 	date, err := temporal.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss.000000")
 	if err != nil {
 		t.Error("Expected no error, got ", err)
@@ -18,7 +18,21 @@ func TestConvertFormat(t *testing.T) {
 	}
 }
 
-func TestConvertForma2(t *testing.T) {
+func TestConvertWithCache(t *testing.T) {
+	// Enable cache
+	temporal.EnableCache()
+
+	// Convert date
+	f := "yyyy-mmm-dd hhh:ii:ss.999"
+	f1 := temporal.ConvertFormat(f)
+	f2 := temporal.ConvertFormat(f)
+
+	if f1 != f2 {
+		t.Error("Expected ", f1, ", got ", f2)
+	}
+}
+
+func TestConvertFormat(t *testing.T) {
 	// Convert format dd-mm-yyyy to to Go format.
 	converted := temporal.ConvertFormat("dd-mm-yyyy")
 	if converted != "02-01-2006" {

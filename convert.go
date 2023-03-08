@@ -96,10 +96,17 @@ var builtInFormats map[string]bool = map[string]bool{
 // zz     -> ±07:00     UTC offset with colon
 // zzz    -> MST        Timezone abbreviation
 // zzzz   -> GMT-07:00  Timezone in long format
-func ConvertFormat(f string) string {
+func ConvertFormat(f string) (converted string) {
 	// Built-in format, return as is
 	if _, ok := builtInFormats[f]; ok {
 		return f
+	}
+
+	// If the format is cached, return the cached value
+	if cache != nil {
+		if v, ok := cache[f]; ok {
+			return v
+		}
 	}
 
 	// Convert format to lower case for case insensitive matching
@@ -168,7 +175,13 @@ func ConvertFormat(f string) string {
 		}
 	}
 
-	return to.String()
+	// Cache the converted format
+	converted = to.String()
+	if cache != nil {
+		cache[f] = converted
+	}
+
+	return converted
 }
 
 // Convert function converts a datetime from one string format to another.
