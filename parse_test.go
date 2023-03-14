@@ -1,6 +1,7 @@
 package temporal_test
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
@@ -22,4 +23,15 @@ func BenchmarkParse(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		temporal.Parse("24-01-1984", "dd-mm-yyyy")
 	}
+}
+
+func TestTrial(t *testing.T) {
+	tm := time.Now().Add(8 * time.Hour)
+	tmu := tm.UTC()
+
+	// truncate time from tm and tmu and store them in tru and truu
+	// tru := time.Date(tm.Year(), tm.Month(), tm.Day(), 0, 0, 0, 0, tm.Location())
+	truu := time.Date(tmu.Year(), tmu.Month(), tmu.Day(), 0, 0, 0, 0, tmu.Location())
+
+	fmt.Println(truu, truu.Local())
 }
