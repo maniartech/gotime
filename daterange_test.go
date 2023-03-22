@@ -59,7 +59,7 @@ func TestDateRangeToday(t *testing.T) {
 func TestDateRangeYesterday(t *testing.T) {
 	d := temporal.DateRange().Yesterday()
 
-	if d.From != temporal.Yesterday() {
+	if temporal.DateTime(d.From) != temporal.Yesterday() {
 		t.Error("From date is not yesterday's date")
 	}
 	if d.To != temporal.DayEnd() {
@@ -74,7 +74,7 @@ func TestDateRangeTomorrow(t *testing.T) {
 	if d.From != temporal.DayStart() {
 		t.Error("From date is not today's start date")
 	}
-	if d.To != temporal.Tomorrow() {
+	if temporal.DateTime(d.To) != temporal.Tomorrow() {
 		t.Error("To date is not tomorrow's date")
 	}
 }
