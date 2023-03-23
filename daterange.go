@@ -36,14 +36,14 @@ func (d *dateRange) Today() *dateRange {
 }
 
 func (d *dateRange) Yesterday() *dateRange {
-	d.From = Yesterday(d.For)
+	d.From = time.Time(Yesterday())
 	d.To = DayEnd(d.For)
 	return d
 }
 
 func (d *dateRange) Tomorrow() *dateRange {
 	d.From = DayStart(d.For)
-	d.To = Tomorrow(d.For)
+	d.To = time.Time(Tomorrow())
 	return d
 }
 

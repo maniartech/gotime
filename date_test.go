@@ -13,168 +13,125 @@ const (
 
 func TestDateMonday(t *testing.T) {
 	d := temporal.Date().Monday()
-	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+1)
-	if d.Start != e {
+	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+1)
+	if d != e {
 		t.Error("Monday is not the start of the week")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 	d = temporal.Date().Monday(2)
-	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+1+14)
-	if d.Start != e {
+	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+1+14)
+	if d != e {
 		t.Error("Date is not a Monday")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 }
 
 func TestDateTuesday(t *testing.T) {
 	d := temporal.Date().Tuesday()
-	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+2)
-	if d.Start != e {
+	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+2)
+	if d != e {
 		t.Error("Tuesday is not the start of the week")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 	d = temporal.Date().Tuesday(2)
-	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+2+14)
-	if d.Start != e {
+	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+2+14)
+	if d != e {
 		t.Error("Date is not a Tuesday")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 }
 
 func TestDateWednesday(t *testing.T) {
 	d := temporal.Date().Wednesday()
-	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+3)
-	if d.Start != e {
+	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+3)
+	if d != e {
 		t.Error("Wednesday is not the start of the week")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 	d = temporal.Date().Wednesday(2)
-	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+3+14)
-	if d.Start != e {
+	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+3+14)
+	if d != e {
 		t.Error("Date is not a Wednesday")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 }
 
 func TestDateThursday(t *testing.T) {
 	d := temporal.Date().Thursday()
-	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+4)
-	if d.Start != e {
+	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+4)
+	if d != e {
 		t.Error("Thursday is not the start of the week")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 	d = temporal.Date().Thursday(2)
-	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+4+14)
-	if d.Start != e {
+	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+4+14)
+	if d != e {
 		t.Error("Date is not a Thursday")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 }
 
 func TestDateFriday(t *testing.T) {
 	d := temporal.Date().Friday()
-	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+5)
-	if d.Start != e {
+	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+5)
+	if d != e {
 		t.Error("Friday is not the start of the week")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 	d = temporal.Date().Friday(2)
-	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+5+14)
-	if d.Start != e {
+	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+5+14)
+	if d != e {
 		t.Error("Date is not a Friday")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 }
 
 func TestDateSaturday(t *testing.T) {
 	d := temporal.Date().Saturday()
-	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+6)
-	if d.Start != e {
+	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+6)
+	if d != e {
 		t.Error("Saturday is not the start of the week")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 	d = temporal.Date().Saturday(2)
-	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+6+14)
-	if d.Start != e {
+	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+6+14)
+	if d != e {
 		t.Error("Date is not a Saturday")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 }
 
 func TestDateSunday(t *testing.T) {
 	d := temporal.Date().Sunday()
-	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday()))
-	if d.Start != e {
+	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday()))
+	if d != e {
 		t.Error("Sunday is not the start of the week")
-	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
 	}
 
 	d = temporal.Date().Sunday(2)
-	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Weekday())+7+7)
-	if d.Start != e {
+	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+7+7)
+	if d != e {
 		t.Error("Date is not a Sunday")
 	}
-	if d.End != temporal.DayEnd(e) {
-		t.Error("Not the correct end to the day")
-	}
-
 }
 
 func TestDate(t *testing.T) {
 	ti := time.Date(2017, 1, 1, 0, 0, 0, 0, time.UTC)
 	d := temporal.Date(ti)
 
-	if d.Start != temporal.DayStart(ti) {
+	if d != temporal.DayStart(ti) {
 		t.Error("Date is not the start of the day")
 	}
-	if d.End != temporal.DayEnd(ti) {
+	if d != temporal.DayEnd(ti) {
 		t.Error("Date is not the end of the day")
 	}
 }
 
 func TestToday(t *testing.T) {
 	today := temporal.DayStart()
-	if !today.Equal(temporal.DayStart()) {
+	if today != (temporal.DayStart()) {
 		t.Error(ErrInvalidFormat)
 	}
 
 	today = temporal.Today()
-	if !today.Equal(temporal.DayStart()) {
+	if today != (temporal.DayStart()) {
 		t.Error(ErrInvalidFormat)
 	}
 }
