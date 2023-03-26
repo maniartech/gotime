@@ -128,8 +128,8 @@ func (d DateTime) Monday(weeks ...int) DateTime {
 	if len(weeks) > 0 {
 		w = weeks[0]
 	}
-	d = (DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+1))
-	// d.Start = DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+1)
+	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+1))
+	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+1)
 	// d.End = DayEnd(d.Start)
 
 	return d
@@ -143,8 +143,8 @@ func (d DateTime) Tuesday(weeks ...int) DateTime {
 	if len(weeks) > 0 {
 		w = weeks[0]
 	}
-	d = (DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+2))
-	// d.Start = DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+2)
+	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+2))
+	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+2)
 	// d.End = DayEnd(d.Start)
 
 	return d
@@ -158,8 +158,8 @@ func (d DateTime) Wednesday(weeks ...int) DateTime {
 	if len(weeks) > 0 {
 		w = weeks[0]
 	}
-	d = (DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+3))
-	// d.Start = DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+3)
+	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+3))
+	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+3)
 	// d.End = DayEnd(d.Start)
 
 	return d
@@ -173,8 +173,8 @@ func (d DateTime) Thursday(weeks ...int) DateTime {
 	if len(weeks) > 0 {
 		w = weeks[0]
 	}
-	d = (DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+4))
-	// d.Start = DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+4)
+	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+4))
+	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+4)
 	// d.End = DayEnd(d.Start)
 
 	return d
@@ -188,8 +188,8 @@ func (d DateTime) Friday(weeks ...int) DateTime {
 	if len(weeks) > 0 {
 		w = weeks[0]
 	}
-	d = (DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+5))
-	// d.Start = DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+5)
+	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+5))
+	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+5)
 	// d.End = DayEnd(d.Start)
 
 	return d
@@ -203,8 +203,8 @@ func (d DateTime) Saturday(weeks ...int) DateTime {
 	if len(weeks) > 0 {
 		w = weeks[0]
 	}
-	d = (DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+6))
-	// d.Start = DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+6)
+	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+6))
+	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+6)
 	// d.End = DayEnd(d.Start)
 
 	return d
@@ -218,8 +218,8 @@ func (d DateTime) Sunday(weeks ...int) DateTime {
 	if len(weeks) > 0 {
 		w = weeks[0]
 	}
-	d = (DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7+7))
-	// d.Start = DayStart().AddDate(0, 0, -int(DayStart().Time().Weekday())+w*7)
+	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+7))
+	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7)
 	// d.End = DayEnd(d.Start)
 
 	return d
