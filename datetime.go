@@ -12,11 +12,6 @@ func (d DateTime) Time() time.Time {
 	return time.Time(d)
 }
 
-func (d DateTime) UTC() DateTime {
-	// return DateTime((*time.Time)(&d).UTC())
-	return DateTime(time.Time(d).UTC())
-}
-
 // WeekDay return the what day of the week it is from 0 to 6
 // 0 is Sunday, 1 is Monday, 2 is Tuesday, 3 is Wednesday, 4 is Thursday, 5 is Friday, 6 is Saturday
 func (d DateTime) WeekDay() int {
@@ -83,16 +78,6 @@ func (d DateTime) Microsecond() int {
 	return d.Time().Nanosecond() / 1000
 }
 
-// Add adds the given duration to the DateTime
-func (d DateTime) Add(duration time.Duration) DateTime {
-	return DateTime(d.Time().Add(duration))
-}
-
-// AddDate adds the given number of years, months, and days to the DateTime
-func (d DateTime) AddDate(years, months, days int) DateTime {
-	return DateTime(d.Time().AddDate(years, months, days))
-}
-
 // Diff returns the difference between the given DateTime and the current DateTime in the given unit
 func (d DateTime) Diff(t DateTime, unit time.Duration, rounded ...bool) float64 {
 	isRounded := false
@@ -110,15 +95,6 @@ func (d DateTime) Local() DateTime {
 	return DateTime(d.Time().Local())
 }
 
-// In returns the DateTime in the given location
-func (d DateTime) In(loc *time.Location) DateTime {
-	return DateTime(d.Time().In(loc))
-}
-
-// Round returns the DateTime rounded to the nearest unit
-func (d DateTime) Round(unit time.Duration) DateTime {
-	return DateTime(d.Time().Round(unit))
-}
 
 // Date().Monday(weeks) returns the DateTime of the current week's Monday
 // weeks is the number of weeks to add to the current week
