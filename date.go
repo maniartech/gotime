@@ -30,41 +30,5 @@ func DayEnd(dt ...time.Time) DateTime {
 
 // Today is an alias for DayStart
 func Today(dt ...time.Time) DateTime {
-	return Now(dt...)
-}
-
-// Return last week's DateTime at 00:00:00
-func LastWeek(dt ...time.Time) DateTime {
-	lastWeek := Now(dt...).AddDate(0, 0, -7)
-	return lastWeek
-}
-
-// Return last month's DateTime at 00:00:00
-func LastMonth(dt ...time.Time) DateTime {
-	lastMonth := Now(dt...).AddDate(0, -1, 0)
-	return lastMonth
-}
-
-// Return last year's DateTime at 00:00:00
-func LastYear(dt ...time.Time) DateTime {
-	lastYear := Now(dt...).AddDate(-1, 0, 0)
-	return lastYear
-}
-
-// Return next week's DateTime at 00:00:00
-func NextWeek(dt ...time.Time) DateTime {
-	nextWeek := Now(dt...).AddDate(0, 0, 7)
-	return nextWeek
-}
-
-// Return next month's DateTime at 00:00:00
-func NextMonth(dt ...time.Time) DateTime {
-	nextMonth := Now(dt...).AddDate(0, 1, 0)
-	return nextMonth
-}
-
-// Return next year's DateTime at 00:00:00
-func NextYear(dt ...time.Time) DateTime {
-	nextYear := Now(dt...).AddDate(1, 0, 0)
-	return nextYear
+	return DayStart(dt...)
 }
