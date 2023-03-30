@@ -22,6 +22,11 @@ func (d DateTime) In(loc *time.Location) DateTime {
 	return DateTime(d.Time().In(loc))
 }
 
+// Local returns the local time
+func (d DateTime) Local() DateTime {
+	return DateTime(d.Time().Local())
+}
+
 // Round returns the DateTime rounded to the nearest unit
 func (d DateTime) Round(unit time.Duration) DateTime {
 	return DateTime(d.Time().Round(unit))

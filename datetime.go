@@ -90,12 +90,6 @@ func (d DateTime) Diff(t DateTime, unit time.Duration, rounded ...bool) float64 
 	return float64(d.Time().Sub(t.Time()) / unit)
 }
 
-// Local returns the local time
-func (d DateTime) Local() DateTime {
-	return DateTime(d.Time().Local())
-}
-
-
 // Date().Monday(weeks) returns the DateTime of the current week's Monday
 // weeks is the number of weeks to add to the current week
 // If the value is negative, it will return the previous week's Monday
@@ -105,8 +99,6 @@ func (d DateTime) Monday(weeks ...int) DateTime {
 		w = weeks[0]
 	}
 	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+1))
-	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+1)
-	// d.End = DayEnd(d.Start)
 
 	return d
 }
@@ -120,8 +112,6 @@ func (d DateTime) Tuesday(weeks ...int) DateTime {
 		w = weeks[0]
 	}
 	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+2))
-	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+2)
-	// d.End = DayEnd(d.Start)
 
 	return d
 }
@@ -135,8 +125,6 @@ func (d DateTime) Wednesday(weeks ...int) DateTime {
 		w = weeks[0]
 	}
 	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+3))
-	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+3)
-	// d.End = DayEnd(d.Start)
 
 	return d
 }
@@ -150,8 +138,6 @@ func (d DateTime) Thursday(weeks ...int) DateTime {
 		w = weeks[0]
 	}
 	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+4))
-	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+4)
-	// d.End = DayEnd(d.Start)
 
 	return d
 }
@@ -165,8 +151,6 @@ func (d DateTime) Friday(weeks ...int) DateTime {
 		w = weeks[0]
 	}
 	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+5))
-	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+5)
-	// d.End = DayEnd(d.Start)
 
 	return d
 }
@@ -180,8 +164,6 @@ func (d DateTime) Saturday(weeks ...int) DateTime {
 		w = weeks[0]
 	}
 	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+6))
-	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+6)
-	// d.End = DayEnd(d.Start)
 
 	return d
 }
@@ -195,8 +177,6 @@ func (d DateTime) Sunday(weeks ...int) DateTime {
 		w = weeks[0]
 	}
 	d = (Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7+7))
-	// d.Start = Now().AddDate(0, 0, -int(Now().Time().Weekday())+w*7)
-	// d.End = DayEnd(d.Start)
 
 	return d
 }
