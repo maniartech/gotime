@@ -103,8 +103,8 @@ func ConvertFormat(f string) (converted string) {
 	}
 
 	// If the format is cached, return the cached value
-	if cache != nil {
-		if v, ok := cache[f]; ok {
+	if Options.cache != nil {
+		if v, ok := Options.cache[f]; ok {
 			return v
 		}
 	}
@@ -177,8 +177,8 @@ func ConvertFormat(f string) (converted string) {
 
 	// Cache the converted format
 	converted = to.String()
-	if cache != nil {
-		cache[f] = converted
+	if Options.cache != nil {
+		Options.cache[f] = converted
 	}
 
 	return converted

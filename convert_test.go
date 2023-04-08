@@ -20,7 +20,7 @@ func TestConvert(t *testing.T) {
 
 func TestConvertWithCache(t *testing.T) {
 	// Enable cache
-	temporal.EnableCache()
+	temporal.Options.EnableCache()
 
 	// Convert date
 	f := "yyyy-mmm-dd hhh:ii:ss.999"
