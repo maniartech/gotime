@@ -1,11 +1,16 @@
 package temporal_test
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
 	"github.com/maniartech/temporal"
 )
+
+func TestTrialForma(t *testing.T) {
+	fmt.Println("---", temporal.TryFormat(time.Now(), "dt mmmm, yyyy"))
+}
 
 func TestFormat(t *testing.T) {
 	// Converting time.Time to Go format.
