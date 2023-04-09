@@ -91,5 +91,6 @@ it converts `yyyy-mm-dd` to `2006-01-02` and then uses `time.Time.Format()` to f
 | z      | UTC offset | ±07:00 |
 | zz     | UTC offset with colon | ±07:00 |
 | zh     | Numeric timezone hour with hours only | ±07 |
+| zhh    | Numeric timezone hour with hours and minutes | ±0700 |
 | zzz    | Timezone abbreviation | MST |
 | zzzz   | Timezone in long format | GMT-07:00 |
