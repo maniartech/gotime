@@ -4,6 +4,9 @@ import (
 	"time"
 )
 
+type Formatter func(time.Time, string) (string, error)
+type Parseer func(string, string) (time.Time, error)
+
 // Format converts a simple format string to a time.Time format string. It
 // accepts a simple format string such as "yyyy-mm-dd" and returns a converted
 // format string such as "2006-01-02".
