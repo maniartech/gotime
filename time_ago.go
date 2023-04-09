@@ -7,11 +7,15 @@ import (
 )
 
 const (
-	hoursInYear  = 8760
+
+	// The actual average number of hours in a month is 730.001. This number is obtained by
+	// taking the average number of days in a year (365.2425) and dividing it by 12, which
+	// gives 30.436875. Multiplying this by 24 gives 730.001 hours.
 	hoursInMonth = 730.001
-	hoursInWeek  = 168
-	hoursInDay   = 24
-	hoursInHour  = 1
+	hoursInYear  = hoursInMonth * 12
+	hoursInWeek  = 168 // 7 * 24
+	hoursInDay   = 24  // 24
+	hoursInHour  = 1   // 1
 )
 
 var hoursList = [5]float64{hoursInHour, hoursInDay, hoursInWeek, hoursInMonth, hoursInYear}
