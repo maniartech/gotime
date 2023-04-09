@@ -1,6 +1,8 @@
 package temporal
 
 import (
+	"errors"
+	"fmt"
 	"strings"
 	"time"
 )
@@ -96,10 +98,10 @@ var builtInFormats map[string]bool = map[string]bool{
 // zz     -> ±07:00     UTC offset with colon
 // zzz    -> MST        Timezone abbreviation
 // zzzz   -> GMT-07:00  Timezone in long format
-func ConvertFormat(f string) (converted string) {
+func ConvertFormat(f string) []string {
 	// Built-in format, return as is
 	if _, ok := builtInFormats[f]; ok {
-		return f
+		return []string{f}
 	}
 
 	// If the format is cached, return the cached value
@@ -111,6 +113,7 @@ func ConvertFormat(f string) (converted string) {
 
 	// Convert format to lower case for case insensitive matching
 	f = strings.ToLower(f)
+	converted := []string{}
 
 	// Initialize a map of format conversions
 	conversions := map[string][][]string{
@@ -161,6 +164,12 @@ func ConvertFormat(f string) (converted string) {
 			// Check if the len of key + i is less than the len of the format
 			if iEnd <= len(f) {
 				if f[i:iEnd] == key {
+					if val == "" {
+						converted = append(converted, to.String()) // Append the converted format
+						converted = append(converted, val)         // Append the value to the converted format
+						to.Reset()
+						i += len(key)
+					}
 					to.WriteString(val)
 					i += len(key)
 					break
@@ -176,10 +185,12 @@ func ConvertFormat(f string) (converted string) {
 	}
 
 	// Cache the converted format
-	converted = to.String()
+	converted = append(converted, to.String())
 	if Options.cache != nil {
 		Options.cache[f] = converted
 	}
+
+	fmt.Println(converted)
 
 	return converted
 }
@@ -193,10 +204,14 @@ func Convert(datetime string, from string, to string) (string, error) {
 	}
 
 	// Convert the format to go format.
-	from = ConvertFormat(from)
-	to = ConvertFormat(to)
+	fromConverted := ConvertFormat(from)
+	toConverted := ConvertFormat(to)
 
-	parsed, err := time.Parse(from, datetime)
+	if len(fromConverted) > 1 {
+		return "", errors.New("Ordinals are not supported in the from format")
+	}
+
+	parsed, err := time.Parse(fromConverted, datetime)
 	if err != nil {
 		return "", err
 	}
