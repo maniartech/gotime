@@ -1,11 +1,17 @@
 package temporal_test
 
 import (
+	"fmt"
 	"testing"
 	"time"
 
 	"github.com/maniartech/temporal"
 )
+
+func TestConvertFormatA(t *testing.T) {
+	c := temporal.Format(time.Now(), "dt mmmm 'yy")
+	fmt.Println(c)
+}
 
 func TestConvert(t *testing.T) {
 	date, err := temporal.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss.000000")
@@ -24,8 +30,8 @@ func TestConvertWithCache(t *testing.T) {
 
 	// Convert date
 	f := "yyyy-mmm-dd hhh:ii:ss.999"
-	f1 := temporal.ConvertFormat(f)
-	f2 := temporal.ConvertFormat(f)
+	f1 := temporal.ConvertFormat(f)[0]
+	f2 := temporal.ConvertFormat(f)[0]
 
 	if f1 != f2 {
 		t.Error("Expected ", f1, ", got ", f2)
@@ -34,109 +40,109 @@ func TestConvertWithCache(t *testing.T) {
 
 func TestConvertFormat(t *testing.T) {
 	// Convert format dd-mm-yyyy to to Go format.
-	converted := temporal.ConvertFormat("dd-mm-yyyy")
+	converted := temporal.ConvertFormat("dd-mm-yyyy")[0]
 	if converted != "02-01-2006" {
 		t.Error("Expected 02-01-2006, got ", converted)
 	}
 
 	// Convert format w-ww to to Go format.
-	converted = temporal.ConvertFormat("www-wwww")
+	converted = temporal.ConvertFormat("www-wwww")[0]
 	if converted != "Mon-Monday" {
 		t.Error("Expected Mon-Monday, got ", converted)
 	}
 
 	// Convert format hhh-hh-h to to Go format.
-	converted = temporal.ConvertFormat("hhh-hh-h")
+	converted = temporal.ConvertFormat("hhh-hh-h")[0]
 	if converted != "15-03-3" {
 		t.Error("Expected 15-03-3, got ", converted)
 	}
 
 	// Convert format ww-MM-yyyy to to Go format.
-	converted = temporal.ConvertFormat("wwww-mmmm-yyyy")
+	converted = temporal.ConvertFormat("wwww-mmmm-yyyy")[0]
 	if converted != "Monday-January-2006" {
 		t.Error("Expected Monday-January-2006, got ", converted)
 	}
 
 	// Convert format i-s to Go format.
-	converted = temporal.ConvertFormat("i-s")
+	converted = temporal.ConvertFormat("i-s")[0]
 	if converted != "4-5" {
 		t.Error("Expected 4-5, got ", converted)
 	}
 
 	// Convert format ii-ss to Go format.
-	converted = temporal.ConvertFormat("ss-ii")
+	converted = temporal.ConvertFormat("ss-ii")[0]
 	if converted != "05-04" {
 		t.Error("Expected 05-04, got ", converted)
 	}
 
 	// Convert format ss-u to Go format.
-	converted = temporal.ConvertFormat("ss-000000")
+	converted = temporal.ConvertFormat("ss-000000")[0]
 	if converted != "05-000000" {
 		t.Error("Expected 05-000000, got ", converted)
 	}
 
 	// Convert format dd-z-hh to Go format.
-	converted = temporal.ConvertFormat("dd-z-hh")
+	converted = temporal.ConvertFormat("dd-z-hh")[0]
 	if converted != "02-±07:00-03" {
 		t.Error("Expected 02-±0700-03, got ", converted)
 	}
 
 	// Convert format zh-d to Go format.
-	converted = temporal.ConvertFormat("zh-d")
+	converted = temporal.ConvertFormat("zh-d")[0]
 	if converted != "±07-2" {
 		t.Error("Expected ±07-2, got ", converted)
 	}
 
 	// Convert format w-zzz to Go format.
-	converted = temporal.ConvertFormat("www-zzz")
+	converted = temporal.ConvertFormat("www-zzz")[0]
 	if converted != "Mon-MST" {
 		t.Error("Expected Mon-MST, got ", converted)
 	}
 
 	// Convert format yy-zz to Go format.
-	converted = temporal.ConvertFormat("yy-z")
+	converted = temporal.ConvertFormat("yy-z")[0]
 	if converted != "06-±07:00" {
 		t.Error("Expected 06-±07:00, got ", converted)
 	}
 
 	// Convert format zzzz-ss to Go format.
-	converted = temporal.ConvertFormat("zzzz-ss")
+	converted = temporal.ConvertFormat("zzzz-ss")[0]
 	if converted != "GMT-07:00-05" {
 		t.Error("Expected GMT-07:00-05, got ", converted)
 	}
 
 	// Convert format M-ddd-yy to Go format.
-	converted = temporal.ConvertFormat("mmm-ddd-yy")
+	converted = temporal.ConvertFormat("mmm-ddd-yy")[0]
 	if converted != "Jan-002-06" {
 		t.Error("Expected Jan-002-06, got ", converted)
 	}
 
 	// Convert format a-h to Go format.
-	converted = temporal.ConvertFormat("a-h")
+	converted = temporal.ConvertFormat("a-h")[0]
 	if converted != "pm-3" {
 		t.Error("Expected pm-3, got ", converted)
 	}
 
 	// Convert format w-A to Go format.
-	converted = temporal.ConvertFormat("www-aa")
+	converted = temporal.ConvertFormat("www-aa")[0]
 	if converted != "Mon-PM" {
 		t.Error("Expected Mon-PM, got ", converted)
 	}
 
 	// Convert format M-yy-m to Go format.
-	converted = temporal.ConvertFormat("mmm-yy")
+	converted = temporal.ConvertFormat("mmm-yy")[0]
 	if converted != "Jan-06" {
 		t.Error("Expected Jan-06, got ", converted)
 	}
 
 	// Convert format time.Layout format to Go format.
-	converted = temporal.ConvertFormat(time.Layout)
+	converted = temporal.ConvertFormat(time.Layout)[0]
 	if converted != "01/02 03:04:05PM '06 -0700" {
 		t.Error("Expected 01/02 03:04:05PM '06 -0700, got ", converted)
 	}
 
 	// Convert format time.UnixDate format to Go format.
-	converted = temporal.ConvertFormat(time.UnixDate)
+	converted = temporal.ConvertFormat(time.UnixDate)[0]
 	if converted != "Mon Jan _2 15:04:05 MST 2006" {
 		t.Error("Expected Mon Jan _2 15:04:05 MST 2006, got ", converted)
 	}

@@ -119,7 +119,7 @@ func ConvertFormat(f string) []string {
 	conversions := map[string][][]string{
 		"y": {{"yyyy", "2006"}, {"yy", "06"}},
 		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"m", "1"}},
-		"d": {{"ddd", "002"}, {"dd", "02"}, {"d", "2"}},
+		"d": {{"ddd", "002"}, {"dd", "02"}, {"dt", ""}, {"d", "2"}},
 		"w": {{"wwww", "Monday"}, {"www", "Mon"}},
 		"h": {{"hhh", "15"}, {"hh", "03"}, {"h", "3"}},
 		"a": {{"aa", "PM"}, {"a", "pm"}},
@@ -166,9 +166,8 @@ func ConvertFormat(f string) []string {
 				if f[i:iEnd] == key {
 					if val == "" {
 						converted = append(converted, to.String()) // Append the converted format
-						converted = append(converted, val)         // Append the value to the converted format
+						converted = append(converted, key)         // Append the value to the converted format
 						to.Reset()
-						i += len(key)
 					}
 					to.WriteString(val)
 					i += len(key)
@@ -185,7 +184,11 @@ func ConvertFormat(f string) []string {
 	}
 
 	// Cache the converted format
-	converted = append(converted, to.String())
+	finalConvert := to.String()
+	if finalConvert != "" {
+		converted = append(converted, finalConvert)
+	}
+	// converted = append(converted, to.String())
 	if Options.cache != nil {
 		Options.cache[f] = converted
 	}
@@ -203,7 +206,7 @@ func Convert(datetime string, from string, to string) (string, error) {
 		return datetime, nil
 	}
 
-	// Convert the format to go format.
+	// // Convert the format to go format.
 	fromConverted := ConvertFormat(from)
 	toConverted := ConvertFormat(to)
 
@@ -211,10 +214,10 @@ func Convert(datetime string, from string, to string) (string, error) {
 		return "", errors.New("Ordinals are not supported in the from format")
 	}
 
-	parsed, err := time.Parse(fromConverted, datetime)
+	parsed, err := time.Parse(fromConverted[0], datetime)
 	if err != nil {
 		return "", err
 	}
 
-	return parsed.Format(to), nil
+	return format(parsed, toConverted), nil
 }
