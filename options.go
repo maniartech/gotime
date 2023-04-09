@@ -1,7 +1,7 @@
 package temporal
 
 type options struct {
-	cache map[string]string
+	cache map[string][]string
 }
 
 // Options is the global options for the temporal package. You can use this to
@@ -15,7 +15,7 @@ var Options *options
 
 func init() {
 	Options = &options{
-		cache: map[string]string{},
+		cache: map[string][]string{},
 	}
 }
 
@@ -35,7 +35,7 @@ func (o *options) DisableCache() *options {
 // This function useful when you want to enable the cache after it has been
 // disabled. See the DisableCache function for more information.
 func (o *options) EnableCache() *options {
-	o.cache = map[string]string{}
+	o.cache = map[string][]string{}
 	return o
 }
 
