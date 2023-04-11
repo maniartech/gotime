@@ -1,4 +1,4 @@
-package temporal
+package temp
 
 // // Covers all test cases for the function RelativeRange in daterange.go
 // func TestRelativeRange(t *testing.T) {
