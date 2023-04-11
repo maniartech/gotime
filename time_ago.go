@@ -22,9 +22,14 @@ var hoursList = [5]float64{hoursInHour, hoursInDay, hoursInWeek, hoursInMonth, h
 var timeScale = [5]string{"hours", "days", "weeks", "months", "years"}
 
 // Calculates the relative time difference since time.Now()
-func TimeAgo(date time.Time) string {
+func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	future := false
-	timeSince := time.Since(date)
+	var timeSince time.Duration
+	if len(baseTime) > 0 {
+		timeSince = baseTime[0].Sub(t)
+	} else {
+		timeSince = time.Since(t)
+	}
 
 	// If timeSince is negative, then the date is in the future
 	if timeSince < 0 {
@@ -42,7 +47,7 @@ func TimeAgo(date time.Time) string {
 	}
 
 	//Checking if the date is yesterday or tomorrow
-	val := yesterdayOrTomorrow(date, future)
+	val := yesterdayOrTomorrow(t, future)
 	if val != "" {
 		return val
 	}
@@ -55,10 +60,6 @@ func TimeAgo(date time.Time) string {
 		}
 	}
 	return calculateTimeVal(len(hoursList)-1, hours, future)
-}
-
-func DateCreate(Year, Month, Day int) time.Time {
-	return time.Date(Year, time.Month(Month), Day, 0, 0, 0, 0, time.UTC)
 }
 
 func calculateTimeVal(scale int, hours float64, future bool) string {
