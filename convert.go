@@ -2,88 +2,30 @@ package temporal
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 	"time"
 )
 
-// builtInFormats is a map of built-in formats. It is used to
-// check if the specified format is a built-in format.
-var builtInFormats map[string]bool = map[string]bool{
-
-	// Built-in formats.
-
-	// Layout - 2006-01-02 15:04:05.999999999 -0700 MST
-	time.Layout: true,
-
-	// ANSIC - Mon Jan _2 15:04:05 2006
-	time.ANSIC: true,
-
-	// UnixDate - Mon Jan _2 15:04:05 MST 2006
-	time.UnixDate: true,
-
-	// RubyDate - Mon Jan 02 15:04:05 -0700 2006
-	time.RubyDate: true,
-
-	// RFC822 - 02 Jan 06 15:04 MST
-	time.RFC822: true,
-
-	// RFC822Z - 02 Jan 06 15:04 -0700
-	time.RFC822Z: true,
-
-	// RFC850 - Monday, 02-Jan-06 15:04:05 MST
-	time.RFC850: true,
-
-	// RFC1123 - Mon, 02 Jan 2006 15:04:05 MST
-	time.RFC1123: true,
-
-	// RFC1123Z - Mon, 02 Jan 2006 15:04:05 -0700
-	time.RFC1123Z: true,
-
-	// RFC3339 - 2006-01-02T15:04:05Z07:00
-	time.RFC3339: true,
-
-	// RFC3339Nano - 2006-01-02T15:04:05.999999999Z07:00
-	time.RFC3339Nano: true,
-
-	// Handy time stamps.
-
-	// Kitchen - 3:04PM
-	time.Kitchen: true,
-
-	// Stamp - Jan _2 15:04:05
-	time.Stamp: true,
-
-	// StampMilli - Jan _2 15:04:05.000
-	time.StampMilli: true,
-
-	// StampMicro - Jan _2 15:04:05.000000
-	time.StampMicro: true,
-
-	// StampNano - Jan _2 15:04:05.000000000
-	time.StampNano: true,
-}
-
-// ConvertFormat converts this library datetime format to a go format.
+// convertLayout converts this library datetime format to a go format.
 // It loops through each character of the supplied format string
 // and checks if it is a valid format character. If it is, it
 // converts it to the go format.
 // The function convert following format:
-// yyyy   -> 2006       Four digit year
 // yy     -> 06         Two digit year with leading zero
-// mmmm   -> January    Month in full name
-// mmm    -> Jan        Month in short name
-// mm     -> 01         Month in two digits with leading zero
+// yyyy   -> 2006       Four digit year
 // m      -> 1          Month without leading zero
-// ddd    -> 002        Zero padded day of year
-// dd     -> 02         Day in two digits with leading zero
+// mm     -> 01         Month in two digits with leading zero
+// mmm    -> Jan        Month in short name
+// mmmm   -> January    Month in full name
 // d      -> 2          Day without leading zero
-// wwww   -> Monday     Full weekday name
+// dd     -> 02         Day in two digits with leading zero
+// dt     -> 2nd        Day in ordinal format with leading zero (not supported during parsing)
+// ddd    -> 002        Zero padded day of year
 // www    -> 1          Three letter weekday name
+// wwww   -> Monday     Full weekday name
 // h      -> 3          Hour in 12 hour format without leading zero
 // hh     -> 03         Hour in 12 hour format with leading zero
-// H      -> 3          Hour in 24 hour format without leading zero
-// HH     -> 15         Hour in 24 hour format with leading zero
+// hhh    -> 15         Hour in 24 hour format without leading zero
 // a      -> pm         am/pm
 // A      -> PM         AM/PM
 // ii     -> 04         Minute with leading zero
@@ -98,16 +40,18 @@ var builtInFormats map[string]bool = map[string]bool{
 // zz     -> ±07:00     UTC offset with colon
 // zzz    -> MST        Timezone abbreviation
 // zzzz   -> GMT-07:00  Timezone in long format
-func ConvertFormat(f string) []string {
+func convertLayout(f string, forParsing bool) ([]string, error) {
 	// Built-in format, return as is
-	if _, ok := builtInFormats[f]; ok {
-		return []string{f}
+	if version, ok := builtInLayouts[f]; ok {
+		if runtimeVersion >= version {
+			return []string{f}, nil
+		}
 	}
 
 	// If the format is cached, return the cached value
 	if Options.cache != nil {
 		if v, ok := Options.cache[f]; ok {
-			return v
+			return v, nil
 		}
 	}
 
@@ -165,6 +109,10 @@ func ConvertFormat(f string) []string {
 			if iEnd <= len(f) {
 				if f[i:iEnd] == key {
 					if val == "" {
+						if forParsing {
+							return nil, errors.New(errOrdinalsNotSupported)
+						}
+
 						converted = append(converted, to.String()) // Append the converted format
 						converted = append(converted, key)         // Append the value to the converted format
 						to.Reset()
@@ -193,28 +141,30 @@ func ConvertFormat(f string) []string {
 		Options.cache[f] = converted
 	}
 
-	fmt.Println(converted)
-
-	return converted
+	return converted, nil
 }
 
 // Convert function converts a datetime from one string format to another.
 // It takes the datetime string in the single format and converts it to the expected output.
 // It returns an error when the format is not supported.
-func Convert(datetime string, from string, to string) (string, error) {
+func Convert(dt string, from string, to string) (string, error) {
 	if from == to {
-		return datetime, nil
+		return dt, nil
 	}
 
 	// // Convert the format to go format.
-	fromConverted := ConvertFormat(from)
-	toConverted := ConvertFormat(to)
-
-	if len(fromConverted) > 1 {
-		return "", errors.New("Ordinals are not supported in the from format")
+	fromConverted, err := convertLayout(from, true)
+	if err != nil {
+		return "", err
 	}
 
-	parsed, err := time.Parse(fromConverted[0], datetime)
+	toConverted, _ := convertLayout(to, false)
+
+	if len(fromConverted) > 1 {
+		return "", errors.New(errOrdinalsNotSupported)
+	}
+
+	parsed, err := time.Parse(fromConverted[0], dt)
 	if err != nil {
 		return "", err
 	}
