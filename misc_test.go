@@ -129,3 +129,19 @@ func TestTimeCreate(t *testing.T) {
 		t.Errorf("Expected 12:00:00, got, %v", time)
 	}
 }
+
+// TestEoD tests EoD function.
+func TestEoD(t *testing.T) {
+	date := temporal.EoD(temporal.DateCreate(2021, 1, 1))
+	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 || date.Hour() != 23 || date.Minute() != 59 || date.Second() != 59 {
+		t.Errorf("Expected 2021-01-01 23:59:59, got, %v", date)
+	}
+}
+
+// TestSoD tests SoD function.
+func TestSoD(t *testing.T) {
+	date := temporal.SoD(temporal.DateCreate(2021, 1, 1))
+	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 || date.Hour() != 0 || date.Minute() != 0 || date.Second() != 0 {
+		t.Errorf("Expected 2021-01-01 00:00:00, got, %v", date)
+	}
+}
