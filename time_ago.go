@@ -21,7 +21,31 @@ const (
 var hoursList = [5]float64{hoursInHour, hoursInDay, hoursInWeek, hoursInMonth, hoursInYear}
 var timeScale = [5]string{"hours", "days", "weeks", "months", "years"}
 
-// Calculates the relative time difference since time.Now()
+// TimeAgo calculates the relative time difference between a given timestamp and the current time, and returns a string
+// that describes the time difference in human-readable terms. The function takes a time.Time object representing the
+// timestamp, and an optional baseTime parameter, which can be used to specify a different base time to use instead of the
+// current time. The function returns a string that describes the time difference in human-readable terms, such as "2 weeks
+// ago" or "In a few minutes".
+//
+// Example usage:
+//
+//	// Create a time object representing one week ago
+//	oneWeekAgo := time.Now().Add(-7 * 24 * time.Hour)
+//
+//	// Calculate the relative time difference between the timestamp and the current time
+//	timeAgo := TimeAgo(oneWeekAgo)
+//
+//	fmt.Println("One week ago:", timeAgo)
+//	// Output: One week ago: Last week
+//
+//	// Create a time object representing 3 hours and 45 minutes ago
+//	threeHoursAgo := time.Now().Add(-3 * time.Hour).Add(-45 * time.Minute)
+//
+//	// Calculate the relative time difference between the timestamp and the current time
+//	timeAgo = TimeAgo(threeHoursAgo)
+//
+//	fmt.Println("Three hours ago:", timeAgo)
+//	// Output: Three hours ago: 3 hours ago
 func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	future := false
 	var timeSince time.Duration
