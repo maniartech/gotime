@@ -5,6 +5,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/maniartech/temporal/cache"
 	"github.com/maniartech/temporal/internal/utils"
 )
 
@@ -16,24 +17,35 @@ func Convert(dt string, from string, to string) (string, error) {
 		return dt, nil
 	}
 
-	// // Convert the format to go format.
+	// Convert the format to go format. While parsing
+	// the from layout, it may return an error if the format
+	// contains ordinals (mt, dt).
 	fromConverted, err := convertLayout(from, true)
 	if err != nil {
 		return "", err
 	}
 
-	toConverted, _ := convertLayout(to, false)
+	var fromLayout string
+	var toLayout string
 
-	if len(fromConverted) > 1 {
-		return "", errors.New(errOrdinalsNotSupported)
+	switch v := fromConverted.(type) {
+	case []string:
+		if len(v) > 1 {
+			return "", errors.New(errOrdinalsNotSupported)
+		}
+		fromLayout = v[0]
+	case string:
+		fromLayout = v
+	default:
+		return "", errors.New(errInvalidFormat)
 	}
 
-	parsed, err := time.Parse(fromConverted[0], dt)
+	t, err := time.Parse(fromLayout, dt)
 	if err != nil {
 		return "", err
 	}
 
-	return format(parsed, toConverted), nil
+	return t.Format(toLayout), nil
 }
 
 // convertLayout converts this library datetime format to a go format.
@@ -72,7 +84,7 @@ func Convert(dt string, from string, to string) (string, error) {
 // zz     -> ±07:00     UTC offset with colon
 // zzz    -> MST        Timezone abbreviation
 // zzzz   -> GMT-07:00  Timezone in long format
-func convertLayout(f string, forParsing bool) ([]string, error) {
+func convertLayout(f string, forParsing bool) (interface{}, error) {
 	// Built-in format, return as is
 	if version, ok := utils.BuiltInLayouts[f]; ok {
 		if utils.RuntimeVersion >= version {
@@ -81,15 +93,13 @@ func convertLayout(f string, forParsing bool) ([]string, error) {
 	}
 
 	// If the format is cached, return the cached value
-	// if Options.cache != nil {
-	// 	if v, ok := Options.cache[f]; ok {
-	// 		return v, nil
-	// 	}
-	// }
+	if v := cache.Get(f); v != nil {
+		return v, nil
+	}
 
 	// Convert format to lower case for case insensitive matching
 	f = strings.ToLower(f)
-	converted := []string{}
+	var converted interface{}
 
 	// Initialize a map of format conversions
 	conversions := map[string][][]string{
@@ -159,9 +169,11 @@ func convertLayout(f string, forParsing bool) ([]string, error) {
 						if forParsing {
 							return nil, errors.New(errOrdinalsNotSupported)
 						}
-
-						converted = append(converted, to.String()) // Append the converted format
-						converted = append(converted, key)         // Append the value to the converted format
+						if converted == nil {
+							converted = []string{}
+						}
+						converted = append(converted.([]string), to.String()) // Append the converted format
+						converted = append(converted.([]string), key)         // Append the value to the converted format
 						to.Reset()
 					}
 					to.WriteString(val)
@@ -180,13 +192,13 @@ func convertLayout(f string, forParsing bool) ([]string, error) {
 
 	// Cache the converted format
 	finalConvert := to.String()
-	if finalConvert != "" {
-		converted = append(converted, finalConvert)
+	if converted == nil {
+		cache.Set(f, finalConvert)
+		return finalConvert, nil
 	}
-	// converted = append(converted, to.String())
-	// if Options.cache != nil {
-	// 	Options.cache[f] = converted
-	// }
 
+	converted = append(converted.([]string), finalConvert)
+
+	cache.Set(f, converted)
 	return converted, nil
 }
