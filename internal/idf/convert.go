@@ -138,15 +138,6 @@ func convertLayout(f string, forParsing bool) ([]string, error) {
 			continue
 		}
 
-		// Check if the current character is part of a time.Time format attribute
-		skipChars := isTimeFormatAttribute(f, i)
-		if skipChars > 0 {
-			// Append the time.Time format attribute as a literal and skip the matched characters
-			to.WriteString(f[i : i+skipChars])
-			i += skipChars
-			continue
-		}
-
 		// Check if the current character is a valid format character
 		conv, ok := conversions[string(c)]
 		if !ok {
@@ -198,15 +189,4 @@ func convertLayout(f string, forParsing bool) ([]string, error) {
 	// }
 
 	return converted, nil
-}
-
-func isTimeFormatAttribute(s string, pos int) int {
-	timeFormatAttributes := []string{"01", "02", "03", "04", "05", "06", "07", "15", "2006", "Mon", "Monday", "Jan", "January", "MST", "PM", "pm", "Z0700", "Z07:00", "Z07"}
-
-	for _, attr := range timeFormatAttributes {
-		if strings.HasPrefix(s[pos:], attr) {
-			return len(attr)
-		}
-	}
-	return 0
 }
