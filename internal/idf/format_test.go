@@ -9,7 +9,7 @@ import (
 )
 
 func TestTrialForma(t *testing.T) {
-	fmt.Println("---", idf.Format(time.Now(), "dt mmmm, yyyy"))
+	fmt.Println("---", idf.Format(time.Now(), `mt \mont\h of yyyy`))
 }
 
 func TestFormat(t *testing.T) {
