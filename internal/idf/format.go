@@ -11,10 +11,14 @@ import (
 
 func Format(dt time.Time, layout string) string {
 	convertedLayouts, _ := convertLayout(layout, false)
-	return format(dt, convertedLayouts)
+	if str, ok := convertedLayouts.(string); ok {
+		return dt.Format(str)
+	}
+
+	return formatStrs(dt, convertedLayouts.([]string))
 }
 
-func format(dt time.Time, convertedLayouts []string) string {
+func formatStrs(dt time.Time, convertedLayouts []string) string {
 	converted := make([]any, 0, len(convertedLayouts))
 	for _, f := range convertedLayouts {
 
