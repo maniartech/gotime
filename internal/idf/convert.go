@@ -40,11 +40,13 @@ func Convert(dt string, from string, to string) (string, error) {
 // It loops through each character of the supplied format string
 // and checks if it is a valid format character. If it is, it
 // converts it to the go format.
+//
 // The function convert following format:
 // yy     -> 06         Two digit year with leading zero
 // yyyy   -> 2006       Four digit year
 // m      -> 1          Month without leading zero
 // mm     -> 01         Month in two digits with leading zero
+// mt    ->  1st        Month in ordinal format with leading zero (not supported during parsing)
 // mmm    -> Jan        Month in short name
 // mmmm   -> January    Month in full name
 // d      -> 2          Day without leading zero
@@ -92,7 +94,7 @@ func convertLayout(f string, forParsing bool) ([]string, error) {
 	// Initialize a map of format conversions
 	conversions := map[string][][]string{
 		"y": {{"yyyy", "2006"}, {"yy", "06"}},
-		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"m", "1"}},
+		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"mt", ""}, {"m", "1"}},
 		"d": {{"ddd", "002"}, {"dd", "02"}, {"dt", ""}, {"d", "2"}},
 		"w": {{"wwww", "Monday"}, {"www", "Mon"}},
 		"h": {{"hhh", "15"}, {"hh", "03"}, {"h", "3"}},
@@ -120,6 +122,30 @@ func convertLayout(f string, forParsing bool) ([]string, error) {
 	i := 0
 	for i < len(f) {
 		c := f[i]
+
+		// Check if the current character is an escape character
+		if f[i] == '\\' {
+			// Check if we're not at the end of the format string
+			if i+1 < len(f) {
+				// Append the next character as a literal, ignoring its format meaning
+				to.WriteString(string(f[i+1]))
+				i += 2
+			} else {
+				// We're at the end of the format string; append the escape character
+				to.WriteString(string(f[i]))
+				i++
+			}
+			continue
+		}
+
+		// Check if the current character is part of a time.Time format attribute
+		skipChars := isTimeFormatAttribute(f, i)
+		if skipChars > 0 {
+			// Append the time.Time format attribute as a literal and skip the matched characters
+			to.WriteString(f[i : i+skipChars])
+			i += skipChars
+			continue
+		}
 
 		// Check if the current character is a valid format character
 		conv, ok := conversions[string(c)]
@@ -172,4 +198,15 @@ func convertLayout(f string, forParsing bool) ([]string, error) {
 	// }
 
 	return converted, nil
+}
+
+func isTimeFormatAttribute(s string, pos int) int {
+	timeFormatAttributes := []string{"01", "02", "03", "04", "05", "06", "07", "15", "2006", "Mon", "Monday", "Jan", "January", "MST", "PM", "pm", "Z0700", "Z07:00", "Z07"}
+
+	for _, attr := range timeFormatAttributes {
+		if strings.HasPrefix(s[pos:], attr) {
+			return len(attr)
+		}
+	}
+	return 0
 }
