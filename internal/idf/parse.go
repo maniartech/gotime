@@ -12,6 +12,9 @@ func Parse(layout, value string) (time.Time, error) {
 		return time.Time{}, err
 	}
 
-	parsedTime, err := time.Parse(convertedFormat[0], value)
-	return parsedTime, err
+	if str, ok := convertedFormat.(string); ok {
+		return time.Parse(str, value)
+	}
+
+	return time.Time{}, nil
 }
