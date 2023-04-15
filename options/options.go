@@ -4,7 +4,6 @@ var cache map[string][]string
 
 func init() {
 	cache = map[string][]string{}
-	converterRegistry = map[string]FormatConverter{}
 }
 
 // DisableCache disables the cache. This is useful for testing or
