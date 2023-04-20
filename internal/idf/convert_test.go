@@ -9,7 +9,7 @@ import (
 )
 
 func TestConvertLayoutA(t *testing.T) {
-	c := idf.Format(time.Now(), time.DateOnly)
+	c := idf.Format(time.Now(), time.Kitchen)
 	fmt.Println(c)
 	// temporal.TimeAgo(time.Now())
 }

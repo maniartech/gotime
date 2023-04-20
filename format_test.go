@@ -9,7 +9,8 @@ import (
 )
 
 func TestTrialForma(t *testing.T) {
-	fmt.Println("---", temporal.Format(time.Now(), "dt mmmm, yyyy"))
+	test, _ := temporal.Convert("2022-12-31", "yyyy-mm-dd", "dt mmmm, yyyy")
+	fmt.Println("---", test)
 }
 
 func TestFormat(t *testing.T) {
@@ -32,6 +33,18 @@ func TestFormat(t *testing.T) {
 	date3Formatted := temporal.FormatTimestamp(unixTime, "mm/dd/yyyy")
 	if date3Formatted != "04/22/0018" {
 		t.Errorf("Expected 04/22/0018, got %s, ", date3Formatted)
+	}
+
+	// Converting Layout to Go format.
+	date4Formatted, _ := temporal.Parse("dd/mm/yy", "02/02/02")
+	if date4Formatted != time.Date(2002, 2, 2, 0, 0, 0, 0, time.UTC) {
+		t.Errorf("Expected 2012/06/03, got %s, ", date4Formatted)
+	}
+
+	// Converting Unix timestamp to Go format.
+	date5Formatted := temporal.FormatUnix(1234567890, 0, "yyyy/mm/dd")
+	if date5Formatted != "2009/02/14" {
+		t.Errorf("Expected 2009/02/14, got %s, ", date5Formatted)
 	}
 }
 
