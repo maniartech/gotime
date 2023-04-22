@@ -1,24 +1,24 @@
-package temporal_test
+package cache_test
 
 import (
 	"testing"
 
-	"github.com/maniartech/temporal"
+	"github.com/maniartech/temporal/cache"
 )
 
 func TestDisableCache(t *testing.T) {
 	// Test Case for DisableCache()
-	temporal.Options.DisableCache()
+	cache.Disable()
 
-	if temporal.Options.IsCacheEnabled() {
+	if cache.IsEnabled() {
 		t.Errorf("Expected %v, got, %v", false, true)
 	}
 }
 
 func TestEnableCache(t *testing.T) {
 	// Test Case for EnableCache()
-	temporal.Options.EnableCache()
-	if !temporal.Options.IsCacheEnabled() {
+	cache.Enable()
+	if !cache.IsEnabled() {
 		t.Errorf("Expected %v, got, %v", true, false)
 	}
 }
@@ -26,13 +26,13 @@ func TestEnableCache(t *testing.T) {
 func BenchmarkDisableCache(b *testing.B) {
 	// Benchmarking for DisableCache function
 	for i := 0; i < b.N; i++ {
-		temporal.Options.DisableCache()
+		cache.Disable()
 	}
 }
 
 func BenchmarkEnableCache(b *testing.B) {
 	// Benchmarking for EnableCache function
 	for i := 0; i < b.N; i++ {
-		temporal.Options.EnableCache()
+		cache.Enable()
 	}
 }

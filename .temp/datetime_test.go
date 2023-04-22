@@ -1,4 +1,4 @@
-package temporal_test
+package temp_test
 
 import (
 	"testing"

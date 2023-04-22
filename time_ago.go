@@ -7,20 +7,53 @@ import (
 )
 
 const (
-	hoursInYear  = 8760
+
+	// The actual average number of hours in a month is 730.001. This number is obtained by
+	// taking the average number of days in a year (365.2425) and dividing it by 12, which
+	// gives 30.436875. Multiplying this by 24 gives 730.001 hours.
 	hoursInMonth = 730.001
-	hoursInWeek  = 168
-	hoursInDay   = 24
-	hoursInHour  = 1
+	hoursInYear  = hoursInMonth * 12
+	hoursInWeek  = 168 // 7 * 24
+	hoursInDay   = 24  // 24
+	hoursInHour  = 1   // 1
 )
 
 var hoursList = [5]float64{hoursInHour, hoursInDay, hoursInWeek, hoursInMonth, hoursInYear}
 var timeScale = [5]string{"hours", "days", "weeks", "months", "years"}
 
-// Calculates the relative time difference since time.Now()
-func TimeAgo(date time.Time) string {
+// TimeAgo calculates the relative time difference between a given timestamp and the current time, and returns a string
+// that describes the time difference in human-readable terms. The function takes a time.Time object representing the
+// timestamp, and an optional baseTime parameter, which can be used to specify a different base time to use instead of the
+// current time. The function returns a string that describes the time difference in human-readable terms, such as "2 weeks
+// ago" or "In a few minutes".
+//
+// Example usage:
+//
+//	// Create a time object representing one week ago
+//	oneWeekAgo := time.Now().Add(-7 * 24 * time.Hour)
+//
+//	// Calculate the relative time difference between the timestamp and the current time
+//	timeAgo := TimeAgo(oneWeekAgo)
+//
+//	fmt.Println("One week ago:", timeAgo)
+//	// Output: One week ago: Last week
+//
+//	// Create a time object representing 3 hours and 45 minutes ago
+//	threeHoursAgo := time.Now().Add(-3 * time.Hour).Add(-45 * time.Minute)
+//
+//	// Calculate the relative time difference between the timestamp and the current time
+//	timeAgo = TimeAgo(threeHoursAgo)
+//
+//	fmt.Println("Three hours ago:", timeAgo)
+//	// Output: Three hours ago: 3 hours ago
+func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	future := false
-	timeSince := time.Since(date)
+	var timeSince time.Duration
+	if len(baseTime) > 0 {
+		timeSince = baseTime[0].Sub(t)
+	} else {
+		timeSince = time.Since(t)
+	}
 
 	// If timeSince is negative, then the date is in the future
 	if timeSince < 0 {
@@ -38,7 +71,7 @@ func TimeAgo(date time.Time) string {
 	}
 
 	//Checking if the date is yesterday or tomorrow
-	val := yesterdayOrTomorrow(date, future)
+	val := yesterdayOrTomorrow(t, future)
 	if val != "" {
 		return val
 	}
@@ -51,10 +84,6 @@ func TimeAgo(date time.Time) string {
 		}
 	}
 	return calculateTimeVal(len(hoursList)-1, hours, future)
-}
-
-func DateCreate(Year, Month, Day int) time.Time {
-	return time.Date(Year, time.Month(Month), Day, 0, 0, 0, 0, time.UTC)
 }
 
 func calculateTimeVal(scale int, hours float64, future bool) string {
