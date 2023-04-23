@@ -45,7 +45,7 @@ func Convert(dt string, from string, to string) (string, error) {
 		return "", err
 	}
 
-	return t.Format(toLayout), nil
+	return Format(t, toLayout), nil
 }
 
 // convertLayout converts this library datetime format to a go format.
