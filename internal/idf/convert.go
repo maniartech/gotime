@@ -3,7 +3,6 @@ package idf
 import (
 	"errors"
 	"strings"
-	"time"
 
 	"github.com/maniartech/temporal/cache"
 	"github.com/maniartech/temporal/internal/utils"
@@ -13,39 +12,12 @@ import (
 // It takes the datetime string in the single format and converts it to the expected output.
 // It returns an error when the format is not supported.
 func Convert(dt string, from string, to string) (string, error) {
-	if from == to {
-		return dt, nil
-	}
-
-	// Convert the format to go format. While parsing
-	// the from layout, it may return an error if the format
-	// contains ordinals (mt, dt).
-	fromConverted, err := convertLayout(from, true)
+	t, err := Parse(from, dt)
 	if err != nil {
 		return "", err
 	}
 
-	var fromLayout string
-	var toLayout string
-
-	switch v := fromConverted.(type) {
-	case []string:
-		if len(v) > 1 {
-			return "", errors.New(errOrdinalsNotSupported)
-		}
-		fromLayout = v[0]
-	case string:
-		fromLayout = v
-	default:
-		return "", errors.New(errInvalidFormat)
-	}
-
-	t, err := time.Parse(fromLayout, dt)
-	if err != nil {
-		return "", err
-	}
-
-	return Format(t, toLayout), nil
+	return Format(t, to), nil
 }
 
 // convertLayout converts this library datetime format to a go format.
@@ -98,30 +70,30 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 	}
 
 	// Convert format to lower case for case insensitive matching
-	f = strings.ToLower(f)
+	f = strings.ToUpper(f)
 	var converted interface{}
 
 	// Initialize a map of format conversions
 	conversions := map[string][][]string{
-		"y": {{"yyyy", "2006"}, {"yy", "06"}},
-		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"mt", ""}, {"m", "1"}},
-		"d": {{"ddd", "002"}, {"dd", "02"}, {"dt", ""}, {"d", "2"}},
-		"w": {{"wwww", "Monday"}, {"www", "Mon"}},
-		"h": {{"hhh", "15"}, {"hh", "03"}, {"h", "3"}},
-		"a": {{"aa", "PM"}, {"a", "pm"}},
-		"i": {{"ii", "04"}, {"i", "4"}},
-		"s": {{"ss", "05"}, {"s", "5"}},
+		"Y": {{"YYYY", "2006"}, {"YY", "06"}},
+		"M": {{"MMMM", "January"}, {"MMM", "Jan"}, {"MM", "01"}, {"MT", ""}, {"M", "1"}},
+		"D": {{"DDD", "002"}, {"DD", "02"}, {"DT", ""}, {"D", "2"}},
+		"W": {{"WWWW", "Monday"}, {"WWW", "Mon"}},
+		"H": {{"HHH", "15"}, {"HH", "03"}, {"H", "3"}},
+		"A": {{"AA", "PM"}, {"A", "pm"}},
+		"I": {{"II", "04"}, {"I", "4"}},
+		"S": {{"SS", "05"}, {"S", "5"}},
 
 		// Timezone
-		"z": {
-			{"zzzz", "GMT-07:00"},
-			{"zzz", "MST"},
-			{"zhh", "±0700"},
+		"Z": {
+			{"ZZZZ", "GMT-07:00"},
+			{"ZZZ", "MST"},
+			{"ZHH", "±0700"},
 
-			{"zz", "MST"},
-			{"zh", "±07"},
+			{"ZZ", "MST"},
+			{"ZH", "±07"},
 
-			{"z", "±07:00"},
+			{"Z", "±07:00"},
 		},
 	}
 
