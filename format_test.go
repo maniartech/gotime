@@ -22,7 +22,11 @@ func TestFormat(t *testing.T) {
 	}
 
 	// Converting string to Go format.
-	date2Formatted, _ := temporal.Convert("2001-01-01T15:04:05Z", time.RFC1123, "yyyy/mm/dd")
+	date2Formatted, err := temporal.Convert("2001-01-01T15:04:05Z", `2006-01-02T15:04:05\Z`, "yyyy/mm/dd")
+	if err != nil {
+		t.Errorf("Expected no error, got, %s", err)
+	}
+
 	if date2Formatted != "2001/01/01" {
 		t.Errorf("Expected 2001/01/01, got, %s", date2Formatted)
 	}
