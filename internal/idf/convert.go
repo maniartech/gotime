@@ -85,7 +85,12 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 		"S": {{"SS", "05"}, {"S", "5"}},
 
 		// Timezone
-		"Z": {
+		"T": {
+			{"TH", "-07"}, // Timezone hour
+			{"TM", "00"},  // Timezone minute
+			{"TZ", "MST"}, // Timezone abbreviation
+		},
+		"Z": { // ZTHTM
 			{"ZZZZ", "GMT-07:00"},
 			{"ZZZ", "MST"},
 			{"ZHH", "±0700"},
