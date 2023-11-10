@@ -14,6 +14,12 @@ func TestConvertLayoutA(t *testing.T) {
 	// temporal.TimeAgo(time.Now())
 }
 
+func TestTZ(t *testing.T) {
+	date := idf.Format(time.Now(), "yyyy-mm-ddThh:ii:aa:ss.000000000TZZ")
+
+	fmt.Println(date)
+}
+
 func TestConvert(t *testing.T) {
 	date, err := idf.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss.000000")
 	if err != nil {

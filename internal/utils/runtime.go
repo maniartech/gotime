@@ -24,4 +24,5 @@ func init() {
 	major, _ := strconv.Atoi(parts[0])
 	minor, _ := strconv.Atoi(parts[1])
 	RuntimeVersion = major*100 + minor
+
 }

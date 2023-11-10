@@ -63,11 +63,11 @@ var BuiltInLayouts map[string]int = map[string]int{
 	time.StampNano: v100,
 
 	// // DateTime - 2006-01-02 15:04:05
-	// time.DateTime: v120,
+	time.DateTime: v120,
 
 	// // Date - 2006-01-02
-	// time.DateOnly: v120,
+	time.DateOnly: v120,
 
 	// // Time - 15:04:05
-	// time.TimeOnly: v120,
+	time.TimeOnly: v120,
 }
