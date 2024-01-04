@@ -75,14 +75,16 @@ func Convert(dt string, from string, to string) (string, error) {
 // d      -> 2          Day without leading zero
 // dd     -> 02         Day in two digits with leading zero
 // dt     -> 2nd        Day in ordinal format with leading zero (not supported during parsing)
+
 // ddd    -> 002        Zero padded day of year
-// www    -> 1          Three letter weekday name
+// www    -> Mon        Three letter weekday name
 // wwww   -> Monday     Full weekday name
+
 // h      -> 3          Hour in 12 hour format without leading zero
 // hh     -> 03         Hour in 12 hour format with leading zero
 // hhh    -> 15         Hour in 24 hour format without leading zero
-// a      -> pm         am/pm
-// A      -> PM         AM/PM
+// a      -> pm         am/pm (lowercase)
+// aa     -> PM         AM/PM (uppercase)
 // ii     -> 04         Minute with leading zero
 // i      -> 4          Minute without leading zero
 // ss     -> 05         Second with leading zero
@@ -90,11 +92,11 @@ func Convert(dt string, from string, to string) (string, error) {
 // 0      -> 0          Microsecond with leading zero
 // 9      -> 9          Microsecond without leading zero
 
-// z      -> ±0700      UTC offset
-// zh     -> ±07        Numeric timezone hour with hours only
-// zz     -> ±07:00     UTC offset with colon
-// zzz    -> MST        Timezone abbreviation
-// zzzz   -> GMT-07:00  Timezone in long format
+// z      -> Z      		The Z literal represents UTC
+// zz     -> MST        Timezone abbreviation
+// o     -> ±07     		Timezone offset with leading zero (only hours)
+// oo    -> ±0700       Timezone offset with leading zero without colon
+// ooo   -> ±07:00      Timezone offset with leading zero with colon
 func convertLayout(f string, forParsing bool) (interface{}, error) {
 	// Built-in format, return as is
 	if version, ok := utils.BuiltInLayouts[f]; ok {
