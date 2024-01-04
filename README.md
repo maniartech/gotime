@@ -50,47 +50,58 @@ temporal.NextYear()
 
 ## Introducing IDF (Intuitive Date Format)
 
-We've developed the Intuitive Date Format (IDF) for Temporal. IDF is a case-insensitive format, eliminating ambiguity often associated with dd-mm-yyyy formats. This format simplifies date and time entry by removing the need to remember upper and lower case attributes, a common issue with strftime and similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDF intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDF, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
+We've developed the Intuitive Date Format (IDF) for Temporal. IDF is a cAsE-insensitive format, eliminating ambiguity often associated with dd-mm-yyyy formats. This intuitive format makes date and time formatting simple and hackable. entry by removing the need to remember upper and lower case attributes, a common issue with other similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDF intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDF, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
 
 Temporal supports simple, human-friendly date-time formatting. The table below displays the supported formats. Internally, Temporal utilizes time.Time.Format() and converts human-friendly formats into the time.Time format. For instance, it transforms yyyy-mm-dd into 2006-01-02 before using time.Time.Format() to format the date.
 
-### Date
+### Date Formats
 
-| Format | Description | Example |
-|--------|-------------|---------|
-| yy     | Two digit year with leading zero | 06 |
-| yyyy   | Four digit year | 2006 |
-| m      | Month without leading zero | 1 |
-| mm     | Month in two digits with leading zero | 01 |
-| mmm    | Month in short name | Jan |
-| mmmm   | Month in full name | January |
-| d      | Day without leading zero | 2 |
-| dd     | Day in two digits with leading zero | 02 |
-| ddd    | Zero padded day of year | 002 |
-| www    | Three letter weekday name | Mon |
-| wwww   | Full weekday name | Monday |
+| Format | Output   | Description                                   |
+| ------ | -------- | --------------------------------------------- |
+| `yy`   | `06`     | Two-digit year with leading zero              |
+| `yyyy` | `2006`   | Four-digit year                               |
+| `m`    | `1`      | Month without leading zero                    |
+| `mm`   | `01`     | Month in two digits with leading zero         |
+| `mt`   | `1st`    | Month in ordinal format (not for parsing)     |
+| `mmm`  | `Jan`    | Month in short name                           |
+| `mmmm` | `January`| Month in full name                            |
+| `d`    | `2`      | Day without leading zero                      |
+| `dd`   | `02`     | Day in two digits with leading zero           |
+| `dt`   | `2nd`    | Day in ordinal format (not for parsing)       |
+| `ddd`  | `002`    | Zero padded day of year                       |
+| `www`  | `Mon`    | Three-letter weekday name                     |
+| `wwww` | `Monday` | Full weekday name                             |
 
-### Time
+### Time Formats
 
-| Format | Description | Example |
-|--------|-------------|---------|
-| h      | Hour in 12 hour format without leading zero | 3 |
-| hh     | Hour in 12 hour format with leading zero | 03 |
-| hhh    | Hour in 24 hour format with leading zero | 15 |
-| a      | am/pm | pm |
-| aa     | AM/PM | PM |
-| i      | Minute without leading zero | 4 |
-| ii     | Minute with leading zero | 04 |
-| s      | Second without leading zero | 5 |
-| ss     | Second with leading zero | 05 |
-| u      | Microsecond | 000000 |
+| Format | Output | Description                                      |
+| ------ | ------ | ------------------------------------------------ |
+| `h`    | `3`    | Hour in 12-hour format without leading zero      |
+| `hh`   | `03`   | Hour in 12-hour format with leading zero         |
+| `hhh`  | `15`   | Hour in 24-hour format without leading zero      |
+| `a`    | `pm`   | AM/PM in lowercase                               |
+| `aa`   | `PM`   | AM/PM in uppercase                               |
+| `ii`   | `04`   | Minute with leading zero                         |
+| `i`    | `4`    | Minute without leading zero                      |
+| `ss`   | `05`   | Second with leading zero                         |
+| `s`    | `5`    | Second without leading zero                      |
+| `0`    | `0`    | Microsecond with leading zero                    |
+| `9`    | `9`    | Microsecond without leading zero                 |
 
-### Timezone
+### Timezone Formats
 
-| Format | Description | Example |
-|--------|-------------|---------|
-| z      | UTC offset | ±07:00 |
-| zz     | UTC offset with colon | ±07:00 |
-| zh     | Numeric timezone hour with hours only | ±07 |
-| zzz    | Timezone abbreviation | MST |
-| zzzz   | Timezone in long format | GMT-07:00 |
+| Format | Output  | Description                                        |
+| ------ | ------- | -------------------------------------------------- |
+| `z`    | `Z`     | The Z literal represents UTC                       |
+| `zz`   | `MST`   | Timezone abbreviation                              |
+| `o`    | `±07`   | Timezone offset with leading zero (only hours)     |
+| `oo`   | `±0700` | Timezone offset with leading zero without colon    |
+| `ooo`  | `±07:00`| Timezone offset with leading zero with colon       |
+
+### Built-in Formats
+
+| Format | Output | Description                                      |
+| ------ | ------ | ------------------------------------------------ |
+| `iso`  | `2006-01-02T15:04:05.000Z` | ISO 8601 format |
+
+Temporal provides a comprehensive range of specifiers for all your date and time formatting needs, making it an indispensable tool for Go developers.
