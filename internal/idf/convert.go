@@ -26,8 +26,6 @@ func Convert(dt string, from string, to string) (string, error) {
 	}
 
 	var fromLayout string
-	var toLayout string
-
 	switch v := fromConverted.(type) {
 	case []string:
 		if len(v) > 1 {
@@ -40,12 +38,25 @@ func Convert(dt string, from string, to string) (string, error) {
 		return "", errors.New(errInvalidFormat)
 	}
 
+	toLayout, err := convertLayout(to, false)
+	if err != nil {
+		return "", err
+
+	}
+
 	t, err := time.Parse(fromLayout, dt)
 	if err != nil {
 		return "", err
 	}
 
-	return t.Format(toLayout), nil
+	switch v := toLayout.(type) {
+	case []string:
+		return formatStrs(t, v), nil
+	case string:
+		return t.Format(v), nil
+	default:
+		return "", errors.New(errInvalidFormat)
+	}
 }
 
 // convertLayout converts this library datetime format to a go format.
