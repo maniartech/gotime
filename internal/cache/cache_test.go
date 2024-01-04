@@ -3,7 +3,7 @@ package cache_test
 import (
 	"testing"
 
-	"github.com/maniartech/temporal/cache"
+	"github.com/maniartech/temporal/internal/cache"
 )
 
 func TestDisableCache(t *testing.T) {
