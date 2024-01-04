@@ -85,8 +85,8 @@ Temporal supports simple, human-friendly date-time formatting. The table below d
 | `i`    | `4`    | Minute without leading zero                      |
 | `ss`   | `05`   | Second with leading zero                         |
 | `s`    | `5`    | Second without leading zero                      |
-| `0`    | `0`    | Microsecond with leading zero                    |
-| `9`    | `9`    | Microsecond without leading zero                 |
+| `.0`    | `.00`    | Microsecond with leading zero                    |
+| `.9`    | `.99`    | Microsecond without leading zero                 |
 
 ### Timezone Formats
 
@@ -100,8 +100,36 @@ Temporal supports simple, human-friendly date-time formatting. The table below d
 
 ### Built-in Formats
 
-| Format | Output | Description                                      |
-| ------ | ------ | ------------------------------------------------ |
-| `iso`  | `2006-01-02T15:04:05.000Z` | ISO 8601 format |
+| Layout Name        | Output                                    |
+| ------------------ | ----------------------------------------- |
+| `time.Layout`      | `2006-01-02 15:04:05.999999999 -0700 MST` |
+| `time.ANSIC`       | `Mon Jan  2 15:04:05 2006`               |
+| `time.UnixDate`    | `Mon Jan  2 15:04:05 MST 2006`           |
+| `time.RubyDate`    | `Mon Jan 02 15:04:05 -0700 2006`         |
+| `time.RFC822`      | `02 Jan 06 15:04 MST`                    |
+| `time.RFC822Z`     | `02 Jan 06 15:04 -0700`                  |
+| `time.RFC850`      | `Monday, 02-Jan-06 15:04:05 MST`         |
+| `time.RFC1123`     | `Mon, 02 Jan 2006 15:04:05 MST`          |
+| `time.RFC1123Z`    | `Mon, 02 Jan 2006 15:04:05 -0700`        |
+| `time.RFC3339`     | `2006-01-02T15:04:05Z07:00`              |
+| `time.RFC3339Nano` | `2006-01-02T15:04:05.999999999Z07:00`    |
+| `time.Kitchen`     | `3:04PM`                                 |
+
+### Handy Time Stamps
+
+| Layout Name        | Output                      |
+| ------------------ | --------------------------- |
+| `time.Stamp`       | `Jan  2 15:04:05`           |
+| `time.StampMilli`  | `Jan  2 15:04:05.000`       |
+| `time.StampMicro`  | `Jan  2 15:04:05.000000`    |
+| `time.StampNano`   | `Jan  2 15:04:05.000000000` |
+
+### Additional Date and Time Formats
+
+| Layout Name        | Output                  |
+| ------------------ | ----------------------- |
+| `time.DateTime`    | `2006-01-02 15:04:05`   |
+| `time.DateOnly`    | `2006-01-02`            |
+| `time.TimeOnly`    | `15:04:05`              |
 
 Temporal provides a comprehensive range of specifiers for all your date and time formatting needs, making it an indispensable tool for Go developers.
