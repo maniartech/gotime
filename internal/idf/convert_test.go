@@ -5,15 +5,16 @@ import (
 	"testing"
 	"time"
 
+	"github.com/maniartech/temporal"
 	"github.com/maniartech/temporal/internal/idf"
 )
 
 func TestConvertLayoutA(t *testing.T) {
 	c := idf.Format(time.Now(), "dd-mm-yyyyThhh:ii:ss.000000000000 zzoo")
-	fmt.Println(time.Now().Format("-0700"))
+	fmt.Println(time.Now().Format(time.ANSIC))
 	fmt.Println(c)
 
-	// temporal.TimeAgo(time.Now())
+	fmt.Println(temporal.TimeAgo(time.Now().Add(time.Second * 24 * 1)))
 }
 
 func TestConvert(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/maniartech/temporal/cache"
+	"github.com/maniartech/temporal/internal/cache"
 	"github.com/maniartech/temporal/internal/utils"
 )
 
@@ -117,7 +117,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 	conversions := map[string][][]string{
 		"y": {{"yyyy", "2006"}, {"yy", "06"}},
 		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"mt", ""}, {"m", "1"}},
-		"d": {{"ddd", "002"}, {"dd", "02"}, {"dt", ""}, {"d", "2"}}, // dt for ordinals
+		"d": {{"ddd", "002"}, {"dd", "02"}, {"db", "_2"}, {"dt", ""}, {"d", "2"}}, // dt for ordinals
 		"w": {{"wwww", "Monday"}, {"www", "Mon"}},
 		"h": {{"hhh", "15"}, {"hh", "03"}, {"h", "3"}},
 		"a": {{"aa", "PM"}, {"a", "pm"}},
