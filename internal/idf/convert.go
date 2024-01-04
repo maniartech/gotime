@@ -98,14 +98,13 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 	}
 
 	// Convert format to lower case for case insensitive matching
-	f = strings.ToLower(f)
 	var converted interface{}
 
 	// Initialize a map of format conversions
 	conversions := map[string][][]string{
 		"y": {{"yyyy", "2006"}, {"yy", "06"}},
 		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"mt", ""}, {"m", "1"}},
-		"d": {{"ddd", "002"}, {"dd", "02"}, {"dt", ""}, {"d", "2"}},
+		"d": {{"ddd", "002"}, {"dd", "02"}, {"dt", ""}, {"d", "2"}}, // dt for ordinals
 		"w": {{"wwww", "Monday"}, {"www", "Mon"}},
 		"h": {{"hhh", "15"}, {"hh", "03"}, {"h", "3"}},
 		"a": {{"aa", "PM"}, {"a", "pm"}},
@@ -114,15 +113,10 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 
 		// Timezone
 		"z": {
-			{"zzzz", "GMT-07:00"},
-			{"zzz", "MST"},
-			{"zhh", "±0700"},
-
 			{"zz", "MST"},
-			{"zh", "±07"},
-
-			{"z", "±07:00"},
+			{"z", "Z"},
 		},
+		"o": {{"ooo", "-07:00"}, {"oo", "-0700"}, {"o", "-07"}},
 	}
 
 	// Initialize a new string builder
@@ -132,6 +126,11 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 	i := 0
 	for i < len(f) {
 		c := f[i]
+
+		// If c is uppercase, convert it to lowercase
+		if c >= 'A' && c <= 'Z' {
+			c += 32
+		}
 
 		// Check if the current character is an escape character
 		if f[i] == '\\' {
@@ -162,7 +161,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 			key, val := keyVal[0], keyVal[1]
 			iEnd := i + len(key)
 
-			// Check if the len of key + i is less than the len of the format
+			// Check if the len of key + i is less than the len of the format.
 			if iEnd <= len(f) {
 				if f[i:iEnd] == key {
 					if val == "" {
@@ -178,7 +177,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 					}
 					to.WriteString(val)
 					i += len(key)
-					break
+					goto MatchFound
 				}
 			}
 		}
@@ -188,6 +187,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 			to.WriteString(string(f[i]))
 			i++
 		}
+	MatchFound:
 	}
 
 	// Cache the converted format
