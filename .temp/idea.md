@@ -117,10 +117,41 @@ temporal.TimeAgo(
   temporal.Catch(temporal.Parse("2019-01-01", "yyyy-mm-dd"), time.Now()),
 )
 
-temporal.Last().Weeks(1)
-temporal.Last().Months(2)
-temporal.Last().Years(2)
+temporal.Weeks(1, time.Now())
+temporal.Months(2)
+temporal.Years(2)
 
+temporal.EoD(
+  temporal.Monday(-1) // Last Monday
+) // Last Monday at 23:59:59.999999999
+
+
+// First Monday of the month
+temporal.Monday(
+  1, temporal.MonthStart(), true // inclusive true
+                                 // inclusive means consider the current date
+                                 // as well
+)
+
+// Second Monday of the month
+temporal.Monday(
+  2, temporal.MonthStart(), true // inclusive true
+                                 // inclusive means consider the current date
+                                 // as well
+)
+
+// Last Monday of the month
+temporal.Monday(
+  -1, temporal.MonthEnd(), true // inclusive true
+                                // inclusive means consider the current date
+                                // as well
+)
+
+// Monday from today, inclusive
+temporal.WeekDay(temporal.Monday)
+
+// Count of Mondays in the given month
+temporal.TotalWeekdays(temporal.Monday, temporal.MonthStart(), temporal.MonthEnd())
 
 Options
   .CacheFormats() // Default true
@@ -138,5 +169,5 @@ Options
   .Locale() // Default "en"
   .SetWeekDays()
 
-// Time ago
+
 ```
