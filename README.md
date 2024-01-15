@@ -67,6 +67,7 @@ Temporal supports simple, human-friendly date-time formatting. The table below d
 | `mmmm` | `January`| Month in full name                            |
 | `d`    | `2`      | Day without leading zero                      |
 | `dd`   | `02`     | Day in two digits with leading zero           |
+| `db`   | ` 2`     | Day in blank-padded two digits                |
 | `dt`   | `2nd`    | Day in ordinal format (not for parsing)       |
 | `ddd`  | `002`    | Zero padded day of year                       |
 | `www`  | `Mon`    | Three-letter weekday name                     |
