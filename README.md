@@ -2,11 +2,11 @@
 
 A golang library for parsing and parsing, formatting and processing dates and times using simple human-friendly formats such as `yesterday`, `tomorrow`, `dd/mm/yyyy`, etc. The temporal does not aims to be a replacement for the standard time package, but rather addtional facilities to make regular date and time operations such as formatting, parsing, relative time, data range, etc. easier.
 
-It does not depend on any third-party libraries and is fully compatible with Tinygo. It uses caching to improve performance and reduce allocations.
+It does not depend on any third-party libraries and is fully compatible with TinyGO. It uses caching to improve performance and to  allocations during formatting, parsing and data format conversion.
 
 💯 **100% test coverage** 💯
 
-✔️ Tinygo Compatible
+✨ TinyGO Compatible ✨
 
 ## Installation
 
@@ -16,16 +16,45 @@ Installation is simple. Just run the following command in your terminal to insta
 go get github.com/maniartech/temporal
 ```
 
+## What you can do with the Temporal
+
+- [x] Parse dates using simple human-friendly formats such as `yesterday`,
+      `tomorrow`, `dd/mm/yyyy`, etc.
+- [x] Format dates using simple human-friendly formats such as `yesterday`,
+      `tomorrow`, `dd/mm/yyyy`, etc.
+- [x] Convert dates from one format to another. For example, `dd/mm/yyyy` to
+      `yyyy-mm-dd`.
+- [x] Convert the datetime to relative time such as `1 hour ago`, `2 days ago`,
+      etc.
+- [x] Parse and find relative date range. For example, `yesterday`, `today`,
+      `tomorrow`, `this week`, `this month`, `this year`, etc.
+- [ ] Find the start and end of the day, week, month and year.
+- [ ] Provides range of date finder functions
+
 ## Usage
 
 The following example shows how to use the temporal package.
+
+## Date Parsing
+
+Temporal supports parsing of dates using [Intuitive Date Format (IDF)](#intuitive-date-format-idf) . The following example shows how to parse a date in the `dd/mm/yyyy` format.
+
+```go
+dt := temporal.Parse("01/01/2020", "dd/mm/yyyy")
+
+// You can also specify the timezone
+dt2 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.UTC)
+dt3 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.Local)
+dt4 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.FixedZone("IST", 5*60*60))
 
 ```go
 
 import "github.com/maniartech/temporal"
 
 // Parse a date
-t, err := temporal.Parse("tomorrow")
+t, err := temporal.Parse("2012-01-01", "yyyy-mm-dd")
+
+range, err := temporal.ParseRange("yesterday", time.Now())
 
 // Format a date
 s := temporal.Format(t, "yyyy-mm-dd")
@@ -33,22 +62,44 @@ s := temporal.Format(t, "yyyy-mm-dd")
 // Convert date string to different format
 s, err := temporal.Convert("2012-01-01", "yyyy-mm-dd", "dd/mm/yyyy")
 
-// Get the relative date range
-start, end, err := temporal.RelativeRange("last-week")
+// Some handy date finders
+temporal.StartOfDay() // Returns today's date at 00:00:00.000000000
+temporal.EndOfDay()      // Returns today's date at 23:59:59.999999999
 
-temporal.Today()
-temporal.EoD()
-temporal.Yesterday()
-temporal.Tomorrow()
-temporal.LastWeek()
-temporal.LastMonth()
-temporal.LastYear()
-temporal.NextWeek()
-temporal.NextMonth()
-temporal.NextYear()
+temporal.Yesterday()  // Returns yesterday's date
+temporal.Yesterday(
+  temporal.Yesterday(),
+)                     // Returns day before yesterday's date
+
+temporal.Tomorrow()   // Returns tomorrow's date
+
+// temporal.SoD()        // Returns start of day (00:00:00.000000000)
+// temporal.EoD()        // Returns end of day (23:59:59.999999999)
+
+// temporal.Date(-2)     // Returns date of 2 days ago
+// temporal.Date(10)     // Returns date of 10 days from now
+
+// temporal.Week(-1)   // Returns last week's date
+// temporal.Week(2)    // Returns date of 2 weeks from now
+
+// temporal.Month(-1)  // Returns last month's date from now
+
+// temporal.MonthStart() // Returns start of current month
+// temporal.MonthEnd()   // Returns end of current month
+
+// temporal.MonthStart(temporal.Month(-1)) // Returns start of last month
+// temporal.MonthEnd(time.Now())   // Returns end of last month
+
+// temporal.Year()       // Returns last year's date
+// temporal.YearStart()  // Returns start of current year
+// temporal.YearEnd()    // Returns end of current year
+
+// Combining date finders
+// temporal.SoD(temporal.Yesterday()) // Returns start of yesterday
+// temporal.EoD(temporal.Today())      // Returns end of today
 ```
 
-## Introducing IDF (Intuitive Date Format)
+## Intuitive Date Format (IDF)
 
 We've developed the Intuitive Date Format (IDF) for Temporal. IDF is a cAsE-insensitive format, eliminating ambiguity often associated with dd-mm-yyyy formats. This intuitive format makes date and time formatting simple and hackable. entry by removing the need to remember upper and lower case attributes, a common issue with other similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDF intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDF, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
 
