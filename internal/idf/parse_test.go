@@ -19,7 +19,7 @@ func TestParse(t *testing.T) {
 
 func TestParseWithLocation(t *testing.T) {
 	// Test case for parsing the date 24-01-1984
-	format, _ := idf.Parse("dd-mm-yyyy", "24-01-1984", time.FixedZone("IST", 5.5*60*60))
+	format, _ := idf.ParseInLocation("dd-mm-yyyy", "24-01-1984", time.FixedZone("IST", 5.5*60*60))
 	correctTime := time.Date(1984, 1, 24, 0, 0, 0, 0, time.FixedZone("IST", 5.5*60*60))
 	if !format.Equal(correctTime) {
 		t.Errorf("Expected %v, got, %v", correctTime, format)
