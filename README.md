@@ -2,21 +2,19 @@
 
 A golang library for parsing and parsing, formatting and processing dates and times using simple human-friendly formats such as `yesterday`, `tomorrow`, `dd/mm/yyyy`, etc. The temporal does not aims to be a replacement for the standard time package, but rather addtional facilities to make regular date and time operations such as formatting, parsing, relative time, data range, etc. easier.
 
+## Why Temporal?
+
+### ✔️ Temporal does not reinvent the wheel
+
+Temporal is built on top of the standard time package. It does not aims to be a replacement for the standard time package, but rather addtional facilities to make regular date and time operations such as formatting, parsing, relative time, data range, etc. easier.
+
+### ✔️ Temporal is simple, intuitive and hackable
+
 It does not depend on any third-party libraries and is fully compatible with TinyGO. It uses caching to improve performance and to reduce the allocations during formatting, parsing and data format conversion.
 
-💯 **100% test coverage** 💯
+### ✔️ Enhances your productivity
 
-✨ TinyGO Compatible ✨
-
-## Installation
-
-Installation is simple. Just run the following command in your terminal to install the temporal package in your project.
-
-```sh
-go get github.com/maniartech/temporal
-```
-
-## What you can do with the Temporal
+It provides features that we developers often need to deal with dates and times. The following is a list of features that Temporal provides.
 
 - [x] Parse dates using simple human-friendly formats such as `yesterday`,
       `tomorrow`, `dd/mm/yyyy`, etc.
@@ -30,6 +28,23 @@ go get github.com/maniartech/temporal
       `tomorrow`, `this week`, `this month`, `this year`, etc.
 - [ ] Find the start and end of the day, week, month and year.
 - [ ] Provides range of date finder functions
+
+### ✔️ Developer Friendly
+
+It provides a comprehensive range of specifiers for all your date and time formatting needs, making it an indispensable tool for Go developers.
+
+💯 **100% test coverage** 💯
+
+✨ TinyGO Compatible ✨
+
+## Installation
+
+Installation is simple. Just run the following command in your terminal to install the temporal package in your project.
+
+```sh
+go get github.com/maniartech/temporal
+```
+
 
 ## Usage
 
@@ -101,7 +116,7 @@ temporal.Tomorrow()   // Returns tomorrow's date
 
 ## Intuitive Date Format (IDF)
 
-We've developed the Intuitive Date Format (IDF) for Temporal. IDF is a cAsE-insensitive format, eliminating ambiguity often associated with dd-mm-yyyy formats. This intuitive format makes date and time formatting simple and hackable. entry by removing the need to remember upper and lower case attributes, a common issue with other similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDF intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDF, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
+We've developed the Intuitive Date Format (IDF) for Temporal. `IDF is a cAsE-insensitive format`, eliminating ambiguity often associated with dd-mm-yyyy formats. This intuitive format makes date and time formatting simple and hackable. entry by removing the need to remember upper and lower case attributes, a common issue with other similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDF intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDF, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
 
 Temporal supports simple, human-friendly date-time formatting. The table below displays the supported formats. Internally, Temporal utilizes time.Time.Format() and converts human-friendly formats into the time.Time format. For instance, it transforms yyyy-mm-dd into 2006-01-02 before using time.Time.Format() to format the date.
 
