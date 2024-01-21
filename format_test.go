@@ -10,6 +10,7 @@ import (
 
 func TestTrialForma(t *testing.T) {
 	fmt.Println("---", temporal.Format(time.Now(), "dt mmmm, yyyy"))
+
 }
 
 func TestFormat(t *testing.T) {
