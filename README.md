@@ -2,7 +2,7 @@
 
 A golang library for parsing and parsing, formatting and processing dates and times using simple human-friendly formats such as `yesterday`, `tomorrow`, `dd/mm/yyyy`, etc. The temporal does not aims to be a replacement for the standard time package, but rather addtional facilities to make regular date and time operations such as formatting, parsing, relative time, data range, etc. easier.
 
-It does not depend on any third-party libraries and is fully compatible with TinyGO. It uses caching to improve performance and to  allocations during formatting, parsing and data format conversion.
+It does not depend on any third-party libraries and is fully compatible with TinyGO. It uses caching to improve performance and to reduce the allocations during formatting, parsing and data format conversion.
 
 💯 **100% test coverage** 💯
 
