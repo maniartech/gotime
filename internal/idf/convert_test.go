@@ -12,9 +12,14 @@ import (
 func TestConvertLayoutA(t *testing.T) {
 	c := idf.Format(time.Now(), "dd-mm-yyyyThhh:ii:ss.000000000000 zzoo")
 	fmt.Println(time.Now().Format(time.ANSIC))
-	fmt.Println(c)
 
 	fmt.Println(temporal.TimeAgo(time.Now().Add(time.Second * 24 * 1)))
+}
+
+func TestTZ(t *testing.T) {
+	date := idf.Format(time.Now(), "yyyy-mm-ddThh:ii:aa:ss.000000000TZZ")
+
+	fmt.Println(date)
 }
 
 func TestConvert(t *testing.T) {

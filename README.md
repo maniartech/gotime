@@ -16,18 +16,14 @@ It does not depend on any third-party libraries and is fully compatible with Tin
 
 It provides features that we developers often need to deal with dates and times. The following is a list of features that Temporal provides.
 
-- [x] Parse dates using simple human-friendly formats such as `yesterday`,
-      `tomorrow`, `dd/mm/yyyy`, etc.
-- [x] Format dates using simple human-friendly formats such as `yesterday`,
-      `tomorrow`, `dd/mm/yyyy`, etc.
+- [x] Parse dates using simple human-friendly formats such as `dd/mm/yyyy`, etc.
+- [x] Format dates using simple human-friendly formats such as `dd/mm/yyyy`, etc.
 - [x] Convert dates from one format to another. For example, `dd/mm/yyyy` to
       `yyyy-mm-dd`.
 - [x] Convert the datetime to relative time such as `1 hour ago`, `2 days ago`,
       etc.
-- [x] Parse and find relative date range. For example, `yesterday`, `today`,
-      `tomorrow`, `this week`, `this month`, `this year`, etc.
-- [ ] Find the start and end of the day, week, month and year.
-- [ ] Provides range of date finder functions
+- [x] Provides a finder functions for finding relative dates such as `yesterday`,
+      `tomorrow`, etc.
 
 ### ✔️ Developer Friendly
 
@@ -61,6 +57,7 @@ dt := temporal.Parse("01/01/2020", "dd/mm/yyyy")
 dt2 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.UTC)
 dt3 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.Local)
 dt4 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.FixedZone("IST", 5*60*60))
+```
 
 ```go
 

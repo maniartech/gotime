@@ -62,6 +62,9 @@ func TestDaysInMonth(t *testing.T) {
 			t.Errorf("Expected %v, got, %v", days, temporal.DaysInMonth(2019, month))
 		}
 	}
+	if temporal.DaysInMonth(2020, 2) != 29 {
+		t.Errorf("Expected %v, got, %v", 29, temporal.DaysInMonth(2019, 2))
+	}
 }
 
 // TestDaysInYear tests DaysInYear function.

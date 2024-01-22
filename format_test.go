@@ -8,11 +8,6 @@ import (
 	"github.com/maniartech/temporal"
 )
 
-func TestTrialForma(t *testing.T) {
-	fmt.Println("---", temporal.Format(time.Now(), "dt mmmm, yyyy"))
-
-}
-
 func TestFormat(t *testing.T) {
 	// Converting time.Time to Go format.
 	date1 := time.Date(12, 12, 2012, 0, 0, 0, 0, time.UTC)
@@ -22,7 +17,11 @@ func TestFormat(t *testing.T) {
 	}
 
 	// Converting string to Go format.
-	date2Formatted, _ := temporal.Convert("2001-01-01T15:04:05Z", time.RFC1123, "yyyy/mm/dd")
+	date2Formatted, err := temporal.Convert("2001-01-01T15:04:05Z", `2006-01-02T15:04:05\Z`, "yyyy/mm/dd")
+	if err != nil {
+		t.Errorf("Expected no error, got, %s", err)
+	}
+
 	if date2Formatted != "2001/01/01" {
 		t.Errorf("Expected 2001/01/01, got, %s", date2Formatted)
 	}
@@ -33,6 +32,18 @@ func TestFormat(t *testing.T) {
 	date3Formatted := temporal.FormatTimestamp(unixTime, "mm/dd/yyyy")
 	if date3Formatted != "04/22/0018" {
 		t.Errorf("Expected 04/22/0018, got %s, ", date3Formatted)
+	}
+
+	// Converting Layout to Go format.
+	date4Formatted, _ := temporal.Parse("dd/mm/yy", "02/02/02")
+	if date4Formatted != time.Date(2002, 2, 2, 0, 0, 0, 0, time.UTC) {
+		t.Errorf("Expected 2012/06/03, got %s, ", date4Formatted)
+	}
+
+	// Converting Unix timestamp to Go format.
+	date5Formatted := temporal.FormatUnix(1234567890, 0, "yyyy/mm/dd")
+	if date5Formatted != "2009/02/14" {
+		t.Errorf("Expected 2009/02/14, got %s, ", date5Formatted)
 	}
 }
 

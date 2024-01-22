@@ -52,10 +52,19 @@ func TestTimeAgo(t *testing.T) {
 	timeAgoTestCase(t, "In 2 years", time.Now().UTC().AddDate(2, 2, 2))
 	timeAgoTestCase(t, "2 years ago", time.Now().UTC().AddDate(-2, -2, -2))
 
+	// Test case for TimeAgo() with base time
+	timeAgoTestCaseWithBaseTime(t, "Just now", time.Now().UTC(), time.Now().UTC())
 }
 
 func timeAgoTestCase(t *testing.T, expected string, date time.Time) {
 	timeAgo := temporal.TimeAgo(date)
+	if timeAgo != expected {
+		t.Errorf("Expected \"%v\", got, \"%v\"", expected, timeAgo)
+	}
+}
+
+func timeAgoTestCaseWithBaseTime(t *testing.T, expected string, date time.Time, baseTime time.Time) {
+	timeAgo := temporal.TimeAgo(date, baseTime)
 	if timeAgo != expected {
 		t.Errorf("Expected \"%v\", got, \"%v\"", expected, timeAgo)
 	}
