@@ -9,6 +9,6 @@ import (
 )
 
 func TestWIP(t *testing.T) {
-	dt, _ := temporal.Parse("yyyy-mm-dd", "2022-12-31", time.FixedZone("ABC", 5.5*60*60))
+	dt, _ := temporal.ParseInLocation("yyyy-mm-dd", "2022-12-31", time.FixedZone("ABC", 5.5*60*60))
 	fmt.Println(dt)
 }
