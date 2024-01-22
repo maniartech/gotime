@@ -3,8 +3,9 @@ package idf
 import (
 	"errors"
 	"strings"
+	"time"
 
-	"github.com/maniartech/temporal/cache"
+	"github.com/maniartech/temporal/internal/cache"
 	"github.com/maniartech/temporal/internal/utils"
 )
 
@@ -12,12 +13,50 @@ import (
 // It takes the datetime string in the single format and converts it to the expected output.
 // It returns an error when the format is not supported.
 func Convert(dt string, from string, to string) (string, error) {
-	t, err := Parse(from, dt)
+	if from == to {
+		return dt, nil
+	}
+
+	// Convert the format to go format. While parsing
+	// the from layout, it may return an error if the format
+	// contains ordinals (mt, dt).
+	fromConverted, err := convertLayout(from, true)
 	if err != nil {
 		return "", err
 	}
 
-	return Format(t, to), nil
+	var fromLayout string
+	switch v := fromConverted.(type) {
+	case []string:
+		if len(v) > 1 {
+			return "", errors.New(errOrdinalsNotSupported)
+		}
+		fromLayout = v[0]
+	case string:
+		fromLayout = v
+	default:
+		return "", errors.New(errInvalidFormat)
+	}
+
+	toLayout, err := convertLayout(to, false)
+	if err != nil {
+		return "", err
+
+	}
+
+	t, err := time.Parse(fromLayout, dt)
+	if err != nil {
+		return "", err
+	}
+
+	switch v := toLayout.(type) {
+	case []string:
+		return formatStrs(t, v), nil
+	case string:
+		return t.Format(v), nil
+	default:
+		return "", errors.New(errInvalidFormat)
+	}
 }
 
 // convertLayout converts this library datetime format to a go format.
@@ -36,14 +75,16 @@ func Convert(dt string, from string, to string) (string, error) {
 // d      -> 2          Day without leading zero
 // dd     -> 02         Day in two digits with leading zero
 // dt     -> 2nd        Day in ordinal format with leading zero (not supported during parsing)
+
 // ddd    -> 002        Zero padded day of year
-// www    -> 1          Three letter weekday name
+// www    -> Mon        Three letter weekday name
 // wwww   -> Monday     Full weekday name
+
 // h      -> 3          Hour in 12 hour format without leading zero
 // hh     -> 03         Hour in 12 hour format with leading zero
 // hhh    -> 15         Hour in 24 hour format without leading zero
-// a      -> pm         am/pm
-// A      -> PM         AM/PM
+// a      -> pm         am/pm (lowercase)
+// aa     -> PM         AM/PM (uppercase)
 // ii     -> 04         Minute with leading zero
 // i      -> 4          Minute without leading zero
 // ss     -> 05         Second with leading zero
@@ -51,11 +92,11 @@ func Convert(dt string, from string, to string) (string, error) {
 // 0      -> 0          Microsecond with leading zero
 // 9      -> 9          Microsecond without leading zero
 
-// z      -> ±0700      UTC offset
-// zh     -> ±07        Numeric timezone hour with hours only
-// zz     -> ±07:00     UTC offset with colon
-// zzz    -> MST        Timezone abbreviation
-// zzzz   -> GMT-07:00  Timezone in long format
+// z      -> Z      		The Z literal represents UTC
+// zz     -> MST        Timezone abbreviation
+// o     -> ±07     		Timezone offset with leading zero (only hours)
+// oo    -> ±0700       Timezone offset with leading zero without colon
+// ooo   -> ±07:00      Timezone offset with leading zero with colon
 func convertLayout(f string, forParsing bool) (interface{}, error) {
 	// Built-in format, return as is
 	if version, ok := utils.BuiltInLayouts[f]; ok {
@@ -70,36 +111,25 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 	}
 
 	// Convert format to lower case for case insensitive matching
-	f = strings.ToUpper(f)
 	var converted interface{}
 
 	// Initialize a map of format conversions
 	conversions := map[string][][]string{
-		"Y": {{"YYYY", "2006"}, {"YY", "06"}},
-		"M": {{"MMMM", "January"}, {"MMM", "Jan"}, {"MM", "01"}, {"MT", ""}, {"M", "1"}},
-		"D": {{"DDD", "002"}, {"DD", "02"}, {"DT", ""}, {"D", "2"}},
-		"W": {{"WWWW", "Monday"}, {"WWW", "Mon"}},
-		"H": {{"HHH", "15"}, {"HH", "03"}, {"H", "3"}},
-		"A": {{"AA", "PM"}, {"A", "pm"}},
-		"I": {{"II", "04"}, {"I", "4"}},
-		"S": {{"SS", "05"}, {"S", "5"}},
+		"y": {{"yyyy", "2006"}, {"yy", "06"}},
+		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"mt", ""}, {"m", "1"}},
+		"d": {{"ddd", "002"}, {"dd", "02"}, {"db", "_2"}, {"dt", ""}, {"d", "2"}}, // dt for ordinals
+		"w": {{"wwww", "Monday"}, {"www", "Mon"}},
+		"h": {{"hhh", "15"}, {"hh", "03"}, {"h", "3"}},
+		"a": {{"aa", "PM"}, {"a", "pm"}},
+		"i": {{"ii", "04"}, {"i", "4"}},
+		"s": {{"ss", "05"}, {"s", "5"}},
 
 		// Timezone
-		"T": {
-			{"TH", "-07"}, // Timezone hour
-			{"TM", "00"},  // Timezone minute
-			{"TZ", "MST"}, // Timezone abbreviation
+		"z": {
+			{"zz", "MST"},
+			{"z", "Z"},
 		},
-		"Z": { // ZTHTM
-			{"ZZZZ", "GMT-07:00"},
-			{"ZZZ", "MST"},
-			{"ZHH", "±0700"},
-
-			{"ZZ", "MST"},
-			{"ZH", "±07"},
-
-			{"Z", "±07:00"},
-		},
+		"o": {{"ooo", "-07:00"}, {"oo", "-0700"}, {"o", "-07"}},
 	}
 
 	// Initialize a new string builder
@@ -109,6 +139,11 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 	i := 0
 	for i < len(f) {
 		c := f[i]
+
+		// If c is uppercase, convert it to lowercase
+		if c >= 'A' && c <= 'Z' {
+			c += 32
+		}
 
 		// Check if the current character is an escape character
 		if f[i] == '\\' {
@@ -139,7 +174,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 			key, val := keyVal[0], keyVal[1]
 			iEnd := i + len(key)
 
-			// Check if the len of key + i is less than the len of the format
+			// Check if the len of key + i is less than the len of the format.
 			if iEnd <= len(f) {
 				if f[i:iEnd] == key {
 					if val == "" {
@@ -155,7 +190,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 					}
 					to.WriteString(val)
 					i += len(key)
-					break
+					goto MatchFound
 				}
 			}
 		}
@@ -165,6 +200,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 			to.WriteString(string(f[i]))
 			i++
 		}
+	MatchFound:
 	}
 
 	// Cache the converted format

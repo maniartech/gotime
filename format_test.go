@@ -8,11 +8,6 @@ import (
 	"github.com/maniartech/temporal"
 )
 
-func TestTrialForma(t *testing.T) {
-	test, _ := temporal.Convert("2022-12-31", "yyyy-mm-dd", "dt mmmm, yyyy")
-	fmt.Println("---", test)
-}
-
 func TestFormat(t *testing.T) {
 	// Converting time.Time to Go format.
 	date1 := time.Date(12, 12, 2012, 0, 0, 0, 0, time.UTC)

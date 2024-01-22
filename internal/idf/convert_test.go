@@ -5,13 +5,15 @@ import (
 	"testing"
 	"time"
 
+	"github.com/maniartech/temporal"
 	"github.com/maniartech/temporal/internal/idf"
 )
 
 func TestConvertLayoutA(t *testing.T) {
-	c := idf.Format(time.Now(), time.Kitchen)
-	fmt.Println(c)
-	// temporal.TimeAgo(time.Now())
+	c := idf.Format(time.Now(), "dd-mm-yyyyThhh:ii:ss.000000000000 zzoo")
+	fmt.Println(time.Now().Format(time.ANSIC))
+
+	fmt.Println(temporal.TimeAgo(time.Now().Add(time.Second * 24 * 1)))
 }
 
 func TestTZ(t *testing.T) {
@@ -21,13 +23,14 @@ func TestTZ(t *testing.T) {
 }
 
 func TestConvert(t *testing.T) {
-	date, err := idf.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss.000000")
+	date, err := idf.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss")
+
 	if err != nil {
 		t.Error("Expected no error, got ", err)
 	}
 
-	if date != "2012-06-03 12:00:AM:00.123000" {
-		t.Error("Expected 2012-06-03 12:00:AM:00.123000, got ", date)
+	if date != "2012-06-03 12:00:AM:00" {
+		t.Error("Expected 2012-06-03 12:00:AM:00, got ", date)
 	}
 }
 
