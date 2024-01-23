@@ -1,7 +1,6 @@
 package temporal_test
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
