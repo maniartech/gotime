@@ -29,7 +29,7 @@ func MonthEnd(dt ...time.Time) time.Time {
 }
 
 // LastMonth returns the last month's time.Time corresponding to the current time.
-func LastMonth() time.Time {
+func LastMonth(dt ...time.Time) time.Time {
 	return time.Now().AddDate(0, -1, 0)
 }
 
@@ -38,9 +38,26 @@ func NextMonth() time.Time {
 	return time.Now().AddDate(0, 1, 0)
 }
 
+// Months returns the date of the given number of months from the date provided,
+// If the date is not provided, it will return the date of the given number of months from the current date.
+// If the months parameter is 0 it will panic.
+func Months(months int, dt ...time.Time) time.Time {
+	if months == 0 {
+		panic("Months parameter can't be zero")
+	}
+
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+	}
+	return t.AddDate(0, months, 0)
+}
+
 //-----------------Week Functions-----------------
 
-// WeekStart returns the first day of the week.
+// WeekStart returns the first day of the week (Monday).
 func WeekStart(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -49,6 +66,19 @@ func WeekStart(dt ...time.Time) time.Time {
 		t = time.Now()
 	}
 	start := t.AddDate(0, 0, -int(t.Weekday()))
+	return time.Date(start.Year(), start.Month(), start.Day(), 0, 0, 0, 0, start.Location())
+}
+
+// WeekStartOn returns the first day of the week on the given day.
+// For example, WeekStartOn(time.Sunday) returns the first day of the week (Sunday).
+func WeekStartOn(day time.Weekday, dt ...time.Time) time.Time {
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+	}
+	start := t.AddDate(0, 0, -int(t.Weekday())+int(day))
 	return time.Date(start.Year(), start.Month(), start.Day(), 0, 0, 0, 0, start.Location())
 }
 
@@ -64,14 +94,36 @@ func WeekEnd(dt ...time.Time) time.Time {
 	return time.Date(end.Year(), end.Month(), end.Day(), 23, 59, 59, 999999999, end.Location())
 }
 
-// LastWeek returns the last week's time.Time corresponding to the current time.
-func LastWeek() time.Time {
-	return time.Now().AddDate(0, 0, -7)
+// WeekEndOn returns the last day and the last second of the week on the given day.
+// For example, WeekEndOn(time.Sunday) returns the last day of the week (Sunday).
+func WeekEndOn(day time.Weekday, dt ...time.Time) time.Time {
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+	}
+	end := t.AddDate(0, 0, 6-int(t.Weekday())+int(day))
+	return time.Date(end.Year(), end.Month(), end.Day(), 23, 59, 59, 999999999, end.Location())
 }
 
-// NextWeek returns the next week's time.Time corresponding to the current time.
-func NextWeek() time.Time {
-	return time.Now().AddDate(0, 0, 7)
+// Weeks returns the date of the given number of weeks from the current date.
+// If the value is negative, it will return the date of the previous week.
+// The default value is 1 week, that is the date of the next week from the specified date.
+// The weeks parameter can't be zero. If it is zero, it will panic.
+func Weeks(weeks int, dt ...time.Time) time.Time {
+	if weeks == 0 {
+		panic("Weeks parameter can't be zero")
+	}
+
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+	}
+
+	return t.AddDate(0, 0, weeks*7)
 }
 
 //-----------------Day Functions-----------------
@@ -110,4 +162,19 @@ func Tomorrow() time.Time {
 	return time.Now().AddDate(0, 0, 1)
 }
 
+// Days returns the date of the given number of days from the date provided,
+// If the date is not provided, it will return the date of the given number of days from the current date.
+// If the days parameter is 0 it will panic.
+func Days(days int, dt ...time.Time) time.Time {
+	if days == 0 {
+		panic("Days parameter can't be zero")
+	}
 
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+	}
+	return t.AddDate(0, 0, days)
+}
