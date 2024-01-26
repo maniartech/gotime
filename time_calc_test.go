@@ -91,3 +91,10 @@ func TestEarliest(t *testing.T) {
 	assert.Equal(t, expected, result)
 
 }
+
+func TestTruncateTime(t *testing.T) {
+	now := time.Now()
+	expected := trunccateSecond(time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()))
+	result := trunccateSecond(temporal.TruncateTime(now))
+	assert.Equal(t, expected, result)
+}

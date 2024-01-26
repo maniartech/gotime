@@ -59,3 +59,14 @@ func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time {
 
 	return time.UnixMilli(min)
 }
+
+// TruncateTime truncates the time part of the given date. It returns
+// the tructed date.
+func TruncateTime(date time.Time) time.Time {
+	return time.Date(
+		date.Year(), date.Month(), date.Day(),
+		0, 0, 0, 0,
+		date.Location(),
+	)
+}
+
