@@ -118,3 +118,22 @@ func TestWorkDay(t *testing.T) {
 	assert.Equal(t, expectedDate, functionDate)
 
 }
+
+func TestNetWorkdays(t *testing.T) {
+	startDay := time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
+	endDay := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
+	workingDays := [7]bool{false, true, true, true, true, true, false}
+	holidays := []time.Time{
+		time.Date(2024, 1, 3, 0, 0, 0, 0, time.UTC),
+		time.Date(2024, 1, 2, 0, 0, 0, 0, time.UTC),
+		time.Date(2022, 1, 4, 0, 0, 0, 0, time.UTC),
+	}
+
+	expectedDays := 8
+	functionDays := temporal.NetWorkdays(startDay, endDay, workingDays)
+	assert.Equal(t, expectedDays, functionDays)
+
+	expectedDays = 6
+	functionDays = temporal.NetWorkdays(startDay, endDay, workingDays, holidays...)
+	assert.Equal(t, expectedDays, functionDays)
+}

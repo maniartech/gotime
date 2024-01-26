@@ -119,3 +119,44 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 
 	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour)
 }
+
+func NetWorkdays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) int {
+	startDateSerial := DateValue(startDate)
+	endDateSerial := DateValue(endDate)
+	weekDay := startDate.Weekday()
+
+	holidaysSerial := make([]int, 0, len(holidays))
+	for _, holiday := range holidays {
+		datevalue := DateValue(holiday)
+		if datevalue < startDateSerial || datevalue > endDateSerial {
+			continue
+		}
+		holidaysSerial = append(holidaysSerial, datevalue)
+	}
+
+	sort.Slice(holidaysSerial, func(i, j int) bool {
+		return holidaysSerial[i] < holidaysSerial[j]
+	})
+
+	days := 0
+	dayCounter := startDateSerial
+	for dayCounter <= endDateSerial {
+		dayCounter++
+		weekDay = (weekDay + 1) % 7
+		if !workingDays[weekDay] {
+			continue
+		}
+		// Removing the holidays
+		for _, holiday := range holidaysSerial {
+			if dayCounter == holiday {
+				holidaysSerial = holidaysSerial[1:]
+				days--
+				break
+
+			}
+		}
+		days++
+	}
+
+	return days
+}
