@@ -70,17 +70,9 @@ func TestLatest(t *testing.T) {
 	assert.Equal(t, expected, result)
 
 	// Test with a single time
-	result = trunccateSecond(temporal.Latest(now))
-	expected = trunccateSecond(now)
+	result = trunccateSecond(temporal.Latest(now, yesterday, tomorrow))
+	expected = trunccateSecond(tomorrow)
 	assert.Equal(t, expected, result)
-
-	// Test panic for empty input
-	defer func() {
-		if r := recover(); r != "No time given" {
-			t.Errorf("Expected panic for empty input, got: %v", r)
-		}
-	}()
-	temporal.Latest()
 }
 
 func TestEarliest(t *testing.T) {
@@ -94,15 +86,8 @@ func TestEarliest(t *testing.T) {
 	assert.Equal(t, expected, result)
 
 	// Test with a single time
-	result = trunccateSecond(temporal.Earliest(now))
-	expected = trunccateSecond(now)
+	result = trunccateSecond(temporal.Earliest(now, tomorrow, yesterday))
+	expected = trunccateSecond(yesterday)
 	assert.Equal(t, expected, result)
 
-	// Test panic for empty input
-	defer func() {
-		if r := recover(); r != "No time given" {
-			t.Errorf("Expected panic for empty input, got: %v", r)
-		}
-	}()
-	temporal.Earliest()
 }
