@@ -52,8 +52,8 @@ func TestYear(t *testing.T) {
 		assert.Equal(t, expectedDate, functionDate)
 	}
 
-	expectedDate = truccateSecond(now.AddDate(1, 0, 0))
-	functionDate = truccateSecond(temporal.Years(1))
+	expectedDate = trunccateSecond(now.AddDate(1, 0, 0))
+	functionDate = trunccateSecond(temporal.Years(1))
 	assert.Equal(t, expectedDate, functionDate)
 
 	assert.Panics(t, func() { temporal.Years(0, fixedDate) })
@@ -106,15 +106,15 @@ func TestMonth(t *testing.T) {
 		assert.Equal(t, expectedDate, functionDate)
 	}
 
-	expectedDate = truccateSecond(now.AddDate(0, 1, 0))
-	functionDate = truccateSecond(temporal.Months(1))
+	expectedDate = trunccateSecond(now.AddDate(0, 1, 0))
+	functionDate = trunccateSecond(temporal.Months(1))
 	assert.Equal(t, expectedDate, functionDate)
 
 	assert.Panics(t, func() { temporal.Months(0, fixedDate) })
 
 }
 
-func truccateSecond(t time.Time) time.Time {
+func trunccateSecond(t time.Time) time.Time {
 	return t.Truncate(time.Second)
 }
 
@@ -126,8 +126,8 @@ func TestWeek(t *testing.T) {
 	assert.Equal(t, expectedDate, functionDate)
 
 	now := time.Now()
-	expectedDate = truccateSecond(time.Date(now.Year(), now.Month(), now.Day()-int(now.Weekday()), 0, 0, 0, 0, time.Local))
-	functionDate = truccateSecond(temporal.WeekStart())
+	expectedDate = trunccateSecond(time.Date(now.Year(), now.Month(), now.Day()-int(now.Weekday()), 0, 0, 0, 0, time.Local))
+	functionDate = trunccateSecond(temporal.WeekStart())
 	assert.Equal(t, expectedDate, functionDate)
 
 	// WeekEnd
@@ -162,8 +162,8 @@ func TestWeek(t *testing.T) {
 		assert.Equal(t, expectedDate, functionDate)
 	}
 
-	expectedDate = truccateSecond(now.AddDate(0, 0, 7))
-	functionDate = truccateSecond(temporal.Weeks(1))
+	expectedDate = trunccateSecond(now.AddDate(0, 0, 7))
+	functionDate = trunccateSecond(temporal.Weeks(1))
 
 	assert.Equal(t, expectedDate, functionDate)
 
@@ -187,8 +187,8 @@ func TestWeek(t *testing.T) {
 
 	now = time.Now()
 
-	expectedDate = truccateSecond(time.Date(now.Year(), now.Month(), now.Day()-int(now.Weekday())+1, 0, 0, 0, 0, time.Local))
-	functionDate = truccateSecond(temporal.WeekStartOn(time.Monday))
+	expectedDate = trunccateSecond(time.Date(now.Year(), now.Month(), now.Day()-int(now.Weekday())+1, 0, 0, 0, 0, time.Local))
+	functionDate = trunccateSecond(temporal.WeekStartOn(time.Monday))
 
 	assert.Equal(t, expectedDate, functionDate)
 
@@ -255,8 +255,8 @@ func TestDay(t *testing.T) {
 		assert.Equal(t, expectedDate, functionDate)
 	}
 
-	expectedDate = truccateSecond(now.AddDate(0, 0, 1))
-	functionDate = truccateSecond(temporal.Days(1))
+	expectedDate = trunccateSecond(now.AddDate(0, 0, 1))
+	functionDate = trunccateSecond(temporal.Days(1))
 
 	assert.Equal(t, expectedDate, functionDate)
 

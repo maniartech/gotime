@@ -82,18 +82,6 @@ func MonthShortName(d time.Time) string {
 // 	return d.Nanosecond() / 1000
 // }
 
-// Diff returns the difference between the given time.Time and the current time.Time in the given unit
-func Diff(d, t time.Time, unit time.Duration, rounded ...bool) float64 {
-	isRounded := false
-	if len(rounded) > 0 {
-		isRounded = rounded[0]
-	}
-
-	if isRounded {
-		return math.Round(float64(d.Sub(t) / unit))
-	}
-	return float64(d.Sub(t) / unit)
-}
 
 // Date().Monday(weeks) returns the time.Time of the current week's Monday
 // weeks is the number of weeks to add to the current week
