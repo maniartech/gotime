@@ -2,17 +2,17 @@ package temporal
 
 import (
 	"math"
+	"sort"
 	"time"
 )
 
-func DateValue(date time.Time) float64 {
-	var val time.Time = time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC)
+func DateValue(date time.Time) int {
 
-	val = time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
+	val := time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
 
 	// Converting the time.Time form to a serial number starting from 1/1/1900
 	diff := val.Sub(time.Date(1900, 1, 1, 0, 0, 0, 0, date.Location())).Hours()
-	return float64(diff/24) + 2
+	return int(diff/24) + 2
 }
 
 // Diff returns the difference between the given time.Time and the current time.Time in the given unit
@@ -80,17 +80,22 @@ func TruncateTime(date time.Time) time.Time {
 	)
 }
 
-func WorkDay(startDate time.Time, days float64, workingDays [7]bool, holidays ...time.Time) time.Time {
+func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) time.Time {
 	finalDateSerial := DateValue(startDate)
 	weekDay := startDate.Weekday()
 
-	// truncating the days to get the integer part
-	days = float64(int(days))
-
-	holidaysSerial := make([]float64, len(holidays))
-	for i, holiday := range holidays {
-		holidaysSerial[i] = DateValue(holiday)
+	holidaysSerial := make([]int, 0, len(holidays))
+	for _, holiday := range holidays {
+		datevalue := DateValue(holiday)
+		if datevalue < finalDateSerial {
+			continue
+		}
+		holidaysSerial = append(holidaysSerial, datevalue)
 	}
+
+	sort.Slice(holidaysSerial, func(i, j int) bool {
+		return holidaysSerial[i] < holidaysSerial[j]
+	})
 
 	for days > 0 {
 		finalDateSerial++
@@ -103,14 +108,13 @@ func WorkDay(startDate time.Time, days float64, workingDays [7]bool, holidays ..
 			if finalDateSerial == holiday {
 				holidaysSerial = holidaysSerial[1:]
 				found = true
-			}
-			if found {
 				break
 			}
 		}
-		if !found {
-			days--
+		if found {
+			continue
 		}
+		days--
 	}
 
 	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour)

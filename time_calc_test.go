@@ -98,3 +98,23 @@ func TestTruncateTime(t *testing.T) {
 	result := trunccateSecond(temporal.TruncateTime(now))
 	assert.Equal(t, expected, result)
 }
+
+func TestWorkDay(t *testing.T) {
+	startDay := time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
+	workingDays := [7]bool{false, true, true, true, true, true, false}
+	holidays := []time.Time{
+		time.Date(2024, 1, 3, 0, 0, 0, 0, time.UTC),
+		time.Date(2024, 1, 2, 0, 0, 0, 0, time.UTC),
+		time.Date(2022, 1, 4, 0, 0, 0, 0, time.UTC),
+	}
+	days := 7
+
+	expectedDate := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
+	functionDate := temporal.WorkDay(startDay, days, workingDays)
+	assert.Equal(t, expectedDate, functionDate)
+
+	expectedDate = time.Date(2024, 1, 12, 0, 0, 0, 0, time.UTC)
+	functionDate = temporal.WorkDay(startDay, days, workingDays, holidays...)
+	assert.Equal(t, expectedDate, functionDate)
+
+}
