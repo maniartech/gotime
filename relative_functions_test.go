@@ -52,8 +52,8 @@ func TestYear(t *testing.T) {
 		assert.Equal(t, expectedDate, functionDate)
 	}
 
-	expectedDate = truccateMillisecond(now.AddDate(1, 0, 0))
-	functionDate = truccateMillisecond(temporal.Years(1))
+	expectedDate = truccateSecond(now.AddDate(1, 0, 0))
+	functionDate = truccateSecond(temporal.Years(1))
 	assert.Equal(t, expectedDate, functionDate)
 
 	assert.Panics(t, func() { temporal.Years(0, fixedDate) })
@@ -106,16 +106,16 @@ func TestMonth(t *testing.T) {
 		assert.Equal(t, expectedDate, functionDate)
 	}
 
-	expectedDate = truccateMillisecond(now.AddDate(0, 1, 0))
-	functionDate = truccateMillisecond(temporal.Months(1))
+	expectedDate = truccateSecond(now.AddDate(0, 1, 0))
+	functionDate = truccateSecond(temporal.Months(1))
 	assert.Equal(t, expectedDate, functionDate)
 
 	assert.Panics(t, func() { temporal.Months(0, fixedDate) })
 
 }
 
-func truccateMillisecond(t time.Time) time.Time {
-	return t.Truncate(time.Millisecond)
+func truccateSecond(t time.Time) time.Time {
+	return t.Truncate(time.Second)
 }
 
 func TestWeek(t *testing.T) {
@@ -126,8 +126,8 @@ func TestWeek(t *testing.T) {
 	assert.Equal(t, expectedDate, functionDate)
 
 	now := time.Now()
-	expectedDate = truccateMillisecond(time.Date(now.Year(), now.Month(), now.Day()-int(now.Weekday()), 0, 0, 0, 0, time.Local))
-	functionDate = truccateMillisecond(temporal.WeekStart())
+	expectedDate = truccateSecond(time.Date(now.Year(), now.Month(), now.Day()-int(now.Weekday()), 0, 0, 0, 0, time.Local))
+	functionDate = truccateSecond(temporal.WeekStart())
 	assert.Equal(t, expectedDate, functionDate)
 
 	// WeekEnd
@@ -162,11 +162,104 @@ func TestWeek(t *testing.T) {
 		assert.Equal(t, expectedDate, functionDate)
 	}
 
-	expectedDate = truccateMillisecond(now.AddDate(0, 0, 7))
-	functionDate = truccateMillisecond(temporal.Weeks(1))
+	expectedDate = truccateSecond(now.AddDate(0, 0, 7))
+	functionDate = truccateSecond(temporal.Weeks(1))
 
 	assert.Equal(t, expectedDate, functionDate)
 
 	assert.Panics(t, func() { temporal.Weeks(0, fixedDate) })
+
+	// WeekStartOn
+	expectedDate = time.Date(2023, 12, 31, 0, 0, 0, 0, time.UTC)
+	functionDate = temporal.WeekStartOn(time.Sunday, time.Date(2024, 1, 1, 11, 2, 10, 0, time.UTC))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	expectedDate = time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
+	functionDate = temporal.WeekStartOn(time.Monday, time.Date(2024, 1, 2, 11, 2, 10, 0, time.UTC))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	expectedDate = time.Date(2024, 1, 2, 0, 0, 0, 0, time.UTC)
+	functionDate = temporal.WeekStartOn(time.Tuesday, time.Date(2024, 1, 3, 11, 2, 10, 0, time.UTC))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	now = time.Now()
+
+	expectedDate = truccateSecond(time.Date(now.Year(), now.Month(), now.Day()-int(now.Weekday())+1, 0, 0, 0, 0, time.Local))
+	functionDate = truccateSecond(temporal.WeekStartOn(time.Monday))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	// WeekEndOn
+	expectedDate = time.Date(2024, 1, 6, 23, 59, 59, 999999999, time.UTC)
+	functionDate = temporal.WeekEndOn(time.Sunday, time.Date(2024, 1, 1, 11, 2, 10, 0, time.UTC))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	expectedDate = time.Date(2024, 1, 7, 23, 59, 59, 999999999, time.UTC)
+	functionDate = temporal.WeekEndOn(time.Monday, time.Date(2024, 1, 2, 11, 2, 10, 0, time.UTC))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	now = time.Now()
+
+	expectedDate = time.Date(now.Year(), now.Month(), now.Day()-int(now.Weekday())+7, 23, 59, 59, 999999999, time.Local)
+	functionDate = temporal.WeekEndOn(time.Monday)
+
+	assert.Equal(t, expectedDate, functionDate)
+}
+
+func TestDay(t *testing.T) {
+	// DayStart
+	expectedDate := time.Date(2023, 1, 1, 0, 0, 0, 0, time.UTC)
+	functionDate := temporal.DayStart(time.Date(2023, 1, 1, 11, 2, 10, 0, time.UTC))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	now := time.Now()
+	expectedDate = time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
+	functionDate = temporal.DayStart()
+	assert.Equal(t, expectedDate, functionDate)
+
+	// DayEnd
+	expectedDate = time.Date(2023, 1, 1, 23, 59, 59, 999999999, time.UTC)
+	functionDate = temporal.DayEnd(time.Date(2023, 1, 1, 11, 2, 10, 0, time.UTC))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	expectedDate = time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 999999999, time.Local)
+	functionDate = temporal.DayEnd()
+	assert.Equal(t, expectedDate, functionDate)
+
+	// Yesterday
+	expectedDate = time.Now().AddDate(0, 0, -1)
+	functionDate = temporal.Yesterday()
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	// Tomorrow
+	expectedDate = time.Now().AddDate(0, 0, 1)
+	functionDate = temporal.Tomorrow()
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	// Days
+	testRange := []int{-3, -2, -1, 1, 2, 3}
+	fixedDate := time.Date(2022, 1, 1, 0, 0, 0, 0, time.UTC)
+	for _, day := range testRange {
+		expectedDate := fixedDate.AddDate(0, 0, day)
+		functionDate := temporal.Days(day, fixedDate)
+
+		assert.Equal(t, expectedDate, functionDate)
+	}
+
+	expectedDate = truccateSecond(now.AddDate(0, 0, 1))
+	functionDate = truccateSecond(temporal.Days(1))
+
+	assert.Equal(t, expectedDate, functionDate)
+
+	assert.Panics(t, func() { temporal.Days(0, fixedDate) })
 
 }
