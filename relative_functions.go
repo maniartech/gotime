@@ -155,6 +155,16 @@ func WeekEndOn(day time.Weekday, dt ...time.Time) time.Time {
 	return time.Date(end.Year(), end.Month(), end.Day(), 23, 59, 59, 999999999, end.Location())
 }
 
+// LastWeek returns the last week's time.Time corresponding to the current time.
+func LastWeek() time.Time {
+	return time.Now().AddDate(0, 0, -7)
+}
+
+// NextWeek returns the next week's time.Time corresponding to the current time.
+func NextWeek() time.Time {
+	return time.Now().AddDate(0, 0, 7)
+}
+
 // Weeks returns the date of the given number of weeks from the current date.
 // If the value is negative, it will return the date of the previous week.
 // The default value is 1 week, that is the date of the next week from the specified date.
