@@ -2,6 +2,54 @@ package temporal
 
 import "time"
 
+//-----------------Year Functions-----------------
+func YearStart(dt ...time.Time) time.Time {
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+
+	}
+	start := time.Date(t.Year(), 1, 1, 0, 0, 0, 0, t.Location())
+	return start
+}
+
+func YearEnd(dt ...time.Time) time.Time {
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+
+	}
+	end := time.Date(t.Year(), 12, 31, 23, 59, 59, 999999999, t.Location())
+	return end
+}
+
+func Years(years int, dt ...time.Time) time.Time {
+	if years == 0 {
+		panic("Years parameter can't be zero")
+	}
+
+	var t time.Time
+	if len(dt) > 0 {
+		t = dt[0]
+	} else {
+		t = time.Now()
+
+	}
+	return t.AddDate(years, 0, 0)
+}
+
+func LastYear() time.Time {
+	return time.Now().AddDate(-1, 0, 0)
+}
+
+func NextYear() time.Time {
+	return time.Now().AddDate(1, 0, 0)
+}
+
 //-----------------Month Functions-----------------
 
 // MonthStart returns the first day of the month.
@@ -29,7 +77,7 @@ func MonthEnd(dt ...time.Time) time.Time {
 }
 
 // LastMonth returns the last month's time.Time corresponding to the current time.
-func LastMonth(dt ...time.Time) time.Time {
+func LastMonth() time.Time {
 	return time.Now().AddDate(0, -1, 0)
 }
 
