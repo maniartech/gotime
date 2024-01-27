@@ -6,6 +6,15 @@ import (
 	"time"
 )
 
+// DateValue returns the serial number of the given time.Time
+//
+// # Arguments
+//
+// date: (time.Time) The date to be converted to serial number
+//
+// # Note
+//
+// The serial number is the number of days from 1/1/1900
 func DateValue(date time.Time) int {
 
 	val := time.Date(date.Year(), date.Month(), date.Day(), 0, 0, 0, 0, time.UTC)
@@ -28,7 +37,15 @@ func Diff(t1, t2 time.Time, unit time.Duration, rounded ...bool) float64 {
 	return float64(t1.Sub(t2) / unit)
 }
 
-// Latest returns the latest time from the given time.Time
+// Latest returns the latest time from the given time.Time list
+//
+// # Arguments
+//
+// t1: (time.Time) The first time to be compared
+//
+// t2: (time.Time) The second time to be compared
+//
+// tn: (time.Time) The rest of the times to be compared
 func Latest(t1, t2 time.Time, tn ...time.Time) time.Time {
 
 	timeStamps := make([]int64, len(tn)+2)
@@ -49,7 +66,15 @@ func Latest(t1, t2 time.Time, tn ...time.Time) time.Time {
 	return time.UnixMilli(max)
 }
 
-// Earliest returns the earliest time from the given time.Time
+// Earliest returns the earliest time from the given time.Time list
+//
+// # Arguments
+//
+// t1: (time.Time) The first time to be compared
+//
+// t2: (time.Time) The second time to be compared
+//
+// tn: (time.Time) The rest of the times to be compared
 func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time {
 
 	timeStamps := make([]int64, len(tn)+2)
@@ -72,6 +97,10 @@ func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time {
 
 // TruncateTime truncates the time part of the given date. It returns
 // the tructed date.
+//
+// # Arguments
+//
+// date: (time.Time) The date to be truncated
 func TruncateTime(date time.Time) time.Time {
 	return time.Date(
 		date.Year(), date.Month(), date.Day(),
@@ -80,6 +109,21 @@ func TruncateTime(date time.Time) time.Time {
 	)
 }
 
+// WorkDay returns the date after the given number of working days
+//
+// # Arguments
+//
+// startDate: (time.Time) The date to start from
+//
+// days: (int) The number of working days to add
+//
+// workingDays: ([7]bool) The working days of the week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
+//
+// holidays: (...time.Time) The holidays to be excluded
+//
+// # Note
+//
+// The working days are the days that are not holidays and are in the working days of the week
 func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) time.Time {
 	finalDateSerial := DateValue(startDate)
 	weekDay := startDate.Weekday()
@@ -120,6 +164,18 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour)
 }
 
+
+// NetWorkdays returns the number of working days between the given dates
+//
+// # Arguments
+//
+// startDate: (time.Time) The date to start from
+//
+// endDate: (time.Time) The date to end at
+//
+// workingDays: ([7]bool) The working days of the week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
+//
+// holidays: (...time.Time) The holidays to be excluded
 func NetWorkdays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) int {
 	startDateSerial := DateValue(startDate)
 	endDateSerial := DateValue(endDate)

@@ -3,6 +3,15 @@ package temporal
 import "time"
 
 //-----------------Year Functions-----------------
+// YearStart returns the first day of the year.
+//
+// # Arguments
+//
+// dt: (time.Time) The date to be used to calculate the first day of the year.
+//
+// # Note
+//
+// If the date is not provided, it will return the first day of the year from the current date.
 func YearStart(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -15,6 +24,15 @@ func YearStart(dt ...time.Time) time.Time {
 	return start
 }
 
+// YearEnd returns the last day and the last second of the year.
+//
+// # Arguments
+//
+// dt: (time.Time) The date to be used to calculate the last day of the year.
+//
+// # Note
+//
+// If the date is not provided, it will return the last day of the year from the current date.
 func YearEnd(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -27,6 +45,18 @@ func YearEnd(dt ...time.Time) time.Time {
 	return end
 }
 
+// Years returns the date of the given number of years from the date provided,
+// If the date is not provided, it will return the date of the given number of years from the current date.
+//
+// # Arguments
+//
+// years: (int) The number of years to be added to the date.
+//
+// dt: (time.Time) The date to be used to calculate the date of the given number of year. (Only takes the first date if multiple dates are provided)
+//
+// # Note
+//
+// If the years parameter is 0 it will panic.
 func Years(years int, dt ...time.Time) time.Time {
 	if years == 0 {
 		panic("Years parameter can't be zero")
@@ -42,10 +72,12 @@ func Years(years int, dt ...time.Time) time.Time {
 	return t.AddDate(years, 0, 0)
 }
 
+// LastYear returns the last year's time.Time corresponding to the current time.
 func LastYear() time.Time {
 	return time.Now().AddDate(-1, 0, 0)
 }
 
+// NextYear returns the next year's time.Time corresponding to the current time.
 func NextYear() time.Time {
 	return time.Now().AddDate(1, 0, 0)
 }
@@ -53,6 +85,14 @@ func NextYear() time.Time {
 //-----------------Month Functions-----------------
 
 // MonthStart returns the first day of the month.
+//
+// # Arguments
+//
+// dt: (time.Time) The date to be used to calculate the first day of the month.
+//
+// # Note
+//
+// If the date is not provided, it will return the first day of the month from the current date.
 func MonthStart(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -65,6 +105,14 @@ func MonthStart(dt ...time.Time) time.Time {
 }
 
 // MonthEnd returns the last day and the last second of the month.
+//
+// # Arguments
+//
+// dt: (time.Time) The date to be used to calculate the last day of the month.
+//
+// # Note
+//
+// If the date is not provided, it will return the last day of the month from the current date.
 func MonthEnd(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -87,7 +135,15 @@ func NextMonth() time.Time {
 }
 
 // Months returns the date of the given number of months from the date provided,
-// If the date is not provided, it will return the date of the given number of months from the current date.
+//
+// # Arguments
+//
+// months: (int) The number of months to be added to the date.
+//
+// dt: (time.Time) The date to be used to calculate the date of the given number of months. (Only takes the first date if multiple dates are provided)
+//
+// # Note
+//
 // If the months parameter is 0 it will panic.
 func Months(months int, dt ...time.Time) time.Time {
 	if months == 0 {
@@ -106,6 +162,14 @@ func Months(months int, dt ...time.Time) time.Time {
 //-----------------Week Functions-----------------
 
 // WeekStart returns the first day of the week (Monday).
+//
+// # Arguments
+//
+// dt: (time.Time) The date to be used to calculate the first day of the week.
+//
+// # Note
+//
+// If the date is not provided, it will return the first day of the week from the current date.
 func WeekStart(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -118,7 +182,16 @@ func WeekStart(dt ...time.Time) time.Time {
 }
 
 // WeekStartOn returns the first day of the week on the given day.
-// For example, WeekStartOn(time.Sunday) returns the first day of the week (Sunday).
+//
+// # Arguments
+//
+// day: (time.Weekday) The day to be used to calculate the first day of the week.
+//
+// dt: (time.Time) The date to be used to calculate the first day of the week.
+//
+// # Note
+//
+// If the date is not provided, it will return the first day of the week from the current date.
 func WeekStartOn(day time.Weekday, dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -131,6 +204,14 @@ func WeekStartOn(day time.Weekday, dt ...time.Time) time.Time {
 }
 
 // WeekEnd returns the last day and the last second of the week.
+//
+// # Arguments
+//
+// dt: (time.Time) The date to be used to calculate the last day of the week.
+//
+// # Note
+//
+// If the date is not provided, it will return the last day of the week from the current date.
 func WeekEnd(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -144,6 +225,16 @@ func WeekEnd(dt ...time.Time) time.Time {
 
 // WeekEndOn returns the last day and the last second of the week on the given day.
 // For example, WeekEndOn(time.Sunday) returns the last day of the week (Sunday).
+//
+// # Arguments
+//
+// day: (time.Weekday) The day to be used to calculate the last day of the week.
+//
+// dt: (time.Time) The date to be used to calculate the last day of the week.
+//
+// # Note
+//
+// If the date is not provided, it will return the last day of the week from the current date.
 func WeekEndOn(day time.Weekday, dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -167,8 +258,16 @@ func NextWeek() time.Time {
 
 // Weeks returns the date of the given number of weeks from the current date.
 // If the value is negative, it will return the date of the previous week.
-// The default value is 1 week, that is the date of the next week from the specified date.
-// The weeks parameter can't be zero. If it is zero, it will panic.
+//
+// # Arguments
+//
+// weeks: (int) The number of weeks to be added to the date.
+//
+// dt: (time.Time) The date to be used to calculate the date of the given number of weeks. (Only takes the first date if multiple dates are provided)
+//
+// # Note
+//
+// If the weeks parameter is 0 it will panic.
 func Weeks(weeks int, dt ...time.Time) time.Time {
 	if weeks == 0 {
 		panic("Weeks parameter can't be zero")
@@ -186,7 +285,15 @@ func Weeks(weeks int, dt ...time.Time) time.Time {
 
 //-----------------Day Functions-----------------
 
-// DayStart returns the first second of the day.
+// DayStart returns the start of the day.
+//
+// # Arguments
+//
+// dt: (time.Time) The date to be used to calculate the start of the day.
+//
+// # Note
+//
+// If the date is not provided, it will return the start of the day from the current date.
 func DayStart(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -199,6 +306,14 @@ func DayStart(dt ...time.Time) time.Time {
 }
 
 // DayEnd returns the last second of the day.
+//
+// # Arguments
+//
+// dt: (time.Time) The date to be used to calculate the last second of the day.
+//
+// # Note
+//
+// If the date is not provided, it will return the last second of the day from the current date.
 func DayEnd(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -221,7 +336,15 @@ func Tomorrow() time.Time {
 }
 
 // Days returns the date of the given number of days from the date provided,
-// If the date is not provided, it will return the date of the given number of days from the current date.
+//
+// # Arguments
+//
+// days: (int) The number of days to be added to the date.
+//
+// dt: (time.Time) The date to be used to calculate the date of the given number of days. (Only takes the first date if multiple dates are provided)
+//
+// # Note
+//
 // If the days parameter is 0 it will panic.
 func Days(days int, dt ...time.Time) time.Time {
 	if days == 0 {
