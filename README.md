@@ -30,13 +30,12 @@ features are either missing or not easy to use in the standard time package.
 It provides a comprehensive range of specifiers for all your date and time
 formatting needs, making it an indispensable tool for Go developers.
 
-- 100% test coverage
-- TinyGO compatible
-- No external dependencies
-- Fully utilises the standard time package and does not reinvent the wheel
-- Simple, intuitive and hackable API
-- Fully documented
-- Performance focused
+- [x] 100% test coverage 👌🏼
+- [x] No external dependencies  👌🏼
+- [x] Fully utilises the standard time package and does not reinvent the wheel 👌🏼
+- [x] Simple, intuitive and hackable API 👌🏼
+- [x] Fully documented 👌🏼
+- [x] Performance focused 👌🏼
 
 ## Installation
 
@@ -82,9 +81,6 @@ s := temporal.Format(t, "yyyy-mm-dd")
 s, err := temporal.Convert("2012-01-01", "yyyy-mm-dd", "dd/mm/yyyy")
 
 // Some handy date finders
-temporal.StartOfDay() // Returns today's date at 00:00:00.000000000
-temporal.EndOfDay()      // Returns today's date at 23:59:59.999999999
-
 temporal.Yesterday()  // Returns yesterday's date
 temporal.Yesterday(
   temporal.Yesterday(),
