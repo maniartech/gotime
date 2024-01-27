@@ -10,7 +10,7 @@ import (
 )
 
 func TestConvertLayoutA(t *testing.T) {
-	c := idf.Format(time.Now(), "dd-mm-yyyyThhh:ii:ss.000000000000 zzoo")
+	// c := idf.Format(time.Now(), "dd-mm-yyyyThhh:ii:ss.000000000000 zzoo")
 	fmt.Println(time.Now().Format(time.ANSIC))
 
 	fmt.Println(temporal.TimeAgo(time.Now().Add(time.Second * 24 * 1)))
