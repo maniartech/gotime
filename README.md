@@ -1,50 +1,51 @@
 # temporal (WIP)
 
-A golang library for parsing and parsing, formatting and processing dates and times using simple human-friendly formats such as `yesterday`, `tomorrow`, `dd/mm/yyyy`, etc. The temporal does not aims to be a replacement for the standard time package, but rather addtional facilities to make regular date and time operations such as formatting, parsing, relative time, data range, etc. easier.
+A golang library for parsing and parsing, formatting and processing dates and
+times using simple human-friendly formats such as `yesterday`, `tomorrow`,
+`dd/mm/yyyy`, etc. The temporal does not aims to be a replacement for the
+standard time package, but rather addtional facilities to make regular date
+and time operations such as formatting, parsing, relative time, data range, etc.
+easier.
 
 ## Why Temporal?
 
-### ✔️ Temporal does not reinvent the wheel
+### ✔️ Designed for Practicality
 
-Temporal is built on top of the standard time package. It does not aims to be a replacement for the standard time package, but rather addtional facilities to make regular date and time operations such as formatting, parsing, relative time, data range, etc. easier.
+It provides features are practical and useful in real-world applications. These
+features are either missing or not easy to use in the standard time package.
 
-### ✔️ Temporal is simple, intuitive and hackable
-
-It does not depend on any third-party libraries and is fully compatible with TinyGO. It uses caching to improve performance and to reduce the allocations during formatting, parsing and data format conversion.
-
-### ✔️ Enhances your productivity
-
-It provides features that we developers often need to deal with dates and times. The following is a list of features that Temporal provides.
-
-- [x] Parse dates using simple human-friendly formats such as `yesterday`,
-      `tomorrow`, `dd/mm/yyyy`, etc.
-- [x] Format dates using simple human-friendly formats such as `yesterday`,
-      `tomorrow`, `dd/mm/yyyy`, etc.
+- [x] Parse dates using simple human-friendly formats such as `dd/mm/yyyy`, etc.
+- [x] Format dates using simple human-friendly formats such as `dd/mm/yyyy`, etc.
 - [x] Convert dates from one format to another. For example, `dd/mm/yyyy` to
       `yyyy-mm-dd`.
 - [x] Convert the datetime to relative time such as `1 hour ago`, `2 days ago`,
       etc.
-- [x] Parse and find relative date range. For example, `yesterday`, `today`,
-      `tomorrow`, `this week`, `this month`, `this year`, etc.
-- [ ] Find the start and end of the day, week, month and year.
-- [ ] Provides range of date finder functions
+- [x] Provides range of date finder functions such as `Yesterday()`,
+      `Tomorrow()`, `SoD()`, `EoD()`, etc.
+- [x] Provides range of date time utility functions such as `Latest()`,
+      `Earliest()`, `IsBetween()`, `TruncateDate()`, etc.
 
 ### ✔️ Developer Friendly
 
-It provides a comprehensive range of specifiers for all your date and time formatting needs, making it an indispensable tool for Go developers.
+It provides a comprehensive range of specifiers for all your date and time
+formatting needs, making it an indispensable tool for Go developers.
 
-💯 **100% test coverage** 💯
-
-✨ TinyGO Compatible ✨
+- 100% test coverage
+- TinyGO compatible
+- No external dependencies
+- Fully utilises the standard time package and does not reinvent the wheel
+- Simple, intuitive and hackable API
+- Fully documented
+- Performance focused
 
 ## Installation
 
-Installation is simple. Just run the following command in your terminal to install the temporal package in your project.
+Installation is simple. Just run the following command in your terminal to
+install the temporal package in your project.
 
 ```sh
 go get github.com/maniartech/temporal
 ```
-
 
 ## Usage
 
@@ -52,7 +53,9 @@ The following example shows how to use the temporal package.
 
 ## Date Parsing
 
-Temporal supports parsing of dates using [Intuitive Date Format (IDF)](#intuitive-date-format-idf) . The following example shows how to parse a date in the `dd/mm/yyyy` format.
+Temporal supports parsing of dates using [Intuitive Date Format (IDF)
+](#intuitive-date-format-idf) . The following example shows how to parse a
+date in the `dd/mm/yyyy` format.
 
 ```go
 dt := temporal.Parse("01/01/2020", "dd/mm/yyyy")
@@ -167,36 +170,9 @@ Temporal supports simple, human-friendly date-time formatting. The table below d
 
 ### Built-in Formats
 
-| Layout Name        | Output                                    |
-| ------------------ | ----------------------------------------- |
-| `time.Layout`      | `2006-01-02 15:04:05.999999999 -0700 MST` |
-| `time.ANSIC`       | `Mon Jan  2 15:04:05 2006`               |
-| `time.UnixDate`    | `Mon Jan  2 15:04:05 MST 2006`           |
-| `time.RubyDate`    | `Mon Jan 02 15:04:05 -0700 2006`         |
-| `time.RFC822`      | `02 Jan 06 15:04 MST`                    |
-| `time.RFC822Z`     | `02 Jan 06 15:04 -0700`                  |
-| `time.RFC850`      | `Monday, 02-Jan-06 15:04:05 MST`         |
-| `time.RFC1123`     | `Mon, 02 Jan 2006 15:04:05 MST`          |
-| `time.RFC1123Z`    | `Mon, 02 Jan 2006 15:04:05 -0700`        |
-| `time.RFC3339`     | `2006-01-02T15:04:05Z07:00`              |
-| `time.RFC3339Nano` | `2006-01-02T15:04:05.999999999Z07:00`    |
-| `time.Kitchen`     | `3:04PM`                                 |
+Temporal provides all the built-in formats supported by the standard time package.
+Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC822`,
+`time.RFC822Z`, `time.RFC850`, `time.RFC1123`, `time.RFC1123Z`, `time.RFC3339`,
+`time.RFC3339Nano`, `time.Kitchen`, etc.
 
-### Handy Time Stamps
-
-| Layout Name        | Output                      |
-| ------------------ | --------------------------- |
-| `time.Stamp`       | `Jan  2 15:04:05`           |
-| `time.StampMilli`  | `Jan  2 15:04:05.000`       |
-| `time.StampMicro`  | `Jan  2 15:04:05.000000`    |
-| `time.StampNano`   | `Jan  2 15:04:05.000000000` |
-
-### Additional Date and Time Formats
-
-| Layout Name        | Output                  |
-| ------------------ | ----------------------- |
-| `time.DateTime`    | `2006-01-02 15:04:05`   |
-| `time.DateOnly`    | `2006-01-02`            |
-| `time.TimeOnly`    | `15:04:05`              |
-
-Temporal provides a comprehensive range of specifiers for all your date and time formatting needs, making it an indispensable tool for Go developers.
+For more information, see the [time package documentation](https://golang.org/pkg/time/#pkg-constants).
