@@ -92,6 +92,32 @@ func TestEarliest(t *testing.T) {
 
 }
 
+func TestIsBetween(t *testing.T) {
+	now := time.Now()
+	yesterday := now.AddDate(0, 0, -1)
+	tomorrow := now.AddDate(0, 0, 1)
+
+	// Test with multiple times
+	result := temporal.IsBetween(now, yesterday, tomorrow)
+	expected := true
+	assert.Equal(t, expected, result)
+
+	// Test with a single time
+	result = temporal.IsBetween(now, tomorrow, tomorrow)
+	expected = false
+	assert.Equal(t, expected, result)
+
+	// Test with a single time
+	result = temporal.IsBetween(now, now, now)
+	expected = true
+	assert.Equal(t, expected, result)
+
+	// Test with a single time
+	result = temporal.IsBetween(now, tomorrow, yesterday)
+	expected = true
+	assert.Equal(t, expected, result)
+}
+
 func TestTruncateTime(t *testing.T) {
 	now := time.Now()
 	expected := trunccateSecond(time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()))
