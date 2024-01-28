@@ -2,6 +2,7 @@ package idf
 
 import (
 	"errors"
+	"fmt"
 	"strings"
 	"time"
 
@@ -164,7 +165,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 		conv, ok := conversions[string(c)]
 		if !ok {
 			// Not a valid format character, add as is
-			to.WriteString(string(c))
+			to.WriteString(string(f[i]))
 			i++
 			continue
 		}
@@ -211,6 +212,8 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 	}
 
 	converted = append(converted.([]string), finalConvert)
+
+	fmt.Println(converted)
 
 	cache.Set(f, converted)
 	return converted, nil
