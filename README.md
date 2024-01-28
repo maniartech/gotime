@@ -62,7 +62,7 @@ dt := temporal.Parse("01/01/2020", "dd/mm/yyyy")
 // You can also specify the timezone
 dt2 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.UTC)
 dt3 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.Local)
-dt4 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.FixedZone("IST", 5*60*60))
+dt4 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.FixedZone("IST", 5.5*60*60))
 ```
 
 ```go
