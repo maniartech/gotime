@@ -1,4 +1,4 @@
-# temporal (WIP)
+# temporal
 
 A golang library for parsing and parsing, formatting and processing dates and
 times using simple human-friendly formats such as `yesterday`, `tomorrow`,
@@ -31,6 +31,7 @@ It provides a comprehensive range of specifiers for all your date and time
 formatting needs, making it an indispensable tool for Go developers.
 
 - [x] 100% test coverage 👌🏼
+- [x] TinyGo compatible 👌🏼
 - [x] No external dependencies  👌🏼
 - [x] Fully utilises the standard time package and does not reinvent the wheel 👌🏼
 - [x] Simple, intuitive and hackable API 👌🏼
@@ -82,9 +83,6 @@ s, err := temporal.Convert("2012-01-01", "yyyy-mm-dd", "dd/mm/yyyy")
 
 // Some handy date finders
 temporal.Yesterday()  // Returns yesterday's date
-temporal.Yesterday(
-  temporal.Yesterday(),
-)                     // Returns day before yesterday's date
 
 temporal.Tomorrow()   // Returns tomorrow's date
 
@@ -173,3 +171,25 @@ Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC
 `time.RFC3339Nano`, `time.Kitchen`, etc.
 
 For more information, see the [time package documentation](https://golang.org/pkg/time/#pkg-constants).
+
+### Code Clean up - WIP ⚠️
+
+While the temporal is fully functional, and API has been finalized thoroughly
+tested and documented, and can be used in production, there are few area that
+needs to be cleaned up. Such as:
+
+- [ ] Some of the source code and tests are not well organized
+- [ ] In some cases, documentation needs to be improved
+- [ ] Uncomented code in the source files etc
+
+> We shall be working on these issues in the coming days. If you find any issues
+or have any suggestions, please feel free to open an issue or submit a pull
+request.
+
+## Contributing
+
+Contributions to `temporal` are welcome. Please ensure that your code adheres to the existing style and includes tests covering new features or bug fixes.
+
+## License
+
+`temporal` is [MIT licensed](./LICENSE).
