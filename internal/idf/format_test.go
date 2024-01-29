@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/maniartech/temporal/internal/idf"
+	"github.com/maniartech/temporal/internal/utils"
 )
 
 func TestTrialForma(t *testing.T) {
@@ -16,9 +17,7 @@ func TestFormat(t *testing.T) {
 	// Converting time.Time to Go format.
 	date1 := time.Date(12, 12, 2012, 0, 0, 0, 0, time.UTC)
 	date1Formatted := idf.Format(date1, "yyyy/mm/dd")
-	if date1Formatted != "0018/06/04" {
-		t.Errorf("Expected 0018/06/04, got, %s", date1Formatted)
-	}
+	utils.AssertEqual(t, "0018/06/04", date1Formatted)
 
 }
 

@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/maniartech/temporal"
-	"github.com/stretchr/testify/assert"
+	"github.com/maniartech/temporal/internal/utils"
 )
 
 func TestDiff(t *testing.T) {
@@ -67,12 +67,12 @@ func TestLatest(t *testing.T) {
 	// Test with multiple times
 	result := trunccateSecond(temporal.Latest(now, yesterday, tomorrow))
 	expected := trunccateSecond(tomorrow)
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
 	result = trunccateSecond(temporal.Latest(now, yesterday, tomorrow))
 	expected = trunccateSecond(tomorrow)
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 }
 
 func TestEarliest(t *testing.T) {
@@ -83,12 +83,12 @@ func TestEarliest(t *testing.T) {
 	// Test with multiple times
 	result := trunccateSecond(temporal.Earliest(now, yesterday, tomorrow))
 	expected := trunccateSecond(yesterday)
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
 	result = trunccateSecond(temporal.Earliest(now, tomorrow, yesterday))
 	expected = trunccateSecond(yesterday)
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 
 }
 
@@ -100,29 +100,29 @@ func TestIsBetween(t *testing.T) {
 	// Test with multiple times
 	result := temporal.IsBetween(now, yesterday, tomorrow)
 	expected := true
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
 	result = temporal.IsBetween(now, tomorrow, tomorrow)
 	expected = false
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
 	result = temporal.IsBetween(now, now, now)
 	expected = true
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
 	result = temporal.IsBetween(now, tomorrow, yesterday)
 	expected = true
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 }
 
 func TestTruncateTime(t *testing.T) {
 	now := time.Now()
 	expected := trunccateSecond(time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()))
 	result := trunccateSecond(temporal.TruncateTime(now))
-	assert.Equal(t, expected, result)
+	utils.AssertEqual(t, expected, result)
 }
 
 func TestWorkDay(t *testing.T) {
@@ -137,11 +137,11 @@ func TestWorkDay(t *testing.T) {
 
 	expectedDate := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
 	functionDate := temporal.WorkDay(startDay, days, workingDays)
-	assert.Equal(t, expectedDate, functionDate)
+	utils.AssertEqual(t, expectedDate, functionDate)
 
 	expectedDate = time.Date(2024, 1, 12, 0, 0, 0, 0, time.UTC)
 	functionDate = temporal.WorkDay(startDay, days, workingDays, holidays...)
-	assert.Equal(t, expectedDate, functionDate)
+	utils.AssertEqual(t, expectedDate, functionDate)
 
 }
 
@@ -157,9 +157,9 @@ func TestNetWorkdays(t *testing.T) {
 
 	expectedDays := 8
 	functionDays := temporal.NetWorkdays(startDay, endDay, workingDays)
-	assert.Equal(t, expectedDays, functionDays)
+	utils.AssertEqual(t, expectedDays, functionDays)
 
 	expectedDays = 6
 	functionDays = temporal.NetWorkdays(startDay, endDay, workingDays, holidays...)
-	assert.Equal(t, expectedDays, functionDays)
+	utils.AssertEqual(t, expectedDays, functionDays)
 }

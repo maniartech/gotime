@@ -7,6 +7,7 @@ import (
 
 	"github.com/maniartech/temporal"
 	"github.com/maniartech/temporal/internal/idf"
+	"github.com/maniartech/temporal/internal/utils"
 )
 
 func TestConvertLayoutA(t *testing.T) {
@@ -18,20 +19,14 @@ func TestConvertLayoutA(t *testing.T) {
 
 func TestTZ(t *testing.T) {
 	date := idf.Format(time.Now(), "yyyy-mm-ddThh:ii:aa:ss.000000000TZZ")
-
 	fmt.Println(date)
 }
 
 func TestConvert(t *testing.T) {
 	date, err := idf.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss")
 
-	if err != nil {
-		t.Error("Expected no error, got ", err)
-	}
-
-	if date != "2012-06-03 12:00:AM:00" {
-		t.Error("Expected 2012-06-03 12:00:AM:00, got ", date)
-	}
+	utils.AssertNoError(t, err)
+	utils.AssertEqual(t, "2012-06-03 12:00:AM:00", date)
 }
 
 // func TestConvertWithCache(t *testing.T) {
