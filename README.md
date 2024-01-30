@@ -1,4 +1,4 @@
-# temporal
+# Temporal 🕧🕐🕜🕑🕝🕒
 
 A golang library for parsing and parsing, formatting and processing dates and
 times using simple human-friendly formats such as `yesterday`, `tomorrow`,
@@ -9,7 +9,7 @@ easier.
 
 ## Why Temporal?
 
-### ✔️ Designed for Practicality
+### ✨ Designed for Practicality
 
 It provides features are practical and useful in real-world applications. These
 features are either missing or not easy to use in the standard time package.
@@ -18,14 +18,14 @@ features are either missing or not easy to use in the standard time package.
 - [x] Format dates using simple human-friendly formats such as `dd/mm/yyyy`, etc.
 - [x] Convert dates from one format to another. For example, `dd/mm/yyyy` to
       `yyyy-mm-dd`.
-- [x] Convert the datetime to relative time such as `1 hour ago`, `2 days ago`,
+- [x] Convert the datetime to relative time such as `few minutes ago`, `yesterday`, `5 days ago`, `3 years from now`, etc.
       etc.
 - [x] Provides range of date finder functions such as `Yesterday()`,
       `Tomorrow()`, `SoD()`, `EoD()`, etc.
 - [x] Provides range of date time utility functions such as `Latest()`,
       `Earliest()`, `IsBetween()`, `TruncateDate()`, etc.
 
-### ✔️ Developer Friendly
+### ✨ Developer Friendly
 
 It provides a comprehensive range of specifiers for all your date and time
 formatting needs, making it an indispensable tool for Go developers.
@@ -51,65 +51,46 @@ go get github.com/maniartech/temporal
 
 The following example shows how to use the temporal package.
 
-## Date Parsing
-
-Temporal supports parsing of dates using [Intuitive Date Format (IDF)
-](#intuitive-date-format-idf) . The following example shows how to parse a
-date in the `dd/mm/yyyy` format.
-
 ```go
-dt := temporal.Parse("01/01/2020", "dd/mm/yyyy")
-
-// You can also specify the timezone
-dt2 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.UTC)
-dt3 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.Local)
-dt4 := temporal.Parse("01/01/2020", "dd/mm/yyyy", time.FixedZone("IST", 5.5*60*60))
-```
-
-```go
-
 import "github.com/maniartech/temporal"
 
 // Parse a date
 t, err := temporal.Parse("2012-01-01", "yyyy-mm-dd")
+fmt.Println(t) // 2012-01-01 00:00:00 +0000 UTC
 
-range, err := temporal.ParseRange("yesterday", time.Now())
+tz := time.FixedZone("IST", 5.5*60*60)
+t, err := temporal.ParseInLocation("01/01/2020", "dd/mm/yyyy", tz)
+fmt.Println(t) // 2020-01-01 00:00:00 +0530 IST
 
 // Format a date
-s := temporal.Format(t, "yyyy-mm-dd")
+s := temporal.Format(t, "dt mmmm, yyyy")
+fmt.Println(s) // 1st January, 2012
 
 // Convert date string to different format
-s, err := temporal.Convert("2012-01-01", "yyyy-mm-dd", "dd/mm/yyyy")
+s, err := temporal.Convert("2012-01-01", "yyyy-mm-dd", "wwww, dt mmmm, yyyy")
+fmt.Println(s) // Sunday, 1st January, 2012
 
-// Some handy date finders
+// Time ago
+s, err := temporal.TimeAgo(time.Now().Add(-5 * time.Minute))
+fmt.Println(s) // 5 minutes ago
+
+// Some handy date finders and other utility functions
 temporal.Yesterday()  // Returns yesterday's date
+temporal.NextWeek()   // Returns data exactly one week from now
 
-temporal.Tomorrow()   // Returns tomorrow's date
+// Other utility functions
+d1 := temporal.Date(10) // Returns date of 10 days from now
+d2 := temporal.Date(-2) // Returns date of 2 days ago
+d3 := temporal.Date(10, d1) // Returns date of 10 days from t1
+temporal.Earliest(d1, d2, d3) // Returns the earliest date from the given list of dates
+temporal.Latest(d1, d2, d3) // Returns the latest date from the given list of dates
+temporal.IsBetween(d1, d2, d3) // Returns true if d1 is between d2 and d3
 
-// temporal.SoD()        // Returns start of day (00:00:00.000000000)
-// temporal.EoD()        // Returns end of day (23:59:59.999999999)
-
-// temporal.Date(-2)     // Returns date of 2 days ago
-// temporal.Date(10)     // Returns date of 10 days from now
-
-// temporal.Week(-1)   // Returns last week's date
-// temporal.Week(2)    // Returns date of 2 weeks from now
-
-// temporal.Month(-1)  // Returns last month's date from now
-
-// temporal.MonthStart() // Returns start of current month
-// temporal.MonthEnd()   // Returns end of current month
-
-// temporal.MonthStart(temporal.Month(-1)) // Returns start of last month
-// temporal.MonthEnd(time.Now())   // Returns end of last month
-
-// temporal.Year()       // Returns last year's date
-// temporal.YearStart()  // Returns start of current year
-// temporal.YearEnd()    // Returns end of current year
-
-// Combining date finders
-// temporal.SoD(temporal.Yesterday()) // Returns start of yesterday
-// temporal.EoD(temporal.Today())      // Returns end of today
+temporal.IsLeapYear(2020) // Returns true if the given year is a leap year
+weekDdays := bool{true, true, true, true, true, false, false}
+temporal.WorkDay(time.Now(), 15, weekDays) // Returns the date after the specified
+                                           // number of workdays, considering
+                                           // holidays and weekends
 ```
 
 ## Intuitive Date Format (IDF)
@@ -169,6 +150,89 @@ Temporal provides all the built-in formats supported by the standard time packag
 Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC822`,
 `time.RFC822Z`, `time.RFC850`, `time.RFC1123`, `time.RFC1123Z`, `time.RFC3339`,
 `time.RFC3339Nano`, `time.Kitchen`, etc.
+
+## API Reference
+
+### Date Parsing, Formatting and Conversion
+
+| Function         | Description                                                                                                   |
+|------------------|---------------------------------------------------------------------------------------------------------------|
+| Parse            | Parses the given date string using [IDF](#intuitive-date-format-idf), a human-friendly, hackable date format                                |
+| ParseInLocation  | Parses the given date string in the specified location using [IDF](#intuitive-date-format-idf), a human-friendly, hackable date format, and the given location |
+| Format           | Formats the given date using [IDF](#intuitive-date-format-idf) format specifiers                                                            |
+| FormatTimestamp  | Formats the given timestamp in Unix format using [IDF](#intuitive-date-format-idf) format specifiers                                        |
+| Convert          | Converts the given date string from one format to another using [IDF](#intuitive-date-format-idf) format specifiers                         |
+
+### Time Ago
+
+| Function | Description                                        |
+|----------|----------------------------------------------------|
+| TimeAgo  | Returns the humanized relative time from the given date |
+
+
+### Relative Date Finders
+
+#### Years
+
+| Function   | Description                                            |
+|------------|--------------------------------------------------------|
+| YearStart  | Returns the start date of the given year               |
+| YearEnd    | Returns the end date of the given year                 |
+| LastYear   | Returns the date exactly one year before today         |
+| NextYear   | Returns the date exactly one year after today          |
+| Years      | Returns the date of the given number of years from now or the given date |
+
+#### Months
+
+| Function   | Description                                             |
+|------------|---------------------------------------------------------|
+| MonthStart | Returns the start date of the given month               |
+| MonthEnd   | Returns the end date of the given month                 |
+| LastMonth  | Returns the date exactly one month before today         |
+| NextMonth  | Returns the date exactly one month after today          |
+| Months     | Returns the date of the given number of months from now or the given date |
+
+#### Weeks
+
+| Function     | Description                                                                          |
+|--------------|--------------------------------------------------------------------------------------|
+| WeekStart    | Returns the start date of the given week                                             |
+| WeekStartOn  | Considers the given day as the start of the week and returns the start date of the week |
+| WeekEnd      | Returns the end date of the given week                                               |
+| WeekEndOn    | Considers the given day as the end of the week and returns the end date of the week   |
+| LastWeek     | Returns the date exactly one week before today                                       |
+| NextWeek     | Returns the date exactly one week after today                                        |
+| Weeks        | Returns the date of the given number of weeks from now or the given date             |
+
+#### Days
+
+| Function  | Description                                                 |
+|-----------|-------------------------------------------------------------|
+| SoD       | Returns the start of the given day                           |
+| EoD       | Returns the end of the given day                             |
+| Yesterday | Returns the date exactly one day before today                |
+| Tomorrow  | Returns the date exactly one day after today                 |
+| Days      | Returns the date of the given number of days from now or the given date |
+
+### DateTime Utility Functions
+
+| Function       | Description                                                                                   |
+|----------------|-----------------------------------------------------------------------------------------------|
+| IsLeapYear     | Returns true if the given year is a leap year                                                 |
+| DaysInMonth    | Returns the number of days in the given month                                                 |
+| DaysInYear     | Returns the number of days in the given year                                                  |
+| DaysInQuarter  | Returns the number of days in the given quarter                                               |
+| NewDate        | Returns the date from the given year, month, and day                                          |
+| NewTime        | Returns the time from the given hour, minute, and second                                      |
+| DateValue      | Returns the serial number of the given date from 1900-01-01                                   |
+| Diff           | Returns the difference between two durations. Can also return a rounded result.               |
+| Latest         | Returns the latest time from the specified list of times                                      |
+| Earliest       | Returns the earliest time from the specified list of times                                    |
+| IsBetween      | Returns true if the given date is between the specified range                                  |
+| TruncateTime   | Truncates the time part from the given date                                                   |
+| TruncateDate   | Truncates the date part from the given date                                                   |
+| WorkDay        | Returns the date after the specified number of workdays, considering holidays and weekends    |
+| NetWorkDays    | Returns the number of workdays between two dates, considering holidays and weekends           |
 
 For more information, see the [time package documentation](https://golang.org/pkg/time/#pkg-constants).
 
