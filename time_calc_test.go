@@ -156,10 +156,10 @@ func TestNetWorkdays(t *testing.T) {
 	}
 
 	expectedDays := 8
-	functionDays := temporal.NetWorkdays(startDay, endDay, workingDays)
+	functionDays := temporal.NetWorkDays(startDay, endDay, workingDays)
 	utils.AssertEqual(t, expectedDays, functionDays)
 
 	expectedDays = 6
-	functionDays = temporal.NetWorkdays(startDay, endDay, workingDays, holidays...)
+	functionDays = temporal.NetWorkDays(startDay, endDay, workingDays, holidays...)
 	utils.AssertEqual(t, expectedDays, functionDays)
 }

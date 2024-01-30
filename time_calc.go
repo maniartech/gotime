@@ -195,7 +195,7 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 // workingDays: ([7]bool) The working days of the week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
 //
 // holidays: (...time.Time) The holidays to be excluded
-func NetWorkdays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) int {
+func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) int {
 	startDateSerial := DateValue(startDate)
 	endDateSerial := DateValue(endDate)
 	weekDay := startDate.Weekday()
