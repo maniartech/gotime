@@ -125,8 +125,8 @@ func yesterdayOrTomorrow(date time.Time, future bool) string {
 	now := time.Now().UTC()
 	nowYear, nowMonth, nowDay := now.Date()
 	if future {
-		dayAfterTomorrowMidnight := DateCreate(nowYear, int(nowMonth), nowDay+2)
-		tomorrowMidnight := DateCreate(nowYear, int(nowMonth), nowDay+1)
+		dayAfterTomorrowMidnight := NewDate(nowYear, int(nowMonth), nowDay+2)
+		tomorrowMidnight := NewDate(nowYear, int(nowMonth), nowDay+1)
 
 		//If the date is after tomorrow midnight and before day after tomorrow midnight then print "Tomorrow"
 		if date.After(tomorrowMidnight) && date.Before(dayAfterTomorrowMidnight) {
@@ -137,8 +137,8 @@ func yesterdayOrTomorrow(date time.Time, future bool) string {
 
 	// Past
 	// Calculating the midnight of the day after tomorrow, tomorrow, yesterday and day before yesterday
-	yesterdayMidnight := DateCreate(nowYear, int(nowMonth), nowDay)
-	dayBeforeYesterdayMidnight := DateCreate(nowYear, int(nowMonth), nowDay-1)
+	yesterdayMidnight := NewDate(nowYear, int(nowMonth), nowDay)
+	dayBeforeYesterdayMidnight := NewDate(nowYear, int(nowMonth), nowDay-1)
 
 	if date.After(dayBeforeYesterdayMidnight) && date.Before(yesterdayMidnight) {
 		return "Yesterday"
