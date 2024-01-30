@@ -1,5 +1,7 @@
 # Temporal 🕧🕐🕜🕑🕝🕒
 
+> /ˈtɛmp(ə)rəl/ - Relating to Time. The spatial and temporal dimensions of human interference in complex ecosystems
+
 Temporal is a Go language library designed to simplify the parsing, formatting,
 and processing of dates and times. While it does not intend to replace Go's
 standard time package, Temporal enhances it by providing additional, user-friendly
