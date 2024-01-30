@@ -1,29 +1,27 @@
 # Temporal 🕧🕐🕜🕑🕝🕒
 
-A golang library for parsing and parsing, formatting and processing dates and
-times using simple human-friendly formats such as `yesterday`, `tomorrow`,
-`dd/mm/yyyy`, etc. The temporal does not aims to be a replacement for the
-standard time package, but rather addtional facilities to make regular date
-and time operations such as formatting, parsing, relative time, data range, etc.
-easier.
+Temporal is a Go language library designed to simplify the parsing, formatting,
+and processing of dates and times. While it does not intend to replace Go's
+standard time package, Temporal enhances it by providing additional, user-friendly
+functionalities that are practical for real-world applications. This library
+focuses on making common date and time operations, such as formatting, parsing,
+and working with relative times and date ranges, more accessible and efficient.
 
 ## Why Temporal?
 
-### ✨ Designed for Practicality
+### ✨ Key Features (Designed for Practicality)
 
 It provides features are practical and useful in real-world applications. These
 features are either missing or not easy to use in the standard time package.
 
-- [x] Parse dates using simple human-friendly formats such as `dd/mm/yyyy`, etc.
-- [x] Format dates using simple human-friendly formats such as `dd/mm/yyyy`, etc.
-- [x] Convert dates from one format to another. For example, `dd/mm/yyyy` to
-      `yyyy-mm-dd`.
-- [x] Convert the datetime to relative time such as `few minutes ago`, `yesterday`, `5 days ago`, `3 years from now`, etc.
-      etc.
-- [x] Provides range of date finder functions such as `Yesterday()`,
-      `Tomorrow()`, `SoD()`, `EoD()`, etc.
-- [x] Provides range of date time utility functions such as `Latest()`,
-      `Earliest()`, `IsBetween()`, `TruncateDate()`, etc.
+- [x] **Human-Friendly Parsing:** Effortlessly parse dates in intuitive formats
+      like dd/mm/yyyy.
+- [x] **Easy Formatting:** Format dates using straightforward, human-readable formats.
+- [x] **Format Conversion:** Seamlessly convert dates between formats, e.g., from `dd/mm/yyyy` to `yyyy-mm-dd`.
+- [x] **Relative Time Processing:** Translate datetime into relative terms like `a few minutes ago`, `yesterday`, `5 days ago`, or `3 years from now`.
+- [x] **Finder Functions:** Utilize functions like `Yesterday()`, `Tomorrow()`, `SoD()` (Start of Day), and `EoD()` (End of Day) etc.
+- [x] **Utility Functions:** Access a suite of utility functions including  `Latest()`,
+      `Earliest()`, `IsBetween()`, `TruncateDate()`, and more.
 
 ### ✨ Developer Friendly
 
@@ -37,6 +35,16 @@ formatting needs, making it an indispensable tool for Go developers.
 - [x] Simple, intuitive and hackable API 👌🏼
 - [x] Fully documented 👌🏼
 - [x] Performance focused 👌🏼
+
+### ✨ Ideal Use Cases
+
+- [x] Developers needing intuitive date parsing and formatting.
+- [x] Applications requiring conversion between different date formats.
+- [x] Systems that display relative time representations.
+- [x] Software dealing with date range calculations and comparisons.
+- [x] Projects where standard time package features are insufficient or cumbersome.
+
+Temporal stands out by offering features that are either missing or not as user-friendly in the standard time package, making it an invaluable addition to any Go developer's toolkit.
 
 ## Installation
 
