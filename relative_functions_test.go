@@ -212,25 +212,25 @@ func TestWeek(t *testing.T) {
 }
 
 func TestDay(t *testing.T) {
-	// DayStart
+	// SoD
 	expectedDate := time.Date(2023, 1, 1, 0, 0, 0, 0, time.UTC)
-	functionDate := temporal.DayStart(time.Date(2023, 1, 1, 11, 2, 10, 0, time.UTC))
+	functionDate := temporal.SoD(time.Date(2023, 1, 1, 11, 2, 10, 0, time.UTC))
 
 	utils.AssertEqual(t, expectedDate, functionDate)
 
 	now := time.Now()
 	expectedDate = time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, time.Local)
-	functionDate = temporal.DayStart()
+	functionDate = temporal.SoD()
 	utils.AssertEqual(t, expectedDate, functionDate)
 
-	// DayEnd
+	// EoD
 	expectedDate = time.Date(2023, 1, 1, 23, 59, 59, 999999999, time.UTC)
-	functionDate = temporal.DayEnd(time.Date(2023, 1, 1, 11, 2, 10, 0, time.UTC))
+	functionDate = temporal.EoD(time.Date(2023, 1, 1, 11, 2, 10, 0, time.UTC))
 
 	utils.AssertEqual(t, expectedDate, functionDate)
 
 	expectedDate = time.Date(now.Year(), now.Month(), now.Day(), 23, 59, 59, 999999999, time.Local)
-	functionDate = temporal.DayEnd()
+	functionDate = temporal.EoD()
 	utils.AssertEqual(t, expectedDate, functionDate)
 
 	// Yesterday

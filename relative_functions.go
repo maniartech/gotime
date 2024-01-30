@@ -285,44 +285,49 @@ func Weeks(weeks int, dt ...time.Time) time.Time {
 
 //-----------------Day Functions-----------------
 
-// DayStart returns the start of the day.
+// EoD returns the end of the day for the given time.
 //
-// # Arguments
+// It calculates the start of the day for the given time using the SoD function, and adds 24 hours to it.
+// To get the end of the day, it subtracts one nanosecond from the resulting time.Time value,
+// since the SoD function returns the first nanosecond of the day.
 //
-// dt: (time.Time) The date to be used to calculate the start of the day.
-//
-// # Note
-//
-// If the date is not provided, it will return the start of the day from the current date.
-func DayStart(dt ...time.Time) time.Time {
-	var t time.Time
-	if len(dt) > 0 {
-		t = dt[0]
+// Example:
+//   t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
+//   endOfDay := EoD(t)
+//   // endOfDay == time.Date(2022, time.December, 30, 23, 59, 59, 999999999, time.UTC)
+func EoD(t ...time.Time) time.Time {
+	var dt time.Time
+	if len(t) > 0 {
+		dt = t[0]
 	} else {
-		t = time.Now()
+		dt = time.Now()
 	}
-	start := time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
-	return start
+
+	return time.Date(
+		dt.Year(), dt.Month(), dt.Day(),
+		23, 59, 59, 999999999,
+		dt.Location(),
+	)
 }
 
-// DayEnd returns the last second of the day.
+// SoD returns the start of the day for the given time.
 //
-// # Arguments
+// It constructs a new time.Time value using the year, month, and day of the given time.Time value,
+// and setting the hour, minute, second, and nanosecond fields to 0. It also sets the location field to the
+// same location as the input time.Time value. The resulting time.Time value represents the start of the day
+// for the given time.
 //
-// dt: (time.Time) The date to be used to calculate the last second of the day.
-//
-// # Note
-//
-// If the date is not provided, it will return the last second of the day from the current date.
-func DayEnd(dt ...time.Time) time.Time {
-	var t time.Time
-	if len(dt) > 0 {
-		t = dt[0]
-	} else {
-		t = time.Now()
+// Example:
+//   t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
+//   startOfDay := SoD(t)
+//   // startOfDay == time.Date(2022, time.December, 30, 0, 0, 0, 0, time.UTC)
+func SoD(t ...time.Time) time.Time {
+	if len(t) > 0 {
+		return time.Date(t[0].Year(), t[0].Month(), t[0].Day(), 0, 0, 0, 0, t[0].Location())
 	}
-	end := time.Date(t.Year(), t.Month(), t.Day(), 23, 59, 59, 999999999, t.Location())
-	return end
+
+	dt := time.Now()
+	return time.Date(dt.Year(), dt.Month(), dt.Day(), 0, 0, 0, 0, dt.Location())
 }
 
 // Yesterday returns the yesterday's time.Time corresponding to the current time.
