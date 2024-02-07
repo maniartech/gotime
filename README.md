@@ -2,9 +2,9 @@
 
 > github.com/maniartech/gotime
 
-Temporal is a Go language library designed to simplify the parsing, formatting,
+GoTime is a Go language library designed to simplify the parsing, formatting,
 and processing of dates and times. While it does not intend to replace Go's
-standard time package, Temporal enhances it by providing additional, user-friendly
+standard time package, `gotime` enhances it by providing additional, user-friendly
 functionalities that are practical for real-world applications. This library
 focuses on making common date and time operations, such as formatting, parsing,
 and working with relative times and date ranges, more accessible and efficient.
@@ -46,7 +46,7 @@ formatting needs, making it an indispensable tool for Go developers.
 - [x] Software dealing with date range calculations and comparisons.
 - [x] Projects where standard time package features are insufficient or cumbersome.
 
-Temporal stands out by offering features that are either missing or not as user-friendly in the standard time package, making it an invaluable addition to any Go developer's toolkit.
+The `gotime` stands out by offering features that are either missing or not as user-friendly in the standard time package, making it an invaluable addition to any Go developer's toolkit.
 
 ## Installation
 
@@ -105,9 +105,9 @@ gotime.WorkDay(time.Now(), 15, weekDays) // Returns the date after the specified
 
 ## Intuitive Date Format (IDF)
 
-We've developed the Intuitive Date Format (IDF) for Temporal. `IDF is a cAsE-insensitive format`, eliminating ambiguity often associated with dd-mm-yyyy formats. This intuitive format makes date and time formatting simple and hackable. entry by removing the need to remember upper and lower case attributes, a common issue with other similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDF intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDF, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
+We've developed the Intuitive Date Format (IDF) for `gotime`. `IDF is a cAsE-insensitive format`, eliminating ambiguity often associated with dd-mm-yyyy formats. This intuitive format makes date and time formatting simple and hackable. entry by removing the need to remember upper and lower case attributes, a common issue with other similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDF intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDF, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
 
-Temporal supports simple, human-friendly date-time formatting. The table below displays the supported formats. Internally, Temporal utilizes time.Time.Format() and converts human-friendly formats into the time.Time format. For instance, it transforms yyyy-mm-dd into 2006-01-02 before using time.Time.Format() to format the date.
+It supports simple, human-friendly date-time formatting. The table below displays the supported formats. Internally, `gotime` utilizes time.Time.Format() and converts human-friendly formats into the time.Time format. For instance, it transforms yyyy-mm-dd into 2006-01-02 before using time.Time.Format() to format the date.
 
 ### Date Formats
 
@@ -156,7 +156,7 @@ Temporal supports simple, human-friendly date-time formatting. The table below d
 
 ### Built-in Formats
 
-Temporal provides all the built-in formats supported by the standard time package.
+It provides all the built-in formats supported by the standard time package.
 Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC822`,
 `time.RFC822Z`, `time.RFC850`, `time.RFC1123`, `time.RFC1123Z`, `time.RFC3339`,
 `time.RFC3339Nano`, `time.Kitchen`, etc.
