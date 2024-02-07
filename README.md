@@ -1,6 +1,6 @@
-# Temporal 🕧🕐🕜🕑🕝🕒
+# GoTime 🕧🕐🕜🕑🕝🕒
 
-> /ˈtɛmp(ə)rəl/ - Relating to Time.
+> github.com/maniartech/gotime
 
 Temporal is a Go language library designed to simplify the parsing, formatting,
 and processing of dates and times. While it does not intend to replace Go's
