@@ -2,12 +2,57 @@
 
 > ⚠️ Package name changed to `gotime` on community request.
 
-GoTime is a Go language library designed to simplify the parsing, formatting,
-and processing of dates and times. While it does not intend to replace Go's
-standard time package, `gotime` enhances it by providing additional, user-friendly
-functionalities that are practical for real-world applications. This library
-focuses on making common date and time operations, such as formatting, parsing,
-and working with relative times and date ranges, more accessible and efficient.
+Designed on the top of Golang's built-in `time` package, instead of reinventing
+the wheel `gotime` uses internal `time` package to provide additional
+day-to-day functionalities that are practical for real-world applications.
+
+Before we understand why there is a need for yet another time paackage, let's see
+some of the code that shocases what this library is capable of doing.
+
+```go
+import "github.com/maniartech/gotime"
+
+// // Format the date using human-friendly case-insensitive specifiers like yyyy-mm-dd
+dt = time.Date(2012, 1, 1, 0, 0, 0, 0, time.UTC)
+s := gotime.Format(dt, "dt mmmm, yyyy")
+fmt.Println(s) // 1st January, 2012
+
+// Convert date string to different format
+s, err := gotime.Convert("2012-01-01", "yyyy-mm-dd", "wwww, dt mmmm, yyyy")
+fmt.Println(s) // Sunday, 1st January, 2012
+
+// Use time ago to get relative time
+s, err := gotime.TimeAgo(time.Now().Add(-5 * time.Minute))
+fmt.Println(s) // 5 minutes ago
+
+// Parse a date string using easy to remember specifiers
+t, err := gotime.Parse("2012-01-01", "yyyy-mm-dd")
+fmt.Println(t) // 2012-01-01 00:00:00 +0000 UTC
+
+tz := time.FixedZone("IST", 5.5*60*60)
+t, err := gotime.ParseInLocation("01/01/2020", "dd/mm/yyyy", tz)
+fmt.Println(t) // 2020-01-01 00:00:00 +0530 IST
+
+// Some handy date finders and other utility functions
+gotime.Yesterday()  // Returns yesterday's date
+gotime.NextWeek()   // Returns data exactly one week from now
+
+// Other utility functions
+d1 := gotime.Date(10) // Returns date of 10 days from now
+d2 := gotime.Date(-2) // Returns date of 2 days ago
+d3 := gotime.Date(10, d1) // Returns date of 10 days from t1
+gotime.Earliest(d1, d2, d3) // Returns the earliest date from the given list of dates
+gotime.Latest(d1, d2, d3) // Returns the latest date from the given list of dates
+gotime.IsBetween(d1, d2, d3) // Returns true if d1 is between d2 and d3
+
+gotime.IsLeapYear(2020) // Returns true if the given year is a leap year
+weekDdays := bool{true, true, true, true, true, false, false}
+gotime.WorkDay(time.Now(), 15, weekDays) // Returns the date after the specified
+                                           // number of workdays, considering
+                                           // holidays and weekends
+
+// So on...
+```
 
 ## Why GoTime?
 
@@ -30,7 +75,7 @@ features are either missing or not easy to use in the standard time package.
 It provides a comprehensive range of specifiers for all your date and time
 formatting needs, making it an indispensable tool for Go developers.
 
-- [x] 100% test coverage 👌🏼
+- [x] 💯% test coverage 👌🏼
 - [x] TinyGo compatible 👌🏼
 - [x] No external dependencies  👌🏼
 - [x] Fully utilises the standard time package and does not reinvent the wheel 👌🏼
@@ -40,7 +85,7 @@ formatting needs, making it an indispensable tool for Go developers.
 
 ### ✨ Ideal Use Cases
 
-- [x] Developers needing intuitive date parsing and formatting.
+- [x] Developers needing formatting and parsing dates using human-friendly specifiers like `yyyy-mm-dd`.
 - [x] Applications requiring conversion between different date formats.
 - [x] Systems that display relative time representations.
 - [x] Software dealing with date range calculations and comparisons.
@@ -55,52 +100,6 @@ install the `gotime` package in your project.
 
 ```sh
 go get github.com/maniartech/gotime
-```
-
-## Usage
-
-The following example shows how to use the `gotime` package.
-
-```go
-import "github.com/maniartech/gotime"
-
-// Parse a date
-t, err := gotime.Parse("2012-01-01", "yyyy-mm-dd")
-fmt.Println(t) // 2012-01-01 00:00:00 +0000 UTC
-
-tz := time.FixedZone("IST", 5.5*60*60)
-t, err := gotime.ParseInLocation("01/01/2020", "dd/mm/yyyy", tz)
-fmt.Println(t) // 2020-01-01 00:00:00 +0530 IST
-
-// Format a date
-s := gotime.Format(t, "dt mmmm, yyyy")
-fmt.Println(s) // 1st January, 2012
-
-// Convert date string to different format
-s, err := gotime.Convert("2012-01-01", "yyyy-mm-dd", "wwww, dt mmmm, yyyy")
-fmt.Println(s) // Sunday, 1st January, 2012
-
-// Time ago
-s, err := gotime.TimeAgo(time.Now().Add(-5 * time.Minute))
-fmt.Println(s) // 5 minutes ago
-
-// Some handy date finders and other utility functions
-gotime.Yesterday()  // Returns yesterday's date
-gotime.NextWeek()   // Returns data exactly one week from now
-
-// Other utility functions
-d1 := gotime.Date(10) // Returns date of 10 days from now
-d2 := gotime.Date(-2) // Returns date of 2 days ago
-d3 := gotime.Date(10, d1) // Returns date of 10 days from t1
-gotime.Earliest(d1, d2, d3) // Returns the earliest date from the given list of dates
-gotime.Latest(d1, d2, d3) // Returns the latest date from the given list of dates
-gotime.IsBetween(d1, d2, d3) // Returns true if d1 is between d2 and d3
-
-gotime.IsLeapYear(2020) // Returns true if the given year is a leap year
-weekDdays := bool{true, true, true, true, true, false, false}
-gotime.WorkDay(time.Now(), 15, weekDays) // Returns the date after the specified
-                                           // number of workdays, considering
-                                           // holidays and weekends
 ```
 
 ## Intuitive Date Format (IDF)
@@ -178,7 +177,6 @@ Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC
 | Function | Description                                        |
 |----------|----------------------------------------------------|
 | TimeAgo  | Returns the humanized relative time from the given date |
-
 
 ### Relative Date Finders
 
