@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/maniartech/temporal/internal/cache"
-	"github.com/maniartech/temporal/internal/utils"
+	"github.com/maniartech/gotime/internal/cache"
+	"github.com/maniartech/gotime/internal/utils"
 )
 
 // Convert function converts a datetime from one string format to another.

@@ -1,19 +1,19 @@
 # Contains, the library structural and functional research, trial and error notes!
 
 ```go
-temporal.DateRange().Today() // 2019-01-01 00:00:00 +0000 UTC - 2019-01-01 23:59:59.999999999 +0000 UTC
-temporal.DateRange().Yesterday()
+gotime.DateRange().Today() // 2019-01-01 00:00:00 +0000 UTC - 2019-01-01 23:59:59.999999999 +0000 UTC
+gotime.DateRange().Yesterday()
 
 // DateRange Functions
 
-temporal.DateRange().Weeks(-2) // From exactly 2 weeks ago to now
-temporal.DateRange(temporal.FromTime(t)).Weeks(-2) // Yesterday as a base date, from exactly 2 weeks ago to yesterday
+gotime.DateRange().Weeks(-2) // From exactly 2 weeks ago to now
+gotime.DateRange(gotime.FromTime(t)).Weeks(-2) // Yesterday as a base date, from exactly 2 weeks ago to yesterday
 
-temporal.DateRange().Days(3)
-temporal.DateRanae().Months(-1) // From exactly 1 month ago to now
+gotime.DateRange().Days(3)
+gotime.DateRanae().Months(-1) // From exactly 1 month ago to now
 
-temporal.DateRange(baseTime).Months() // From the base time to the end of the month
-temporal.DateRange()
+gotime.DateRange(baseTime).Months() // From the base time to the end of the month
+gotime.DateRange()
   .Months(1) // From the current time to one month from now
   .Months(-1) // From exactly one month ago to now
   .Months(-1, true) // true for previous month. Previous months 1st day at 00:00:00 to the end of the month
@@ -31,17 +31,17 @@ temporal.DateRange()
   .To()
 
 // Date Functions
-temporal.Yesterday()
-temporal.Now() // 2019-01-01 13:37:00 +0000 UTC, the current time
-temporal.Today() // 2019-01-01 00:00:00 +0000 UTC, the current date at 00:00:00 without time
-temporal.Tomorrow()
-temporal.Today() // 2019-01-01 00:00:00 +0000 UTC
-temporal.Parse()
-temporal.DateFromTS()
-temporal.DateFromTime()
-temporal.DateFromString()
+gotime.Yesterday()
+gotime.Now() // 2019-01-01 13:37:00 +0000 UTC, the current time
+gotime.Today() // 2019-01-01 00:00:00 +0000 UTC, the current date at 00:00:00 without time
+gotime.Tomorrow()
+gotime.Today() // 2019-01-01 00:00:00 +0000 UTC
+gotime.Parse()
+gotime.DateFromTS()
+gotime.DateFromTime()
+gotime.DateFromString()
 
-temporal.DateTime
+gotime.DateTime
   .Yesterday()
   .DayStart() // 2019-01-01 00:00:00 +0000 UTC
   .DayEnd() // 2019-01-01 23:59:59.999999999 +0000 UTC
@@ -76,15 +76,15 @@ temporal.DateTime
   .Microsecond() // 0-999999
 
   // Add
-  .Add(1, temporal.Days) // Days, Weeks, Months, Years, Hours, Minutes, Seconds, Milliseconds, Microseconds
+  .Add(1, gotime.Days) // Days, Weeks, Months, Years, Hours, Minutes, Seconds, Milliseconds, Microseconds
 
   // Diff
-  .Diff(time.Now(), temporal.Days) // Days, Weeks, Months, Years
-  .Diff(time.Now(), temporal.Weeks, true) // true for rounded value
+  .Diff(time.Now(), gotime.Days) // Days, Weeks, Months, Years
+  .Diff(time.Now(), gotime.Weeks, true) // true for rounded value
 
   // Range - Range function always returns the earliest date first
   .Range() // Returns a range of dates from the current date to the end of the month
-  .Range(temporal.Yesterday()) // Returns a range of dates from the current date to yesterday
+  .Range(gotime.Yesterday()) // Returns a range of dates from the current date to yesterday
 
   // Format
 
@@ -92,66 +92,66 @@ temporal.DateTime
   .ToTS()
   .ToString()
   .Format("dd-mm-yyyy") // 01-01-2019
-  .Format(temporal.ISODate) // 2019-01-01 00:00:00
-  .Format(temporal.ISODateTime) // 2019-01-01 00:00:00 +0000 UTC
-  .Format(temporal.ISODateTimeShort) // 2019-01-01 00:00:00
-  .Format(temporal.ISODateTimeMicro) // 2019-01-01 00:00:00.000000 +0000 UTC
-  .Format(temporal.JSONDate) // 2019-01-01T00:00:00.000Z
+  .Format(gotime.ISODate) // 2019-01-01 00:00:00
+  .Format(gotime.ISODateTime) // 2019-01-01 00:00:00 +0000 UTC
+  .Format(gotime.ISODateTimeShort) // 2019-01-01 00:00:00
+  .Format(gotime.ISODateTimeMicro) // 2019-01-01 00:00:00.000000 +0000 UTC
+  .Format(gotime.JSONDate) // 2019-01-01T00:00:00.000Z
 
-// Factory Functions - Creates a new temporal.DateTime object
-temporal.FromTS(4324234234)
-temporal.FromTime(time.Now())
-temporal.FromString("2019-01-01", "yyyy-mm-dd")
+// Factory Functions - Creates a new gotime.DateTime object
+gotime.FromTS(4324234234)
+gotime.FromTime(time.Now())
+gotime.FromString("2019-01-01", "yyyy-mm-dd")
 
 // Format functions
 
 // Time Ago
-temporal.TryParse("2019-01-01")                  // time.Time, errors.Error
-temporal.Parse("2019-01-01", "yyyy-mm-dd")    // time.Time, errors.Error
+gotime.TryParse("2019-01-01")                  // time.Time, errors.Error
+gotime.Parse("2019-01-01", "yyyy-mm-dd")    // time.Time, errors.Error
 
-temporal.ParseAndFormat("2019-01-01", "dd-mm-yyyy") // Automatically detects the format, and formats it to dd-mm-yyyy
-temporal.ParseAndFormat("2019-01-01", "dd-mm-yyyy", "yyyy-mm-dd") // Format is provided as the third argument
+gotime.ParseAndFormat("2019-01-01", "dd-mm-yyyy") // Automatically detects the format, and formats it to dd-mm-yyyy
+gotime.ParseAndFormat("2019-01-01", "dd-mm-yyyy", "yyyy-mm-dd") // Format is provided as the third argument
 
 
-temporal.TimeAgo(
-  temporal.Catch(temporal.Parse("2019-01-01", "yyyy-mm-dd"), time.Now()),
+gotime.TimeAgo(
+  gotime.Catch(gotime.Parse("2019-01-01", "yyyy-mm-dd"), time.Now()),
 )
 
-temporal.Weeks(1, time.Now())
-temporal.Months(2)
-temporal.Years(2)
+gotime.Weeks(1, time.Now())
+gotime.Months(2)
+gotime.Years(2)
 
-temporal.EoD(
-  temporal.Monday(-1) // Last Monday
+gotime.EoD(
+  gotime.Monday(-1) // Last Monday
 ) // Last Monday at 23:59:59.999999999
 
 
 // First Monday of the month
-temporal.Monday(
-  1, temporal.MonthStart(), true // inclusive true
+gotime.Monday(
+  1, gotime.MonthStart(), true // inclusive true
                                  // inclusive means consider the current date
                                  // as well
 )
 
 // Second Monday of the month
-temporal.Monday(
-  2, temporal.MonthStart(), true // inclusive true
+gotime.Monday(
+  2, gotime.MonthStart(), true // inclusive true
                                  // inclusive means consider the current date
                                  // as well
 )
 
 // Last Monday of the month
-temporal.Monday(
-  -1, temporal.MonthEnd(), true // inclusive true
+gotime.Monday(
+  -1, gotime.MonthEnd(), true // inclusive true
                                 // inclusive means consider the current date
                                 // as well
 )
 
 // Monday from today, inclusive
-temporal.WeekDay(temporal.Monday)
+gotime.WeekDay(gotime.Monday)
 
 // Count of Mondays in the given month
-temporal.TotalWeekdays(temporal.Monday, temporal.MonthStart(), temporal.MonthEnd())
+gotime.TotalWeekdays(gotime.Monday, gotime.MonthStart(), gotime.MonthEnd())
 
 Options
   .CacheFormats() // Default true

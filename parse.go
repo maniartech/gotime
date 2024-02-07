@@ -1,9 +1,9 @@
-package temporal
+package gotime
 
 import (
 	"time"
 
-	"github.com/maniartech/temporal/internal/idf"
+	"github.com/maniartech/gotime/internal/idf"
 )
 
 // Parse is a utility function that takes a date-time string and a format string

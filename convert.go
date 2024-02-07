@@ -1,6 +1,6 @@
-package temporal
+package gotime
 
-import "github.com/maniartech/temporal/internal/idf"
+import "github.com/maniartech/gotime/internal/idf"
 
 // ParseAndFormat is a utility function that takes a date-time string, a source
 // format string (from), and a target format string (to). The function parses

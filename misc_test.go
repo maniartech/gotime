@@ -1,9 +1,9 @@
-package temporal_test
+package gotime_test
 
 import (
 	"testing"
 
-	"github.com/maniartech/temporal"
+	"github.com/maniartech/gotime"
 )
 
 // TestIsLeapYear tests IsLeapYear function.
@@ -30,8 +30,8 @@ func TestIsLeapYear(t *testing.T) {
 
 	// Test Case for IsLeapYear function
 	for year, leap := range yearsLeapMap {
-		if temporal.IsLeapYear(year) != leap {
-			t.Errorf("Expected %v, got, %v", leap, temporal.IsLeapYear(year))
+		if gotime.IsLeapYear(year) != leap {
+			t.Errorf("Expected %v, got, %v", leap, gotime.IsLeapYear(year))
 		}
 	}
 }
@@ -58,12 +58,12 @@ func TestDaysInMonth(t *testing.T) {
 
 	// Test Case for DaysInMonth function
 	for month, days := range monthDaysMap {
-		if temporal.DaysInMonth(2019, month) != days {
-			t.Errorf("Expected %v, got, %v", days, temporal.DaysInMonth(2019, month))
+		if gotime.DaysInMonth(2019, month) != days {
+			t.Errorf("Expected %v, got, %v", days, gotime.DaysInMonth(2019, month))
 		}
 	}
-	if temporal.DaysInMonth(2020, 2) != 29 {
-		t.Errorf("Expected %v, got, %v", 29, temporal.DaysInMonth(2019, 2))
+	if gotime.DaysInMonth(2020, 2) != 29 {
+		t.Errorf("Expected %v, got, %v", 29, gotime.DaysInMonth(2019, 2))
 	}
 }
 
@@ -91,8 +91,8 @@ func TestDaysInYear(t *testing.T) {
 
 	// Test Case for DaysInYear function
 	for year, days := range yearsDaysMap {
-		if temporal.DaysInYear(year) != days {
-			t.Errorf("Expected %v, got, %v", days, temporal.DaysInYear(year))
+		if gotime.DaysInYear(year) != days {
+			t.Errorf("Expected %v, got, %v", days, gotime.DaysInYear(year))
 		}
 	}
 }
@@ -111,15 +111,15 @@ func TestDaysInQuarter(t *testing.T) {
 
 	// Test Case for DaysInQuarter function
 	for quarter, days := range quarterDaysMap {
-		if temporal.DaysInQuarter(2019, quarter) != days {
-			t.Errorf("Expected %v, got, %v", days, temporal.DaysInQuarter(2019, quarter))
+		if gotime.DaysInQuarter(2019, quarter) != days {
+			t.Errorf("Expected %v, got, %v", days, gotime.DaysInQuarter(2019, quarter))
 		}
 	}
 }
 
 // TestDateCreate tests DateCreate function.
 func TestDateCreate(t *testing.T) {
-	date := temporal.NewDate(2021, 1, 1)
+	date := gotime.NewDate(2021, 1, 1)
 	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 {
 		t.Errorf("Expected 2021-01-01, got, %v", date)
 	}
@@ -127,7 +127,7 @@ func TestDateCreate(t *testing.T) {
 
 // TestNewTime tests NewTime function.
 func TestNewTime(t *testing.T) {
-	time := temporal.NewTime(12, 0, 0)
+	time := gotime.NewTime(12, 0, 0)
 	if time.Hour() != 12 || time.Minute() != 0 || time.Second() != 0 {
 		t.Errorf("Expected 12:00:00, got, %v", time)
 	}
@@ -135,7 +135,7 @@ func TestNewTime(t *testing.T) {
 
 // TestEoD tests EoD function.
 func TestEoD(t *testing.T) {
-	date := temporal.EoD(temporal.NewDate(2021, 1, 1))
+	date := gotime.EoD(gotime.NewDate(2021, 1, 1))
 	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 || date.Hour() != 23 || date.Minute() != 59 || date.Second() != 59 {
 		t.Errorf("Expected 2021-01-01 23:59:59, got, %v", date)
 	}
@@ -143,7 +143,7 @@ func TestEoD(t *testing.T) {
 
 // TestSoD tests SoD function.
 func TestSoD(t *testing.T) {
-	date := temporal.SoD(temporal.NewDate(2021, 1, 1))
+	date := gotime.SoD(gotime.NewDate(2021, 1, 1))
 	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 || date.Hour() != 0 || date.Minute() != 0 || date.Second() != 0 {
 		t.Errorf("Expected 2021-01-01 00:00:00, got, %v", date)
 	}

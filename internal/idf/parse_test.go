@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/temporal/internal/idf"
+	"github.com/maniartech/gotime/internal/idf"
 )
 
 func TestParse(t *testing.T) {

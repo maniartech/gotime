@@ -1,11 +1,11 @@
-package temporal_test
+package gotime_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/temporal"
-	"github.com/maniartech/temporal/internal/utils"
+	"github.com/maniartech/gotime"
+	"github.com/maniartech/gotime/internal/utils"
 )
 
 func TestParse(t *testing.T) {
@@ -27,7 +27,7 @@ func TestParseInLocation(t *testing.T) {
 	loc := time.FixedZone("UTC+5.5", int(5.5*60*60))
 	expectedTime := time.Date(2022, time.December, 31, 0, 0, 0, 0, loc)
 
-	parsedDate, err := temporal.ParseInLocation(layout, value, loc)
+	parsedDate, err := gotime.ParseInLocation(layout, value, loc)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedTime, parsedDate)
 
@@ -36,7 +36,7 @@ func TestParseInLocation(t *testing.T) {
 	loc = time.FixedZone("UTC+2", int(2*60*60))
 	expectedTime = time.Date(2022, time.December, 31, 0, 0, 0, 0, loc)
 
-	parsedDate, err = temporal.ParseInLocation(layout, value, loc)
+	parsedDate, err = gotime.ParseInLocation(layout, value, loc)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedTime, parsedDate)
 
@@ -45,7 +45,7 @@ func TestParseInLocation(t *testing.T) {
 	loc = time.FixedZone("UTC-3", int(-3*60*60))
 	expectedTime = time.Date(2010, time.May, 15, 0, 0, 0, 0, loc)
 
-	parsedDate, err = temporal.ParseInLocation(layout, value, loc)
+	parsedDate, err = gotime.ParseInLocation(layout, value, loc)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedTime, parsedDate)
 
@@ -54,7 +54,7 @@ func TestParseInLocation(t *testing.T) {
 	loc = time.FixedZone("UTC+8", int(8*60*60))
 	expectedTime = time.Date(2022, time.December, 31, 12, 34, 0, 0, loc)
 
-	parsedDate, err = temporal.ParseInLocation(layout, value, loc)
+	parsedDate, err = gotime.ParseInLocation(layout, value, loc)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedTime, parsedDate)
 
@@ -63,7 +63,7 @@ func TestParseInLocation(t *testing.T) {
 	loc = time.FixedZone("UTC-2", int(-2*60*60))
 	expectedTime = time.Date(2001, time.January, 15, 23, 45, 0, 0, loc)
 
-	parsedDate, err = temporal.ParseInLocation(layout, value, loc)
+	parsedDate, err = gotime.ParseInLocation(layout, value, loc)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedTime, parsedDate)
 
@@ -72,7 +72,7 @@ func TestParseInLocation(t *testing.T) {
 	loc = time.FixedZone("UTC-5", int(-5*60*60))
 	expectedTime = time.Date(2022, time.December, 31, 12, 34, 56, 789000000, loc)
 
-	parsedDate, err = temporal.ParseInLocation(layout, value, loc)
+	parsedDate, err = gotime.ParseInLocation(layout, value, loc)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedTime, parsedDate)
 
@@ -81,14 +81,14 @@ func TestParseInLocation(t *testing.T) {
 	loc = time.FixedZone("UTC+2", int(2*60*60))
 	expectedTime = time.Date(2022, time.December, 31, 12, 34, 56, 789000000, loc)
 
-	parsedDate, err = temporal.ParseInLocation(layout, value, loc)
+	parsedDate, err = gotime.ParseInLocation(layout, value, loc)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedTime, parsedDate)
 
 }
 
 func testParse(layout, value string) time.Time {
-	dt, err := temporal.Parse(layout, value)
+	dt, err := gotime.Parse(layout, value)
 	if err != nil {
 		panic(err)
 	}

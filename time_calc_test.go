@@ -1,11 +1,11 @@
-package temporal_test
+package gotime_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/temporal"
-	"github.com/maniartech/temporal/internal/utils"
+	"github.com/maniartech/gotime"
+	"github.com/maniartech/gotime/internal/utils"
 )
 
 func TestDiff(t *testing.T) {
@@ -16,7 +16,7 @@ func TestDiff(t *testing.T) {
 
 	// Test different units
 	t.Run("Test difference in hours", func(t *testing.T) {
-		result := temporal.Diff(now, yesterday, time.Hour)
+		result := gotime.Diff(now, yesterday, time.Hour)
 		expected := 24.0 // Adjusted for potential time zone differences
 		if result != expected {
 			t.Errorf("Expected difference in hours: %f, got: %f", expected, result)
@@ -24,7 +24,7 @@ func TestDiff(t *testing.T) {
 	})
 
 	t.Run("Test difference in minutes", func(t *testing.T) {
-		result := temporal.Diff(now, twoHoursAgo, time.Minute)
+		result := gotime.Diff(now, twoHoursAgo, time.Minute)
 		expected := 120.0
 		if result != expected {
 			t.Errorf("Expected difference in minutes: %f, got: %f", expected, result)
@@ -33,7 +33,7 @@ func TestDiff(t *testing.T) {
 
 	// Test rounding
 	t.Run("Test rounding to nearest second", func(t *testing.T) {
-		result := temporal.Diff(now, fiveMinutesAgo, time.Second, true)
+		result := gotime.Diff(now, fiveMinutesAgo, time.Second, true)
 		expected := 300.0
 		if result != expected {
 			t.Errorf("Expected rounded difference in seconds: %f, got: %f", expected, result)
@@ -42,7 +42,7 @@ func TestDiff(t *testing.T) {
 
 	// Test zero difference
 	t.Run("Test zero difference", func(t *testing.T) {
-		result := temporal.Diff(now, now, time.Second)
+		result := gotime.Diff(now, now, time.Second)
 		expected := 0.0
 		if result != expected {
 			t.Errorf("Expected zero difference: %f, got: %f", expected, result)
@@ -51,7 +51,7 @@ func TestDiff(t *testing.T) {
 
 	// Test negative difference
 	t.Run("Test negative difference", func(t *testing.T) {
-		result := temporal.Diff(yesterday, now, time.Hour)
+		result := gotime.Diff(yesterday, now, time.Hour)
 		expected := -24.0
 		if result != expected {
 			t.Errorf("Expected negative difference in hours: %f, got: %f", expected, result)
@@ -65,12 +65,12 @@ func TestLatest(t *testing.T) {
 	tomorrow := now.AddDate(0, 0, 1)
 
 	// Test with multiple times
-	result := trunccateSecond(temporal.Latest(now, yesterday, tomorrow))
+	result := trunccateSecond(gotime.Latest(now, yesterday, tomorrow))
 	expected := trunccateSecond(tomorrow)
 	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
-	result = trunccateSecond(temporal.Latest(now, yesterday, tomorrow))
+	result = trunccateSecond(gotime.Latest(now, yesterday, tomorrow))
 	expected = trunccateSecond(tomorrow)
 	utils.AssertEqual(t, expected, result)
 }
@@ -81,12 +81,12 @@ func TestEarliest(t *testing.T) {
 	tomorrow := now.AddDate(0, 0, 1)
 
 	// Test with multiple times
-	result := trunccateSecond(temporal.Earliest(now, yesterday, tomorrow))
+	result := trunccateSecond(gotime.Earliest(now, yesterday, tomorrow))
 	expected := trunccateSecond(yesterday)
 	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
-	result = trunccateSecond(temporal.Earliest(now, tomorrow, yesterday))
+	result = trunccateSecond(gotime.Earliest(now, tomorrow, yesterday))
 	expected = trunccateSecond(yesterday)
 	utils.AssertEqual(t, expected, result)
 
@@ -98,22 +98,22 @@ func TestIsBetween(t *testing.T) {
 	tomorrow := now.AddDate(0, 0, 1)
 
 	// Test with multiple times
-	result := temporal.IsBetween(now, yesterday, tomorrow)
+	result := gotime.IsBetween(now, yesterday, tomorrow)
 	expected := true
 	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
-	result = temporal.IsBetween(now, tomorrow, tomorrow)
+	result = gotime.IsBetween(now, tomorrow, tomorrow)
 	expected = false
 	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
-	result = temporal.IsBetween(now, now, now)
+	result = gotime.IsBetween(now, now, now)
 	expected = true
 	utils.AssertEqual(t, expected, result)
 
 	// Test with a single time
-	result = temporal.IsBetween(now, tomorrow, yesterday)
+	result = gotime.IsBetween(now, tomorrow, yesterday)
 	expected = true
 	utils.AssertEqual(t, expected, result)
 }
@@ -121,7 +121,7 @@ func TestIsBetween(t *testing.T) {
 func TestTruncateTime(t *testing.T) {
 	now := time.Now()
 	expected := trunccateSecond(time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location()))
-	result := trunccateSecond(temporal.TruncateTime(now))
+	result := trunccateSecond(gotime.TruncateTime(now))
 	utils.AssertEqual(t, expected, result)
 }
 
@@ -136,11 +136,11 @@ func TestWorkDay(t *testing.T) {
 	days := 7
 
 	expectedDate := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
-	functionDate := temporal.WorkDay(startDay, days, workingDays)
+	functionDate := gotime.WorkDay(startDay, days, workingDays)
 	utils.AssertEqual(t, expectedDate, functionDate)
 
 	expectedDate = time.Date(2024, 1, 12, 0, 0, 0, 0, time.UTC)
-	functionDate = temporal.WorkDay(startDay, days, workingDays, holidays...)
+	functionDate = gotime.WorkDay(startDay, days, workingDays, holidays...)
 	utils.AssertEqual(t, expectedDate, functionDate)
 
 }
@@ -156,10 +156,10 @@ func TestNetWorkdays(t *testing.T) {
 	}
 
 	expectedDays := 8
-	functionDays := temporal.NetWorkDays(startDay, endDay, workingDays)
+	functionDays := gotime.NetWorkDays(startDay, endDay, workingDays)
 	utils.AssertEqual(t, expectedDays, functionDays)
 
 	expectedDays = 6
-	functionDays = temporal.NetWorkDays(startDay, endDay, workingDays, holidays...)
+	functionDays = gotime.NetWorkDays(startDay, endDay, workingDays, holidays...)
 	utils.AssertEqual(t, expectedDays, functionDays)
 }

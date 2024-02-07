@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/temporal/internal/idf"
-	"github.com/maniartech/temporal/internal/utils"
+	"github.com/maniartech/gotime/internal/idf"
+	"github.com/maniartech/gotime/internal/utils"
 )
 
 func TestTrialForma(t *testing.T) {

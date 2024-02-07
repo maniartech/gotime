@@ -4,26 +4,26 @@ import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/temporal"
-	"github.com/maniartech/temporal/temp"
+	"github.com/maniartech/gotime"
+	"github.com/maniartech/gotime/temp"
 )
 
 func TestRange(t *testing.T) {
 	ti := time.Date(2019, 1, 1, 0, 0, 0, 0, time.UTC)
 	d := temp.DateRange().Range(ti)
-	if d.From != temporal.SoD(ti) {
+	if d.From != gotime.SoD(ti) {
 		t.Error("From date is not today's start date")
 	}
-	if d.To != temporal.EoD() {
+	if d.To != gotime.EoD() {
 		t.Error("To date is not today's end date")
 	}
 
 	ti = time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
 	d = temp.DateRange().Range(ti)
-	if d.From != temporal.SoD() {
+	if d.From != gotime.SoD() {
 		t.Error("From date is not today's start date")
 	}
-	ti = temporal.EoD(ti)
+	ti = gotime.EoD(ti)
 	if d.To != ti {
 		t.Error("To date is not today's end date")
 	}
@@ -48,10 +48,10 @@ func TestDateRangeFor(t *testing.T) {
 func TestDateRangeToday(t *testing.T) {
 	d := temp.DateRange().Today()
 
-	if d.From != temporal.SoD() {
+	if d.From != gotime.SoD() {
 		t.Error("From date is not today's start date")
 	}
-	if d.To != temporal.EoD() {
+	if d.To != gotime.EoD() {
 		t.Error("To date is not today's end date")
 	}
 }
@@ -60,10 +60,10 @@ func TestDateRangeToday(t *testing.T) {
 func TestDateRangeYesterday(t *testing.T) {
 	d := temp.DateRange().Yesterday()
 
-	if temporal.DateTime(d.From) != temporal.Yesterday() {
+	if gotime.DateTime(d.From) != gotime.Yesterday() {
 		t.Error("From date is not yesterday's date")
 	}
-	if d.To != temporal.EoD() {
+	if d.To != gotime.EoD() {
 		t.Error("To date is not today's end date")
 	}
 }
@@ -72,10 +72,10 @@ func TestDateRangeYesterday(t *testing.T) {
 func TestDateRangeTomorrow(t *testing.T) {
 	d := temp.DateRange().Tomorrow()
 
-	if d.From != temporal.SoD() {
+	if d.From != gotime.SoD() {
 		t.Error("From date is not today's start date")
 	}
-	if temporal.DateTime(d.To) != temporal.Tomorrow() {
+	if gotime.DateTime(d.To) != gotime.Tomorrow() {
 		t.Error("To date is not tomorrow's date")
 	}
 }
@@ -84,19 +84,19 @@ func TestDateRangeTomorrow(t *testing.T) {
 func TestDateRangeDays(t *testing.T) {
 	d := temp.DateRange().Days(-2)
 
-	if d.From != temporal.SoD().AddDate(0, 0, -1) { // -1 because the base date is included
+	if d.From != gotime.SoD().AddDate(0, 0, -1) { // -1 because the base date is included
 		t.Error("From date is not 2 days ago")
 	}
-	if d.To != temporal.EoD() {
+	if d.To != gotime.EoD() {
 		t.Error("To date is not today's end date")
 	}
 
 	d = temp.DateRange().Days(2)
 
-	if d.From != temporal.SoD() {
+	if d.From != gotime.SoD() {
 		t.Error("From date is not 2 days from now")
 	}
-	if d.To != temporal.EoD().AddDate(0, 0, 1) { // +1 because the base date is included
+	if d.To != gotime.EoD().AddDate(0, 0, 1) { // +1 because the base date is included
 		t.Error("To date is not today's end date")
 	}
 }
@@ -104,7 +104,7 @@ func TestDateRangeDays(t *testing.T) {
 // Tests for DateRange.LastWeek
 func TestDateRangeLastWeek(t *testing.T) {
 	d := temp.DateRange().LastWeek()
-	e := temporal.LastWeek()
+	e := gotime.LastWeek()
 	for e.Weekday() != time.Sunday {
 		e = e.AddDate(0, 0, -1)
 	}
@@ -120,7 +120,7 @@ func TestDateRangeLastWeek(t *testing.T) {
 // Tests for DateRange.ThisWeek
 func TestDateRangeThisWeek(t *testing.T) {
 	d := temp.DateRange().ThisWeek()
-	e := temporal.SoD()
+	e := gotime.SoD()
 	for e.Weekday() != time.Sunday {
 		e = e.AddDate(0, 0, -1)
 	}
@@ -135,7 +135,7 @@ func TestDateRangeThisWeek(t *testing.T) {
 // Tests for DateRange.NextWeek
 func TestDateRangeNextWeek(t *testing.T) {
 	d := temp.DateRange().NextWeek()
-	e := temporal.NextWeek()
+	e := gotime.NextWeek()
 	for e.Weekday() != time.Sunday {
 		e = e.AddDate(0, 0, -1)
 	}
@@ -154,7 +154,7 @@ func TestDateRangeWeeks(t *testing.T) {
 	if d.From != e {
 		t.Error("From date is not 2 weeks ago")
 	}
-	e = temporal.EoD(time.Date(2018, 12, 24, 0, 0, 0, 0, time.UTC))
+	e = gotime.EoD(time.Date(2018, 12, 24, 0, 0, 0, 0, time.UTC))
 	if d.To != e {
 		t.Error("To date is not today's end date")
 	}
@@ -175,7 +175,7 @@ func TestDateRangeWeeks(t *testing.T) {
 // Tests for DateRange.LastMonth
 func TestDateRangeLastMonth(t *testing.T) {
 	d := temp.DateRange().LastMonth()
-	e := temporal.SoD().AddDate(0, -1, 0)
+	e := gotime.SoD().AddDate(0, -1, 0)
 	for e.Day() != 1 {
 		e = e.AddDate(0, 0, -1)
 	}
@@ -197,7 +197,7 @@ func TestDateRangeLastMonth(t *testing.T) {
 // Tests for DateRange.ThisMonth
 func TestDateRangeThisMonth(t *testing.T) {
 	d := temp.DateRange().ThisMonth()
-	e := temporal.SoD()
+	e := gotime.SoD()
 	for e.Day() != 1 {
 		e = e.AddDate(0, 0, -1)
 	}
@@ -218,7 +218,7 @@ func TestDateRangeThisMonth(t *testing.T) {
 // Tests for DateRange.NextMonth
 func TestDateRangeNextMonth(t *testing.T) {
 	d := temp.DateRange().NextMonth()
-	e := temporal.SoD().AddDate(0, 1, 0)
+	e := gotime.SoD().AddDate(0, 1, 0)
 	for e.Day() != 1 {
 		e = e.AddDate(0, 0, -1)
 	}

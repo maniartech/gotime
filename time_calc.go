@@ -1,4 +1,4 @@
-package temporal
+package gotime
 
 import (
 	"math"

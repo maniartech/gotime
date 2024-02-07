@@ -1,4 +1,4 @@
-package temporal
+package gotime
 
 import (
 	"math"
@@ -81,7 +81,6 @@ func MonthShortName(d time.Time) string {
 // func Microsecond() int {
 // 	return d.Nanosecond() / 1000
 // }
-
 
 // Date().Monday(weeks) returns the time.Time of the current week's Monday
 // weeks is the number of weeks to add to the current week

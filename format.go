@@ -1,9 +1,9 @@
-package temporal
+package gotime
 
 import (
 	"time"
 
-	"github.com/maniartech/temporal/internal/idf"
+	"github.com/maniartech/gotime/internal/idf"
 )
 
 // Format is a utility function that takes a time.Time value and a layout string

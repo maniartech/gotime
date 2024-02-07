@@ -1,10 +1,10 @@
-package temporal_test
+package gotime_test
 
 // import (
 // 	"testing"
 // 	"time"
 
-// 	"github.com/maniartech/temporal"
+// 	"github.com/maniartech/gotime"
 // )
 
 // const (
@@ -12,56 +12,56 @@ package temporal_test
 // )
 
 // func TestDateMonday(t *testing.T) {
-// 	d := temporal.Date().Monday()
-// 	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+1)
+// 	d := gotime.Date().Monday()
+// 	e := gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+1)
 // 	if d != e {
 // 		t.Error("Monday is not the start of the week")
 // 	}
 
-// 	d = temporal.Date().Monday(2)
-// 	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+1+14)
+// 	d = gotime.Date().Monday(2)
+// 	e = gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+1+14)
 // 	if d != e {
 // 		t.Error("Date is not a Monday")
 // 	}
 // }
 
 // func TestDateTuesday(t *testing.T) {
-// 	d := temporal.Date().Tuesday()
-// 	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+2)
+// 	d := gotime.Date().Tuesday()
+// 	e := gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+2)
 // 	if d != e {
 // 		t.Error("Tuesday is not the start of the week")
 // 	}
 
-// 	d = temporal.Date().Tuesday(2)
-// 	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+2+14)
+// 	d = gotime.Date().Tuesday(2)
+// 	e = gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+2+14)
 // 	if d != e {
 // 		t.Error("Date is not a Tuesday")
 // 	}
 // }
 
 // func TestDateWednesday(t *testing.T) {
-// 	d := temporal.Date().Wednesday()
-// 	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+3)
+// 	d := gotime.Date().Wednesday()
+// 	e := gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+3)
 // 	if d != e {
 // 		t.Error("Wednesday is not the start of the week")
 // 	}
 
-// 	d = temporal.Date().Wednesday(2)
-// 	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+3+14)
+// 	d = gotime.Date().Wednesday(2)
+// 	e = gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+3+14)
 // 	if d != e {
 // 		t.Error("Date is not a Wednesday")
 // 	}
 // }
 
 // func TestDateThursday(t *testing.T) {
-// 	d := temporal.Date().Thursday()
-// 	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+4)
+// 	d := gotime.Date().Thursday()
+// 	e := gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+4)
 // 	if d != e {
 // 		t.Error("Thursday is not the start of the week")
 // 	}
 
-// 	d = temporal.Date().Thursday(2)
-// 	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+4+14)
+// 	d = gotime.Date().Thursday(2)
+// 	e = gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+4+14)
 // 	if d != e {
 // 		t.Error("Date is not a Thursday")
 // 	}
@@ -69,14 +69,14 @@ package temporal_test
 // }
 
 // func TestDateFriday(t *testing.T) {
-// 	d := temporal.Date().Friday()
-// 	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+5)
+// 	d := gotime.Date().Friday()
+// 	e := gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+5)
 // 	if d != e {
 // 		t.Error("Friday is not the start of the week")
 // 	}
 
-// 	d = temporal.Date().Friday(2)
-// 	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+5+14)
+// 	d = gotime.Date().Friday(2)
+// 	e = gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+5+14)
 // 	if d != e {
 // 		t.Error("Date is not a Friday")
 // 	}
@@ -84,14 +84,14 @@ package temporal_test
 // }
 
 // func TestDateSaturday(t *testing.T) {
-// 	d := temporal.Date().Saturday()
-// 	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+6)
+// 	d := gotime.Date().Saturday()
+// 	e := gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+6)
 // 	if d != e {
 // 		t.Error("Saturday is not the start of the week")
 // 	}
 
-// 	d = temporal.Date().Saturday(2)
-// 	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+6+14)
+// 	d = gotime.Date().Saturday(2)
+// 	e = gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+6+14)
 // 	if d != e {
 // 		t.Error("Date is not a Saturday")
 // 	}
@@ -99,14 +99,14 @@ package temporal_test
 // }
 
 // func TestDateSunday(t *testing.T) {
-// 	d := temporal.Date().Sunday()
-// 	e := temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday()))
+// 	d := gotime.Date().Sunday()
+// 	e := gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday()))
 // 	if d != e {
 // 		t.Error("Sunday is not the start of the week")
 // 	}
 
-// 	d = temporal.Date().Sunday(2)
-// 	e = temporal.DayStart().AddDate(0, 0, -int(temporal.DayStart().Time().Weekday())+7+7)
+// 	d = gotime.Date().Sunday(2)
+// 	e = gotime.DayStart().AddDate(0, 0, -int(gotime.DayStart().Time().Weekday())+7+7)
 // 	if d != e {
 // 		t.Error("Date is not a Sunday")
 // 	}
@@ -114,87 +114,87 @@ package temporal_test
 
 // func TestDate(t *testing.T) {
 // 	ti := time.Date(2017, 1, 1, 0, 0, 0, 0, time.UTC)
-// 	d := temporal.Date(ti)
+// 	d := gotime.Date(ti)
 
-// 	if d != temporal.DayStart(ti) {
+// 	if d != gotime.DayStart(ti) {
 // 		t.Error("Date is not the start of the day")
 // 	}
-// 	if d != temporal.DayEnd(ti) {
+// 	if d != gotime.DayEnd(ti) {
 // 		t.Error("Date is not the end of the day")
 // 	}
 // }
 
 // func TestToday(t *testing.T) {
-// 	today := temporal.DayStart()
-// 	if today != (temporal.DayStart()) {
+// 	today := gotime.DayStart()
+// 	if today != (gotime.DayStart()) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 
-// 	today = temporal.Today()
-// 	if today != (temporal.DayStart()) {
+// 	today = gotime.Today()
+// 	if today != (gotime.DayStart()) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestEoD(t *testing.T) {
-// 	eod := temporal.DayEnd()
-// 	if eod != temporal.DayStart().Add(time.Hour*23).Add(time.Minute*59).Add(time.Second*59) {
+// 	eod := gotime.DayEnd()
+// 	if eod != gotime.DayStart().Add(time.Hour*23).Add(time.Minute*59).Add(time.Second*59) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestYesterday(t *testing.T) {
-// 	yesterday := temporal.Yesterday()
-// 	if yesterday != temporal.DayStart().AddDate(0, 0, -1) {
+// 	yesterday := gotime.Yesterday()
+// 	if yesterday != gotime.DayStart().AddDate(0, 0, -1) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestTomorrow(t *testing.T) {
-// 	tomorrow := temporal.Tomorrow()
-// 	if tomorrow != temporal.DayStart().AddDate(0, 0, 1) {
+// 	tomorrow := gotime.Tomorrow()
+// 	if tomorrow != gotime.DayStart().AddDate(0, 0, 1) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestLastWeek(t *testing.T) {
-// 	lastWeek := temporal.LastWeek()
-// 	if lastWeek != temporal.DayStart().AddDate(0, 0, -7) {
+// 	lastWeek := gotime.LastWeek()
+// 	if lastWeek != gotime.DayStart().AddDate(0, 0, -7) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestLastMonth(t *testing.T) {
-// 	lastMonth := temporal.LastMonth()
-// 	if lastMonth != temporal.DayStart().AddDate(0, -1, 0) {
+// 	lastMonth := gotime.LastMonth()
+// 	if lastMonth != gotime.DayStart().AddDate(0, -1, 0) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestLastYear(t *testing.T) {
-// 	lastYear := temporal.LastYear()
-// 	if lastYear != temporal.DayStart().AddDate(-1, 0, 0) {
+// 	lastYear := gotime.LastYear()
+// 	if lastYear != gotime.DayStart().AddDate(-1, 0, 0) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestNextWeek(t *testing.T) {
-// 	nextWeek := temporal.NextWeek()
-// 	if nextWeek != temporal.DayStart().AddDate(0, 0, 7) {
+// 	nextWeek := gotime.NextWeek()
+// 	if nextWeek != gotime.DayStart().AddDate(0, 0, 7) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestNextMonth(t *testing.T) {
-// 	nextMonth := temporal.NextMonth()
-// 	if nextMonth != temporal.DayStart().AddDate(0, 1, 0) {
+// 	nextMonth := gotime.NextMonth()
+// 	if nextMonth != gotime.DayStart().AddDate(0, 1, 0) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
 
 // func TestNextYear(t *testing.T) {
-// 	nextYear := temporal.NextYear()
-// 	if nextYear != temporal.DayStart().AddDate(1, 0, 0) {
+// 	nextYear := gotime.NextYear()
+// 	if nextYear != gotime.DayStart().AddDate(1, 0, 0) {
 // 		t.Error(ErrInvalidFormat)
 // 	}
 // }
@@ -202,71 +202,71 @@ package temporal_test
 // func BenchmarkToday(b *testing.B) {
 // 	// Benchmarking for Today function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.DayStart()
+// 		gotime.DayStart()
 // 	}
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.Today()
+// 		gotime.Today()
 // 	}
 // }
 // func BenchmarkEoD(b *testing.B) {
 // 	// Benchmarking for EoD function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.DayEnd()
+// 		gotime.DayEnd()
 // 	}
 // }
 
 // func BenchmarkYesterday(b *testing.B) {
 // 	// Benchmarking for Yesterday function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.Yesterday()
+// 		gotime.Yesterday()
 // 	}
 // }
 
 // func BenchmarkTomorrow(b *testing.B) {
 // 	// Benchmarking for Tomorrow function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.Tomorrow()
+// 		gotime.Tomorrow()
 // 	}
 // }
 
 // func BenchmarkLastWeek(b *testing.B) {
-// 	// Benchmarking for temporal.LastWeek function
+// 	// Benchmarking for gotime.LastWeek function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.LastWeek()
+// 		gotime.LastWeek()
 // 	}
 // }
 
 // func BenchmarkLastMonth(b *testing.B) {
-// 	// Benchmarking for temporal.LastMonth function
+// 	// Benchmarking for gotime.LastMonth function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.LastMonth()
+// 		gotime.LastMonth()
 // 	}
 // }
 
 // func BenchmarkLastYear(b *testing.B) {
-// 	// Benchmarking for temporal.LastYear function
+// 	// Benchmarking for gotime.LastYear function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.LastYear()
+// 		gotime.LastYear()
 // 	}
 // }
 
 // func BenchmarkNextWeek(b *testing.B) {
-// 	// Benchmarking for temporal.NextWeek function
+// 	// Benchmarking for gotime.NextWeek function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.NextWeek()
+// 		gotime.NextWeek()
 // 	}
 // }
 
 // func BenchmarkNextMonth(b *testing.B) {
-// 	// Benchmarking for temporal.NextMonth function
+// 	// Benchmarking for gotime.NextMonth function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.NextMonth()
+// 		gotime.NextMonth()
 // 	}
 // }
 
 // func BenchmarkNextYear(b *testing.B) {
-// 	// Benchmarking for temporal.NextYear function
+// 	// Benchmarking for gotime.NextYear function
 // 	for i := 0; i < b.N; i++ {
-// 		temporal.NextYear()
+// 		gotime.NextYear()
 // 	}
 // }

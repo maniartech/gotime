@@ -1,26 +1,21 @@
-package temporal_test
+package gotime_test
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
-	"github.com/maniartech/temporal"
+	"github.com/maniartech/gotime"
 )
 
 func BenchmarkTimeAgo(b *testing.B) {
 	// Benchmark for TimeAgo()
 	date := time.Now().UTC().AddDate(0, 0, 10)
 	for i := 0; i < b.N; i++ {
-		temporal.TimeAgo(date)
+		gotime.TimeAgo(date)
 	}
 }
 
 func TestTimeAgo(t *testing.T) {
-	// Test case for TimeAgo()
-
-	fmt.Println(temporal.TimeAgo(time.Date(2022, 1, 1, 19, 40, 0, 0, time.Local)))
-
 	timeAgoTestCase(t, "Just now", time.Now().UTC())
 	timeAgoTestCase(t, "Just now", time.Now().UTC().Add(time.Second*-9))
 	timeAgoTestCase(t, "In a few seconds", time.Now().UTC().Add(time.Second*9))
@@ -57,14 +52,14 @@ func TestTimeAgo(t *testing.T) {
 }
 
 func timeAgoTestCase(t *testing.T, expected string, date time.Time) {
-	timeAgo := temporal.TimeAgo(date)
+	timeAgo := gotime.TimeAgo(date)
 	if timeAgo != expected {
 		t.Errorf("Expected \"%v\", got, \"%v\"", expected, timeAgo)
 	}
 }
 
 func timeAgoTestCaseWithBaseTime(t *testing.T, expected string, date time.Time, baseTime time.Time) {
-	timeAgo := temporal.TimeAgo(date, baseTime)
+	timeAgo := gotime.TimeAgo(date, baseTime)
 	if timeAgo != expected {
 		t.Errorf("Expected \"%v\", got, \"%v\"", expected, timeAgo)
 	}

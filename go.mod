@@ -1,3 +1,3 @@
-module github.com/maniartech/temporal
+module github.com/maniartech/gotime
 
 go 1.19

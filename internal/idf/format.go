@@ -7,7 +7,7 @@ import (
 )
 
 // This file contains the IDF (Intuitive Date Format) conversion functions
-// for the temporal package.
+// for the gotime package.
 
 func Format(dt time.Time, layout string) string {
 	convertedLayouts, _ := convertLayout(layout, false)
