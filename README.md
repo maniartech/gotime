@@ -1,5 +1,6 @@
 # GoTime 🕧🕐🕜🕑🕝🕒
 
+> ⚠️ Package rename changed to `gotime`on community request.
 > github.com/maniartech/gotime
 
 GoTime is a Go language library designed to simplify the parsing, formatting,
