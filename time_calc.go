@@ -184,6 +184,61 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour)
 }
 
+// PrevWorkDay returns the date before the given number of working days
+//
+// # Arguments
+//
+// startDate: (time.Time) The date to start from
+//
+// days: (int) The number of working days to subtract
+//
+// workingDays: ([7]bool) The working days of the week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
+//
+// holidays: (...time.Time) The holidays to be excluded
+//
+// # Note
+//
+// The working days are the days that are not holidays and are in the working days of the week
+func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) time.Time {
+	finalDateSerial := DateValue(startDate)
+	weekDay := startDate.Weekday()
+
+	holidaysSerial := make([]int, 0, len(holidays))
+	for _, holiday := range holidays {
+		datevalue := DateValue(holiday)
+		if datevalue > finalDateSerial {
+			continue
+		}
+		holidaysSerial = append(holidaysSerial, datevalue)
+	}
+
+	sort.Slice(holidaysSerial, func(i, j int) bool {
+		return holidaysSerial[i] < holidaysSerial[j]
+	})
+
+	for days > 0 {
+		finalDateSerial--
+		weekDay = (weekDay + 6) % 7
+		if !workingDays[weekDay] {
+			continue
+		}
+		found := false
+		for _, holiday := range holidaysSerial {
+			if finalDateSerial == holiday {
+				holidaysSerial = holidaysSerial[1:]
+				found = true
+				break
+			}
+		}
+		if found {
+			continue
+		}
+		days--
+	}
+
+	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour)
+}
+
 // NetWorkdays returns the number of working days between the given dates
 //
 // # Arguments
@@ -198,6 +253,11 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) int {
 	startDateSerial := DateValue(startDate)
 	endDateSerial := DateValue(endDate)
+
+	if startDateSerial > endDateSerial {
+		startDateSerial, endDateSerial = endDateSerial, startDateSerial
+	}
+
 	weekDay := startDate.Weekday()
 
 	holidaysSerial := make([]int, 0, len(holidays))
