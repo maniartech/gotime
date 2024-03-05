@@ -222,6 +222,13 @@ Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC
 | Tomorrow  | Returns the date exactly one day after today                 |
 | Days      | Returns the date of the given number of days from now or the given date |
 
+#### DateRange Functions
+
+| Function  | Description                                                                                   |
+|-----------|-----------------------------------------------------------------------------------------------|
+| IsInRange | Returns true if the given date is in the specified range                                      |
+| IsInDateRange | Returns true if the given date is in the specified range. Before performing inclusive comparison, it sets the time to the start ~~of~~ the day for the start date and the end of the day for the end date. |
+
 ### DateTime Utility Functions
 
 | Function       | Description                                                                                   |
@@ -239,8 +246,9 @@ Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC
 | IsBetween      | Returns true if the given date is between the specified range                                  |
 | TruncateTime   | Truncates the time part from the given date                                                   |
 | TruncateDate   | Truncates the date part from the given date                                                   |
-| WorkDay        | Returns the date after the specified number of workdays, considering holidays and weekends    |
 | NetWorkDays    | Returns the number of workdays between two dates, considering holidays and weekends           |
+| WorkDay        | Returns the date after the specified number of workdays, considering holidays and weekends    |
+| PrevWorkDay    | Returns the date before the specified number of working days, considering holidays and weekends   |
 
 For more information, see the [time package documentation](https://golang.org/pkg/time/#pkg-constants).
 
