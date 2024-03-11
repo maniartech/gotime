@@ -95,26 +95,6 @@ func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time {
 	return time.UnixMilli(min)
 }
 
-// IsBetween returns true if the given time.Time is between the given time.Time range
-//
-// # Arguments
-//
-// t1: (time.Time) The date to be checked
-//
-// t2: (time.Time) The first date of the range
-//
-// t3: (time.Time) The second date of the range
-func IsBetween(t1, t2, t3 time.Time) bool {
-	t1Unix := t1.UnixMilli()
-	t2Unix := t2.UnixMilli()
-	t3Unix := t3.UnixMilli()
-	if t2Unix > t3Unix {
-		t2Unix, t3Unix = t3Unix, t2Unix
-	}
-
-	return t1Unix >= t2Unix && t1Unix <= t3Unix
-}
-
 // TruncateTime truncates the time part of the given date. It returns
 // the tructed date.
 //
