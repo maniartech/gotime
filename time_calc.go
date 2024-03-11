@@ -234,11 +234,11 @@ func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...
 	startDateSerial := DateValue(startDate)
 	endDateSerial := DateValue(endDate)
 
+	weekDay := startDate.Weekday()
 	if startDateSerial > endDateSerial {
 		startDateSerial, endDateSerial = endDateSerial, startDateSerial
+		weekDay = endDate.Weekday()
 	}
-
-	weekDay := startDate.Weekday()
 
 	holidaysSerial := make([]int, 0, len(holidays))
 	for _, holiday := range holidays {
