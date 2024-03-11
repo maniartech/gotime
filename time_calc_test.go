@@ -116,7 +116,60 @@ func TestWorkDay(t *testing.T) {
 	expectedDate = time.Date(2024, 1, 12, 0, 0, 0, 0, time.UTC)
 	functionDate = gotime.WorkDay(startDay, days, workingDays, holidays...)
 	utils.AssertEqual(t, expectedDate, functionDate)
+}
 
+func TestPrevWorkDay(t *testing.T) {
+	// Define the working days (Monday to Friday)
+	workingDays := [7]bool{false, true, true, true, true, true, false}
+
+	// Define some holidays
+	holidays := []time.Time{
+		time.Date(2022, time.January, 1, 0, 0, 0, 0, time.UTC),   // New Year's Day
+		time.Date(2022, time.December, 25, 0, 0, 0, 0, time.UTC), // Christmas Day
+	}
+
+	// Define some test cases
+	testCases := []struct {
+		name       string
+		startDate  time.Time
+		days       int
+		expectDate time.Time
+	}{
+		{
+			name:       "Subtract 1 working day, no holiday",
+			startDate:  time.Date(2022, time.January, 5, 0, 0, 0, 0, time.UTC), // Wednesday
+			days:       1,
+			expectDate: time.Date(2022, time.January, 4, 0, 0, 0, 0, time.UTC), // Tuesday
+		},
+		{
+			name:       "Subtract 1 working day, with holiday",
+			startDate:  time.Date(2022, time.January, 3, 0, 0, 0, 0, time.UTC), // Monday
+			days:       1,
+			expectDate: time.Date(2021, time.December, 31, 0, 0, 0, 0, time.UTC), // Friday
+		},
+		{
+			name:       "Subtract 5 working days, with holiday",
+			startDate:  time.Date(2022, time.January, 10, 0, 0, 0, 0, time.UTC), // Monday
+			days:       5,
+			expectDate: time.Date(2022, time.January, 3, 0, 0, 0, 0, time.UTC), // Monday
+		},
+		{
+			name:       "Subtract 20 working days, with holiday",
+			startDate:  time.Date(2022, time.January, 31, 0, 0, 0, 0, time.UTC), // Monday
+			days:       20,
+			expectDate: time.Date(2022, time.January, 3, 0, 0, 0, 0, time.UTC), // Monday
+		},
+	}
+
+	// Run the test cases
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			gotDate := gotime.PrevWorkDay(tc.startDate, tc.days, workingDays, holidays...)
+			if !gotDate.Equal(tc.expectDate) {
+				t.Errorf("got %v, want %v", gotDate, tc.expectDate)
+			}
+		})
+	}
 }
 
 func TestNetWorkdays(t *testing.T) {
@@ -130,7 +183,7 @@ func TestNetWorkdays(t *testing.T) {
 	}
 
 	expectedDays := 8
-	functionDays := gotime.NetWorkDays(startDay, endDay, workingDays)
+	functionDays := gotime.NetWorkDays(endDay, startDay, workingDays)
 	utils.AssertEqual(t, expectedDays, functionDays)
 
 	expectedDays = 6
