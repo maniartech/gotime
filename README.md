@@ -61,9 +61,8 @@ gotime.WorkDay(time.Now(), 15, weekDays) // Returns the date after the specified
 It provides features are practical and useful in real-world applications. These
 features are either missing or not easy to use in the standard time package.
 
-- [x] **Human-Friendly Parsing:** Effortlessly parse dates in intuitive formats
-      like dd/mm/yyyy.
-- [x] **Easy Formatting:** Format dates using straightforward, human-readable formats.
+- [x] **Easy Formatting:** Format dates using straightforward, human-readable and intuitive specifiers like dd/mm/yyyy.
+- [x] **Human-Friendly Parsing:** Effortlessly parse dates using intuitive date specifiers
 - [x] **Format Conversion:** Seamlessly convert dates between formats, e.g., from `dd/mm/yyyy` to `yyyy-mm-dd`.
 - [x] **Relative Time Processing:** Translate datetime into relative terms like `a few minutes ago`, `yesterday`, `5 days ago`, or `3 years from now`.
 - [x] **Finder Functions:** Utilize functions like `Yesterday()`, `Tomorrow()`, `SoD()` (Start of Day), and `EoD()` (End of Day) etc.
@@ -102,9 +101,9 @@ install the `gotime` package in your project.
 go get github.com/maniartech/gotime
 ```
 
-## Intuitive Date Format (IDF)
+## Intuitive Date Specifiers (IDS)
 
-We've developed the Intuitive Date Format (IDF) for `gotime`. `IDF is a cAsE-insensitive format`, eliminating ambiguity often associated with dd-mm-yyyy formats. This intuitive format makes date and time formatting simple and hackable. entry by removing the need to remember upper and lower case attributes, a common issue with other similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDF intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDF, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
+We've developed the Intuitive Date Specifiers (IDS) for `gotime`. `IDS is a cAsE-insensitive format`, eliminating ambiguity often associated with dd-mm-yyyy formats. This intuitive specifiers makes date and time formatting simple and hackable. entry by removing the need to remember upper and lower case attributes, a common issue with other similar formats. For example, %Y represents a four-digit year, while %y denotes a two-digit year in strftime. In contrast, IDS intuitively uses yyyy for a four-digit year and yy for a two-digit year. Typing dates is also more straightforward with IDS, as the format yyyy-mm-dd is easier to remember and input compared to the less intuitive 2006-01-02.
 
 It supports simple, human-friendly date-time formatting. The table below displays the supported formats. Internally, `gotime` utilizes time.Time.Format() and converts human-friendly formats into the time.Time format. For instance, it transforms yyyy-mm-dd into 2006-01-02 before using time.Time.Format() to format the date.
 
@@ -166,11 +165,11 @@ Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC
 
 | Function         | Description                                                                                                   |
 |------------------|---------------------------------------------------------------------------------------------------------------|
-| Parse            | Parses the given date string using [IDF](#intuitive-date-format-idf), a human-friendly, hackable date format                                |
-| ParseInLocation  | Parses the given date string in the specified location using [IDF](#intuitive-date-format-idf), a human-friendly, hackable date format, and the given location |
-| Format           | Formats the given date using [IDF](#intuitive-date-format-idf) format specifiers                                                            |
-| FormatTimestamp  | Formats the given timestamp in Unix format using [IDF](#intuitive-date-format-idf) format specifiers                                        |
-| Convert          | Converts the given date string from one format to another using [IDF](#intuitive-date-format-idf) format specifiers                         |
+| Parse            | Parses the given date string using [IDS](#intuitive-date-specifiers-ids), a human-friendly, hackable date format                                |
+| ParseInLocation  | Parses the given date string in the specified location using [IDS](#intuitive-date-specifiers-ids), a human-friendly, hackable date format, and the given location |
+| Format           | Formats the given date using [IDS](#intuitive-date-specifiers-ids) format specifiers                                                            |
+| FormatTimestamp  | Formats the given timestamp in Unix format using [IDS](#intuitive-date-specifiers-ids) format specifiers                                        |
+| Convert          | Converts the given date string from one format to another using [IDS](#intuitive-date-specifiers-ids) format specifiers                         |
 
 ### Time Ago
 
