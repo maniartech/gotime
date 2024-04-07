@@ -3,7 +3,7 @@ package gotime
 import (
 	"time"
 
-	"github.com/maniartech/gotime/internal/idf"
+	"github.com/maniartech/gotime/internal/ids"
 )
 
 // Format is a utility function that takes a time.Time value and a layout string
@@ -14,7 +14,7 @@ import (
 //
 //	formattedDate := Format(time.Now(), "yyyy-mm-dd")
 func Format(dt time.Time, layout string) string {
-	return idf.Format(dt, layout)
+	return ids.Format(dt, layout)
 }
 
 // FormatUnix takes the Unix time in seconds and nanoseconds,
@@ -25,7 +25,7 @@ func Format(dt time.Time, layout string) string {
 //
 //	formattedDate := FormatUnix(1609459200, 0, "yyyy-mm-dd")
 func FormatUnix(sec int64, nsec int64, layout string) string {
-	return idf.Format(
+	return ids.Format(
 		time.Unix(sec, nsec), layout,
 	)
 }
@@ -37,5 +37,5 @@ func FormatUnix(sec int64, nsec int64, layout string) string {
 //
 //	formattedDate := FormatTimestamp(1609459200, "yyyy-mm-dd")
 func FormatTimestamp(timestamp int64, layout string) string {
-	return idf.Format(time.Unix(timestamp, 0), layout)
+	return ids.Format(time.Unix(timestamp, 0), layout)
 }

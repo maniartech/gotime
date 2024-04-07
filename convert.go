@@ -1,6 +1,6 @@
 package gotime
 
-import "github.com/maniartech/gotime/internal/idf"
+import "github.com/maniartech/gotime/internal/ids"
 
 // ParseAndFormat is a utility function that takes a date-time string, a source
 // format string (from), and a target format string (to). The function parses
@@ -16,5 +16,5 @@ import "github.com/maniartech/gotime/internal/idf"
 //	}
 //	fmt.Println(formattedDate) // 31st December, 2022
 func Convert(value, fromLayout, toLayout string) (string, error) {
-	return idf.Convert(value, fromLayout, toLayout)
+	return ids.Convert(value, fromLayout, toLayout)
 }
