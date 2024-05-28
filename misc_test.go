@@ -2,6 +2,7 @@ package gotime_test
 
 import (
 	"testing"
+	"time"
 
 	"github.com/maniartech/gotime"
 )
@@ -146,5 +147,25 @@ func TestSoD(t *testing.T) {
 	date := gotime.SoD(gotime.NewDate(2021, 1, 1))
 	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 || date.Hour() != 0 || date.Minute() != 0 || date.Second() != 0 {
 		t.Errorf("Expected 2021-01-01 00:00:00, got, %v", date)
+	}
+}
+
+func TestReplaceDate(t *testing.T) {
+	date := time.Date(2022, time.April, 15, 12, 30, 0, 0, time.UTC)
+	newDate := gotime.ReplaceDate(date, 2023, 5, 20)
+	expected := time.Date(2023, time.May, 20, 12, 30, 0, 0, time.UTC)
+
+	if !newDate.Equal(expected) {
+		t.Errorf("Expected %v, got %v", expected, newDate)
+	}
+}
+
+func TestReplaceTime(t *testing.T) {
+	date := time.Date(2022, time.April, 15, 12, 30, 0, 0, time.UTC)
+	newTime := gotime.ReplaceTime(date, 15, 45, 0)
+	expected := time.Date(2022, time.April, 15, 15, 45, 0, 0, time.UTC)
+
+	if !newTime.Equal(expected) {
+		t.Errorf("Expected %v, got %v", expected, newTime)
 	}
 }
