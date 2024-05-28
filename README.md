@@ -248,6 +248,8 @@ Such as `time.Layout`, `time.ANSIC`, `time.UnixDate`, `time.RubyDate`, `time.RFC
 | NetWorkDays    | Returns the number of workdays between two dates, considering holidays and weekends           |
 | WorkDay        | Returns the date after the specified number of workdays, considering holidays and weekends    |
 | PrevWorkDay    | Returns the date before the specified number of working days, considering holidays and weekends   |
+| ReplaceDate    | ReplaceDate lets you replace the date part of a time.Time object with a new date. |
+| ReplaceTime    | ReplaceTime lets you replace the time part of a time.Time object with a new time. |
 
 For more information, see the [time package documentation](https://golang.org/pkg/time/#pkg-constants).
 
