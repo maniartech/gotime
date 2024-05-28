@@ -97,3 +97,25 @@ func NewDate(year, month, day int) time.Time {
 func NewTime(hour, minute, second int) time.Time {
 	return time.Date(0, 0, 0, hour, minute, second, 0, time.UTC)
 }
+
+// ReplaceDate lets you replace the date part of a time.Time object with a new date.
+// It keeps the time part of the time.Time object unchanged.
+//
+// Example:
+//   date := time.Date(2022, time.April, 15, 12, 30, 0, 0, time.UTC)
+//   newDate := ReplaceDate(date, 2023, 5, 20)
+//   // newDate == time.Date(2023, time.May, 20, 12, 30, 0, 0, time.UTC)
+func ReplaceDate(t time.Time, year, month, day int) time.Time {
+	return time.Date(year, time.Month(month), day, t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), t.Location())
+}
+
+// ReplaceTime lets you replace the time part of a time.Time object with a new time.
+// It keeps the date part of the time.Time object unchanged.
+//
+// Example:
+//   date := time.Date(2022, time.April, 15, 12, 30, 0, 0, time.UTC)
+//   newTime := ReplaceTime(date, 15, 45, 0)
+//   // newTime == time.Date(2022, time.April, 15, 15, 45, 0, 0, time.UTC)
+func ReplaceTime(t time.Time, hour, minute, second int) time.Time {
+	return time.Date(t.Year(), t.Month(), t.Day(), hour, minute, second, t.Nanosecond(), t.Location())
+}
