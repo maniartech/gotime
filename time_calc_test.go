@@ -118,6 +118,24 @@ func TestWorkDay(t *testing.T) {
 	utils.AssertEqual(t, expectedDate, functionDate)
 }
 
+func TestWorkDayWithUnsortedHolidays(t *testing.T) {
+	startDay := time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
+	workingDays := [7]bool{false, true, true, true, true, true, false}
+
+	// Deliberately unsorted holidays
+	holidays := []time.Time{
+		time.Date(2024, 1, 5, 0, 0, 0, 0, time.UTC),
+		time.Date(2024, 1, 2, 0, 0, 0, 0, time.UTC),
+		time.Date(2024, 1, 3, 0, 0, 0, 0, time.UTC),
+	}
+
+	days := 5
+
+	expectedDate := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
+	functionDate := gotime.WorkDay(startDay, days, workingDays, holidays...)
+	utils.AssertEqual(t, expectedDate, functionDate)
+}
+
 func TestPrevWorkDay(t *testing.T) {
 	// Define the working days (Monday to Friday)
 	workingDays := [7]bool{false, true, true, true, true, true, false}
@@ -172,6 +190,24 @@ func TestPrevWorkDay(t *testing.T) {
 	}
 }
 
+func TestPrevWorkDayWithUnsortedHolidays(t *testing.T) {
+	startDay := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
+	workingDays := [7]bool{false, true, true, true, true, true, false}
+
+	// Deliberately unsorted holidays
+	holidays := []time.Time{
+		time.Date(2024, 1, 8, 0, 0, 0, 0, time.UTC),
+		time.Date(2024, 1, 3, 0, 0, 0, 0, time.UTC),
+		time.Date(2024, 1, 5, 0, 0, 0, 0, time.UTC),
+	}
+
+	days := 5
+
+	expectedDate := time.Date(2024, 1, 2, 0, 0, 0, 0, time.UTC)
+	functionDate := gotime.PrevWorkDay(startDay, days, workingDays, holidays...)
+	utils.AssertEqual(t, expectedDate, functionDate)
+}
+
 func TestNetWorkdays(t *testing.T) {
 	startDay := time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC)
 	endDay := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
@@ -189,4 +225,24 @@ func TestNetWorkdays(t *testing.T) {
 	expectedDays = 6
 	functionDays = gotime.NetWorkDays(startDay, endDay, workingDays, holidays...)
 	utils.AssertEqual(t, expectedDays, functionDays)
+}
+
+func TestDateValue(t *testing.T) {
+	testCases := []struct {
+		date     time.Time
+		expected int
+	}{
+		{time.Date(1900, 1, 1, 0, 0, 0, 0, time.UTC), 2},
+		{time.Date(1900, 1, 2, 0, 0, 0, 0, time.UTC), 3},
+		{time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC), 45252},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.date.String(), func(t *testing.T) {
+			result := gotime.DateValue(tc.date)
+			if result != tc.expected {
+				t.Errorf("Expected %d, got %d", tc.expected, result)
+			}
+		})
+	}
 }
