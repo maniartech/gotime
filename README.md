@@ -1,7 +1,5 @@
 # GoTime 🕧🕐🕜🕑🕝🕒
 
-> ⚠️ Package name changed to `gotime` on community request.
-
 Designed on the top of Golang's built-in `time` package, instead of reinventing
 the wheel `gotime` uses internal `time` package to provide additional
 day-to-day functionalities that are practical for real-world applications.
