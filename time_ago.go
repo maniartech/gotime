@@ -86,6 +86,7 @@ func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	return calculateTimeVal(len(hoursList)-1, hours, future)
 }
 
+// calculateTimeVal calculates the time value and returns a string that describes the time difference in human-readable terms.
 func calculateTimeVal(scale int, hours float64, future bool) string {
 	timeVal := int(math.Round(hours / hoursList[scale]))
 	timeScaleVal := timeScale[scale]
@@ -96,7 +97,7 @@ func calculateTimeVal(scale int, hours float64, future bool) string {
 	return lastOrNext(timeScaleVal, timeVal, future)
 }
 
-// Returns the string "Just now" or "In a few seconds" depending on the future bool
+// justNow returns the string "Just now" or "In a few seconds" depending on the future bool.
 func justNow(future bool) string {
 	if future {
 		return "In a few seconds"
@@ -104,7 +105,7 @@ func justNow(future bool) string {
 	return "Just now"
 }
 
-// Returns the string "A minute ago" or "In a minute" depending on the future bool
+// minuteAgo returns the string "A minute ago" or "In a minute" depending on the future bool.
 func minuteAgo(future bool) string {
 	if future {
 		return "In a minute"
@@ -112,7 +113,7 @@ func minuteAgo(future bool) string {
 	return "A minute ago"
 }
 
-// Returns the string "Few minutes ago" or "In a few minutes" depending on the future bool
+// fewMinutesAgo returns the string "Few minutes ago" or "In a few minutes" depending on the future bool.
 func fewMinutesAgo(future bool) string {
 	if future {
 		return "In a few minutes"
@@ -120,7 +121,7 @@ func fewMinutesAgo(future bool) string {
 	return "Few minutes ago"
 }
 
-// Returns the string "Yesterday" or "Tomorrow" depending on the future bool
+// yesterdayOrTomorrow returns the string "Yesterday" or "Tomorrow" depending on the future bool.
 func yesterdayOrTomorrow(date time.Time, future bool) string {
 	now := time.Now().UTC()
 	nowYear, nowMonth, nowDay := now.Date()
@@ -146,7 +147,7 @@ func yesterdayOrTomorrow(date time.Time, future bool) string {
 	return ""
 }
 
-// Returns the string "Last <timeScaleVal>" or "In a <timeScaleVal>" depending on the future bool
+// lastOrNextSingular returns the string "Last <timeScaleVal>" or "In a <timeScaleVal>" depending on the future bool.
 func lastOrNextSingular(timeScaleVal string, future bool) string {
 	if future {
 		return fmt.Sprintf("In a %s", timeScaleVal[:len(timeScaleVal)-1])
@@ -154,6 +155,7 @@ func lastOrNextSingular(timeScaleVal string, future bool) string {
 	return fmt.Sprintf("Last %s", timeScaleVal[:len(timeScaleVal)-1])
 }
 
+// lastOrNext returns the string "Last <timeScaleVal>" or "In <timeVal> <timeScaleVal>" depending on the future bool.
 func lastOrNext(timeScaleVal string, timeVal int, future bool) string {
 	if future {
 		return fmt.Sprintf("In %d %s", timeVal, timeScaleVal)
