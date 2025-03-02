@@ -1,9 +1,18 @@
 package gotime
 
 import (
+	"errors"
+	"fmt"
 	"math"
 	"sort"
 	"time"
+)
+
+// Common errors
+var (
+	ErrNegativeDays  = errors.New("number of days cannot be negative")
+	ErrNoWorkingDays = errors.New("at least one working day must be specified")
+	ErrInvalidDate   = errors.New("date cannot be zero value")
 )
 
 // DateValue returns the serial number of the given time.Time
@@ -124,7 +133,26 @@ func TruncateTime(date time.Time) time.Time {
 // # Note
 //
 // The working days are the days that are not holidays and are in the working days of the week
-func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) time.Time {
+func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) (time.Time, error) {
+	if days < 0 {
+		return time.Time{}, fmt.Errorf("%w: %d", ErrNegativeDays, days)
+	}
+	if startDate.IsZero() {
+		return time.Time{}, ErrInvalidDate
+	}
+
+	// Check if at least one working day is specified
+	hasWorkingDay := false
+	for _, isWorking := range workingDays {
+		if isWorking {
+			hasWorkingDay = true
+			break
+		}
+	}
+	if !hasWorkingDay {
+		return time.Time{}, ErrNoWorkingDays
+	}
+
 	finalDateSerial := DateValue(startDate)
 	weekDay := startDate.Weekday()
 
@@ -161,7 +189,7 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 		days--
 	}
 
-	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour)
+	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour), nil
 }
 
 // PrevWorkDay returns the date before the given number of working days
@@ -179,7 +207,26 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 // # Note
 //
 // The working days are the days that are not holidays and are in the working days of the week
-func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) time.Time {
+func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) (time.Time, error) {
+	if days < 0 {
+		return time.Time{}, fmt.Errorf("%w: %d", ErrNegativeDays, days)
+	}
+	if startDate.IsZero() {
+		return time.Time{}, ErrInvalidDate
+	}
+
+	// Check if at least one working day is specified
+	hasWorkingDay := false
+	for _, isWorking := range workingDays {
+		if isWorking {
+			hasWorkingDay = true
+			break
+		}
+	}
+	if !hasWorkingDay {
+		return time.Time{}, ErrNoWorkingDays
+	}
+
 	finalDateSerial := DateValue(startDate)
 	weekDay := startDate.Weekday()
 
@@ -216,10 +263,10 @@ func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ..
 		days--
 	}
 
-	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour)
+	return time.Date(1900, time.Month(1), 1, 0, 0, 0, 0, time.UTC).Add(time.Duration(finalDateSerial-2) * 24 * time.Hour), nil
 }
 
-// NetWorkdays returns the number of working days between the given dates
+// NetWorkDays returns the number of working days between the given dates
 //
 // # Arguments
 //
@@ -230,7 +277,23 @@ func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ..
 // workingDays: ([7]bool) The working days of the week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
 //
 // holidays: (...time.Time) The holidays to be excluded
-func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) int {
+func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) (int, error) {
+	if startDate.IsZero() || endDate.IsZero() {
+		return 0, ErrInvalidDate
+	}
+
+	// Check if at least one working day is specified
+	hasWorkingDay := false
+	for _, isWorking := range workingDays {
+		if isWorking {
+			hasWorkingDay = true
+			break
+		}
+	}
+	if !hasWorkingDay {
+		return 0, ErrNoWorkingDays
+	}
+
 	startDateSerial := DateValue(startDate)
 	endDateSerial := DateValue(endDate)
 
@@ -273,5 +336,5 @@ func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...
 		days++
 	}
 
-	return days
+	return days, nil
 }
