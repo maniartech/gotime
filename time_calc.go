@@ -118,6 +118,19 @@ func TruncateTime(date time.Time) time.Time {
 	)
 }
 
+// Helper function to check if a date is a working day and not a holiday
+func isWorkingDay(dateSerial int, weekDay time.Weekday, workingDays [7]bool, holidaysSerial []int) bool {
+	if !workingDays[weekDay] {
+		return false
+	}
+	for _, holiday := range holidaysSerial {
+		if dateSerial == holiday {
+			return false
+		}
+	}
+	return true
+}
+
 // WorkDay returns the date after the given number of working days
 //
 // # Arguments
@@ -172,18 +185,7 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 	for days > 0 {
 		finalDateSerial++
 		weekDay = (weekDay + 1) % 7
-		if !workingDays[weekDay] {
-			continue
-		}
-		found := false
-		for _, holiday := range holidaysSerial {
-			if finalDateSerial == holiday {
-				holidaysSerial = holidaysSerial[1:]
-				found = true
-				break
-			}
-		}
-		if found {
+		if !isWorkingDay(finalDateSerial, weekDay, workingDays, holidaysSerial) {
 			continue
 		}
 		days--
@@ -246,18 +248,7 @@ func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ..
 	for days > 0 {
 		finalDateSerial--
 		weekDay = (weekDay + 6) % 7
-		if !workingDays[weekDay] {
-			continue
-		}
-		found := false
-		for _, holiday := range holidaysSerial {
-			if finalDateSerial == holiday {
-				holidaysSerial = holidaysSerial[1:]
-				found = true
-				break
-			}
-		}
-		if found {
+		if !isWorkingDay(finalDateSerial, weekDay, workingDays, holidaysSerial) {
 			continue
 		}
 		days--
