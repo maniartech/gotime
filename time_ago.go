@@ -123,11 +123,11 @@ func fewMinutesAgo(future bool) string {
 
 // yesterdayOrTomorrow returns the string "Yesterday" or "Tomorrow" depending on the future bool.
 func yesterdayOrTomorrow(date time.Time, future bool) string {
-	now := time.Now().UTC()
+	now := time.Now().In(date.Location())
 	nowYear, nowMonth, nowDay := now.Date()
 	if future {
-		dayAfterTomorrowMidnight := NewDate(nowYear, int(nowMonth), nowDay+2)
-		tomorrowMidnight := NewDate(nowYear, int(nowMonth), nowDay+1)
+		dayAfterTomorrowMidnight := NewDate(nowYear, int(nowMonth), nowDay+2, date.Location())
+		tomorrowMidnight := NewDate(nowYear, int(nowMonth), nowDay+1, date.Location())
 
 		//If the date is after tomorrow midnight and before day after tomorrow midnight then print "Tomorrow"
 		if date.After(tomorrowMidnight) && date.Before(dayAfterTomorrowMidnight) {
@@ -138,8 +138,8 @@ func yesterdayOrTomorrow(date time.Time, future bool) string {
 
 	// Past
 	// Calculating the midnight of the day after tomorrow, tomorrow, yesterday and day before yesterday
-	yesterdayMidnight := NewDate(nowYear, int(nowMonth), nowDay)
-	dayBeforeYesterdayMidnight := NewDate(nowYear, int(nowMonth), nowDay-1)
+	yesterdayMidnight := NewDate(nowYear, int(nowMonth), nowDay, date.Location())
+	dayBeforeYesterdayMidnight := NewDate(nowYear, int(nowMonth), nowDay-1, date.Location())
 
 	if date.After(dayBeforeYesterdayMidnight) && date.Before(yesterdayMidnight) {
 		return "Yesterday"

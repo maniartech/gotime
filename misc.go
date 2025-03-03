@@ -82,8 +82,8 @@ func DaysInQuarter(year, quarter int) int {
 // Example:
 //   date := NewDate(2022, 4, 15)
 //   // date == time.Date(2022, time.April, 15, 0, 0, 0, 0, time.UTC)
-func NewDate(year, month, day int) time.Time {
-	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
+func NewDate(year, month, day int, loc *time.Location) time.Time {
+	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc)
 }
 
 // NewTime creates a time.Time object from the given hour, minute and second.
@@ -94,8 +94,8 @@ func NewDate(year, month, day int) time.Time {
 // Example:
 //   timeObj := NewTime(12, 30, 0)
 //   // timeObj == time.Date(0, 1, 1, 12, 30, 0, 0, time.UTC)
-func NewTime(hour, minute, second int) time.Time {
-	return time.Date(0, 0, 0, hour, minute, second, 0, time.UTC)
+func NewTime(hour, minute, second int, loc *time.Location) time.Time {
+	return time.Date(0, 0, 0, hour, minute, second, 0, loc)
 }
 
 // ReplaceDate lets you replace the date part of a time.Time object with a new date.

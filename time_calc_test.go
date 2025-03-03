@@ -110,11 +110,13 @@ func TestWorkDay(t *testing.T) {
 	days := 7
 
 	expectedDate := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
-	functionDate := gotime.WorkDay(startDay, days, workingDays)
+	functionDate, err := gotime.WorkDay(startDay, days, workingDays)
+	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
 
 	expectedDate = time.Date(2024, 1, 12, 0, 0, 0, 0, time.UTC)
-	functionDate = gotime.WorkDay(startDay, days, workingDays, holidays...)
+	functionDate, err = gotime.WorkDay(startDay, days, workingDays, holidays...)
+	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
 }
 
@@ -132,7 +134,8 @@ func TestWorkDayWithUnsortedHolidays(t *testing.T) {
 	days := 5
 
 	expectedDate := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
-	functionDate := gotime.WorkDay(startDay, days, workingDays, holidays...)
+	functionDate, err := gotime.WorkDay(startDay, days, workingDays, holidays...)
+	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
 }
 
@@ -182,7 +185,8 @@ func TestPrevWorkDay(t *testing.T) {
 	// Run the test cases
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			gotDate := gotime.PrevWorkDay(tc.startDate, tc.days, workingDays, holidays...)
+			gotDate, err := gotime.PrevWorkDay(tc.startDate, tc.days, workingDays, holidays...)
+			utils.AssertNoError(t, err)
 			if !gotDate.Equal(tc.expectDate) {
 				t.Errorf("got %v, want %v", gotDate, tc.expectDate)
 			}
@@ -204,7 +208,8 @@ func TestPrevWorkDayWithUnsortedHolidays(t *testing.T) {
 	days := 5
 
 	expectedDate := time.Date(2024, 1, 2, 0, 0, 0, 0, time.UTC)
-	functionDate := gotime.PrevWorkDay(startDay, days, workingDays, holidays...)
+	functionDate, err := gotime.PrevWorkDay(startDay, days, workingDays, holidays...)
+	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
 }
 
@@ -219,11 +224,13 @@ func TestNetWorkdays(t *testing.T) {
 	}
 
 	expectedDays := 8
-	functionDays := gotime.NetWorkDays(endDay, startDay, workingDays)
+	functionDays, err := gotime.NetWorkDays(endDay, startDay, workingDays)
+	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDays, functionDays)
 
 	expectedDays = 6
-	functionDays = gotime.NetWorkDays(startDay, endDay, workingDays, holidays...)
+	functionDays, err = gotime.NetWorkDays(startDay, endDay, workingDays, holidays...)
+	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDays, functionDays)
 }
 

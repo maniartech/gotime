@@ -120,7 +120,7 @@ func TestDaysInQuarter(t *testing.T) {
 
 // TestDateCreate tests DateCreate function.
 func TestDateCreate(t *testing.T) {
-	date := gotime.NewDate(2021, 1, 1)
+	date := gotime.NewDate(2021, 1, 1, time.Local)
 	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 {
 		t.Errorf("Expected 2021-01-01, got, %v", date)
 	}
@@ -128,7 +128,7 @@ func TestDateCreate(t *testing.T) {
 
 // TestNewTime tests NewTime function.
 func TestNewTime(t *testing.T) {
-	time := gotime.NewTime(12, 0, 0)
+	time := gotime.NewTime(12, 0, 0, time.Local)
 	if time.Hour() != 12 || time.Minute() != 0 || time.Second() != 0 {
 		t.Errorf("Expected 12:00:00, got, %v", time)
 	}
@@ -136,7 +136,7 @@ func TestNewTime(t *testing.T) {
 
 // TestEoD tests EoD function.
 func TestEoD(t *testing.T) {
-	date := gotime.EoD(gotime.NewDate(2021, 1, 1))
+	date := gotime.EoD(gotime.NewDate(2021, 1, 1, time.Local))
 	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 || date.Hour() != 23 || date.Minute() != 59 || date.Second() != 59 {
 		t.Errorf("Expected 2021-01-01 23:59:59, got, %v", date)
 	}
@@ -144,7 +144,7 @@ func TestEoD(t *testing.T) {
 
 // TestSoD tests SoD function.
 func TestSoD(t *testing.T) {
-	date := gotime.SoD(gotime.NewDate(2021, 1, 1))
+	date := gotime.SoD(gotime.NewDate(2021, 1, 1, time.Local))
 	if date.Year() != 2021 || date.Month() != 1 || date.Day() != 1 || date.Hour() != 0 || date.Minute() != 0 || date.Second() != 0 {
 		t.Errorf("Expected 2021-01-01 00:00:00, got, %v", date)
 	}
