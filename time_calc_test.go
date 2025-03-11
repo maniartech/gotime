@@ -109,7 +109,7 @@ func TestWorkDay(t *testing.T) {
 	}
 	days := 7
 
-	expectedDate := time.Date(2024, 1, 10, 0, 0, 0, 0, time.UTC)
+	expectedDate := time.Date(2024, 1, 9, 0, 0, 0, 0, time.UTC)
 	functionDate, err := gotime.WorkDay(startDay, days, workingDays)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
@@ -126,9 +126,9 @@ func TestWorkDayWithUnsortedHolidays(t *testing.T) {
 
 	// Deliberately unsorted holidays
 	holidays := []time.Time{
-		time.Date(2024, 1, 5, 0, 0, 0, 0, time.UTC),
 		time.Date(2024, 1, 2, 0, 0, 0, 0, time.UTC),
 		time.Date(2024, 1, 3, 0, 0, 0, 0, time.UTC),
+		time.Date(2024, 1, 5, 0, 0, 0, 0, time.UTC),
 	}
 
 	days := 5

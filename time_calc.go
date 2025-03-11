@@ -186,15 +186,20 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 	daysAdded := 0
 
 	for daysAdded < days {
-		currentDate = currentDate.AddDate(0, 0, 1)
 		dateKey := currentDate.Format("2006-01-02")
 
-		// Skip if it's a weekend or a holiday
-		if !workingDays[currentDate.Weekday()] || holidayMap[dateKey] {
-			continue
+		// Check if it's a working day and not a holiday
+		if workingDays[currentDate.Weekday()] && !holidayMap[dateKey] {
+			daysAdded++
 		}
 
-		daysAdded++
+		// If we've added enough days, we're done
+		if daysAdded >= days {
+			break
+		}
+
+		// Always advance to the next day
+		currentDate = currentDate.AddDate(0, 0, 1)
 	}
 
 	return currentDate, nil
