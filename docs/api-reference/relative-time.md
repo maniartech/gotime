@@ -319,7 +319,47 @@ yearEnd := gotime.YearEnd()        // December 31st of current year
 // For specific date
 specificDate := time.Date(2025, 7, 15, 0, 0, 0, 0, time.UTC)
 yearStartForDate := gotime.YearStart(specificDate)   // 2025-01-01 00:00:00
+
 yearEndForDate := gotime.YearEnd(specificDate)       // 2025-12-31 23:59:59
+```
+
+## Business Calendar Utilities
+
+### IsBusinessDay
+```go
+func IsBusinessDay(date time.Time, weekends []time.Weekday, holidays ...time.Time) bool
+```
+Returns true if the given date is a business day (not a weekend or holiday). Supports custom weekends and holidays.
+
+**Example:**
+```go
+weekends := []time.Weekday{time.Saturday, time.Sunday}
+holidays := []time.Time{
+    time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC), // Independence Day
+}
+gotime.IsBusinessDay(time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC), weekends, holidays...) // true
+```
+
+### NextBusinessDay
+```go
+func NextBusinessDay(date time.Time, weekends []time.Weekday, holidays ...time.Time) time.Time
+```
+Returns the next business day after the given date, skipping weekends and holidays.
+
+**Example:**
+```go
+gotime.NextBusinessDay(time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC), weekends, holidays...) // 2025-07-07 (Monday)
+```
+
+### PrevBusinessDay
+```go
+func PrevBusinessDay(date time.Time, weekends []time.Weekday, holidays ...time.Time) time.Time
+```
+Returns the previous business day before the given date, skipping weekends and holidays.
+
+**Example:**
+```go
+gotime.PrevBusinessDay(time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC), weekends, holidays...) // 2025-07-03 (Thursday)
 ```
 
 ## Real-World Use Cases

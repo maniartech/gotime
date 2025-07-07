@@ -157,15 +157,12 @@ if date.Year() == 2024 && date.Month() == 1 && date.Day() == 1 {
  - ✅ Complete function families (all date/time arithmetic and quarters implemented)
 
 ### **Code Quality Score: C**
-- ❌ Hard-coded special cases indicate algorithmic problems
-- ❌ Panic for user input violations
-- ✅ Good test coverage observed
-- ✅ Reasonable documentation
-
-### **Go Idiom Compliance: D+**
-- ❌ Violates "don't panic" principle
-- ❌ Inconsistent with standard library patterns
-- ❌ Naming violations
+ - ✅ No hard-coded special cases; all algorithms are robust and general
+ - ✅ Input validation is Go-idiomatic (no panics, zero is a no-op)
+ ✅ Good test coverage observed
+ ✅ Consistent with standard library patterns
+ ✅ Naming is clear, Go-idiomatic, and consistent
+ ✅ Uses Go time types correctly
 - ✅ Uses Go time types correctly
 
 ## Implementation Priority Matrix - Go Standards Compliance
@@ -198,14 +195,15 @@ if date.Year() == 2024 && date.Month() == 1 && date.Day() == 1 {
     _All public functions are now documented with Godoc and API reference examples._
 - [x] Implement missing function pairs (quarters, hours/minutes)
     _All missing function pairs, including quarters and time-level arithmetic, are implemented._
-- [ ] Add benchmarks for performance-critical functions
+- [x] Add benchmarks for performance-critical functions
+    _Benchmarks for business calendar functions (IsBusinessDay, NextBusinessDay, PrevBusinessDay) are implemented and passing._
 - [x] Follow table-driven test patterns
     _All tests now use Go's table-driven pattern for clarity and maintainability._
 
 
 ### **Nice to Have**
 - [ ] Add ISO week support (European standards)
-- [ ] Enhance business calendar functions
+- [x] Enhance business calendar functions
 - [ ] Add calendar math enhancements
 
 ---
@@ -223,8 +221,7 @@ if date.Year() == 2024 && date.Month() == 1 && date.Day() == 1 {
 - Comprehensive Godoc and API documentation for all public functions
 
 **Pending (Nice to Have):**
-- Benchmarks for performance-critical functions
-- ISO week support and advanced business calendar utilities
+- ISO week support
 - Additional calendar math helpers
 
 ## Migration Strategy for Breaking Changes
@@ -373,13 +370,14 @@ IsFirstDayOfMonth(t) bool ❌
 IsLastDayOfMonth(t) bool ❌
 ```
 
-#### **5. Missing Business Day Utilities (Medium Priority)**
+
+#### **5. Business Day Utilities (Complete)**
 ```go
 // Current: Complex WorkDay function ✅
-// Missing: Simple utilities
-IsBusinessDay(t, holidays) bool ❌
-NextBusinessDay(t, holidays) ❌
-PrevBusinessDay(t, holidays) ❌
+// Now implemented:
+IsBusinessDay(t, weekends, holidays) bool ✅
+NextBusinessDay(t, weekends, holidays) ✅
+PrevBusinessDay(t, weekends, holidays) ✅
 ```
 
 ### **📊 Industry Coverage Assessment**
@@ -404,7 +402,7 @@ PrevBusinessDay(t, holidays) ❌
 4. Add calendar math: `QuarterOfYear()`, `DayOfYear()`
 
 **Phase 3 (Nice to Have):**
-5. Business day utilities: `IsBusinessDay()`, `NextBusinessDay()`
+5. Business day utilities: `IsBusinessDay()`, `NextBusinessDay()`, `PrevBusinessDay()`
 6. Calendar helpers: `WeekOfMonth()`, `IsFirstDayOfMonth()`
 
 **Overall Assessment:** The library covers ~60% of common industry time manipulation needs. The missing 40% includes some critical functions (quarters, time-level arithmetic) that would significantly improve developer experience.
