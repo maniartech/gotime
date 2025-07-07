@@ -1,3 +1,5 @@
+[Home](../README.md) > [Getting Started](README.md) > Installation
+
 # Installation
 
 GoTime is designed to be easy to install and integrate into your Go projects.

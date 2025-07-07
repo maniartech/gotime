@@ -1,3 +1,5 @@
+[Home](../README.md) > [Core Concepts](README.md) > IDFS
+
 # Intuitive Date Format Specifiers (IDFS)
 
 IDFS is the core innovation that makes GoTime intuitive and powerful. It replaces Go's cryptic reference time (`2006-01-02 15:04:05`) with human-readable, logical format specifiers.

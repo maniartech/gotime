@@ -1,3 +1,5 @@
+[Home](../README.md) > API Reference
+
 # API Reference
 
 Complete documentation for all GoTime functions and their usage patterns.

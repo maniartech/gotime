@@ -1,3 +1,5 @@
+[Home](../README.md) > [Getting Started](README.md) > Quick Start
+
 # Quick Start Guide
 
 Get started with GoTime in just a few minutes! This guide will walk you through the basic setup and most common operations.

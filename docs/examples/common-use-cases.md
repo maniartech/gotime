@@ -1,3 +1,5 @@
+[Home](../README.md) > [Examples](README.md) > Common Use Cases
+
 # Common Use Cases
 
 This guide demonstrates practical, real-world applications of GoTime across different domains and scenarios.

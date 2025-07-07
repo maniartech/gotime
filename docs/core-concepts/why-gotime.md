@@ -1,3 +1,5 @@
+[Home](../README.md) > [Core Concepts](README.md) > Why GoTime
+
 # Why GoTime?
 
 GoTime was created to address fundamental limitations and usability issues in Go's standard `time` package. While Go's `time` package is powerful and comprehensive, it often requires developers to write verbose, error-prone code for common date and time operations.

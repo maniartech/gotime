@@ -1,3 +1,5 @@
+[Home](../README.md) > [API Reference](README.md) > Parsing & Formatting
+
 # Date Parsing and Formatting
 
 GoTime provides powerful, intuitive functions for parsing and formatting dates using IDFS (Intuitive Date Format Specifiers).

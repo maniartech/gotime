@@ -1,3 +1,5 @@
+[Home](../README.md) > [Getting Started](README.md) > Basic Usage
+
 # Basic Usage
 
 This guide covers the fundamental concepts and usage patterns of GoTime, building on the [Quick Start Guide](quick-start.md) with more detailed explanations and examples.

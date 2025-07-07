@@ -2,7 +2,7 @@
 
 Welcome to the comprehensive documentation for GoTime - a powerful, intuitive time manipulation library for Go that makes working with dates and times as simple as it should be.
 
-## 🚀 Quick Start
+## Quick Start
 
 New to GoTime? Start here:
 
@@ -29,20 +29,20 @@ tenDaysFromNow := gotime.Days(10)
 
 **[→ Full Quick Start Guide](getting-started/quick-start.md)**
 
-## 📚 Documentation Sections
+## Documentation Sections
 
-### 🎯 Getting Started
+### Getting Started
 Perfect for newcomers to GoTime:
 - **[Installation](getting-started/installation.md)** - Get GoTime installed and verified
 - **[Quick Start Guide](getting-started/quick-start.md)** - Essential operations in 5 minutes
 - **[Basic Usage](getting-started/basic-usage.md)** - Comprehensive usage patterns
 
-### 💡 Core Concepts
+### Core Concepts
 Understand what makes GoTime powerful:
 - **[Why GoTime?](core-concepts/why-gotime.md)** - Problems solved and design decisions
 - **[Intuitive Date Format Specifiers (IDFS)](core-concepts/idfs.md)** - The heart of GoTime's simplicity
 
-### 📖 API Reference
+### API Reference
 Complete function documentation:
 - **[Date Parsing and Formatting](api-reference/parsing-formatting.md)** - Parse, Format, FormatTimestamp
 - **[Date Conversion](api-reference/conversion.md)** - Convert between any date formats
@@ -51,21 +51,21 @@ Complete function documentation:
 - **[Date Range Operations](api-reference/date-ranges.md)** - IsBetween, range validation
 - **[Utility Functions](api-reference/utilities.md)** - IsLeapYear, DaysInMonth, date construction
 
-### 💼 Examples
+### Examples
 Real-world applications and patterns:
 - **[Common Use Cases](examples/common-use-cases.md)** - Web APIs, databases, business logic
 - **[Real-world Examples](examples/real-world.md)** - Complete applications
 - **[Migration Guide](examples/migration.md)** - Moving from standard library
 
-### ⚡ Advanced Topics
+### Advanced Topics
 Optimization and best practices:
 - **[Performance Considerations](advanced/performance.md)** - Optimization techniques
 - **[Best Practices](advanced/best-practices.md)** - Production-ready patterns
 - **[Working with Timezones](advanced/timezones.md)** - Global application support
 
-## 🎯 Key Features
+## Key Features
 
-### ✨ Intuitive Format Specifiers (IDFS)
+### Intuitive Format Specifiers (IDFS)
 Replace Go's cryptic `2006-01-02` with readable `yyyy-mm-dd`:
 
 ```go
@@ -76,7 +76,7 @@ time.Now().Format("2006-01-02 15:04:05")
 gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")
 ```
 
-### 🔄 Seamless Format Conversion
+### Seamless Format Conversion
 Transform dates between any formats effortlessly:
 
 ```go
@@ -85,7 +85,7 @@ iso, _ := gotime.Convert("07/07/2025", "mm/dd/yyyy", "yyyy-mm-dd")
 readable, _ := gotime.Convert("2025-07-07", "yyyy-mm-dd", "mmmm dt, yyyy")
 ```
 
-### ⏰ Smart Relative Time
+### Smart Relative Time
 Human-friendly time descriptions:
 
 ```go
@@ -94,7 +94,7 @@ gotime.TimeAgo(tomorrow)        // "Tomorrow"
 gotime.TimeAgo(lastWeek)        // "Last week"
 ```
 
-### 📅 Powerful Date Arithmetic
+### Powerful Date Arithmetic
 Intuitive date calculations:
 
 ```go
@@ -104,7 +104,7 @@ quarterStart := gotime.MonthStart(gotime.Months(-2))
 weekEnd := gotime.WeekEnd()
 ```
 
-## 🌟 Why Choose GoTime?
+## Why Choose GoTime?
 
 | Challenge | Standard Go | GoTime |
 |-----------|-------------|---------|
@@ -115,7 +115,7 @@ weekEnd := gotime.WeekEnd()
 | **Learning Curve** | High | Low |
 | **Error Prone** | Yes | No |
 
-## 🔧 Format Specifier Quick Reference
+## Format Specifier Quick Reference
 
 | Format | Output | Description |
 |--------|--------|-------------|
@@ -131,38 +131,38 @@ weekEnd := gotime.WeekEnd()
 
 **[→ Complete IDFS Reference](core-concepts/idfs.md)**
 
-## 🚀 Quick Links by Use Case
+## Quick Links by Use Case
 
-### 🌐 Web Development
+### Web Development
 - [API Date Handling](examples/common-use-cases.md#web-development)
 - [User-Friendly Timestamps](examples/common-use-cases.md#user-friendly-timestamps)
 - [Form Validation](examples/common-use-cases.md#form-date-validation)
 
-### 💾 Database Integration
+### Database Integration
 - [Custom Database Types](examples/common-use-cases.md#database-integration)
 - [Query Builders](examples/common-use-cases.md#query-builder-with-date-filters)
 
-### 💼 Business Applications
+### Business Applications
 - [Invoice Management](examples/common-use-cases.md#business-applications)
 - [Employee Scheduling](examples/common-use-cases.md#employee-schedule-management)
 - [Project Timelines](examples/common-use-cases.md#project-timeline-management)
 
-### 📊 Analytics & Reporting
+### Analytics & Reporting
 - [Time-Series Analysis](examples/common-use-cases.md#analytics-and-reporting)
 - [Performance Monitoring](examples/common-use-cases.md#performance-monitoring)
 
-## 📦 Installation
+## Installation
 
 ```bash
 go get github.com/maniartech/gotime
 ```
 
 **Requirements:**
-- Go 1.13+
-- Zero external dependencies
-- TinyGo compatible
+- ✓ Go 1.13+
+- ✓ Zero external dependencies
+- ✓ TinyGo compatible
 
-## 🆘 Need Help?
+## Need Help?
 
 - **New to GoTime?** → [Quick Start Guide](getting-started/quick-start.md)
 - **Looking for examples?** → [Common Use Cases](examples/common-use-cases.md)
@@ -170,16 +170,16 @@ go get github.com/maniartech/gotime
 - **Performance questions?** → [Best Practices](advanced/best-practices.md)
 - **Migration help?** → [Migration Guide](examples/migration.md)
 
-## 🏆 Quality Assurance
+## Quality Assurance
 
-- ✅ **100% Test Coverage** - Every function thoroughly tested
-- ✅ **Production Ready** - Used in real-world applications
-- ✅ **Zero Dependencies** - No external package dependencies
-- ✅ **TinyGo Compatible** - Works in embedded and WebAssembly
-- ✅ **MIT Licensed** - Open source and commercial-friendly
-- ✅ **Comprehensive Docs** - Every feature documented with examples
+- ✓ **100% Test Coverage** - Every function thoroughly tested
+- ✓ **Production Ready** - Used in real-world applications
+- ✓ **Zero Dependencies** - No external package dependencies
+- ✓ **TinyGo Compatible** - Works in embedded and WebAssembly
+- ✓ **MIT Licensed** - Open source and commercial-friendly
+- ✓ **Comprehensive Docs** - Every feature documented with examples
 
-## 🎉 Success Stories
+## Success Stories
 
 GoTime is successfully used in:
 - **Web APIs** for consistent date formatting
@@ -190,7 +190,7 @@ GoTime is successfully used in:
 
 ---
 
-## 🚀 Get Started Now
+## Get Started Now
 
 Ready to make date/time handling in Go intuitive and powerful?
 
