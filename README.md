@@ -65,7 +65,7 @@ gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")  // 😊
 go get github.com/maniartech/gotime
 ```
 
-**Requirements:** Go 1.13+ • Zero dependencies • TinyGo compatible
+**Requirements:** Go 1.13+ • Zero dependencies • TinyGo compatible*
 
 ## Core Features
 
@@ -124,8 +124,12 @@ businessDaysCount := gotime.NetWorkDays(startDate, endDate)
 - ![Test Cases](https://img.shields.io/badge/tests-400%2B%20cases-blue?style=flat-square) **400+ Automated Test Cases** — Industry-grade reliability
 - ✓ **Production Ready** — Used in real-world applications
 - ✓ **Zero Dependencies** — Only uses Go standard library
-- ✓ **TinyGo Compatible** — Works in embedded and WebAssembly
+- ✓ **TinyGo Compatible** — Works in embedded and WebAssembly*
 - ✓ **MIT Licensed** — Free for commercial use
+
+# TinyGo Compatibility*
+
+*GoTime's core library is designed to be compatible with [TinyGo](https://tinygo.org/) for use in embedded and WebAssembly environments. Test helpers and some internal utilities use `reflect` and `runtime` and are not TinyGo compatible, but these are not required for end users. To build with TinyGo, you must use a Go version supported by TinyGo (currently Go 1.19–1.22). See `examples/tinygo/main.go` for a working example.*
 
 ## Contributing
 
