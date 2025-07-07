@@ -2,7 +2,7 @@
 
 > **Intuitive time manipulation for Go** - Making date/time operations as simple as they should be.
 
-GoTime extends Go's standard `time` package with human-friendly operations that developers actually need in real-world applications.
+GoTime extends Go's standard `time` package with human-friendly operations that developers actually need in real-world applications. It leverages Go's powerful time handling while providing an intuitive API that makes working with dates and times a breeze.
 
 ## Quick Example
 
