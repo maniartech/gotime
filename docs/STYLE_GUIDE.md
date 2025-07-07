@@ -79,6 +79,50 @@ This guide establishes universal standards for technical documentation and can b
 - 📝 → ◯ (for notes/planning items)
 - ⚠️ → ⚠ (for warnings/alerts)
 
+### Critical Implementation Rule: Content Preservation
+
+**⚠ IMPORTANT: Symbol-Only Updates**
+
+When applying this style guide to existing documentation, you MUST preserve all original content:
+
+**✓ DO Change:**
+- Emojis to Unicode symbols (🔄 → ⟲)
+- Symbol choices to match this guide
+- Symbol placement and formatting
+
+**❌ DO NOT Change:**
+- Original phrases, sentences, or words
+- Meaning or intention of any content
+- Technical explanations or descriptions
+- Code examples or functionality descriptions
+- Author's voice or writing style
+- Project-specific terminology or branding
+
+**Example of Correct Application:**
+
+```markdown
+<!-- Original -->
+🚀 Getting Started with Our Amazing Tool
+This incredible tool helps you process data quickly! 🎉
+
+<!-- Correct Update: Only symbols changed -->
+▶ Getting Started with Our Amazing Tool
+This incredible tool helps you process data quickly! ✦
+
+<!-- WRONG: Don't change the content -->
+▶ Quick Start Guide
+This tool processes data efficiently.
+```
+
+**Process for Updating Existing Docs:**
+1. **Read through** the entire document first
+2. **Identify** only the symbols/emojis that need updating
+3. **Replace** symbols while keeping ALL original text intact
+4. **Verify** that meaning and intention remain unchanged
+5. **Preserve** the author's original voice and style
+
+This ensures style consistency while respecting the original author's work and maintaining document authenticity.
+
 ---
 
 ## Unicode Symbol Standards
