@@ -201,3 +201,23 @@ func BenchmarkConvert(b *testing.B) {
 		idfs.Convert("01/24/1984", "dd/mm/yyyy", "yyyy/dd/mm")
 	}
 }
+
+func TestConvertErrorHandling(t *testing.T) {
+	// Test parsing with ordinals (should fail)
+	_, err := idfs.Convert("1st Jan 2025", "dt mmm yyyy", "yyyy-mm-dd")
+	if err == nil {
+		t.Error("Expected error when parsing ordinals, but got none")
+	}
+
+	// Test invalid date
+	_, err = idfs.Convert("32/01/2025", "dd/mm/yyyy", "yyyy-mm-dd")
+	if err == nil {
+		t.Error("Expected error with invalid date, but got none")
+	}
+
+	// Test mismatched format
+	_, err = idfs.Convert("2025-01-01", "mm/dd/yyyy", "dd-mm-yyyy")
+	if err == nil {
+		t.Error("Expected error with mismatched format, but got none")
+	}
+}

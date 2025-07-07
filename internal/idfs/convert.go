@@ -2,7 +2,6 @@ package idfs
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 	"time"
 
@@ -42,7 +41,6 @@ func Convert(dt string, from string, to string) (string, error) {
 	toLayout, err := convertLayout(to, false)
 	if err != nil {
 		return "", err
-
 	}
 
 	t, err := time.Parse(fromLayout, dt)
@@ -212,8 +210,6 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 	}
 
 	converted = append(converted.([]string), finalConvert)
-
-	fmt.Println(converted)
 
 	cache.Set(f, converted)
 	return converted, nil
