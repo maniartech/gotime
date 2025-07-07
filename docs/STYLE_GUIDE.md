@@ -41,6 +41,22 @@ This guide establishes universal standards for technical documentation and can b
 - **Rendering Reliability** - Consistent appearance across platforms and fonts
 - **Screen Reader Friendly** - Symbols that translate well to assistive technologies
 - **No Emojis** - Use Unicode symbols only, never colorful emojis for professional documentation
+- **Minimal Symbol Usage** - Avoid symbols in headings unless absolutely required for meaning or critical distinction
+
+### General Symbol Usage Guidelines
+
+**✓ Use symbols for:**
+- Status indicators (✓ ⧗ ◯ ✗ ⚠)
+- Content markers and callouts
+- List item indicators where meaning is enhanced
+- Progress and workflow indicators
+
+**❌ Avoid symbols in headings unless absolutely required:**
+- H1, H2, H3, H4, H5, H6 headings should prioritize readability
+- Only use symbols in headings when essential for meaning or navigation
+- Body text where plain text is clearer
+- Decorative purposes without functional meaning
+- When symbols might confuse rather than clarify
 
 ### Emoji vs Unicode Symbol Guidelines
 
@@ -106,32 +122,35 @@ This guide establishes universal standards for technical documentation and can b
 
 ### H1 - Document Title
 ```markdown
-# Project Name ⧖
+# Project Name
+# Documentation Style Guide
+# API Reference
 ```
 **Rules:**
 - Only one H1 per document
-- Include primary identifying symbol
 - Use title case
 - No period at end
+- **Avoid symbols unless essential** for document identification or navigation
 
 ### H2 - Major Sections
 ```markdown
-## ◈ Core Features
-## ▲ Why Choose This?
-## ▶ Quick Start
-## ◉ Installation
-## ◆ Use Cases
-## ◢ Documentation
-## ◊ Quality Standards
-## ▸ Contributing
-## ◦ License
+## Core Features
+## Why Choose This?
+## Quick Start
+## Installation
+## Use Cases
+## Documentation
+## Quality Standards
+## Contributing
+## License
 ```
 
 **Rules:**
-- Use designated symbols consistently
+- Use clear, descriptive section names
 - Sentence case for section names
 - Clear, action-oriented language
 - Maximum 4-5 words
+- **Symbols only when absolutely necessary** for meaning or critical distinction
 
 ### H3 - Subsections
 ```markdown
@@ -141,10 +160,11 @@ This guide establishes universal standards for technical documentation and can b
 ```
 
 **Rules:**
-- No symbols for H3 and below
+- **No symbols for H3 and below** - Keep headings clean and readable
 - Descriptive, specific titles
 - Use parallel structure within sections
 - Title case for feature names
+- **Avoid symbols unless absolutely required** for meaning or critical distinction
 
 ### H4-H6 - Detailed Breakdowns
 ```markdown
@@ -177,34 +197,34 @@ This guide establishes universal standards for technical documentation and can b
 ### Page Structure Template
 
 ```markdown
-# Title ⧖
+# Project Documentation
 
 > **Tagline** - Brief value proposition in italics.
 
 Brief description paragraph explaining context and scope.
 
-## ▶ Quick Example
+## Quick Start
 [Immediate actionable content]
 
-## ▲ Why This Approach?
+## Why This Approach?
 [Problem/solution comparison]
 
-## ◉ Installation
+## Installation
 [Setup instructions]
 
-## ◈ Core Features
+## Core Features
 [Main functionality breakdown]
 
-## ◢ Documentation
+## Documentation
 [Links to detailed docs]
 
-## ◊ Standards
+## Quality Standards
 [Quality/reliability information]
 
-## ▸ Contributing
+## Contributing
 [How to help]
 
-## ◦ License
+## License
 [Legal information]
 ```
 
