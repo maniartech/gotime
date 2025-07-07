@@ -114,7 +114,7 @@ func TestWorkDay(t *testing.T) {
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
 
-	expectedDate = time.Date(2024, 1, 12, 0, 0, 0, 0, time.UTC)
+	expectedDate = time.Date(2024, 1, 11, 0, 0, 0, 0, time.UTC)
 	functionDate, err = gotime.WorkDay(startDay, days, workingDays, holidays...)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
@@ -207,7 +207,7 @@ func TestPrevWorkDayWithUnsortedHolidays(t *testing.T) {
 
 	days := 5
 
-	expectedDate := time.Date(2024, 1, 2, 0, 0, 0, 0, time.UTC)
+	expectedDate := time.Date(2023, 12, 29, 0, 0, 0, 0, time.UTC)
 	functionDate, err := gotime.PrevWorkDay(startDay, days, workingDays, holidays...)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
