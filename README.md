@@ -1,4 +1,4 @@
-# GoTime 🕛🕐🕒🕓🕔🕕🕖🕗🕘🕙🕚
+# GoTime 🕛🕐🕒
 
 > **Intuitive time manipulation for Go** - Making date/time operations as simple as they should be.
 
