@@ -166,6 +166,79 @@ leapDay := time.Date(2024, 2, 29, 0, 0, 0, 0, time.UTC)
 nextYearFromLeap := gotime.Years(1, leapDay) // Handles Feb 29 -> Feb 28
 ```
 
+## Time Arithmetic Functions
+
+### Hours
+
+Add or subtract hours from a time.
+
+```go
+func Hours(hours int, dt ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+// 3 hours from now
+threeHoursLater := gotime.Hours(3)
+
+// 2 hours ago
+twoHoursAgo := gotime.Hours(-2)
+
+// From specific time
+specificTime := time.Date(2025, 7, 7, 14, 30, 0, 0, time.UTC)
+futureTime := gotime.Hours(5, specificTime) // 2025-07-07 19:30:00
+
+// Multiple hours
+fullWorkDay := gotime.Hours(8, specificTime) // Add full work day
+```
+
+### Minutes
+
+Add or subtract minutes from a time.
+
+```go
+func Minutes(minutes int, dt ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+// 30 minutes from now
+halfHourLater := gotime.Minutes(30)
+
+// 15 minutes ago
+quarterHourAgo := gotime.Minutes(-15)
+
+// Precise scheduling
+meetingTime := time.Date(2025, 7, 7, 14, 0, 0, 0, time.UTC)
+reminderTime := gotime.Minutes(-5, meetingTime) // 5 minutes before meeting
+followupTime := gotime.Minutes(60, meetingTime) // 1 hour after meeting
+```
+
+### Seconds
+
+Add or subtract seconds from a time.
+
+```go
+func Seconds(seconds int, dt ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+// 30 seconds from now
+halfMinuteLater := gotime.Seconds(30)
+
+// 10 seconds ago
+tenSecondsAgo := gotime.Seconds(-10)
+
+// Precise timing
+processStart := time.Now()
+timeout := gotime.Seconds(30, processStart) // 30-second timeout
+checkpoint := gotime.Seconds(5, processStart) // 5-second checkpoint
+```
+
 ## Quick Date Shortcuts
 
 ### Day Functions
@@ -277,7 +350,56 @@ func formatTimestamp(t time.Time) string {
 // Older: "July 7th, 2025"
 ```
 
-### 2. Content Scheduling
+### 2. Meeting and Appointment Scheduling
+
+```go
+package scheduler
+
+import (
+    "github.com/maniartech/gotime"
+    "time"
+)
+
+type Meeting struct {
+    Title     string
+    StartTime time.Time
+    Duration  time.Duration
+}
+
+func (m *Meeting) EndTime() time.Time {
+    minutes := int(m.Duration.Minutes())
+    return gotime.Minutes(minutes, m.StartTime)
+}
+
+func (m *Meeting) ReminderTimes() []time.Time {
+    return []time.Time{
+        gotime.Days(-1, m.StartTime),    // 1 day before
+        gotime.Hours(-2, m.StartTime),   // 2 hours before
+        gotime.Minutes(-15, m.StartTime), // 15 minutes before
+        gotime.Minutes(-5, m.StartTime),  // 5 minutes before
+    }
+}
+
+func (m *Meeting) BufferTime() (start, end time.Time) {
+    start = gotime.Minutes(-15, m.StartTime) // 15 min setup
+    end = gotime.Minutes(15, m.EndTime())    // 15 min cleanup
+    return
+}
+
+// Schedule back-to-back meetings with buffers
+func scheduleConsecutiveMeetings(meetings []Meeting) {
+    for i := 1; i < len(meetings); i++ {
+        prevEnd := meetings[i-1].EndTime()
+        buffer := gotime.Minutes(30, prevEnd) // 30-minute buffer
+
+        if meetings[i].StartTime.Before(buffer) {
+            meetings[i].StartTime = buffer
+        }
+    }
+}
+```
+
+### 3. Content Scheduling
 
 ```go
 package scheduler
@@ -306,6 +428,10 @@ func (cs *ContentScheduler) SchedulePost(content string, when string) error {
         scheduledTime = gotime.NextWeek()
     case "next_month":
         scheduledTime = gotime.NextMonth()
+    case "in_2_hours":
+        scheduledTime = gotime.Hours(2)
+    case "in_30_minutes":
+        scheduledTime = gotime.Minutes(30)
     default:
         // Parse custom date
         scheduledTime, err = gotime.ParseInLocation(when, "yyyy-mm-dd", cs.timezone)
@@ -324,7 +450,76 @@ func (cs *ContentScheduler) scheduleAt(content string, when time.Time) error {
 }
 ```
 
-### 3. Report Generation
+### 4. Process Monitoring and Timeouts
+
+```go
+package monitoring
+
+import (
+    "github.com/maniartech/gotime"
+    "time"
+    "context"
+)
+
+type ProcessMonitor struct {
+    processes map[string]*Process
+}
+
+type Process struct {
+    ID        string
+    StartTime time.Time
+    Timeout   time.Duration
+    Status    string
+}
+
+func (pm *ProcessMonitor) StartProcess(id string, timeout time.Duration) {
+    now := time.Now()
+    process := &Process{
+        ID:        id,
+        StartTime: now,
+        Timeout:   timeout,
+        Status:    "running",
+    }
+
+    pm.processes[id] = process
+
+    // Set up timeout
+    timeoutTime := gotime.Seconds(int(timeout.Seconds()), now)
+    go pm.checkTimeout(id, timeoutTime)
+}
+
+func (pm *ProcessMonitor) checkTimeout(processID string, timeoutTime time.Time) {
+    for {
+        if time.Now().After(timeoutTime) {
+            if process, exists := pm.processes[processID]; exists && process.Status == "running" {
+                process.Status = "timeout"
+            }
+            break
+        }
+        time.Sleep(1 * time.Second)
+    }
+}
+
+func (pm *ProcessMonitor) GetProcessInfo(id string) map[string]interface{} {
+    process := pm.processes[id]
+    if process == nil {
+        return nil
+    }
+
+    runtime := time.Since(process.StartTime)
+    timeoutAt := gotime.Seconds(int(process.Timeout.Seconds()), process.StartTime)
+
+    return map[string]interface{}{
+        "id":           process.ID,
+        "status":       process.Status,
+        "runtime":      gotime.TimeAgo(process.StartTime),
+        "timeout_at":   gotime.TimeAgo(timeoutAt),
+        "will_timeout": gotime.TimeAgo(timeoutAt),
+    }
+}
+```
+
+### 5. Report Generation
 
 ```go
 package reports
@@ -392,8 +587,6 @@ func GenerateReport(period ReportPeriod) *Report {
     }
 }
 ```
-
-### 4. Event Planning
 
 ```go
 package events

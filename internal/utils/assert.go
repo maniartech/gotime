@@ -1,12 +1,22 @@
 package utils
 
 import (
+	"reflect"
 	"testing"
+	"time"
 )
 
 func AssertEqual(t *testing.T, expected interface{}, actual interface{}) {
-	if expected != actual {
-		t.Errorf("Expected %v but got %v", expected, actual)
+	switch e := expected.(type) {
+	case time.Time:
+		a, ok := actual.(time.Time)
+		if !ok || !e.Equal(a) {
+			t.Errorf("Expected %v but got %v", e, actual)
+		}
+	default:
+		if !reflect.DeepEqual(expected, actual) {
+			t.Errorf("Expected %v but got %v", expected, actual)
+		}
 	}
 }
 

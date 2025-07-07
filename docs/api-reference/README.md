@@ -43,6 +43,12 @@ Human-readable time differences:
 - `Months(n, from)` - Add/subtract months
 - `Years(n, from)` - Add/subtract years
 
+### ⏱️ Time Arithmetic Functions
+Precise time-level arithmetic operations:
+- `Hours(n, from)` - Add/subtract hours
+- `Minutes(n, from)` - Add/subtract minutes
+- `Seconds(n, from)` - Add/subtract seconds
+
 ### 📊 Calculation Functions
 Advanced time calculations:
 - `Latest(times...)` - Find latest time
@@ -51,6 +57,25 @@ Advanced time calculations:
 - `WorkDay(n, from)` - Add/subtract work days
 - `PrevWorkDay(time)` - Find previous work day
 - `NetWorkDays(start, end)` - Count business days
+
+### 🎂 Age Calculation Functions
+Age and time difference calculations:
+- `Age(birthDate)` - Calculate current age
+- `YearsBetween(start, end)` - Years between dates
+- `MonthsBetween(start, end)` - Months between dates
+- `DaysBetween(start, end)` - Days between dates
+- `WeeksBetween(start, end)` - Weeks between dates
+- `DurationInWords(start, end)` - Human-readable duration
+- `IsValidAge(age)` - Validate age reasonableness
+
+### 📊 Quarter Functions
+Quarterly time operations for business applications:
+- `QuarterStart(time)` - Start of quarter
+- `QuarterEnd(time)` - End of quarter
+- `LastQuarter(time)` - Previous quarter start
+- `NextQuarter(time)` - Next quarter start
+- `Quarters(start, end)` - List quarters in range
+- `QuarterOfYear(time)` - Get quarter number (1-4)
 
 ### 📅 Range Functions
 Date range operations:
@@ -81,6 +106,10 @@ converted, _ := gotime.Convert("07/07/2025", "mm/dd/yyyy", "yyyy-mm-dd")
 
 // Relative time
 relative := gotime.TimeAgo(date)
+
+// Time arithmetic
+futureTime := gotime.Hours(3, time.Now())    // 3 hours from now
+pastTime := gotime.Minutes(-30, time.Now())  // 30 minutes ago
 ```
 
 ### Advanced Operations
@@ -88,6 +117,15 @@ relative := gotime.TimeAgo(date)
 // Business day calculations
 workDay := gotime.WorkDay(5, time.Now())         // 5 business days from now
 businessDays := gotime.NetWorkDays(start, end)   // Count business days
+
+// Age calculations
+age := gotime.Age(birthDate)                     // Current age
+years := gotime.YearsBetween(start, end)         // Years between dates
+duration := gotime.DurationInWords(start, end)   // "2 years, 3 months"
+
+// Quarter operations
+quarterStart := gotime.QuarterStart(time.Now()) // Start of current quarter
+quarters := gotime.Quarters(start, end)         // All quarters in range
 
 // Range operations
 inRange := gotime.IsBetween(check, start, end)   // Check if in range

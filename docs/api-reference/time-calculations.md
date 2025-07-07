@@ -2,7 +2,1123 @@
 
 # Time Calculations
 
-GoTime provides advanced functions for working with time differences, business days, and date comparisons.
+GoTime provides advanced functions for working with time differences, business days, date comparisons, and age calculations.
+
+## Age Calculation Functions
+
+### Age
+
+Calculates the precise age in years, months, and days between a birth date and a reference date.
+
+```go
+func Age(birthDate time.Time, asOf ...time.Time) (years, months, days int)
+```
+
+**Parameters:**
+- `birthDate`: The birth date
+- `asOf`: Optional reference date (uses current time if not provided)
+
+**Returns:**
+- `years`: Complete years
+- `months`: Additional months after years
+- `days`: Additional days after years and months
+
+**Examples:**
+
+```go
+birthDate := time.Date(1990, 5, 15, 0, 0, 0, 0, time.UTC)
+asOf := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
+
+years, months, days := gotime.Age(birthDate, asOf)
+fmt.Printf("Age: %d years, %d months, %d days", years, months, days)
+// Output: Age: 35 years, 1 months, 22 days
+
+// Use current time as reference
+years, months, days = gotime.Age(birthDate)
+// Calculates age as of now
+
+// Handle leap year birthdays correctly
+leapBirthDate := time.Date(2000, 2, 29, 0, 0, 0, 0, time.UTC)
+nonLeapRef := time.Date(2025, 3, 1, 0, 0, 0, 0, time.UTC)
+years, months, days = gotime.Age(leapBirthDate, nonLeapRef)
+// Correctly handles Feb 29 -> Mar 1 in non-leap years
+```
+
+### YearsBetween
+
+Calculates the precise number of years between two dates as a float64.
+
+```go
+func YearsBetween(start, end time.Time) float64
+```
+
+**Examples:**
+
+```go
+start := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
+end := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
+
+years := gotime.YearsBetween(start, end)
+fmt.Printf("%.1f years", years) // Output: 5.5 years
+
+// Works with reverse order
+years = gotime.YearsBetween(end, start) // Same result: 5.5 years
+
+// Precise calculations
+halfYear := time.Date(2020, 7, 1, 0, 0, 0, 0, time.UTC)
+years = gotime.YearsBetween(start, halfYear) // 0.5 years
+```
+
+### MonthsBetween
+
+Calculates the precise number of months between two dates as a float64.
+
+```go
+func MonthsBetween(start, end time.Time) float64
+```
+
+**Examples:**
+
+```go
+start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+end := time.Date(2025, 7, 15, 0, 0, 0, 0, time.UTC)
+
+months := gotime.MonthsBetween(start, end)
+fmt.Printf("%.1f months", months) // Output: 6.5 months
+
+// Exact month calculations
+oneMonth := time.Date(2025, 2, 1, 0, 0, 0, 0, time.UTC)
+months = gotime.MonthsBetween(start, oneMonth) // 1.0 months
+```
+
+### DaysBetween
+
+Calculates the number of days between two dates.
+
+```go
+func DaysBetween(start, end time.Time) int
+```
+
+**Examples:**
+
+```go
+start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+end := time.Date(2025, 1, 8, 0, 0, 0, 0, time.UTC)
+
+days := gotime.DaysBetween(start, end)
+fmt.Println(days) // Output: 7
+
+// Handles leap years correctly
+leapStart := time.Date(2020, 2, 28, 0, 0, 0, 0, time.UTC)
+leapEnd := time.Date(2020, 3, 1, 0, 0, 0, 0, time.UTC)
+days = gotime.DaysBetween(leapStart, leapEnd) // 2 days (includes Feb 29)
+```
+
+### WeeksBetween
+
+Calculates the precise number of weeks between two dates as a float64.
+
+```go
+func WeeksBetween(start, end time.Time) float64
+```
+
+**Examples:**
+
+```go
+start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+end := time.Date(2025, 1, 11, 0, 0, 0, 0, time.UTC)
+
+weeks := gotime.WeeksBetween(start, end)
+fmt.Printf("%.2f weeks", weeks) // Output: 1.43 weeks
+
+// Exact week calculations
+oneWeek := time.Date(2025, 1, 8, 0, 0, 0, 0, time.UTC)
+weeks = gotime.WeeksBetween(start, oneWeek) // 1.0 weeks
+```
+
+### DurationInWords
+
+Returns a human-readable representation of a duration.
+
+```go
+func DurationInWords(d time.Duration) string
+```
+
+**Examples:**
+
+```go
+// Simple durations
+fmt.Println(gotime.DurationInWords(30 * time.Second))           // "30 seconds"
+fmt.Println(gotime.DurationInWords(1 * time.Minute))           // "1 minute"
+fmt.Println(gotime.DurationInWords(2 * time.Hour))             // "2 hours"
+fmt.Println(gotime.DurationInWords(24 * time.Hour))            // "1 day"
+
+// Combined durations (shows top 2 units)
+duration := 2*time.Hour + 30*time.Minute
+fmt.Println(gotime.DurationInWords(duration))                  // "2 hours 30 minutes"
+
+duration = 25 * time.Hour
+fmt.Println(gotime.DurationInWords(duration))                  // "1 day 1 hour"
+
+duration = 2*24*time.Hour + 3*time.Hour + 45*time.Minute
+fmt.Println(gotime.DurationInWords(duration))                  // "2 days 3 hours"
+
+// Negative durations
+fmt.Println(gotime.DurationInWords(-2 * time.Hour))            // "-2 hours"
+
+// Very small durations
+fmt.Println(gotime.DurationInWords(500 * time.Millisecond))    // "less than 1 second"
+```
+
+### IsValidAge
+
+Checks if the given birth date results in a valid age (not negative, not unreasonably old).
+
+```go
+func IsValidAge(birthDate time.Time, asOf ...time.Time) bool
+```
+
+**Parameters:**
+- `birthDate`: The birth date to validate
+- `asOf`: Optional reference date (uses current time if not provided)
+
+**Returns:**
+- `true` if the age is valid (0-150 years)
+- `false` if the birth date is in the future or results in an unreasonable age
+
+**Examples:**
+
+```go
+// Valid ages
+validBirth := time.Date(1990, 5, 15, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.IsValidAge(validBirth))                     // true
+
+newborn := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.IsValidAge(newborn))                        // true
+
+elderly := time.Date(1925, 1, 1, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.IsValidAge(elderly))                        // true
+
+// Invalid ages
+futureBirth := time.Date(2030, 1, 1, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.IsValidAge(futureBirth))                    // false
+
+tooOld := time.Date(1850, 1, 1, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.IsValidAge(tooOld))                         // false
+
+// With specific reference date
+refDate := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.IsValidAge(validBirth, refDate))            // true
+```
+
+## Time Arithmetic Functions
+
+### Hours
+
+Adds or subtracts hours from a time.
+
+```go
+func Hours(h int, times ...time.Time) time.Time
+```
+
+**Parameters:**
+- `h`: Number of hours to add (negative to subtract)
+- `times`: Optional time(s) to use as base (uses current time if not provided)
+
+**Examples:**
+
+```go
+baseTime := time.Date(2025, 7, 7, 12, 0, 0, 0, time.UTC)
+
+// Add hours
+result := gotime.Hours(5, baseTime)
+fmt.Println(result) // 2025-07-07 17:00:00 +0000 UTC
+
+// Subtract hours
+result = gotime.Hours(-2, baseTime)
+fmt.Println(result) // 2025-07-07 10:00:00 +0000 UTC
+
+// Cross day boundaries
+result = gotime.Hours(25, baseTime)
+fmt.Println(result) // 2025-07-08 13:00:00 +0000 UTC
+
+// Use current time if no base time provided
+result = gotime.Hours(1) // 1 hour from now
+```
+
+### Minutes
+
+Adds or subtracts minutes from a time.
+
+```go
+func Minutes(m int, times ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+baseTime := time.Date(2025, 7, 7, 12, 0, 0, 0, time.UTC)
+
+// Add minutes
+result := gotime.Minutes(30, baseTime)
+fmt.Println(result) // 2025-07-07 12:30:00 +0000 UTC
+
+// Subtract minutes
+result = gotime.Minutes(-15, baseTime)
+fmt.Println(result) // 2025-07-07 11:45:00 +0000 UTC
+
+// Cross hour boundaries
+result = gotime.Minutes(90, baseTime)
+fmt.Println(result) // 2025-07-07 13:30:00 +0000 UTC
+
+// Use current time if no base time provided
+result = gotime.Minutes(30) // 30 minutes from now
+```
+
+### Seconds
+
+Adds or subtracts seconds from a time.
+
+```go
+func Seconds(s int, times ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+baseTime := time.Date(2025, 7, 7, 12, 0, 0, 0, time.UTC)
+
+// Add seconds
+result := gotime.Seconds(45, baseTime)
+fmt.Println(result) // 2025-07-07 12:00:45 +0000 UTC
+
+// Subtract seconds
+result = gotime.Seconds(-30, baseTime)
+fmt.Println(result) // 2025-07-07 11:59:30 +0000 UTC
+
+// Cross minute boundaries
+result = gotime.Seconds(90, baseTime)
+fmt.Println(result) // 2025-07-07 12:01:30 +0000 UTC
+
+// Use current time if no base time provided
+result = gotime.Seconds(10) // 10 seconds from now
+```
+
+## Quarter Functions
+
+### QuarterStart
+
+Returns the start of the quarter for a given time.
+
+```go
+func QuarterStart(times ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+// Get start of current quarter
+start := gotime.QuarterStart()
+
+// Get start of specific quarter
+date := time.Date(2025, 7, 15, 12, 30, 45, 0, time.UTC) // Q3
+start = gotime.QuarterStart(date)
+fmt.Println(start) // 2025-07-01 00:00:00 +0000 UTC
+
+// Quarter boundaries:
+// Q1: January 1   - March 31
+// Q2: April 1     - June 30
+// Q3: July 1      - September 30
+// Q4: October 1   - December 31
+```
+
+### QuarterEnd
+
+Returns the end of the quarter for a given time.
+
+```go
+func QuarterEnd(times ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+// Get end of current quarter
+end := gotime.QuarterEnd()
+
+// Get end of specific quarter
+date := time.Date(2025, 5, 15, 12, 30, 45, 0, time.UTC) // Q2
+end = gotime.QuarterEnd(date)
+fmt.Println(end) // 2025-06-30 23:59:59.999999999 +0000 UTC
+```
+
+### Quarters
+
+Adds or subtracts quarters from a time.
+
+```go
+func Quarters(q int, times ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+baseTime := time.Date(2025, 7, 15, 12, 30, 45, 0, time.UTC)
+
+// Add quarters
+future := gotime.Quarters(2, baseTime)
+fmt.Println(future) // 2026-01-15 12:30:45 +0000 UTC
+
+// Subtract quarters
+past := gotime.Quarters(-1, baseTime)
+fmt.Println(past) // 2025-04-15 12:30:45 +0000 UTC
+
+// Handle end-of-month edge cases correctly
+endOfMonth := time.Date(2025, 8, 31, 0, 0, 0, 0, time.UTC)
+result := gotime.Quarters(1, endOfMonth) // November has only 30 days
+fmt.Println(result) // 2025-11-30 00:00:00 +0000 UTC
+```
+
+### LastQuarter
+
+Returns the same time in the previous quarter.
+
+```go
+func LastQuarter(times ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+current := time.Date(2025, 7, 15, 12, 30, 45, 0, time.UTC) // Q3
+last := gotime.LastQuarter(current)
+fmt.Println(last) // 2025-04-15 12:30:45 +0000 UTC (Q2)
+```
+
+### NextQuarter
+
+Returns the same time in the next quarter.
+
+```go
+func NextQuarter(times ...time.Time) time.Time
+```
+
+**Examples:**
+
+```go
+current := time.Date(2025, 7, 15, 12, 30, 45, 0, time.UTC) // Q3
+next := gotime.NextQuarter(current)
+fmt.Println(next) // 2025-10-15 12:30:45 +0000 UTC (Q4)
+```
+
+### QuarterOfYear
+
+Returns the quarter number (1-4) for a given time.
+
+```go
+func QuarterOfYear(times ...time.Time) int
+```
+
+**Examples:**
+
+```go
+// January-March = Q1
+q1 := time.Date(2025, 2, 15, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.QuarterOfYear(q1)) // 1
+
+// April-June = Q2
+q2 := time.Date(2025, 5, 15, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.QuarterOfYear(q2)) // 2
+
+// July-September = Q3
+q3 := time.Date(2025, 8, 15, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.QuarterOfYear(q3)) // 3
+
+// October-December = Q4
+q4 := time.Date(2025, 11, 15, 0, 0, 0, 0, time.UTC)
+fmt.Println(gotime.QuarterOfYear(q4)) // 4
+
+// Current quarter
+fmt.Println(gotime.QuarterOfYear()) // Quarter of current time
+```
+
+## Time Arithmetic Use Cases
+
+### 1. Appointment Scheduling System
+
+```go
+package scheduling
+
+import (
+    "github.com/maniartech/gotime"
+    "time"
+)
+
+type AppointmentScheduler struct {
+    workingHours struct {
+        start int // 9 for 9 AM
+        end   int // 17 for 5 PM
+    }
+    appointmentDuration int // minutes
+}
+
+func NewScheduler() *AppointmentScheduler {
+    return &AppointmentScheduler{
+        workingHours: struct {
+            start int
+            end   int
+        }{start: 9, end: 17},
+        appointmentDuration: 30,
+    }
+}
+
+func (s *AppointmentScheduler) NextAvailableSlot(after time.Time) time.Time {
+    // Start looking from the next working hour
+    candidate := s.nextWorkingHour(after)
+
+    // For this example, assume all slots are available
+    return candidate
+}
+
+func (s *AppointmentScheduler) nextWorkingHour(t time.Time) time.Time {
+    hour := t.Hour()
+
+    if hour < s.workingHours.start {
+        // Before working hours - move to start of working day
+        return time.Date(t.Year(), t.Month(), t.Day(), s.workingHours.start, 0, 0, 0, t.Location())
+    } else if hour >= s.workingHours.end {
+        // After working hours - move to next working day
+        nextDay := gotime.Days(1, t)
+        return time.Date(nextDay.Year(), nextDay.Month(), nextDay.Day(), s.workingHours.start, 0, 0, 0, t.Location())
+    }
+
+    // During working hours - round up to next hour
+    return gotime.Hours(1, time.Date(t.Year(), t.Month(), t.Day(), hour, 0, 0, 0, t.Location()))
+}
+
+func (s *AppointmentScheduler) ScheduleAppointment(preferredTime time.Time) time.Time {
+    // Find next available slot
+    slot := s.NextAvailableSlot(preferredTime)
+
+    // Make sure it's during working hours
+    hour := slot.Hour()
+    if hour < s.workingHours.start || hour >= s.workingHours.end {
+        slot = s.nextWorkingHour(slot)
+    }
+
+    return slot
+}
+
+func (s *AppointmentScheduler) GetAppointmentEnd(start time.Time) time.Time {
+    return gotime.Minutes(s.appointmentDuration, start)
+}
+
+func (s *AppointmentScheduler) GetReminders(appointmentTime time.Time) map[string]time.Time {
+    return map[string]time.Time{
+        "24_hours":  gotime.Hours(-24, appointmentTime),
+        "2_hours":   gotime.Hours(-2, appointmentTime),
+        "15_minutes": gotime.Minutes(-15, appointmentTime),
+    }
+}
+```
+
+### 2. Shift Management System
+
+```go
+package shifts
+
+import (
+    "github.com/maniartech/gotime"
+    "time"
+)
+
+type Shift struct {
+    ID        string
+    StartTime time.Time
+    Duration  int // hours
+    BreakTime int // minutes
+}
+
+func (s *Shift) GetEndTime() time.Time {
+    return gotime.Hours(s.Duration, s.StartTime)
+}
+
+func (s *Shift) GetBreakStart() time.Time {
+    // Break starts halfway through shift
+    return gotime.Hours(s.Duration/2, s.StartTime)
+}
+
+func (s *Shift) GetBreakEnd() time.Time {
+    breakStart := s.GetBreakStart()
+    return gotime.Minutes(s.BreakTime, breakStart)
+}
+
+func (s *Shift) GetActualWorkTime() time.Duration {
+    totalHours := time.Duration(s.Duration) * time.Hour
+    breakDuration := time.Duration(s.BreakTime) * time.Minute
+    return totalHours - breakDuration
+}
+
+func (s *Shift) IsOvertime() bool {
+    return s.Duration > 8 // More than 8 hours
+}
+
+func (s *Shift) GetOvertimeHours() int {
+    if s.Duration > 8 {
+        return s.Duration - 8
+    }
+    return 0
+}
+
+type ShiftManager struct {
+    shifts []Shift
+}
+
+func (sm *ShiftManager) ScheduleShift(start time.Time, duration int) Shift {
+    shift := Shift{
+        ID:        generateShiftID(),
+        StartTime: start,
+        Duration:  duration,
+        BreakTime: 30, // 30 minute break
+    }
+
+    sm.shifts = append(sm.shifts, shift)
+    return shift
+}
+
+func (sm *ShiftManager) GetWeeklySchedule(weekStart time.Time) []Shift {
+    var weeklyShifts []Shift
+    weekEnd := gotime.Days(7, weekStart)
+
+    for _, shift := range sm.shifts {
+        if shift.StartTime.After(weekStart) && shift.StartTime.Before(weekEnd) {
+            weeklyShifts = append(weeklyShifts, shift)
+        }
+    }
+
+    return weeklyShifts
+}
+
+func generateShiftID() string {
+    return gotime.Format(time.Now(), "yyyymmdd-hhiiss")
+}
+```
+
+### 3. Financial Quarter Reporting
+
+```go
+package reporting
+
+import (
+    "github.com/maniartech/gotime"
+    "time"
+)
+
+type QuarterlyReport struct {
+    Year     int
+    Quarter  int
+    Revenue  float64
+    Expenses float64
+}
+
+func (qr *QuarterlyReport) GetProfit() float64 {
+    return qr.Revenue - qr.Expenses
+}
+
+func (qr *QuarterlyReport) GetPeriodStart() time.Time {
+    return gotime.QuarterStart(time.Date(qr.Year, time.Month((qr.Quarter-1)*3+1), 1, 0, 0, 0, 0, time.UTC))
+}
+
+func (qr *QuarterlyReport) GetPeriodEnd() time.Time {
+    return gotime.QuarterEnd(time.Date(qr.Year, time.Month((qr.Quarter-1)*3+1), 1, 0, 0, 0, 0, time.UTC))
+}
+
+type FinancialReporting struct {
+    reports []QuarterlyReport
+}
+
+func (fr *FinancialReporting) GetCurrentQuarter() int {
+    return gotime.QuarterOfYear()
+}
+
+func (fr *FinancialReporting) GetQuarterStartDate(year, quarter int) time.Time {
+    firstMonthOfQuarter := (quarter-1)*3 + 1
+    someTimeInQuarter := time.Date(year, time.Month(firstMonthOfQuarter), 15, 0, 0, 0, 0, time.UTC)
+    return gotime.QuarterStart(someTimeInQuarter)
+}
+
+func (fr *FinancialReporting) GetQuarterEndDate(year, quarter int) time.Time {
+    firstMonthOfQuarter := (quarter-1)*3 + 1
+    someTimeInQuarter := time.Date(year, time.Month(firstMonthOfQuarter), 15, 0, 0, 0, 0, time.UTC)
+    return gotime.QuarterEnd(someTimeInQuarter)
+}
+
+func (fr *FinancialReporting) GetNextQuarterStart() time.Time {
+    nextQuarterTime := gotime.NextQuarter()
+    return gotime.QuarterStart(nextQuarterTime)
+}
+
+func (fr *FinancialReporting) GetLastQuarterReport() *QuarterlyReport {
+    lastQuarterTime := gotime.LastQuarter()
+    targetYear := lastQuarterTime.Year()
+    targetQuarter := gotime.QuarterOfYear(lastQuarterTime)
+
+    for _, report := range fr.reports {
+        if report.Year == targetYear && report.Quarter == targetQuarter {
+            return &report
+        }
+    }
+    return nil
+}
+
+func (fr *FinancialReporting) GenerateQuarterComparison(year, quarter int) map[string]interface{} {
+    current := fr.getQuarterReport(year, quarter)
+    if current == nil {
+        return map[string]interface{}{"error": "Current quarter data not found"}
+    }
+
+    // Get same quarter from previous year
+    previous := fr.getQuarterReport(year-1, quarter)
+
+    comparison := map[string]interface{}{
+        "current_quarter": map[string]interface{}{
+            "year":     current.Year,
+            "quarter":  current.Quarter,
+            "revenue":  current.Revenue,
+            "expenses": current.Expenses,
+            "profit":   current.GetProfit(),
+            "start":    gotime.Format(current.GetPeriodStart(), "yyyy-mm-dd"),
+            "end":      gotime.Format(current.GetPeriodEnd(), "yyyy-mm-dd"),
+        },
+    }
+
+    if previous != nil {
+        revenueGrowth := ((current.Revenue - previous.Revenue) / previous.Revenue) * 100
+        profitGrowth := ((current.GetProfit() - previous.GetProfit()) / previous.GetProfit()) * 100
+
+        comparison["previous_year"] = map[string]interface{}{
+            "revenue":        previous.Revenue,
+            "profit":         previous.GetProfit(),
+            "revenue_growth": revenueGrowth,
+            "profit_growth":  profitGrowth,
+        }
+    }
+
+    return comparison
+}
+
+func (fr *FinancialReporting) getQuarterReport(year, quarter int) *QuarterlyReport {
+    for _, report := range fr.reports {
+        if report.Year == year && report.Quarter == quarter {
+            return &report
+        }
+    }
+    return nil
+}
+```
+
+fmt.Println(gotime.IsValidAge(validBirth, refDate))            // true
+```
+
+## Age Calculation Use Cases
+
+### 1. User Registration System
+
+```go
+package registration
+
+import (
+    "errors"
+    "github.com/maniartech/gotime"
+    "time"
+)
+
+type User struct {
+    Name      string
+    BirthDate time.Time
+    Email     string
+}
+
+func (u *User) GetAge() (int, int, int) {
+    return gotime.Age(u.BirthDate)
+}
+
+func (u *User) GetAgeInYears() float64 {
+    return gotime.YearsBetween(u.BirthDate, time.Now())
+}
+
+func (u *User) IsAdult() bool {
+    years, _, _ := u.GetAge()
+    return years >= 18
+}
+
+func (u *User) IsEligibleForSeniorDiscount() bool {
+    years, _, _ := u.GetAge()
+    return years >= 65
+}
+
+func ValidateUser(u *User) error {
+    if !gotime.IsValidAge(u.BirthDate) {
+        return errors.New("invalid birth date")
+    }
+
+    if !u.IsAdult() {
+        return errors.New("user must be at least 18 years old")
+    }
+
+    return nil
+}
+
+func GetAgeGroup(birthDate time.Time) string {
+    years, _, _ := gotime.Age(birthDate)
+
+    switch {
+    case years < 13:
+        return "child"
+    case years < 20:
+        return "teenager"
+    case years < 30:
+        return "young_adult"
+    case years < 50:
+        return "adult"
+    case years < 65:
+        return "middle_aged"
+    default:
+        return "senior"
+    }
+}
+```
+
+### 2. Insurance Premium Calculator
+
+```go
+package insurance
+
+import (
+    "github.com/maniartech/gotime"
+    "time"
+)
+
+type InsuranceCalculator struct {
+    BasePremium float64
+}
+
+func NewInsuranceCalculator(basePremium float64) *InsuranceCalculator {
+    return &InsuranceCalculator{BasePremium: basePremium}
+}
+
+func (ic *InsuranceCalculator) CalculatePremium(birthDate time.Time) float64 {
+    years, _, _ := gotime.Age(birthDate)
+    premium := ic.BasePremium
+
+    // Age-based multipliers
+    switch {
+    case years < 25:
+        premium *= 1.5 // Higher risk for young drivers
+    case years < 35:
+        premium *= 1.0 // Standard rate
+    case years < 55:
+        premium *= 0.9 // Lower rate for experienced drivers
+    case years < 70:
+        premium *= 1.1 // Slightly higher for older drivers
+    default:
+        premium *= 1.8 // Much higher for elderly drivers
+    }
+
+    return premium
+}
+
+func (ic *InsuranceCalculator) GetRiskCategory(birthDate time.Time) string {
+    years, _, _ := gotime.Age(birthDate)
+
+    switch {
+    case years < 25:
+        return "high_risk"
+    case years < 55:
+        return "standard_risk"
+    case years < 70:
+        return "experienced"
+    default:
+        return "senior"
+    }
+}
+
+func (ic *InsuranceCalculator) IsEligible(birthDate time.Time) bool {
+    if !gotime.IsValidAge(birthDate) {
+        return false
+    }
+
+    years, _, _ := gotime.Age(birthDate)
+    return years >= 18 && years <= 80
+}
+
+func (ic *InsuranceCalculator) GetQuote(birthDate time.Time) map[string]interface{} {
+    if !ic.IsEligible(birthDate) {
+        return map[string]interface{}{
+            "eligible": false,
+            "reason":   "Age requirements not met",
+        }
+    }
+
+    years, months, days := gotime.Age(birthDate)
+    premium := ic.CalculatePremium(birthDate)
+    category := ic.GetRiskCategory(birthDate)
+
+    return map[string]interface{}{
+        "eligible":     true,
+        "age":          map[string]int{"years": years, "months": months, "days": days},
+        "age_years":    gotime.YearsBetween(birthDate, time.Now()),
+        "premium":      premium,
+        "risk_category": category,
+        "quote_date":   gotime.Format(time.Now(), "yyyy-mm-dd"),
+    }
+}
+```
+
+### 3. Employee Benefits System
+
+```go
+package benefits
+
+import (
+    "github.com/maniartech/gotime"
+    "time"
+)
+
+type Employee struct {
+    ID          string
+    Name        string
+    BirthDate   time.Time
+    HireDate    time.Time
+    Salary      float64
+}
+
+func (e *Employee) GetAge() (int, int, int) {
+    return gotime.Age(e.BirthDate)
+}
+
+func (e *Employee) GetServiceYears() float64 {
+    return gotime.YearsBetween(e.HireDate, time.Now())
+}
+
+func (e *Employee) GetVacationDays() int {
+    serviceYears := e.GetServiceYears()
+
+    switch {
+    case serviceYears < 1:
+        return 10 // 10 days for new employees
+    case serviceYears < 5:
+        return 15 // 15 days after 1 year
+    case serviceYears < 10:
+        return 20 // 20 days after 5 years
+    default:
+        return 25 // 25 days after 10 years
+    }
+}
+
+func (e *Employee) IsEligibleForRetirement() bool {
+    age, _, _ := e.GetAge()
+    serviceYears := e.GetServiceYears()
+
+    // Rule of 85: age + service years >= 85, minimum age 55
+    return age >= 55 && (float64(age) + serviceYears) >= 85
+}
+
+func (e *Employee) GetHealthInsuranceRate() float64 {
+    age, _, _ := e.GetAge()
+
+    baseRate := 150.0 // Base monthly premium
+
+    switch {
+    case age < 30:
+        return baseRate * 0.8
+    case age < 40:
+        return baseRate * 1.0
+    case age < 50:
+        return baseRate * 1.2
+    case age < 60:
+        return baseRate * 1.5
+    default:
+        return baseRate * 1.8
+    }
+}
+
+func (e *Employee) GetLifeInsuranceMultiplier() float64 {
+    age, _, _ := e.GetAge()
+
+    switch {
+    case age < 30:
+        return 3.0 // 3x salary
+    case age < 40:
+        return 2.5 // 2.5x salary
+    case age < 50:
+        return 2.0 // 2x salary
+    case age < 60:
+        return 1.5 // 1.5x salary
+    default:
+        return 1.0 // 1x salary
+    }
+}
+
+func (e *Employee) GetBenefitsSummary() map[string]interface{} {
+    years, months, days := e.GetAge()
+    serviceYears := e.GetServiceYears()
+
+    return map[string]interface{}{
+        "employee_id":       e.ID,
+        "name":             e.Name,
+        "age":              map[string]int{"years": years, "months": months, "days": days},
+        "service_years":    serviceYears,
+        "vacation_days":    e.GetVacationDays(),
+        "retirement_eligible": e.IsEligibleForRetirement(),
+        "health_premium":   e.GetHealthInsuranceRate(),
+        "life_insurance":   e.GetLifeInsuranceMultiplier() * e.Salary,
+        "calculated_date":  gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss"),
+    }
+}
+```
+
+### 4. Medical Appointment System
+
+```go
+package medical
+
+import (
+    "github.com/maniartech/gotime"
+    "time"
+)
+
+type Patient struct {
+    ID          string
+    Name        string
+    BirthDate   time.Time
+    LastVisit   *time.Time
+}
+
+func (p *Patient) GetAge() (int, int, int) {
+    return gotime.Age(p.BirthDate)
+}
+
+func (p *Patient) GetAgeInMonths() float64 {
+    return gotime.MonthsBetween(p.BirthDate, time.Now())
+}
+
+func (p *Patient) GetTimeSinceLastVisit() string {
+    if p.LastVisit == nil {
+        return "No previous visits"
+    }
+
+    duration := time.Since(*p.LastVisit)
+    return gotime.DurationInWords(duration)
+}
+
+func (p *Patient) GetRecommendedScreenings() []string {
+    age, _, _ := p.GetAge()
+    var screenings []string
+
+    if age >= 40 {
+        screenings = append(screenings, "Annual Physical")
+        screenings = append(screenings, "Blood Pressure Check")
+    }
+
+    if age >= 45 {
+        screenings = append(screenings, "Cholesterol Test")
+        screenings = append(screenings, "Diabetes Screening")
+    }
+
+    if age >= 50 {
+        screenings = append(screenings, "Colonoscopy")
+        screenings = append(screenings, "Mammogram") // for applicable patients
+    }
+
+    if age >= 65 {
+        screenings = append(screenings, "Bone Density Test")
+        screenings = append(screenings, "Vision Test")
+        screenings = append(screenings, "Hearing Test")
+    }
+
+    return screenings
+}
+
+func (p *Patient) IsOverdue() bool {
+    if p.LastVisit == nil {
+        return true // Never visited
+    }
+
+    age, _, _ := p.GetAge()
+    var maxInterval time.Duration
+
+    switch {
+    case age < 18:
+        maxInterval = 6 * 30 * 24 * time.Hour // 6 months for children
+    case age < 40:
+        maxInterval = 2 * 365 * 24 * time.Hour // 2 years for young adults
+    case age < 65:
+        maxInterval = 1 * 365 * 24 * time.Hour // 1 year for middle-aged
+    default:
+        maxInterval = 6 * 30 * 24 * time.Hour // 6 months for seniors
+    }
+
+    return time.Since(*p.LastVisit) > maxInterval
+}
+
+func (p *Patient) GetVaccineSchedule() map[string]interface{} {
+    ageInMonths := p.GetAgeInMonths()
+    age, _, _ := p.GetAge()
+
+    schedule := make(map[string]interface{})
+
+    // Pediatric vaccines (age in months)
+    if ageInMonths <= 18 {
+        if ageInMonths >= 2 {
+            schedule["DTaP"] = "Due"
+            schedule["Hib"] = "Due"
+            schedule["IPV"] = "Due"
+            schedule["PCV13"] = "Due"
+            schedule["RV"] = "Due"
+        }
+        if ageInMonths >= 12 {
+            schedule["MMR"] = "Due"
+            schedule["Varicella"] = "Due"
+            schedule["Hepatitis A"] = "Due"
+        }
+    }
+
+    // Adult vaccines (age in years)
+    if age >= 18 {
+        schedule["Tdap"] = "Every 10 years"
+        schedule["Influenza"] = "Annual"
+    }
+
+    if age >= 50 {
+        schedule["Shingles"] = "One-time dose"
+    }
+
+    if age >= 65 {
+        schedule["Pneumococcal"] = "One-time dose"
+    }
+
+    return schedule
+}
+
+func (p *Patient) GetMedicalSummary() map[string]interface{} {
+    years, months, days := p.GetAge()
+
+    summary := map[string]interface{}{
+        "patient_id":         p.ID,
+        "name":              p.Name,
+        "age":               map[string]int{"years": years, "months": months, "days": days},
+        "age_in_months":     p.GetAgeInMonths(),
+        "is_overdue":        p.IsOverdue(),
+        "time_since_visit":  p.GetTimeSinceLastVisit(),
+        "recommended_screenings": p.GetRecommendedScreenings(),
+        "vaccine_schedule":  p.GetVaccineSchedule(),
+        "summary_date":      gotime.Format(time.Now(), "yyyy-mm-dd"),
+    }
+
+    return summary
+}
+```
 
 ## Date Comparison Functions
 
