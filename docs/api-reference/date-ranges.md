@@ -669,6 +669,67 @@ func FindOverlappingRanges(ranges []DateRange) [][]DateRange {
 
 ## Performance Considerations
 
+## Counting Weekdays in a Date Range
+
+### CountWeekdaysInRange
+
+Counts how many times each day of the week appears in a given date range (inclusive).
+
+```go
+type WeekdayCounts struct {
+    Monday    int
+    Tuesday   int
+    Wednesday int
+    Thursday  int
+    Friday    int
+    Saturday  int
+    Sunday    int
+}
+
+func CountWeekdaysInRange(start, end time.Time) WeekdayCounts
+```
+
+**Parameters:**
+- `start`: Start date (inclusive)
+- `end`: End date (inclusive)
+
+**Returns:**
+- `WeekdayCounts`: Struct with the count of each weekday in the range
+
+**Description:**
+This function iterates from the `start` date to the `end` date (inclusive), counting how many times each weekday (Monday through Sunday) occurs. The result is returned as a `WeekdayCounts` struct, with each field representing the count for that day.
+
+**Examples:**
+
+```go
+start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC) // Tuesday
+end := time.Date(2025, 7, 14, 0, 0, 0, 0, time.UTC)   // Monday
+
+counts := gotime.CountWeekdaysInRange(start, end)
+fmt.Printf("Mondays: %d\n", counts.Monday)      // 2
+fmt.Printf("Tuesdays: %d\n", counts.Tuesday)    // 2
+fmt.Printf("Wednesdays: %d\n", counts.Wednesday) // 2
+fmt.Printf("Thursdays: %d\n", counts.Thursday)   // 2
+fmt.Printf("Fridays: %d\n", counts.Friday)       // 2
+fmt.Printf("Saturdays: %d\n", counts.Saturday)   // 2
+fmt.Printf("Sundays: %d\n", counts.Sunday)       // 2
+
+// Single day range
+single := gotime.CountWeekdaysInRange(start, start)
+fmt.Printf("Only %s: %d\n", start.Weekday(), single.Tuesday) // Only Tuesday: 1
+
+// Reverse order (function handles swapping)
+reverse := gotime.CountWeekdaysInRange(end, start)
+fmt.Printf("Mondays: %d\n", reverse.Monday) // 2
+```
+
+**Use Cases:**
+- Generating attendance or workday reports
+- Calculating business days vs. weekends
+- Scheduling and analytics over arbitrary date ranges
+
+---
+
 ### 1. Large Dataset Range Queries
 
 ```go
