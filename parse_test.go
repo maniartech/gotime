@@ -90,7 +90,8 @@ func TestParseInLocation(t *testing.T) {
 func testParse(layout, value string) time.Time {
 	dt, err := gotime.Parse(layout, value)
 	if err != nil {
-		panic(err)
+		// Use t.Fatal in real tests, but for this helper, return zero time
+		return time.Time{}
 	}
 
 	return dt

@@ -56,7 +56,10 @@ func TestYear(t *testing.T) {
 	functionDate = trunccateSecond(gotime.Years(1))
 	utils.AssertEqual(t, expectedDate, functionDate)
 
-	utils.AssertPanics(t, func() { gotime.Years(0, fixedDate) })
+	// Zero is a no-op, should return the same date
+	expectedDate = fixedDate
+	functionDate = gotime.Years(0, fixedDate)
+	utils.AssertEqual(t, expectedDate, functionDate)
 }
 
 func TestMonth(t *testing.T) {
@@ -112,7 +115,10 @@ func TestMonth(t *testing.T) {
 	functionDate = trunccateSecond(gotime.Months(1))
 	utils.AssertEqual(t, expectedDate, functionDate)
 
-	utils.AssertPanics(t, func() { gotime.Months(0, fixedDate) })
+	// Zero is a no-op, should return the same date
+	expectedDate = fixedDate
+	functionDate = gotime.Months(0, fixedDate)
+	utils.AssertEqual(t, expectedDate, functionDate)
 
 }
 
@@ -169,7 +175,10 @@ func TestWeek(t *testing.T) {
 
 	utils.AssertEqual(t, expectedDate, functionDate)
 
-	utils.AssertPanics(t, func() { gotime.Weeks(0, fixedDate) })
+	// Zero is a no-op, should return the same date
+	expectedDate = fixedDate
+	functionDate = gotime.Weeks(0, fixedDate)
+	utils.AssertEqual(t, expectedDate, functionDate)
 
 	// WeekStartOn
 	expectedDate = time.Date(2023, 12, 31, 0, 0, 0, 0, time.UTC)
@@ -262,6 +271,9 @@ func TestDay(t *testing.T) {
 
 	utils.AssertEqual(t, expectedDate, functionDate)
 
-	utils.AssertPanics(t, func() { gotime.Days(0, fixedDate) })
+	// Zero is a no-op, should return the same date
+	expectedDate = fixedDate
+	functionDate = gotime.Days(0, fixedDate)
+	utils.AssertEqual(t, expectedDate, functionDate)
 
 }

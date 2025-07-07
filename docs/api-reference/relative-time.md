@@ -97,8 +97,8 @@ past := gotime.Days(-5)
 specificDate := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
 futureFromSpecific := gotime.Days(10, specificDate)
 
-// Panics if days is 0
-// gotime.Days(0) // This will panic
+// Zero is a no-op (returns the same date)
+sameDay := gotime.Days(0, specificDate) // Returns specificDate unchanged
 ```
 
 ### Weeks
@@ -120,6 +120,9 @@ threeWeeksAgo := gotime.Weeks(-3)
 
 // From specific date
 nextMonth := gotime.Weeks(4, specificDate)
+
+// Zero is a no-op (returns the same date)
+sameWeek := gotime.Weeks(0, specificDate) // Returns specificDate unchanged
 ```
 
 ### Months
@@ -142,6 +145,9 @@ halfYearAgo := gotime.Months(-6)
 // Handle month-end edge cases properly
 endOfJan := time.Date(2025, 1, 31, 0, 0, 0, 0, time.UTC)
 endOfFeb := gotime.Months(1, endOfJan) // Properly handles Feb 28/29
+
+// Zero is a no-op (returns the same date)
+sameMonth := gotime.Months(0, specificDate) // Returns specificDate unchanged
 ```
 
 ### Years
@@ -164,6 +170,9 @@ fiveYearsAgo := gotime.Years(-5)
 // Leap year handling
 leapDay := time.Date(2024, 2, 29, 0, 0, 0, 0, time.UTC)
 nextYearFromLeap := gotime.Years(1, leapDay) // Handles Feb 29 -> Feb 28
+
+// Zero is a no-op (returns the same date)
+sameYear := gotime.Years(0, specificDate) // Returns specificDate unchanged
 ```
 
 ## Time Arithmetic Functions

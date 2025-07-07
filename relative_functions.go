@@ -58,16 +58,14 @@ func YearEnd(dt ...time.Time) time.Time {
 //
 // If the years parameter is 0 it will panic.
 func Years(years int, dt ...time.Time) time.Time {
-	if years == 0 {
-		panic("Years parameter can't be zero")
-	}
-
 	var t time.Time
 	if len(dt) > 0 {
 		t = dt[0]
 	} else {
 		t = time.Now()
-
+	}
+	if years == 0 {
+		return t
 	}
 	return t.AddDate(years, 0, 0)
 }
@@ -146,15 +144,14 @@ func NextMonth() time.Time {
 //
 // If the months parameter is 0 it will panic.
 func Months(months int, dt ...time.Time) time.Time {
-	if months == 0 {
-		panic("Months parameter can't be zero")
-	}
-
 	var t time.Time
 	if len(dt) > 0 {
 		t = dt[0]
 	} else {
 		t = time.Now()
+	}
+	if months == 0 {
+		return t
 	}
 	return t.AddDate(0, months, 0)
 }
@@ -269,17 +266,15 @@ func NextWeek() time.Time {
 //
 // If the weeks parameter is 0 it will panic.
 func Weeks(weeks int, dt ...time.Time) time.Time {
-	if weeks == 0 {
-		panic("Weeks parameter can't be zero")
-	}
-
 	var t time.Time
 	if len(dt) > 0 {
 		t = dt[0]
 	} else {
 		t = time.Now()
 	}
-
+	if weeks == 0 {
+		return t
+	}
 	return t.AddDate(0, 0, weeks*7)
 }
 
@@ -352,15 +347,14 @@ func Tomorrow() time.Time {
 //
 // If the days parameter is 0 it will panic.
 func Days(days int, dt ...time.Time) time.Time {
-	if days == 0 {
-		panic("Days parameter can't be zero")
-	}
-
 	var t time.Time
 	if len(dt) > 0 {
 		t = dt[0]
 	} else {
 		t = time.Now()
+	}
+	if days == 0 {
+		return t
 	}
 	return t.AddDate(0, 0, days)
 }
