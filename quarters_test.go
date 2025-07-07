@@ -196,6 +196,22 @@ func TestQuarterEnd(t *testing.T) {
 			utils.AssertEqual(t, tt.expected, result)
 		})
 	}
+
+	// Test QuarterEnd without arguments (uses current time)
+	t.Run("No arguments uses current time", func(t *testing.T) {
+		result := gotime.QuarterEnd()
+		now := time.Now()
+		
+		// Should return a valid quarter end
+		if result.Before(now) {
+			t.Errorf("QuarterEnd() without arguments should return a time >= now")
+		}
+		
+		// Should be at end of day (23:59:59.999999999)
+		if result.Hour() != 23 || result.Minute() != 59 || result.Second() != 59 || result.Nanosecond() != 999999999 {
+			t.Errorf("QuarterEnd() should return end of day time, got %v", result)
+		}
+	})
 }
 
 func TestQuarters(t *testing.T) {

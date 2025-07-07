@@ -17,6 +17,7 @@ Complete documentation for all GoTime functions and their usage patterns.
 
 ### Utilities & Helpers
 - **[Utility Functions](utilities.md)** - TruncateTime, DateValue, timezone helpers, time boundaries
+- **[Calendar Math](calendar-math.md)** - DayOfYear, WeekOfMonth, month boundary checks
 
 ## Function Categories
 
@@ -92,6 +93,13 @@ Helper functions for common tasks:
 - `IsLeapYear(year)` - Check leap year
 - `DaysInMonth(year, month)` - Days in month
 - `IsWeekend(time)` / `IsWeekday(time)` - Day type checking
+
+### 📊 Calendar Math Functions
+Calendar calculation utilities:
+- `DayOfYear(time)` - Day number within year (1-366)
+- `WeekOfMonth(time)` - Week number within month (1-5)
+- `IsFirstDayOfMonth(time)` - Check if first day of month
+- `IsLastDayOfMonth(time)` - Check if last day of month
 
 ## Common Patterns
 

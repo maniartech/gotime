@@ -44,6 +44,28 @@ func TestFormat(t *testing.T) {
 	if date5Formatted != "2009/02/14" {
 		t.Errorf("Expected 2009/02/14, got %s, ", date5Formatted)
 	}
+
+	// Test default layout (empty string) for Format
+	date6 := time.Date(2025, 7, 7, 14, 30, 45, 0, time.UTC)
+	date6Formatted := gotime.Format(date6, "")
+	expected6 := "2025-07-07T14:30:45Z"
+	if date6Formatted != expected6 {
+		t.Errorf("Expected %s, got %s", expected6, date6Formatted)
+	}
+
+	// Test default layout (empty string) for FormatUnix
+	date7Formatted := gotime.FormatUnix(1720361445, 0, "")
+	// Just check that it's a valid RFC3339 format, don't check exact value due to timezone
+	if len(date7Formatted) < 19 { // RFC3339 is at least 19 chars
+		t.Errorf("Expected valid RFC3339 format, got %s", date7Formatted)
+	}
+
+	// Test default layout (empty string) for FormatTimestamp
+	date8Formatted := gotime.FormatTimestamp(1720361445, "")
+	// Just check that it's a valid RFC3339 format, don't check exact value due to timezone
+	if len(date8Formatted) < 19 { // RFC3339 is at least 19 chars
+		t.Errorf("Expected valid RFC3339 format, got %s", date8Formatted)
+	}
 }
 
 func BenchmarkFormat(b *testing.B) {

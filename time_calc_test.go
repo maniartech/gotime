@@ -118,6 +118,26 @@ func TestWorkDay(t *testing.T) {
 	functionDate, err = gotime.WorkDay(startDay, days, workingDays, holidays...)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDate, functionDate)
+
+	// Test error cases
+	// Test negative days
+	_, err = gotime.WorkDay(startDay, -1, workingDays)
+	if err == nil {
+		t.Error("Expected error for negative days")
+	}
+	
+	// Test zero date
+	_, err = gotime.WorkDay(time.Time{}, days, workingDays)
+	if err == nil {
+		t.Error("Expected error for zero date")
+	}
+	
+	// Test no working days
+	noWorkingDays := [7]bool{false, false, false, false, false, false, false}
+	_, err = gotime.WorkDay(startDay, days, noWorkingDays)
+	if err == nil {
+		t.Error("Expected error for no working days")
+	}
 }
 
 func TestWorkDayWithUnsortedHolidays(t *testing.T) {
@@ -192,6 +212,26 @@ func TestPrevWorkDay(t *testing.T) {
 			}
 		})
 	}
+
+	// Test error cases
+	// Test negative days
+	_, err := gotime.PrevWorkDay(time.Date(2022, 1, 5, 0, 0, 0, 0, time.UTC), -1, workingDays)
+	if err == nil {
+		t.Error("Expected error for negative days")
+	}
+	
+	// Test zero date
+	_, err = gotime.PrevWorkDay(time.Time{}, 1, workingDays)
+	if err == nil {
+		t.Error("Expected error for zero date")
+	}
+	
+	// Test no working days
+	noWorkingDays := [7]bool{false, false, false, false, false, false, false}
+	_, err = gotime.PrevWorkDay(time.Date(2022, 1, 5, 0, 0, 0, 0, time.UTC), 1, noWorkingDays)
+	if err == nil {
+		t.Error("Expected error for no working days")
+	}
 }
 
 func TestPrevWorkDayWithUnsortedHolidays(t *testing.T) {
@@ -232,6 +272,26 @@ func TestNetWorkdays(t *testing.T) {
 	functionDays, err = gotime.NetWorkDays(startDay, endDay, workingDays, holidays...)
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, expectedDays, functionDays)
+
+	// Test error cases
+	// Test zero start date
+	_, err = gotime.NetWorkDays(time.Time{}, endDay, workingDays)
+	if err == nil {
+		t.Error("Expected error for zero start date")
+	}
+	
+	// Test zero end date
+	_, err = gotime.NetWorkDays(startDay, time.Time{}, workingDays)
+	if err == nil {
+		t.Error("Expected error for zero end date")
+	}
+	
+	// Test no working days
+	noWorkingDays := [7]bool{false, false, false, false, false, false, false}
+	_, err = gotime.NetWorkDays(startDay, endDay, noWorkingDays)
+	if err == nil {
+		t.Error("Expected error for no working days")
+	}
 }
 
 func TestDateValue(t *testing.T) {

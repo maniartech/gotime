@@ -192,6 +192,13 @@ func TestMonthsBetween(t *testing.T) {
 			want:      0.0,
 			tolerance: 0.001,
 		},
+		{
+			name:      "reverse order",
+			start:     time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC),
+			end:       time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC),
+			want:      6.0,
+			tolerance: 0.1,
+		},
 	}
 
 	for _, tt := range tests {
@@ -291,6 +298,13 @@ func TestWeeksBetween(t *testing.T) {
 			end:       time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC),
 			want:      0.0,
 			tolerance: 0.001,
+		},
+		{
+			name:      "reverse order",
+			start:     time.Date(2025, 1, 29, 0, 0, 0, 0, time.UTC),
+			end:       time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC),
+			want:      4.0,
+			tolerance: 0.01,
 		},
 	}
 

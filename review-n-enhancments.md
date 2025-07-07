@@ -204,7 +204,8 @@ if date.Year() == 2024 && date.Month() == 1 && date.Day() == 1 {
 ### **Nice to Have**
 - [ ] Add ISO week support (European standards)
 - [x] Enhance business calendar functions
-- [ ] Add calendar math enhancements
+- [x] Add calendar math enhancements
+    _Implemented DayOfYear, WeekOfMonth, IsFirstDayOfMonth, and IsLastDayOfMonth functions with comprehensive tests, benchmarks, and documentation._
 
 ---
 
