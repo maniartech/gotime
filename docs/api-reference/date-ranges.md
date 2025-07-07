@@ -669,7 +669,56 @@ func FindOverlappingRanges(ranges []DateRange) [][]DateRange {
 
 ## Performance Considerations
 
+
 ## Counting Weekdays in a Date Range
+
+### IsWeekdayPresentInRange
+
+Checks if one or more specified weekdays are present in a date range (inclusive).
+
+```go
+func IsWeekdayPresentInRange(start, end time.Time, weekdays ...time.Weekday) bool
+```
+
+**Parameters:**
+- `start`: Start date (inclusive)
+- `end`: End date (inclusive)
+- `weekdays`: One or more `time.Weekday` values to check for
+
+**Returns:**
+- `bool`: True if any of the specified weekdays are present in the range
+
+**Description:**
+This function checks if any of the given weekdays occur between `start` and `end` (inclusive). You can specify one or more weekdays as arguments. The function returns `true` as soon as any of the specified weekdays is found in the range.
+
+**Examples:**
+
+```go
+start := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC) // Monday
+end := time.Date(2025, 7, 13, 0, 0, 0, 0, time.UTC)  // Sunday
+
+// Check for a single weekday
+present := gotime.IsWeekdayPresentInRange(start, end, time.Wednesday) // true
+
+// Check for multiple weekdays (any present)
+anyPresent := gotime.IsWeekdayPresentInRange(start, end, time.Friday, time.Sunday) // true
+
+// Check for a weekday not present
+absent := gotime.IsWeekdayPresentInRange(start, start, time.Tuesday) // false
+
+// No weekdays provided
+none := gotime.IsWeekdayPresentInRange(start, end) // false
+
+// Reverse order (function handles swapping)
+reverse := gotime.IsWeekdayPresentInRange(end, start, time.Monday) // true
+```
+
+**Use Cases:**
+- Quickly check if a date range includes a weekend or holiday
+- Validate if a schedule covers specific days
+- Filter ranges for business logic
+
+---
 
 ### CountWeekdaysInRange
 
