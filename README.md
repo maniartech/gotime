@@ -1,10 +1,10 @@
-# GoTime ⧖
+# GoTime 🕛🕐🕒🕓🕔🕕🕖🕗🕘🕙🕚
 
 > **Intuitive time manipulation for Go** - Making date/time operations as simple as they should be.
 
 GoTime extends Go's standard `time` package with human-friendly operations that developers actually need in real-world applications.
 
-## ▶ Quick Example
+## Quick Example
 
 ```go
 import "github.com/maniartech/gotime"
@@ -26,7 +26,7 @@ nextBusinessDay := gotime.WorkDay(1, time.Now())
 tenDaysFromNow := gotime.Days(10, time.Now())
 ```
 
-## ▲ Why GoTime?
+## Why GoTime?
 
 **The Problem:** Go's time formatting is cryptic and error-prone
 ```go
@@ -40,7 +40,7 @@ time.Now().Format("2006-01-02 15:04:05")  // 😵‍💫
 gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")  // 😊
 ```
 
-### ✦ Key Benefits
+### Key Benefits
 
 | What You Get | Standard Go | GoTime |
 |-------------|-------------|---------|
@@ -50,7 +50,7 @@ gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")  // 😊
 | **Format Conversion** | Parse + Format | `Convert()` |
 | **Date Arithmetic** | Complex calculations | `WorkDay()`, `Days()` |
 
-### ◆ Perfect For
+### Perfect For
 
 - **Web APIs** - Consistent date formatting across endpoints
 - **Reports** - Human-readable timestamps and date ranges
@@ -58,7 +58,7 @@ gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")  // 😊
 - **Data Processing** - Converting between date formats
 - **User Interfaces** - "2 hours ago" style timestamps
 
-## ◉ Installation
+## Installation
 
 ```bash
 go get github.com/maniartech/gotime
@@ -66,7 +66,7 @@ go get github.com/maniartech/gotime
 
 **Requirements:** Go 1.13+ • Zero dependencies • TinyGo compatible
 
-## ◈ Core Features
+## Core Features
 
 ### Intuitive Formatting
 ```go
@@ -99,9 +99,9 @@ nextBusinessDay := gotime.WorkDay(1, time.Now())
 businessDaysCount := gotime.NetWorkDays(startDate, endDate)
 ```
 
-## ◢ Documentation
+## Documentation
 
-**◈ [Complete Documentation](docs/)**
+**[Complete Documentation](docs/)**
 
 ### Quick Links
 - **[5-Minute Quick Start](docs/getting-started/quick-start.md)** - Get productive immediately
@@ -116,7 +116,7 @@ businessDaysCount := gotime.NetWorkDays(startDate, endDate)
 - **[Business Applications](docs/examples/common-use-cases.md#business-applications)** - Invoices, schedules
 - **[Analytics](docs/examples/common-use-cases.md#analytics-and-reporting)** - Time-series, monitoring
 
-## ◊ Quality & Reliability
+## Quality & Reliability
 
 - ✓ **100% Test Coverage** - Every function thoroughly tested
 - ✓ **Production Ready** - Used in real-world applications
@@ -124,17 +124,17 @@ businessDaysCount := gotime.NetWorkDays(startDate, endDate)
 - ✓ **TinyGo Compatible** - Works in embedded and WebAssembly
 - ✓ **MIT Licensed** - Free for commercial use
 
-## ▸ Contributing
+## Contributing
 
 Contributions are welcome! Please ensure your code includes tests and follows existing patterns.
 
 **Found an issue?** [Open an issue](https://github.com/maniartech/gotime/issues)
 **Want to contribute?** See our [contribution guidelines](CONTRIBUTING.md)
 
-## ◦ License
+## License
 
 MIT Licensed - see [LICENSE](LICENSE) for details.
 
 ---
 
-**[◈ Browse Documentation](docs/)** | **[★ Star on GitHub](https://github.com/maniartech/gotime)** | **[⚠ Report Issues](https://github.com/maniartech/gotime/issues)**
+**[Browse Documentation](docs/)** | **[Star on GitHub](https://github.com/maniartech/gotime)** | **[Report Issues](https://github.com/maniartech/gotime/issues)**
