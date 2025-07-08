@@ -28,20 +28,12 @@ func Convert(dt string, from string, to string) (string, error) {
 	var fromLayout string
 	switch v := fromConverted.(type) {
 	case []string:
-		if len(v) > 1 {
-			return "", errors.New(errOrdinalsNotSupported)
-		}
 		fromLayout = v[0]
-	case string:
-		fromLayout = v
 	default:
-		return "", errors.New(errInvalidFormat)
+		fromLayout, _ = v.(string)
 	}
 
-	toLayout, err := convertLayout(to, false)
-	if err != nil {
-		return "", err
-	}
+	toLayout, _ := convertLayout(to, false) // ConvertLayout never returns an error when forParsing is false
 
 	t, err := time.Parse(fromLayout, dt)
 	if err != nil {
@@ -51,10 +43,9 @@ func Convert(dt string, from string, to string) (string, error) {
 	switch v := toLayout.(type) {
 	case []string:
 		return formatStrs(t, v), nil
-	case string:
-		return t.Format(v), nil
 	default:
-		return "", errors.New(errInvalidFormat)
+		vstr, _ := v.(string)
+		return t.Format(vstr), nil
 	}
 }
 
