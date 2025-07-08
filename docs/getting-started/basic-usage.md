@@ -105,13 +105,13 @@ date4, _ := parseUserDate("July 7th, 2025")  // Readable
 // Parse time strings
 morning, _ := gotime.Parse("09:30", "hh:ii")           // 9:30 AM
 afternoon, _ := gotime.Parse("2:30 PM", "h:ii aa")     // 2:30 PM
-evening, _ := gotime.Parse("18:45", "hhh:ii")          // 6:45 PM
+evening, _ := gotime.Parse("18:45", "hhhh:ii")          // 6:45 PM
 
 // Format time values
 now := time.Now()
 time12 := gotime.Format(now, "h:ii aa")                // "2:30 PM"
-time24 := gotime.Format(now, "hhh:ii")                 // "14:30"
-withSeconds := gotime.Format(now, "hhh:ii:ss")         // "14:30:45"
+time24 := gotime.Format(now, "hhhh:ii")                 // "14:30"
+withSeconds := gotime.Format(now, "hhhh:ii:ss")         // "14:30:45"
 ```
 
 ### Combining Date and Time

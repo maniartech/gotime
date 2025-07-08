@@ -12,7 +12,7 @@ import (
 )
 
 func TestConvertLayoutA(t *testing.T) {
-	// c := nites.Format(time.Now(), "dd-mm-yyyyThhh:ii:ss.000000000000 zzoo")
+	// c := nites.Format(time.Now(), "dd-mm-yyyyThhhh:ii:ss.000000000000 zzoo")
 	fmt.Println(time.Now().Format(time.ANSIC))
 
 	fmt.Println(gotime.TimeAgo(time.Now().Add(time.Second * 24 * 1)))
@@ -24,7 +24,7 @@ func TestTZ(t *testing.T) {
 }
 
 func TestConvert(t *testing.T) {
-	date, err := nites.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss")
+	date, err := nites.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss")
 
 	utils.AssertNoError(t, err)
 	utils.AssertEqual(t, "2012-06-03 12:00:AM:00", date)
@@ -35,7 +35,7 @@ func TestConvert(t *testing.T) {
 // 	gotime.Options.EnableCache()
 
 // 	// Convert date
-// 	f := "yyyy-mmm-dd hhh:ii:ss.999"
+// 	f := "yyyy-mmm-dd hhhh:ii:ss.999"
 // 	f1 := gotime.convertLayout(f)
 // 	f2 := gotime.convertLayout(f)
 
@@ -57,8 +57,8 @@ func TestConvert(t *testing.T) {
 // 		t.Error("Expected Mon-Monday, got ", converted)
 // 	}
 
-// 	// Convert format hhh-hh-h to to Go format.
-// 	converted = gotime.convertLayout("hhh-hh-h")[0]
+// 	// Convert format hhhh-hh-h to to Go format.
+// 	converted = gotime.convertLayout("hhhh-hh-h")[0]
 // 	if converted != "15-03-3" {
 // 		t.Error("Expected 15-03-3, got ", converted)
 // 	}
@@ -178,7 +178,7 @@ func TestConvert(t *testing.T) {
 // 	}
 
 // 	// Test Microseconds
-// 	date, err = gotime.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss.000000")
+// 	date, err = gotime.Convert("2012-Jun-03 00:00:00.123", "yyyy-mmm-dd hhhh:ii:ss.999", "yyyy-mm-dd hh:ii:aa:ss.000000")
 // 	if err != nil {
 // 		t.Error("Expected no error, got ", err)
 // 	}
@@ -279,7 +279,7 @@ func TestConvertLayoutEdgeCases(t *testing.T) {
 	utils.AssertEqual(t, "01/Jan/2025", date)
 
 	// Test timezone conversion
-	date, err = nites.Convert("2025-01-01 12:00:00 UTC", "yyyy-mm-dd hhh:ii:ss zz", "dd/mm/yyyy hh:ii:aa")
+	date, err = nites.Convert("2025-01-01 12:00:00 UTC", "yyyy-mm-dd hhhh:ii:ss zz", "dd/mm/yyyy hh:ii:aa")
 	utils.AssertNoError(t, err)
 	if date == "" {
 		t.Error("Expected non-empty result for timezone conversion")

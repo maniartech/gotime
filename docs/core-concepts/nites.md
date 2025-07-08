@@ -85,7 +85,7 @@ The number of characters determines the output format:
 |--------|--------|-------------|---------|
 | `h` | `3` | Hour 12-format, no leading zero | 3 AM → 3 |
 | `hh` | `03` | Hour 12-format, with leading zero | 3 AM → 03 |
-| `hhh` | `15` | Hour 24-format | 3 PM → 15 |
+| `hhhh` | `15` | Hour 24-format with leading zero | 3 PM → 15 |
 | `i` | `4` | Minute without leading zero | 04:04 → 4 |
 | `ii` | `04` | Minute with leading zero | 04:04 → 04 |
 | `s` | `5` | Second without leading zero | 05 seconds → 5 |
@@ -135,8 +135,8 @@ gotime.Format(dt, "h:ii aa")              // 2:30 PM
 gotime.Format(dt, "hh:ii:ss aa")          // 02:30:45 PM
 
 // 24-hour format
-gotime.Format(dt, "hhh:ii")               // 14:30
-gotime.Format(dt, "hhh:ii:ss")            // 14:30:45
+gotime.Format(dt, "hhhh:ii")               // 14:30
+gotime.Format(dt, "hhhh:ii:ss")            // 14:30:45
 ```
 
 ### Database Formats
@@ -176,10 +176,10 @@ func displayFormats(dt time.Time) {
 
     // Time formats
     fmt.Println("12-hour:", gotime.Format(dt, "h:ii aa"))
-    fmt.Println("24-hour:", gotime.Format(dt, "hhh:ii"))
+    fmt.Println("24-hour:", gotime.Format(dt, "hhhh:ii"))
 
     // Combined
-    fmt.Println("Log format:", gotime.Format(dt, "yyyy-mm-dd hh:ii:ss"))
+    fmt.Println("Log format:", gotime.Format(dt, "yyyy-mm-dd hh:ii:ss aa"))
 }
 ```
 

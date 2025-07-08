@@ -171,15 +171,15 @@ formatted, _ := formatter.FormatDateColumn(dates)
 
 ```go
 // 12-hour to 24-hour
-time24, err := gotime.Convert("2:30 PM", "h:ii aa", "hhh:ii")
+time24, err := gotime.Convert("2:30 PM", "h:ii aa", "hhhh:ii")
 // Result: "14:30"
 
 // 24-hour to 12-hour
-time12, err := gotime.Convert("14:30", "hhh:ii", "h:ii aa")
+time12, err := gotime.Convert("14:30", "hhhh:ii", "h:ii aa")
 // Result: "2:30 PM"
 
 // Add seconds
-withSeconds, err := gotime.Convert("14:30", "hhh:ii", "hhh:ii:ss")
+withSeconds, err := gotime.Convert("14:30", "hhhh:ii", "hhhh:ii:ss")
 // Result: "14:30:00"
 ```
 
@@ -527,7 +527,7 @@ func TestDateConversions(t *testing.T) {
         {"2025-07-07", "yyyy-mm-dd", "mm/dd/yyyy", "07/07/2025"},
         {"07/07/2025", "mm/dd/yyyy", "dd/mm/yyyy", "07/07/2025"},
         {"2025-07-07", "yyyy-mm-dd", "mmmm dt, yyyy", "July 7th, 2025"},
-        {"14:30", "hhh:ii", "h:ii aa", "2:30 PM"},
+        {"14:30", "hhhh:ii", "h:ii aa", "2:30 PM"},
     }
 
     for _, test := range tests {

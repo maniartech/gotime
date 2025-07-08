@@ -72,7 +72,7 @@ func Convert(dt string, from string, to string) (string, error) {
 
 // h      -> 3          Hour in 12 hour format without leading zero
 // hh     -> 03         Hour in 12 hour format with leading zero
-// hhh    -> 15         Hour in 24 hour format without leading zero
+// hhhh   -> 15         Hour in 24 hour format with leading zero
 // a      -> pm         am/pm (lowercase)
 // aa     -> PM         AM/PM (uppercase)
 // ii     -> 04         Minute with leading zero
@@ -109,7 +109,7 @@ func convertLayout(f string, forParsing bool) (interface{}, error) {
 		"m": {{"mmmm", "January"}, {"mmm", "Jan"}, {"mm", "01"}, {"mt", ""}, {"m", "1"}},
 		"d": {{"ddd", "002"}, {"dd", "02"}, {"db", "_2"}, {"dt", ""}, {"d", "2"}}, // dt for ordinals
 		"w": {{"wwww", "Monday"}, {"www", "Mon"}},
-		"h": {{"hhh", "15"}, {"hh", "03"}, {"h", "3"}},
+		"h": {{"hhhh", "15"}, {"hh", "03"}, {"h", "3"}},
 		"a": {{"aa", "PM"}, {"a", "pm"}},
 		"i": {{"ii", "04"}, {"i", "4"}},
 		"s": {{"ss", "05"}, {"s", "5"}},
