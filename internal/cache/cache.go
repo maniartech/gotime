@@ -47,3 +47,21 @@ func Get(key string) interface{} {
 	}
 	return cache[key]
 }
+
+func GetStrs(key string) []string {
+	if cache == nil {
+		return nil
+	}
+	value, exists := cache[key]
+	if !exists {
+		return nil
+	}
+	switch v := value.(type) {
+	case []string:
+		return v
+	case string:
+		return []string{v}
+	default:
+		return nil
+	}
+}
