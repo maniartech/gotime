@@ -74,8 +74,8 @@ echo -e "${BLUE}=== Internal Package Tests ===${NC}"
 # Cache package
 run_package_tests "internal/cache" "Cache Package"
 
-# IDFS package
-run_package_tests "internal/idfs" "IDFS Package"
+# NITES package
+run_package_tests "internal/nites" "NITES Package"
 
 # Utils package (if it has tests)
 run_package_tests "internal/utils" "Utils Package"

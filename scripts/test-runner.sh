@@ -49,7 +49,7 @@ while [[ $# -gt 0 ]]; do
             echo "  -v, --verbose    Run tests with verbose output"
             echo "  -c, --coverage   Run tests with coverage analysis"
             echo "  -b, --benchmark  Run benchmark tests"
-            echo "  -p, --package    Run tests for specific package (main, cache, idfs, utils, all)"
+            echo "  -p, --package    Run tests for specific package (main, cache, nites, utils, all)"
             echo "  -h, --help       Show this help message"
             exit 0
             ;;
@@ -124,8 +124,8 @@ case "$PACKAGE" in
     "cache")
         run_tests "internal/cache" "Cache Package"
         ;;
-    "idfs")
-        run_tests "internal/idfs" "IDFS Package"
+    "nites")
+        run_tests "internal/nites" "NITES Package"
         ;;
     "utils")
         run_tests "internal/utils" "Utils Package"
@@ -154,7 +154,7 @@ case "$PACKAGE" in
         ;;
     *)
         echo "Unknown package: $PACKAGE"
-        echo "Available packages: main, cache, idfs, utils, all"
+        echo "Available packages: main, cache, nites, utils, all"
         exit 1
         ;;
 esac

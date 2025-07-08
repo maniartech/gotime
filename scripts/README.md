@@ -29,7 +29,7 @@ Fast test execution script with flexible options.
 - `-v, --verbose`: Run tests with verbose output
 - `-c, --coverage`: Run tests with coverage analysis
 - `-b, --benchmark`: Run benchmark tests
-- `-p, --package`: Run tests for specific package (main, cache, idfs, utils, all)
+- `-p, --package`: Run tests for specific package (main, cache, nites, utils, all)
 - `-h, --help`: Show help message
 
 ### `test-coverage.sh`
@@ -100,7 +100,7 @@ The GoTime library has comprehensive test coverage with:
 - **Total test executions**: 238 across all packages
   - Main package: 225 test executions
   - Internal cache package: 2 test executions
-  - Internal idfs package: 11 test executions
+  - Internal nites package: 11 test executions
 - **Test coverage**: 100% across all packages
 - **Test types**: Unit tests, table-driven tests, examples, and benchmarks
 
@@ -120,7 +120,7 @@ The GoTime library has comprehensive test coverage with:
 ./scripts/benchmark.sh
 
 # Run specific package tests
-./scripts/test-runner.sh -p idfs -v
+./scripts/test-runner.sh -p nites -v
 
 # Generate coverage with HTML report
 ./scripts/test-runner.sh -c -p all

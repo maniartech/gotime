@@ -126,8 +126,8 @@ case "$PACKAGE" in
             run_benchmarks "internal/cache" "Cache Package"
         fi
 
-        if [ -d "internal/idfs" ]; then
-            run_benchmarks "internal/idfs" "IDFS Package"
+        if [ -d "internal/nites" ]; then
+            run_benchmarks "internal/nites" "NITES Package"
         fi
         ;;
     *)
