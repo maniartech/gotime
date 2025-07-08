@@ -14,10 +14,10 @@ import (
 //
 // Example:
 //
-//	formatted := Format(time.Now(), "yyyy-mm-dd")
+//	formatted := gotime.Format(time.Now(), "yyyy-mm-dd")
 //	// formatted: "2025-07-08"
 //
-//	formatted = Format(time.Now(), "mmmm dd, yyyy")
+//	formatted = gotime.Format(time.Now(), "mmmm dd, yyyy")
 //	// formatted: "July 08, 2025"
 func Format(dt time.Time, layout string) string {
 	if layout == "" {
@@ -32,7 +32,7 @@ func Format(dt time.Time, layout string) string {
 //
 // Example:
 //
-//	formatted := FormatUnix(1609459200, 0, "yyyy-mm-dd")
+//	formatted := gotime.FormatUnix(1609459200, 0, "yyyy-mm-dd")
 //	// formatted: "2021-01-01"
 func FormatUnix(sec int64, nsec int64, layout string) string {
 	if layout == "" {
@@ -47,7 +47,7 @@ func FormatUnix(sec int64, nsec int64, layout string) string {
 //
 // Example:
 //
-//	formatted := FormatTimestamp(1609459200, "yyyy-mm-dd")
+//	formatted := gotime.FormatTimestamp(1609459200, "yyyy-mm-dd")
 //	// formatted: "2021-01-01"
 func FormatTimestamp(timestamp int64, layout string) string {
 	if layout == "" {

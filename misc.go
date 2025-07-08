@@ -7,7 +7,7 @@ import "time"
 // A leap year is a year that is evenly divisible by 4, but not by 100 unless it is also divisible by 400.
 //
 // Example:
-//   isLeap := IsLeapYear(2024)
+//   isLeap := gotime.IsLeapYear(2024)
 //   // isLeap == true
 func IsLeapYear(year int) bool {
 	return year%4 == 0 && (year%100 != 0 || year%400 == 0)
@@ -20,7 +20,7 @@ func IsLeapYear(year int) bool {
 // For all other months, the number of days is 31.
 //
 // Example:
-//   days := DaysInMonth(2022, 2)
+//   days := gotime.DaysInMonth(2022, 2)
 //   // days == 28
 func DaysInMonth(year, month int) int {
 	switch month {
@@ -41,7 +41,7 @@ func DaysInMonth(year, month int) int {
 // If the year is a leap year, it returns 366, otherwise it returns 365.
 //
 // Example:
-//   days := DaysInYear(2022)
+//   days := gotime.DaysInYear(2022)
 //   // days == 365
 func DaysInYear(year int) int {
 	if IsLeapYear(year) {
@@ -59,7 +59,7 @@ func DaysInYear(year int) int {
 // Q4: Oct (31) + Nov (30) + Dec (31) = 92 days
 //
 // Example:
-//   days := DaysInQuarter(2022, 1)
+//   days := gotime.DaysInQuarter(2022, 1)
 //   // days == 90
 func DaysInQuarter(year, quarter int) int {
 	switch quarter {
@@ -80,7 +80,7 @@ func DaysInQuarter(year, quarter int) int {
 // second, and nanosecond fields to 0. It also sets the location field to time.UTC.
 //
 // Example:
-//   date := NewDate(2022, 4, 15)
+//   date := gotime.NewDate(2022, 4, 15)
 //   // date == time.Date(2022, time.April, 15, 0, 0, 0, 0, time.UTC)
 func NewDate(year, month, day int, loc *time.Location) time.Time {
 	return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc)
@@ -92,7 +92,7 @@ func NewDate(year, month, day int, loc *time.Location) time.Time {
 // and day fields to 0. It also sets the location field to time.UTC.
 //
 // Example:
-//   timeObj := NewTime(12, 30, 0)
+//   timeObj := gotime.NewTime(12, 30, 0)
 //   // timeObj == time.Date(0, 1, 1, 12, 30, 0, 0, time.UTC)
 func NewTime(hour, minute, second int, loc *time.Location) time.Time {
 	return time.Date(0, 0, 0, hour, minute, second, 0, loc)
@@ -103,7 +103,7 @@ func NewTime(hour, minute, second int, loc *time.Location) time.Time {
 //
 // Example:
 //   date := time.Date(2022, time.April, 15, 12, 30, 0, 0, time.UTC)
-//   newDate := ReplaceDate(date, 2023, 5, 20)
+//   newDate := gotime.ReplaceDate(date, 2023, 5, 20)
 //   // newDate == time.Date(2023, time.May, 20, 12, 30, 0, 0, time.UTC)
 func ReplaceDate(t time.Time, year, month, day int) time.Time {
 	return time.Date(year, time.Month(month), day, t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), t.Location())
@@ -114,7 +114,7 @@ func ReplaceDate(t time.Time, year, month, day int) time.Time {
 //
 // Example:
 //   date := time.Date(2022, time.April, 15, 12, 30, 0, 0, time.UTC)
-//   newTime := ReplaceTime(date, 15, 45, 0)
+//   newTime := gotime.ReplaceTime(date, 15, 45, 0)
 //   // newTime == time.Date(2022, time.April, 15, 15, 45, 0, 0, time.UTC)
 func ReplaceTime(t time.Time, hour, minute, second int) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), hour, minute, second, t.Nanosecond(), t.Location())

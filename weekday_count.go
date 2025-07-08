@@ -19,7 +19,7 @@ type WeekdayCounts struct {
 // Example:
 //	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
 //	end := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
-//	counts := CountWeekdaysInRange(start, end)
+//	counts := gotime.CountWeekdaysInRange(start, end)
 //	// counts.Monday: 1, counts.Tuesday: 1, etc.
 func CountWeekdaysInRange(start, end time.Time) WeekdayCounts {
 	if end.Before(start) {

@@ -19,10 +19,10 @@ var (
 //
 // Example:
 //
-//	serialNum := DateValue(time.Date(1900, 1, 1, 0, 0, 0, 0, time.UTC))
+//	serialNum := gotime.DateValue(time.Date(1900, 1, 1, 0, 0, 0, 0, time.UTC))
 //	// serialNum: 2
 //
-//	serialNum = DateValue(time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC))
+//	serialNum = gotime.DateValue(time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC))
 //	// serialNum: 45252
 func DateValue(date time.Time) int {
 	// Use a specific implementation that matches the test case expectations
@@ -58,7 +58,7 @@ func DateValue(date time.Time) int {
 //
 //	t1 := time.Date(2025, 1, 1, 12, 0, 0, 0, time.UTC)
 //	t2 := time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC)
-//	diff := Diff(t1, t2, time.Hour)
+//	diff := gotime.Diff(t1, t2, time.Hour)
 //	// diff: 2.0 (2 hours difference)
 func Diff(t1, t2 time.Time, unit time.Duration, rounded ...bool) float64 {
 	isRounded := false
@@ -79,7 +79,7 @@ func Diff(t1, t2 time.Time, unit time.Duration, rounded ...bool) float64 {
 //	t1 := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //	t2 := time.Date(2025, 1, 2, 0, 0, 0, 0, time.UTC)
 //	t3 := time.Date(2025, 1, 3, 0, 0, 0, 0, time.UTC)
-//	latest := Latest(t1, t2, t3)
+//	latest := gotime.Latest(t1, t2, t3)
 //	// latest: 2025-01-03 (t3)
 func Latest(t1, t2 time.Time, tn ...time.Time) time.Time {
 
@@ -108,7 +108,7 @@ func Latest(t1, t2 time.Time, tn ...time.Time) time.Time {
 //	t1 := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //	t2 := time.Date(2025, 1, 2, 0, 0, 0, 0, time.UTC)
 //	t3 := time.Date(2025, 1, 3, 0, 0, 0, 0, time.UTC)
-//	earliest := Earliest(t1, t2, t3)
+//	earliest := gotime.Earliest(t1, t2, t3)
 //	// earliest: 2025-01-01 (t1)
 func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time {
 
@@ -136,7 +136,7 @@ func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time {
 // Example:
 //
 //	dt := time.Date(2025, 7, 8, 14, 30, 45, 123456789, time.UTC)
-//	truncated := TruncateTime(dt)
+//	truncated := gotime.TruncateTime(dt)
 //	// truncated: 2025-07-08 00:00:00 +0000 UTC
 func TruncateTime(date time.Time) time.Time {
 	return time.Date(
@@ -157,7 +157,7 @@ func TruncateTime(date time.Time) time.Time {
 //	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC) // Tuesday
 //	workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
 //	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//	result, err := WorkDay(start, 5, workdays, holidays...)
+//	result, err := gotime.WorkDay(start, 5, workdays, holidays...)
 //	// result: 5 working days from start, excluding July 4th holiday
 func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) (time.Time, error) {
 	if days < 0 {
@@ -218,7 +218,7 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 //	start := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC) // Thursday
 //	workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
 //	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//	result, err := PrevWorkDay(start, 5, workdays, holidays...)
+//	result, err := gotime.PrevWorkDay(start, 5, workdays, holidays...)
 //	// result: 5 working days before start, excluding July 4th holiday
 func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) (time.Time, error) {
 	if days < 0 {
@@ -278,7 +278,7 @@ func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ..
 //	end := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC)
 //	workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
 //	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//	count, err := NetWorkDays(start, end, workdays, holidays...)
+//	count, err := gotime.NetWorkDays(start, end, workdays, holidays...)
 //	// count: number of working days between start and end, excluding July 4th
 func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) (int, error) {
 	if startDate.IsZero() || endDate.IsZero() {

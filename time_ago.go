@@ -31,15 +31,15 @@ var timeScale = [5]string{"hours", "days", "weeks", "months", "years"}
 // Example:
 //
 //	oneWeekAgo := time.Now().Add(-7 * 24 * time.Hour)
-//	result := TimeAgo(oneWeekAgo)
+//	result := gotime.TimeAgo(oneWeekAgo)
 //	// result: "Last week"
 //
 //	threeHoursAgo := time.Now().Add(-3 * time.Hour)
-//	result = TimeAgo(threeHoursAgo)
+//	result = gotime.TimeAgo(threeHoursAgo)
 //	// result: "3 hours ago"
 //
 //	futureTime := time.Now().Add(30 * time.Minute)
-//	result = TimeAgo(futureTime)
+//	result = gotime.TimeAgo(futureTime)
 //	// result: "In a few minutes"
 func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	future := false

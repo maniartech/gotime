@@ -6,7 +6,7 @@ import "time"
 // If no time is provided, it uses the current time.
 //
 // Example:
-//   q1Start := QuarterStart(time.Date(2025, 3, 15, 0, 0, 0, 0, time.UTC))
+//   q1Start := gotime.QuarterStart(time.Date(2025, 3, 15, 0, 0, 0, 0, time.UTC))
 //   // Returns: 2025-01-01 00:00:00 +0000 UTC
 func QuarterStart(dt ...time.Time) time.Time {
 	var t time.Time
@@ -25,7 +25,7 @@ func QuarterStart(dt ...time.Time) time.Time {
 // If no time is provided, it uses the current time.
 //
 // Example:
-//   q1End := QuarterEnd(time.Date(2025, 2, 15, 0, 0, 0, 0, time.UTC))
+//   q1End := gotime.QuarterEnd(time.Date(2025, 2, 15, 0, 0, 0, 0, time.UTC))
 //   // Returns: 2025-03-31 23:59:59.999999999 +0000 UTC
 func QuarterEnd(dt ...time.Time) time.Time {
 	var t time.Time
@@ -47,7 +47,7 @@ func QuarterEnd(dt ...time.Time) time.Time {
 // This is equivalent to Quarters(-1).
 //
 // Example:
-//   lastQ := LastQuarter() // If current is 2025-07-15, returns 2025-04-15
+//   lastQ := gotime.LastQuarter() // If current is 2025-07-15, returns 2025-04-15
 func LastQuarter() time.Time {
 	return Quarters(-1)
 }
@@ -56,7 +56,7 @@ func LastQuarter() time.Time {
 // This is equivalent to Quarters(1).
 //
 // Example:
-//   nextQ := NextQuarter() // If current is 2025-07-15, returns 2025-10-15
+//   nextQ := gotime.NextQuarter() // If current is 2025-07-15, returns 2025-10-15
 func NextQuarter() time.Time {
 	return Quarters(1)
 }
@@ -65,9 +65,9 @@ func NextQuarter() time.Time {
 // If no time is provided, it uses the current time. Negative values subtract quarters.
 //
 // Example:
-//   futureQuarter := Quarters(2, someTime)  // 2 quarters (6 months) after someTime
-//   pastQuarter := Quarters(-1, someTime)   // 1 quarter (3 months) before someTime
-//   noChange := Quarters(0)                 // same as time.Now()
+//   futureQuarter := gotime.Quarters(2, someTime)  // 2 quarters (6 months) after someTime
+//   pastQuarter := gotime.Quarters(-1, someTime)   // 1 quarter (3 months) before someTime
+//   noChange := gotime.Quarters(0)                 // same as time.Now()
 func Quarters(quarters int, dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -84,7 +84,7 @@ func Quarters(quarters int, dt ...time.Time) time.Time {
 // If no time is provided, it uses the current time.
 //
 // Example:
-//   quarter := QuarterOfYear(time.Date(2025, 7, 15, 0, 0, 0, 0, time.UTC))
+//   quarter := gotime.QuarterOfYear(time.Date(2025, 7, 15, 0, 0, 0, 0, time.UTC))
 //   // Returns: 3 (July is in Q3)
 func QuarterOfYear(dt ...time.Time) int {
 	var t time.Time

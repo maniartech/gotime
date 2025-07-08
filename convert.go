@@ -7,7 +7,7 @@ import "github.com/maniartech/gotime/internal/nites"
 // (Natural and Intuitive Time Expression Syntax) format specifiers.
 //
 // Example:
-//	converted, err := Convert("2022-12-31", "yyyy-mm-dd", "dt mmmm, yyyy")
+//	converted, err := gotime.Convert("2022-12-31", "yyyy-mm-dd", "dt mmmm, yyyy")
 //	if err != nil {
 //		// handle error
 //	}

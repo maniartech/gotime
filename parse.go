@@ -12,7 +12,7 @@ import (
 //
 // Example:
 //
-//	parsed, err := Parse("yyyy-mm-dd", "2022-12-31")
+//	parsed, err := gotime.Parse("yyyy-mm-dd", "2022-12-31")
 //	if err != nil {
 //		// handle error
 //	}
@@ -27,7 +27,7 @@ func Parse(layout, value string) (time.Time, error) {
 // Example:
 //
 //	ist := time.FixedZone("IST", 5*60*60+30*60)
-//	parsed, err := ParseInLocation("yyyy-mm-dd", "2022-12-31", ist)
+//	parsed, err := gotime.ParseInLocation("yyyy-mm-dd", "2022-12-31", ist)
 //	if err != nil {
 //		// handle error
 //	}

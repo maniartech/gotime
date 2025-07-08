@@ -9,7 +9,7 @@ import "time"
 //	target := time.Date(2025, 7, 5, 12, 0, 0, 0, time.UTC)
 //	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
 //	end := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC)
-//	result := IsBetween(target, start, end)
+//	result := gotime.IsBetween(target, start, end)
 //	// result: true (July 5th is between July 1st and 10th)
 func IsBetween(t1, t2, t3 time.Time) bool {
 	t1Unix := t1.UnixMilli()
@@ -32,7 +32,7 @@ func IsBetween(t1, t2, t3 time.Time) bool {
 //	target := time.Date(2025, 7, 5, 23, 30, 0, 0, time.UTC)
 //	start := time.Date(2025, 7, 5, 10, 0, 0, 0, time.UTC)
 //	end := time.Date(2025, 7, 5, 14, 0, 0, 0, time.UTC)
-//	result := IsBetweenDates(target, start, end)
+//	result := gotime.IsBetweenDates(target, start, end)
 //	// result: true (all dates are July 5th, regardless of time)
 func IsBetweenDates(t1, t2, t3 time.Time) bool {
 	sec1 := SoD(t1).Unix()

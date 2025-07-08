@@ -8,7 +8,7 @@ import "time"
 // Example:
 //	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC) // Tuesday
 //	end := time.Date(2025, 7, 5, 0, 0, 0, 0, time.UTC)   // Saturday
-//	present := IsWeekdayPresentInRange(start, end, time.Monday, time.Friday)
+//	present := gotime.IsWeekdayPresentInRange(start, end, time.Monday, time.Friday)
 //	// present: true (Friday occurs on July 4th)
 func IsWeekdayPresentInRange(start, end time.Time, weekdays ...time.Weekday) bool {
 	if len(weekdays) == 0 {

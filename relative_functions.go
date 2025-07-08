@@ -2,16 +2,17 @@ package gotime
 
 import "time"
 
-//-----------------Year Functions-----------------
+// -----------------Year Functions-----------------
 // YearStart returns the first day of the year for the given date.
 // If no date is provided, it uses the current time.
 //
 // Example:
-//	start := YearStart() // First day of current year
+//
+//	start := gotime.YearStart() // First day of current year
 //	// start: 2025-01-01 00:00:00
 //
 //	someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
-//	start = YearStart(someDate)
+//	start = gotime.YearStart(someDate)
 //	// start: 2024-01-01 00:00:00
 func YearStart(dt ...time.Time) time.Time {
 	var t time.Time
@@ -29,11 +30,12 @@ func YearStart(dt ...time.Time) time.Time {
 // If no date is provided, it uses the current time.
 //
 // Example:
-//	end := YearEnd() // Last day of current year
+//
+//	end := gotime.YearEnd() // Last day of current year
 //	// end: 2025-12-31 23:59:59.999999999
 //
 //	someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
-//	end = YearEnd(someDate)
+//	end = gotime.YearEnd(someDate)
 //	// end: 2024-12-31 23:59:59.999999999
 func YearEnd(dt ...time.Time) time.Time {
 	var t time.Time
@@ -52,11 +54,12 @@ func YearEnd(dt ...time.Time) time.Time {
 // If years is 0, it returns the original date unchanged.
 //
 // Example:
-//	future := Years(2) // 2 years from now
+//
+//	future := gotime.Years(2) // 2 years from now
 //	// future: 2027-07-08 (current time + 2 years)
 //
 //	someDate := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
-//	result := Years(5, someDate)
+//	result := gotime.Years(5, someDate)
 //	// result: 2025-01-01
 func Years(years int, dt ...time.Time) time.Time {
 	var t time.Time
@@ -74,7 +77,8 @@ func Years(years int, dt ...time.Time) time.Time {
 // LastYear returns the date one year ago from the current time.
 //
 // Example:
-//	lastYear := LastYear()
+//
+//	lastYear := gotime.LastYear()
 //	// lastYear: 2024-07-08 (if current time is 2025-07-08)
 func LastYear() time.Time {
 	return time.Now().AddDate(-1, 0, 0)
@@ -83,7 +87,8 @@ func LastYear() time.Time {
 // NextYear returns the date one year from the current time.
 //
 // Example:
-//	nextYear := NextYear()
+//
+//	nextYear := gotime.NextYear()
 //	// nextYear: 2026-07-08 (if current time is 2025-07-08)
 func NextYear() time.Time {
 	return time.Now().AddDate(1, 0, 0)
@@ -95,11 +100,12 @@ func NextYear() time.Time {
 // If no date is provided, it uses the current time.
 //
 // Example:
-//	start := MonthStart() // First day of current month
+//
+//	start := gotime.MonthStart() // First day of current month
 //	// start: 2025-07-01 00:00:00
 //
 //	someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
-//	start = MonthStart(someDate)
+//	start = gotime.MonthStart(someDate)
 //	// start: 2024-06-01 00:00:00
 func MonthStart(dt ...time.Time) time.Time {
 	var t time.Time
@@ -116,11 +122,12 @@ func MonthStart(dt ...time.Time) time.Time {
 // If no date is provided, it uses the current time.
 //
 // Example:
-//	end := MonthEnd() // Last day of current month
+//
+//	end := gotime.MonthEnd() // Last day of current month
 //	// end: 2025-07-31 23:59:59.999999999
 //
 //	someDate := time.Date(2024, 2, 15, 0, 0, 0, 0, time.UTC)
-//	end = MonthEnd(someDate)
+//	end = gotime.MonthEnd(someDate)
 //	// end: 2024-02-29 23:59:59.999999999 (leap year)
 func MonthEnd(dt ...time.Time) time.Time {
 	var t time.Time
@@ -136,7 +143,8 @@ func MonthEnd(dt ...time.Time) time.Time {
 // LastMonth returns the date one month ago from the current time.
 //
 // Example:
-//	lastMonth := LastMonth()
+//
+//	lastMonth := gotime.LastMonth()
 //	// lastMonth: 2025-06-08 (if current time is 2025-07-08)
 func LastMonth() time.Time {
 	return time.Now().AddDate(0, -1, 0)
@@ -145,7 +153,8 @@ func LastMonth() time.Time {
 // NextMonth returns the date one month from the current time.
 //
 // Example:
-//	nextMonth := NextMonth()
+//
+//	nextMonth := gotime.NextMonth()
 //	// nextMonth: 2025-08-08 (if current time is 2025-07-08)
 func NextMonth() time.Time {
 	return time.Now().AddDate(0, 1, 0)
@@ -156,11 +165,12 @@ func NextMonth() time.Time {
 // If months is 0, it returns the original date unchanged.
 //
 // Example:
-//	future := Months(3) // 3 months from now
+//
+//	future := gotime.Months(3) // 3 months from now
 //	// future: 2025-10-08 (current time + 3 months)
 //
 //	someDate := time.Date(2020, 1, 31, 0, 0, 0, 0, time.UTC)
-//	result := Months(1, someDate)
+//	result := gotime.Months(1, someDate)
 //	// result: 2020-02-29 (handles month-end edge cases)
 func Months(months int, dt ...time.Time) time.Time {
 	var t time.Time
@@ -181,11 +191,12 @@ func Months(months int, dt ...time.Time) time.Time {
 // If no date is provided, it uses the current time.
 //
 // Example:
-//	start := WeekStart() // Sunday of current week
+//
+//	start := gotime.WeekStart() // Sunday of current week
 //	// start: 2025-07-06 00:00:00 (if current is 2025-07-08)
 //
 //	someDate := time.Date(2025, 7, 10, 15, 30, 0, 0, time.UTC) // Thursday
-//	start = WeekStart(someDate)
+//	start = gotime.WeekStart(someDate)
 //	// start: 2025-07-06 00:00:00 (Sunday of that week)
 func WeekStart(dt ...time.Time) time.Time {
 	var t time.Time
@@ -202,7 +213,8 @@ func WeekStart(dt ...time.Time) time.Time {
 // If no date is provided, it uses the current time.
 //
 // Example:
-//	start := WeekStartOn(time.Monday) // Monday of current week
+//
+//	start := gotime.WeekStartOn(time.Monday) // Monday of current week
 //	// start: 2025-07-07 00:00:00 (if current is 2025-07-08)
 //
 //	someDate := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC) // Thursday
@@ -306,9 +318,10 @@ func Weeks(weeks int, dt ...time.Time) time.Time {
 // since the SoD function returns the first nanosecond of the day.
 //
 // Example:
-//   t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
-//   endOfDay := EoD(t)
-//   // endOfDay == time.Date(2022, time.December, 30, 23, 59, 59, 999999999, time.UTC)
+//
+//	t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
+//	endOfDay := gotime.EoD(t)
+//	// endOfDay == time.Date(2022, time.December, 30, 23, 59, 59, 999999999, time.UTC)
 func EoD(t ...time.Time) time.Time {
 	var dt time.Time
 	if len(t) > 0 {
@@ -332,9 +345,10 @@ func EoD(t ...time.Time) time.Time {
 // for the given time.
 //
 // Example:
-//   t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
-//   startOfDay := SoD(t)
-//   // startOfDay == time.Date(2022, time.December, 30, 0, 0, 0, 0, time.UTC)
+//
+//	t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
+//	startOfDay := gotime.SoD(t)
+//	// startOfDay == time.Date(2022, time.December, 30, 0, 0, 0, 0, time.UTC)
 func SoD(t ...time.Time) time.Time {
 	if len(t) > 0 {
 		return time.Date(t[0].Year(), t[0].Month(), t[0].Day(), 0, 0, 0, 0, t[0].Location())

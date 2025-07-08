@@ -14,7 +14,7 @@ import (
 //
 //	birthDate := time.Date(1990, 5, 15, 0, 0, 0, 0, time.UTC)
 //	asOf := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
-//	years, months, days := Age(birthDate, asOf)
+//	years, months, days := gotime.Age(birthDate, asOf)
 //	// Returns: 35, 1, 23 (35 years, 1 month, 23 days)
 func Age(birthDate time.Time, asOf ...time.Time) (years, months, days int) {
 	var ref time.Time
@@ -70,7 +70,7 @@ func Age(birthDate time.Time, asOf ...time.Time) (years, months, days int) {
 //
 //	start := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
 //	end := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
-//	years := YearsBetween(start, end)
+//	years := gotime.YearsBetween(start, end)
 //	// Returns: approximately 5.5 years
 func YearsBetween(start, end time.Time) float64 {
 	// Ensure start is before end
@@ -94,7 +94,7 @@ func YearsBetween(start, end time.Time) float64 {
 //
 //	start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //	end := time.Date(2025, 7, 15, 0, 0, 0, 0, time.UTC)
-//	months := MonthsBetween(start, end)
+//	months := gotime.MonthsBetween(start, end)
 //	// Returns: approximately 6.5 months
 func MonthsBetween(start, end time.Time) float64 {
 	// Ensure start is before end
@@ -118,7 +118,7 @@ func MonthsBetween(start, end time.Time) float64 {
 //
 //	start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //	end := time.Date(2025, 1, 8, 0, 0, 0, 0, time.UTC)
-//	days := DaysBetween(start, end)
+//	days := gotime.DaysBetween(start, end)
 //	// Returns: 7
 func DaysBetween(start, end time.Time) int {
 	// Ensure start is before end
@@ -137,7 +137,7 @@ func DaysBetween(start, end time.Time) int {
 //
 //	start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //	end := time.Date(2025, 1, 11, 0, 0, 0, 0, time.UTC)
-//	weeks := WeeksBetween(start, end)
+//	weeks := gotime.WeeksBetween(start, end)
 //	// Returns: approximately 1.43 weeks
 func WeeksBetween(start, end time.Time) float64 {
 	// Ensure start is before end
@@ -157,7 +157,7 @@ func WeeksBetween(start, end time.Time) float64 {
 // Example:
 //
 //	d := 2*time.Hour + 30*time.Minute
-//	result := DurationInWords(d)
+//	result := gotime.DurationInWords(d)
 //	// Returns: "2 hours 30 minutes"
 func DurationInWords(d time.Duration) string {
 	if d == 0 {
@@ -240,7 +240,7 @@ func DurationInWords(d time.Duration) string {
 // Example:
 //
 //	birthDate := time.Date(1990, 5, 15, 0, 0, 0, 0, time.UTC)
-//	valid := IsValidAge(birthDate)
+//	valid := gotime.IsValidAge(birthDate)
 //	// Returns: true
 func IsValidAge(birthDate time.Time, asOf ...time.Time) bool {
 	var ref time.Time
