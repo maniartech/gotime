@@ -405,7 +405,7 @@ package-manager verify
 
 #### Inline References
 ```markdown
-See the **[Format Specifiers](core-concepts/idfs.md)** guide for complete details.
+See the **[Format Specifiers](core-concepts/nites.md)** guide for complete details.
 ```
 
 #### Reference Lists

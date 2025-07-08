@@ -2,13 +2,13 @@
 
 # Date Parsing and Formatting
 
-GoTime provides powerful, intuitive functions for parsing and formatting dates using IDFS (Intuitive Date Format Specifiers).
+GoTime provides powerful, intuitive functions for parsing and formatting dates using NITES (Natural and Intuitive Time Expression Syntax).
 
 ## Core Functions
 
 ### Parse
 
-Parses a date string using IDFS format specifiers.
+Parses a date string using NITES format specifiers.
 
 ```go
 func Parse(value, layout string) (time.Time, error)
@@ -16,7 +16,7 @@ func Parse(value, layout string) (time.Time, error)
 
 **Parameters:**
 - `value`: The date string to parse
-- `layout`: IDFS format specifier describing the input format
+- `layout`: NITES format specifier describing the input format
 
 **Returns:**
 - `time.Time`: Parsed date in UTC
@@ -49,7 +49,7 @@ func ParseInLocation(value, layout string, loc *time.Location) (time.Time, error
 
 **Parameters:**
 - `value`: The date string to parse
-- `layout`: IDFS format specifier
+- `layout`: NITES format specifier
 - `loc`: Target timezone location
 
 **Returns:**
@@ -72,7 +72,7 @@ date, err = gotime.ParseInLocation("07/07/2025", "dd/mm/yyyy", tz)
 
 ### Format
 
-Formats a time.Time using IDFS format specifiers.
+Formats a time.Time using NITES format specifiers.
 
 ```go
 func Format(dt time.Time, layout string) string
@@ -80,7 +80,7 @@ func Format(dt time.Time, layout string) string
 
 **Parameters:**
 - `dt`: The time.Time to format
-- `layout`: IDFS format specifier (empty string defaults to RFC3339)
+- `layout`: NITES format specifier (empty string defaults to RFC3339)
 
 **Returns:**
 - `string`: Formatted date string
@@ -109,7 +109,7 @@ formatted = gotime.Format(dt, "")                         // "2025-07-07T14:30:4
 
 ### FormatTimestamp
 
-Formats a Unix timestamp using IDFS format specifiers.
+Formats a Unix timestamp using NITES format specifiers.
 
 ```go
 func FormatTimestamp(timestamp int64, layout string) string
@@ -117,7 +117,7 @@ func FormatTimestamp(timestamp int64, layout string) string
 
 **Parameters:**
 - `timestamp`: Unix timestamp in seconds
-- `layout`: IDFS format specifier (empty string defaults to RFC3339)
+- `layout`: NITES format specifier (empty string defaults to RFC3339)
 
 **Returns:**
 - `string`: Formatted date string
@@ -143,7 +143,7 @@ func FormatUnix(sec int64, nsec int64, layout string) string
 **Parameters:**
 - `sec`: Unix seconds
 - `nsec`: Nanoseconds
-- `layout`: IDFS format specifier
+- `layout`: NITES format specifier
 
 **Returns:**
 - `string`: Formatted date string
@@ -543,7 +543,7 @@ type UserEvent struct {
 
 GoTime's parsing and formatting functions provide:
 
-- **Intuitive IDFS format specifiers** instead of cryptic reference times
+- **Intuitive NITES format specifiers** instead of cryptic reference times
 - **Comprehensive timezone support** with ParseInLocation
 - **Flexible input handling** for various date formats
 - **Performance optimization** through format caching

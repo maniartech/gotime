@@ -40,7 +40,7 @@ Perfect for newcomers to GoTime:
 ### Core Concepts
 Understand what makes GoTime powerful:
 - **[Why GoTime?](core-concepts/why-gotime.md)** - Problems solved and design decisions
-- **[Intuitive Date Format Specifiers (IDFS)](core-concepts/idfs.md)** - The heart of GoTime's simplicity
+- **[Natural and Intuitive Time Expression Syntax (NITES)](core-concepts/nites.md)** - The heart of GoTime's simplicity
 
 ### API Reference
 Complete function documentation:
@@ -65,7 +65,7 @@ Optimization and best practices:
 
 ## Key Features
 
-### Intuitive Format Specifiers (IDFS)
+### Natural and Intuitive Time Expression Syntax (NITES)
 Replace Go's cryptic `2006-01-02` with readable `yyyy-mm-dd`:
 
 ```go
@@ -129,7 +129,7 @@ weekEnd := gotime.WeekEnd()
 | `wwww` | `Monday` | Full weekday name |
 | `dt` | `7th` | Day with ordinal suffix |
 
-**[→ Complete IDFS Reference](core-concepts/idfs.md)**
+**[→ Complete NITES Reference](core-concepts/nites.md)**
 
 ## Quick Links by Use Case
 
@@ -197,7 +197,7 @@ Ready to make date/time handling in Go intuitive and powerful?
 1. **[Install GoTime](getting-started/installation.md)** - Get up and running
 2. **[Quick Start](getting-started/quick-start.md)** - Learn the basics in 5 minutes
 3. **[Explore Examples](examples/common-use-cases.md)** - See real-world applications
-4. **[Master IDFS](core-concepts/idfs.md)** - Understand the format system
+4. **[Master NITES](core-concepts/nites.md)** - Understand the format system
 
 ---
 

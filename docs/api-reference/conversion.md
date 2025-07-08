@@ -2,7 +2,7 @@
 
 # Date Conversion
 
-GoTime provides seamless conversion between different date formats using the same intuitive IDFS format specifiers.
+GoTime provides seamless conversion between different date formats using the same intuitive NITES format specifiers.
 
 ## Core Function
 
@@ -16,8 +16,8 @@ func Convert(value, fromLayout, toLayout string) (string, error)
 
 **Parameters:**
 - `value`: The input date string to convert
-- `fromLayout`: IDFS format specifier describing the input format
-- `toLayout`: IDFS format specifier describing the desired output format
+- `fromLayout`: NITES format specifier describing the input format
+- `toLayout`: NITES format specifier describing the desired output format
 
 **Returns:**
 - `string`: The converted date string
@@ -550,7 +550,7 @@ func TestDateConversions(t *testing.T) {
 
 GoTime's Convert function provides:
 
-- **Seamless format transformation** between any IDFS formats
+- **Seamless format transformation** between any NITES formats
 - **Automatic validation** during conversion process
 - **Error handling** for invalid inputs or format mismatches
 - **Performance optimization** through internal caching

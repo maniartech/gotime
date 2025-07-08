@@ -187,7 +187,7 @@ Now that GoTime is installed:
 
 1. **Start Learning**: Check out the [Quick Start Guide](quick-start.md)
 2. **Explore Features**: Read about [Basic Usage](basic-usage.md)
-3. **Understand IDFS**: Learn about [Intuitive Date Format Specifiers](../core-concepts/idfs.md)
+3. **Understand NITES**: Learn about [Natural and Intuitive Time Expression Syntax](../core-concepts/nites.md)
 4. **See Examples**: Browse [Common Use Cases](../examples/common-use-cases.md)
 
 ## Package Information

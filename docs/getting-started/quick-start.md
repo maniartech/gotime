@@ -182,7 +182,7 @@ fmt.Printf("Business days: %d\n", count)
 
 ## Next Steps
 
-- Learn about [IDFS (Intuitive Date Format Specifiers)](../core-concepts/idfs.md)
+- Learn about [NITES (Natural and Intuitive Time Expression Syntax)](../core-concepts/nites.md)
 - Explore the complete [API Reference](../api-reference/)
 - Check out [Common Use Cases](../examples/common-use-cases.md)
 - Understand [Why GoTime?](../core-concepts/why-gotime.md)

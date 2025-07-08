@@ -23,12 +23,12 @@ Complete documentation for all GoTime functions and their usage patterns.
 
 ### 🔍 Parsing Functions
 Parse date/time strings in various formats:
-- `Parse(dateString, format)` - Parse with IDFS format
+- `Parse(dateString, format)` - Parse with NITES format
 - `ParseInLocation(dateString, format, location)` - Parse in specific timezone
 
 ### 🎨 Formatting Functions
 Format time.Time values to strings:
-- `Format(time, format)` - Format with IDFS format
+- `Format(time, format)` - Format with NITES format
 - `FormatTimestamp(timestamp, format)` - Format Unix timestamp
 - `FormatUnix(timestamp, format)` - Format Unix timestamp (alias)
 
@@ -159,11 +159,11 @@ if err != nil {
 }
 ```
 
-## IDFS (Intuitive Date Format Specifiers)
+## NITES (Natural and Intuitive Time Expression Syntax)
 
 GoTime uses human-readable format specifiers instead of Go's reference time approach:
 
-| IDFS | Description | Example |
+| NITES | Description | Example |
 |------|-------------|---------|
 | `yyyy` | 4-digit year | 2025 |
 | `yy` | 2-digit year | 25 |
@@ -181,7 +181,7 @@ GoTime uses human-readable format specifiers instead of Go's reference time appr
 | `www` | Weekday abbreviation | Mon |
 | `wwww` | Full weekday name | Monday |
 
-See [Core Concepts - IDFS](../core-concepts/idfs.md) for complete reference.
+See [Core Concepts - NITES](../core-concepts/nites.md) for complete reference.
 
 ## Performance Tips
 

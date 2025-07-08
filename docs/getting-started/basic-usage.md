@@ -6,9 +6,9 @@ This guide covers the fundamental concepts and usage patterns of GoTime, buildin
 
 ## Core Concepts
 
-### 1. IDFS - The Foundation
+### 1. NITES - The Foundation
 
-GoTime's power comes from **Intuitive Date Format Specifiers (IDFS)**. Unlike Go's cryptic reference time (`2006-01-02`), IDFS uses logical, memorable patterns:
+GoTime's power comes from **Natural and Intuitive Time Expression Syntax (NITES)**. Unlike Go's cryptic reference time (`2006-01-02`), NITES uses logical, memorable patterns:
 
 ```go
 // Standard Go - cryptic and hard to remember
@@ -18,7 +18,7 @@ time.Now().Format("2006-01-02 15:04:05")
 gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")
 ```
 
-**Key IDFS Principles:**
+**Key NITES Principles:**
 - **Logical**: `yyyy` = 4-digit year, `mm` = 2-digit month, `dd` = 2-digit day
 - **Case-insensitive**: `YYYY`, `yyyy`, `Yyyy` all work the same
 - **Repetition-based**: More characters = more detail/padding
@@ -521,7 +521,7 @@ func validateDateRange(start, end string, format string) error {
 
 This basic usage guide covered:
 
-1. **IDFS fundamentals** - The intuitive format system
+1. **NITES fundamentals** - The intuitive format system
 2. **Core operations** - Format, Parse, Convert
 3. **Date and time handling** - Common patterns and formats
 4. **Timezone management** - Parsing and formatting with timezones
@@ -531,10 +531,10 @@ This basic usage guide covered:
 8. **Real-world patterns** - APIs, user interfaces, configuration
 
 **Next Steps:**
-- Explore the complete [IDFS specification](../core-concepts/idfs.md)
+- Explore the complete [NITES specification](../core-concepts/nites.md)
 - Check out [Common Use Cases](../examples/common-use-cases.md) for more examples
 - Read about [Best Practices](../advanced/best-practices.md) for production use
 
 ---
 
-Continue to: [IDFS Documentation](../core-concepts/idfs.md) | [API Reference](../api-reference/)
+Continue to: [NITES Documentation](../core-concepts/nites.md) | [API Reference](../api-reference/)

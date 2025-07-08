@@ -114,7 +114,7 @@ formatted := gotime.Format(time.Now(), "yyyy-mm-dd")
 
 ### 2. Human-Friendly Specifiers
 
-IDFS (Intuitive Date Format Specifiers) are designed to be:
+NITES (Natural and Intuitive Time Expression Syntax) are designed to be:
 - **Logical**: `yyyy` for 4-digit year, `mm` for 2-digit month
 - **Case-insensitive**: No need to remember if it's `MM` or `mm`
 - **Memorable**: Format matches what you want to see
@@ -174,7 +174,7 @@ userDate, err := gotime.Parse(input, "dd/mm/yyyy")
 ### 2. Fewer Bugs
 
 Common sources of bugs eliminated:
-- **Case sensitivity errors**: IDFS is case-insensitive
+- **Case sensitivity errors**: NITES is case-insensitive
 - **Reference time mistakes**: No need to remember `2006-01-02`
 - **Off-by-one errors**: Functions handle edge cases
 - **Timezone issues**: Proper timezone handling built-in
@@ -320,4 +320,4 @@ GoTime addresses real pain points in Go's date/time handling:
 
 ---
 
-Next: Learn about [Intuitive Date Format Specifiers (IDFS)](idfs.md) that make GoTime so powerful.
+Next: Learn about [Natural and Intuitive Time Expression Syntax (NITES)](nites.md) that make GoTime so powerful.
