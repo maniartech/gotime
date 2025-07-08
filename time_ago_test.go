@@ -8,53 +8,62 @@ import (
 )
 
 func BenchmarkTimeAgo(b *testing.B) {
-	// Benchmark for TimeAgo()
-	date := time.Now().UTC().AddDate(0, 0, 10)
+	// Benchmark for TimeAgo() - use fixed date to avoid time-dependent behavior
+	baseTime := time.Date(2025, 7, 8, 12, 0, 0, 0, time.UTC)
+	date := baseTime.AddDate(0, 0, 10)
 	for i := 0; i < b.N; i++ {
-		gotime.TimeAgo(date)
+		gotime.TimeAgo(date, baseTime)
 	}
 }
 
 func TestTimeAgo(t *testing.T) {
-	timeAgoTestCase(t, "Just now", time.Now().UTC())
-	timeAgoTestCase(t, "Just now", time.Now().UTC().Add(time.Second*-9))
-	timeAgoTestCase(t, "In a few seconds", time.Now().UTC().Add(time.Second*9))
+	// Use fixed base time to prevent time-dependent test failures
+	baseTime := time.Date(2025, 7, 8, 12, 0, 0, 0, time.UTC) // Fixed: July 8, 2025 12:00:00 UTC
 
-	timeAgoTestCase(t, "A minute ago", time.Now().UTC().Add(time.Second*-30))
-	timeAgoTestCase(t, "In a minute", time.Now().UTC().Add(time.Second*30))
+	// Test with current time using base time for consistency
+	timeAgoTestCaseWithBaseTime(t, "Just now", baseTime, baseTime)
+	timeAgoTestCaseWithBaseTime(t, "Just now", baseTime.Add(time.Second*-9), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "In a few seconds", baseTime.Add(time.Second*9), baseTime)
 
-	timeAgoTestCase(t, "In a few minutes", time.Now().UTC().Add(time.Minute*2))
-	timeAgoTestCase(t, "Few minutes ago", time.Now().UTC().Add(time.Minute*-2))
+	timeAgoTestCaseWithBaseTime(t, "A minute ago", baseTime.Add(time.Second*-30), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "In a minute", baseTime.Add(time.Second*30), baseTime)
 
-	timeAgoTestCase(t, "In 2 hours", time.Now().UTC().Add(time.Hour*2))
-	timeAgoTestCase(t, "2 hours ago", time.Now().UTC().Add(time.Hour*-2))
+	timeAgoTestCaseWithBaseTime(t, "In a few minutes", baseTime.Add(time.Minute*2), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "Few minutes ago", baseTime.Add(time.Minute*-2), baseTime)
 
-	timeAgoTestCase(t, "Tomorrow", time.Now().UTC().AddDate(0, 0, 1))
-	timeAgoTestCase(t, "Yesterday", time.Now().UTC().AddDate(0, 0, -1))
+	timeAgoTestCaseWithBaseTime(t, "In 2 hours", baseTime.Add(time.Hour*2), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "2 hours ago", baseTime.Add(time.Hour*-2), baseTime)
 
-	timeAgoTestCase(t, "In 2 days", time.Now().UTC().AddDate(0, 0, 2))
-	timeAgoTestCase(t, "2 days ago", time.Now().UTC().AddDate(0, 0, -2))
+	timeAgoTestCaseWithBaseTime(t, "Tomorrow", baseTime.AddDate(0, 0, 1), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "Yesterday", baseTime.AddDate(0, 0, -1), baseTime)
 
-	timeAgoTestCase(t, "In a week", time.Now().UTC().AddDate(0, 0, 8))
-	timeAgoTestCase(t, "Last week", time.Now().UTC().AddDate(0, 0, -8))
+	timeAgoTestCaseWithBaseTime(t, "In 2 days", baseTime.AddDate(0, 0, 2), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "2 days ago", baseTime.AddDate(0, 0, -2), baseTime)
 
-	timeAgoTestCase(t, "In 2 months", time.Now().UTC().AddDate(0, 2, 0))
-	timeAgoTestCase(t, "2 months ago", time.Now().UTC().AddDate(0, -2, 0))
+	timeAgoTestCaseWithBaseTime(t, "In a week", baseTime.AddDate(0, 0, 8), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "Last week", baseTime.AddDate(0, 0, -8), baseTime)
 
-	timeAgoTestCase(t, "In 2 years", time.Now().UTC().AddDate(2, 0, 0))
-	timeAgoTestCase(t, "2 years ago", time.Now().UTC().AddDate(-2, 0, -1))
+	timeAgoTestCaseWithBaseTime(t, "In 2 months", baseTime.AddDate(0, 2, 0), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "2 months ago", baseTime.AddDate(0, -2, 0), baseTime)
 
-	timeAgoTestCase(t, "In 2 years", time.Now().UTC().AddDate(2, 2, 2))
-	timeAgoTestCase(t, "2 years ago", time.Now().UTC().AddDate(-2, -2, -2))
+	timeAgoTestCaseWithBaseTime(t, "In 2 years", baseTime.AddDate(2, 0, 0), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "2 years ago", baseTime.AddDate(-2, 0, -1), baseTime)
 
-	// Test case for TimeAgo() with base time
-	timeAgoTestCaseWithBaseTime(t, "Just now", time.Now().UTC(), time.Now().UTC())
-}
+	timeAgoTestCaseWithBaseTime(t, "In 2 years", baseTime.AddDate(2, 2, 2), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "2 years ago", baseTime.AddDate(-2, -2, -2), baseTime)
 
-func timeAgoTestCase(t *testing.T, expected string, date time.Time) {
-	timeAgo := gotime.TimeAgo(date)
-	if timeAgo != expected {
-		t.Errorf("Expected \"%v\", got, \"%v\"", expected, timeAgo)
+	// Test very large time differences to reach 100% coverage (trigger final return path)
+	timeAgoTestCaseWithBaseTime(t, "In 10 years", baseTime.AddDate(10, 0, 0), baseTime)
+	timeAgoTestCaseWithBaseTime(t, "10 years ago", baseTime.AddDate(-10, 0, 0), baseTime)
+
+	// Test case for TimeAgo() without base time (uses fixed base time for consistency)
+	timeAgoTestCaseWithBaseTime(t, "Just now", baseTime, baseTime)
+
+	// Test the branch where no baseTime is provided - this should hit the else branch
+	// We'll test with a very recent time to ensure predictable results
+	result := gotime.TimeAgo(time.Now().Add(-time.Second))
+	if result != "Just now" && result != "A minute ago" {
+		t.Errorf("Expected 'Just now' or 'A minute ago', got: %v", result)
 	}
 }
 
