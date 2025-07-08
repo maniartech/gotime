@@ -1,6 +1,6 @@
 package gotime
 
-import "github.com/maniartech/gotime/internal/idfs"
+import "github.com/maniartech/gotime/internal/nites"
 
 // Convert is a utility function that takes a date-time string, a source
 // format string (from), and a target format string (to). The function parses
@@ -17,5 +17,5 @@ import "github.com/maniartech/gotime/internal/idfs"
 //	}
 //	fmt.Println(formattedDate) // 31st December, 2022
 func Convert(value, fromLayout, toLayout string) (string, error) {
-	return idfs.Convert(value, fromLayout, toLayout)
+	return nites.Convert(value, fromLayout, toLayout)
 }

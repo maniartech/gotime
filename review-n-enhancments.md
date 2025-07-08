@@ -411,3 +411,376 @@ PrevBusinessDay(t, weekends, holidays) ✅
 
 **Overall Assessment:** The library covers ~60% of common industry time manipulation needs. The missing 40% includes some critical functions (quarters, time-level arithmetic) that would significantly improve developer experience.
 
+---
+
+## 🎯 **NITES Migration Plan - Natural and Intuitive Time Expression Syntax**
+
+### **Executive Summary**
+
+**IDFS → NITES Transition**: Rename the Internal Date Format System (IDFS) package to NITES (Natural and Intuitive Time Expression Syntax) to better reflect the library's mission of providing intuitive, human-readable time formatting. This is a comprehensive rename operation that maintains all existing functionality while improving brand clarity and developer communication.
+
+### **📋 Migration Scope & Impact Analysis**
+
+#### **Affected Components**
+- **Package Structure**: `internal/idfs/` → `internal/nites/`
+- **Import Statements**: All `github.com/maniartech/gotime/internal/idfs` references
+- **Documentation**: Core concepts, API references, README files
+- **Test Files**: All IDFS test references and package imports
+- **Scripts**: Build scripts, test runners, coverage reports
+- **Comments**: Code documentation and examples
+
+#### **🔍 Current IDFS Usage Map**
+```
+📦 IDFS Package Components:
+├── internal/idfs/
+│   ├── convert.go        - Format conversion logic
+│   ├── convert_test.go   - Conversion tests
+│   ├── errors.go         - Error definitions
+│   ├── format.go         - Time formatting with IDFS syntax
+│   ├── format_test.go    - Format tests
+│   ├── parse.go          - Time parsing with IDFS syntax
+│   └── parse_test.go     - Parse tests
+├── Main Package Imports:
+│   ├── parse.go          - Uses idfs.Parse()
+│   ├── format.go         - Uses idfs.Format()
+│   └── convert.go        - Uses idfs.Convert()
+├── Documentation:
+│   ├── docs/core-concepts/idfs.md
+│   ├── README.md references
+│   └── API documentation
+└── Build Scripts:
+    ├── test-runner.sh
+    ├── test-coverage.sh
+    └── count-tests.sh
+```
+
+### **🚀 Implementation Strategy**
+
+#### **Phase 1: Package Restructuring (Day 1)**
+
+##### **1.1 Directory Structure Migration**
+```bash
+# Create new NITES package structure
+mkdir -p internal/nites/
+
+# Move all IDFS files to NITES
+mv internal/idfs/*.go internal/nites/
+
+# Update package declarations
+sed -i 's/package idfs/package nites/g' internal/nites/*.go
+```
+
+##### **1.2 Import Path Updates**
+```go
+// Update all import statements from:
+import "github.com/maniartech/gotime/internal/idfs"
+
+// To:
+import "github.com/maniartech/gotime/internal/nites"
+```
+
+**Files requiring import updates:**
+- `parse.go`
+- `format.go`
+- `convert.go`
+- `internal/nites/*_test.go`
+
+##### **1.3 Function Call Updates**
+```go
+// Update all function calls from:
+idfs.Parse() → nites.Parse()
+idfs.Format() → nites.Format()
+idfs.Convert() → nites.Convert()
+```
+
+#### **Phase 2: Documentation Updates (Day 2)**
+
+##### **2.1 Core Documentation Migration**
+```
+📁 Documentation Changes:
+├── docs/core-concepts/idfs.md → docs/core-concepts/nites.md
+├── Update README.md references
+├── Update API reference documentation
+└── Update getting-started guides
+```
+
+##### **2.2 Content Updates**
+- **Title**: "Intuitive Date Format Specifiers (IDFS)" → "Natural and Intuitive Time Expression Syntax (NITES)"
+- **Acronym**: All "IDFS" references → "NITES"
+- **Descriptions**: Update to reflect new naming
+- **Examples**: Maintain all existing functionality examples
+
+##### **2.3 Link Updates**
+```markdown
+# Update all documentation links:
+[Format Specifiers](docs/core-concepts/idfs.md)
+→ [Format Specifiers](docs/core-concepts/nites.md)
+```
+
+#### **Phase 3: Build System Updates (Day 2)**
+
+##### **3.1 Script Updates**
+**Files to update:**
+- `scripts/test-runner.sh`
+- `scripts/test-coverage.sh`
+- `scripts/count-tests.sh`
+- `scripts/README.md`
+
+**Changes:**
+```bash
+# Update package references:
+"idfs" → "nites"
+"internal/idfs" → "internal/nites"
+"IDFS Package" → "NITES Package"
+```
+
+##### **3.2 Test Execution Updates**
+```bash
+# Update test command patterns:
+run_tests "internal/idfs" "IDFS Package"
+→ run_tests "internal/nites" "NITES Package"
+
+# Update package selection options:
+Available packages: main, cache, idfs, utils, all
+→ Available packages: main, cache, nites, utils, all
+```
+
+#### **Phase 4: Code Quality & Testing (Day 3)**
+
+##### **4.1 Comprehensive Testing & Coverage Verification**
+```bash
+# CRITICAL: Maintain 100% Test Coverage During Migration
+
+# 1. Pre-migration coverage baseline
+go test -coverprofile=pre_migration_coverage.out ./...
+go tool cover -func=pre_migration_coverage.out > pre_migration_summary.txt
+
+# 2. Verify all tests pass with new structure:
+go test ./...                    # All packages
+go test ./internal/nites/...     # NITES package specifically
+go test -race ./...              # Race condition testing
+go test -bench=. ./...           # Benchmark verification
+
+# 3. Post-migration coverage verification
+go test -coverprofile=post_migration_coverage.out ./...
+go tool cover -func=post_migration_coverage.out > post_migration_summary.txt
+
+# 4. Coverage comparison (MUST be identical)
+diff pre_migration_summary.txt post_migration_summary.txt
+# Should show NO differences in coverage percentages
+
+# 5. Specific NITES package coverage verification
+go test -coverprofile=nites_coverage.out ./internal/nites/
+go tool cover -func=nites_coverage.out
+# Must show 100% coverage for all functions
+
+# 6. Generate detailed coverage reports
+go tool cover -html=post_migration_coverage.out -o coverage_report.html
+# Visual verification of coverage completeness
+```
+
+##### **4.2 Import Verification**
+```bash
+# Verify no old imports remain:
+grep -r "internal/idfs" .
+grep -r "idfs\." .
+
+# Should return zero results after migration
+```
+
+##### **4.3 Documentation Generation**
+```bash
+# Regenerate documentation:
+go doc ./internal/nites
+godoc -http=:6060  # Verify local documentation
+```
+
+### **📊 Migration Checklist**
+
+#### **✅ Package Structure**
+- [x] Create `internal/nites/` directory
+- [x] Move all files from `internal/idfs/` to `internal/nites/`
+- [x] Update package declarations in all `.go` files
+- [x] Remove old `internal/idfs/` directory
+
+#### **✅ Code Updates**
+- [x] Update import statements in `parse.go`
+- [x] Update import statements in `format.go`
+- [x] Update import statements in `convert.go`
+- [x] Update import statements in all test files
+- [x] Update function calls from `idfs.` to `nites.`
+
+#### **✅ Documentation Updates**
+- [x] Rename `docs/core-concepts/idfs.md` to `nites.md`
+- [x] Update all "IDFS" references to "NITES" in documentation
+- [x] Update README.md links and references
+- [x] Update API reference documentation
+- [x] Update getting-started documentation
+
+#### **✅ Build System Updates**
+- [x] Update `scripts/test-runner.sh`
+- [x] Update `scripts/test-coverage.sh`
+- [x] Update `scripts/count-tests.sh`
+- [x] Update `scripts/README.md`
+- [x] Update package selection options
+
+#### **✅ Testing & Coverage Verification**
+- [x] **PRE-MIGRATION**: Generate baseline coverage report
+- [x] **PRE-MIGRATION**: Document current test execution count (238 total)
+- [x] Run full test suite: `go test ./...`
+- [x] Verify NITES package tests: `go test ./internal/nites/...`
+- [x] Run benchmarks: `go test -bench=. ./...`
+- [x] **POST-MIGRATION**: Generate coverage report and compare
+- [x] **CRITICAL**: Verify 100% coverage maintained across all packages
+- [x] **CRITICAL**: Verify 11 NITES package test executions preserved
+- [x] Verify no old imports exist
+- [x] Test documentation generation
+- [x] **COVERAGE GATE**: Block merge if coverage drops below 100%
+
+#### **✅ Quality Assurance**
+- [x] Code review of all changes
+- [x] Verify backward compatibility maintained
+- [x] Ensure all existing functionality preserved
+- [x] Update version control tags if needed
+
+### **🎯 Success Metrics**
+
+#### **Functional Requirements Met:**
+- ✅ All existing IDFS functionality preserved
+- ✅ Zero breaking changes to public API
+- ✅ All tests pass with new structure
+- ✅ **100% test coverage maintained** (CRITICAL REQUIREMENT)
+- ✅ **238 total test executions preserved** (67 main + 143 table-driven + 15 examples + 35 benchmarks + 11 NITES + 2 cache)
+- ✅ Documentation accuracy maintained
+
+#### **Quality Standards:**
+- ✅ No orphaned references to old naming
+- ✅ Consistent NITES branding throughout
+- ✅ Improved developer communication
+- ✅ Enhanced library positioning
+
+#### **Performance Verification:**
+- ✅ No performance degradation
+- ✅ Same caching behavior maintained
+- ✅ Memory usage unchanged
+- ✅ Benchmark results equivalent
+
+### **📈 Post-Migration Benefits**
+
+#### **Enhanced Developer Experience**
+- **Clear Purpose**: "Natural and Intuitive Time Expression Syntax" clearly communicates the library's mission
+- **Better Branding**: NITES is more memorable and descriptive than IDFS
+- **Improved Documentation**: Clearer naming helps with onboarding and adoption
+
+#### **Technical Advantages**
+- **Consistent Naming**: Aligns package naming with library's core value proposition
+- **Future-Proof**: Better foundation for external documentation and community growth
+- **Maintainability**: More intuitive for new contributors to understand
+
+### **🔄 Rollback Plan**
+
+If issues arise during migration:
+
+1. **Coverage Gate Trigger**:
+   ```bash
+   # If coverage drops below 100%, immediately halt migration
+   if [ "$COVERAGE" != "100.0%" ]; then
+       echo "CRITICAL: Test coverage dropped to $COVERAGE"
+       echo "Migration halted - initiating rollback"
+       git revert <migration-commits>
+   fi
+   ```
+
+2. **Immediate Rollback**:
+   ```bash
+   git revert <migration-commits>
+   ```
+
+3. **Partial Rollback**: Cherry-pick specific components back to IDFS naming
+
+4. **Staged Recovery**: Migrate components back individually if needed
+
+5. **Test Count Verification**: Ensure all 238 test executions are preserved
+
+### **📅 Timeline & Resource Allocation**
+
+| Day | Task | Duration | Deliverable | Coverage Verification |
+|-----|------|----------|-------------|----------------------|
+| 1 | Package restructuring | 4 hours | New NITES package structure | Pre-migration baseline |
+| 2 | Documentation updates | 6 hours | Updated docs with NITES branding | Documentation accuracy check |
+| 2 | Build system updates | 2 hours | Updated scripts and CI | Script functionality verification |
+| 3 | Testing & QA | 4 hours | Verified migration success | **100% coverage confirmation** |
+| **Total** | **Complete Migration** | **16 hours** | **NITES-branded library** | **Coverage gate passed** |
+
+### **🎉 Expected Outcome**
+
+**Complete transition from IDFS to NITES with:**
+- Zero functional changes to end-user API
+- Improved branding and developer communication
+- Enhanced documentation clarity
+- **GUARANTEED: 100% test coverage maintained** (238 test executions preserved)
+- **GUARANTEED: 11 NITES package tests** (formerly IDFS tests)
+- Updated build and development scripts
+- Clear, consistent naming throughout codebase
+- **Coverage gate enforcement** prevents any regression
+
+**The NITES migration enhances GoTime's positioning as the premier Go library for natural, intuitive time manipulation while preserving all existing functionality, maintaining backward compatibility, and guaranteeing 100% test coverage throughout the migration process.**
+
+---
+
+## 🛡️ **Coverage Protection Strategy**
+
+### **Pre-Migration Coverage Audit**
+```bash
+# Document current state
+echo "=== PRE-MIGRATION COVERAGE AUDIT ===" > migration_coverage_log.txt
+go test -coverprofile=baseline.out ./... >> migration_coverage_log.txt 2>&1
+go tool cover -func=baseline.out | grep "total:" >> migration_coverage_log.txt
+
+# Expected baseline:
+# Main package: 225 test executions
+# Cache package: 2 test executions
+# IDFS package: 11 test executions
+# Total: 238 test executions with 100% coverage
+```
+
+### **Migration Coverage Gates**
+
+#### **Gate 1: Package Restructuring Verification**
+```bash
+# After moving files to internal/nites/
+go test ./internal/nites/... -v
+# Must show: 11 test executions passing
+# Must maintain: 100% coverage in NITES package
+```
+
+#### **Gate 2: Import Update Verification**
+```bash
+# After updating import statements
+go test ./... -coverprofile=import_update.out
+go tool cover -func=import_update.out | grep "total:"
+# Must show: 100.0% coverage maintained
+```
+
+#### **Gate 3: Final Migration Verification**
+```bash
+# Final verification before merge
+go test ./... -coverprofile=final.out
+COVERAGE=$(go tool cover -func=final.out | grep "total:" | awk '{print $3}')
+if [ "$COVERAGE" != "100.0%" ]; then
+    echo "MIGRATION FAILED: Coverage is $COVERAGE, expected 100.0%"
+    exit 1
+fi
+echo "SUCCESS: 100% coverage maintained after NITES migration"
+```
+
+### **Test Execution Count Verification**
+```bash
+# Verify exact test count preservation
+TEST_COUNT=$(go test ./... -v 2>&1 | grep -c "=== RUN")
+if [ "$TEST_COUNT" != "238" ]; then
+    echo "WARNING: Test count changed from 238 to $TEST_COUNT"
+    echo "Investigating missing/added tests..."
+fi
+```
+

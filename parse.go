@@ -3,7 +3,7 @@ package gotime
 import (
 	"time"
 
-	"github.com/maniartech/gotime/internal/idfs"
+	"github.com/maniartech/gotime/internal/nites"
 )
 
 // Parse is a utility function that takes a date-time string and a format string
@@ -19,7 +19,7 @@ import (
 //	}
 //	fmt.Println(parsedDate) // 2022-12-31 00:00:00 +0000 UTC
 func Parse(layout, value string) (time.Time, error) {
-	return idfs.Parse(layout, value)
+	return nites.Parse(layout, value)
 }
 
 // ParseInLocation is a utility function that takes a date-time string, a format string
@@ -36,5 +36,5 @@ func Parse(layout, value string) (time.Time, error) {
 //	}
 //	fmt.Println(parsedDate) // 2022-12-31 00:00:00 +0530 IST
 func ParseInLocation(layout, value string, loc *time.Location) (time.Time, error) {
-	return idfs.ParseInLocation(layout, value, loc)
+	return nites.ParseInLocation(layout, value, loc)
 }

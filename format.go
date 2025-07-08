@@ -3,7 +3,7 @@ package gotime
 import (
 	"time"
 
-	"github.com/maniartech/gotime/internal/idfs"
+	"github.com/maniartech/gotime/internal/nites"
 )
 
 // Format is a utility function that takes a time.Time value and a layout string
@@ -19,7 +19,7 @@ func Format(dt time.Time, layout string) string {
 		// Layout is RFC3339 by default
 		layout = time.RFC3339
 	}
-	return idfs.Format(dt, layout)
+	return nites.Format(dt, layout)
 }
 
 // FormatUnix takes the Unix time in seconds and nanoseconds,
@@ -40,7 +40,7 @@ func FormatUnix(sec int64, nsec int64, layout string) string {
 		// Layout is RFC3339 by default
 		layout = time.RFC3339
 	}
-	return idfs.Format(time.Unix(sec, nsec), layout)
+	return nites.Format(time.Unix(sec, nsec), layout)
 }
 
 // FormatTimestamp takes a Unix timestamp in seconds and a layout string, then
@@ -60,5 +60,5 @@ func FormatTimestamp(timestamp int64, layout string) string {
 		// Layout is RFC3339 by default
 		layout = time.RFC3339
 	}
-	return idfs.Format(time.Unix(timestamp, 0), layout)
+	return nites.Format(time.Unix(timestamp, 0), layout)
 }

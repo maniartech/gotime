@@ -102,13 +102,13 @@ if [ -d "internal/cache" ]; then
     echo
 fi
 
-# IDFS package
-if [ -d "internal/idfs" ]; then
-    count_package_tests "internal/idfs" "IDFS Package"
-    idfs_functions=$?
-    idfs_executions=$(cd "internal/idfs" && go test -v . 2>&1 | grep -c "=== RUN" || echo "0")
-    total_functions=$((total_functions + idfs_functions))
-    total_executions=$((total_executions + idfs_executions))
+# NITES package
+if [ -d "internal/nites" ]; then
+    count_package_tests "internal/nites" "NITES Package"
+    nites_functions=$?
+    nites_executions=$(cd "internal/nites" && go test -v . 2>&1 | grep -c "=== RUN" || echo "0")
+    total_functions=$((total_functions + nites_functions))
+    total_executions=$((total_executions + nites_executions))
     echo
 fi
 
@@ -131,8 +131,8 @@ echo "  Main package: $main_functions functions, $main_executions executions"
 if [ -d "internal/cache" ]; then
     echo "  Cache package: $cache_functions functions, $cache_executions executions"
 fi
-if [ -d "internal/idfs" ]; then
-    echo "  IDFS package: $idfs_functions functions, $idfs_executions executions"
+if [ -d "internal/nites" ]; then
+    echo "  NITES package: $nites_functions functions, $nites_executions executions"
 fi
 if [ -d "internal/utils" ]; then
     echo "  Utils package: $utils_functions functions, $utils_executions executions"

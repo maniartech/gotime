@@ -1,4 +1,4 @@
-package idfs
+package nites
 
 import (
 	"fmt"
