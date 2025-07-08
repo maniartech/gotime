@@ -21,11 +21,11 @@ type WeekdayCounts struct {
 //	end := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
 //	counts := CountWeekdaysInRange(start, end)
 //	// counts.Monday: 1, counts.Tuesday: 1, etc.
-func CountWeekdaysInRange(start, end time.Time) *WeekdayCounts {
+func CountWeekdaysInRange(start, end time.Time) WeekdayCounts {
 	if end.Before(start) {
 		start, end = end, start
 	}
-	counts := &WeekdayCounts{}
+	counts := WeekdayCounts{}
 	cur := time.Date(start.Year(), start.Month(), start.Day(), 0, 0, 0, 0, start.Location())
 	end = time.Date(end.Year(), end.Month(), end.Day(), 0, 0, 0, 0, end.Location())
 	for !cur.After(end) {
