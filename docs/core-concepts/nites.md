@@ -1,10 +1,12 @@
-[Home](../README.md) > [Core Concepts](README.md) > IDFS
+[Home](../README.md) > [Core Concepts](README.md) > NITES
 
-# Intuitive Date Format Specifiers (IDFS)
+# Natural and Intuitive Time Expression Syntax (NITES)
 
-IDFS is the core innovation that makes GoTime intuitive and powerful. It replaces Go's cryptic reference time (`2006-01-02 15:04:05`) with human-readable, logical format specifiers.
+NITES is the core innovation that makes GoTime intuitive and powerful. It replaces Go's cryptic reference time (`2006-01-02 15:04:05`) with human-readable, logical format specifiers.
 
-## Philosophy Behind IDFS
+> **📄 NITES Specification Paper**: A comprehensive technical specification and research paper on NITES is currently under development and will be released soon. This will include formal grammar definitions, implementation guidelines, and comparative analysis with other time formatting systems.
+
+## Philosophy Behind NITES
 
 ### The Problem with Reference Time
 
@@ -20,7 +22,7 @@ time.Now().Format("2006-01-02 15:04:05")
 - **Error-Prone**: Easy to mix up numbers
 - **Case-Sensitive**: `MM` vs `mm` has different meanings
 
-### IDFS Solution
+### NITES Solution
 
 ```go
 // Intuitive, logical format specifiers
@@ -32,12 +34,16 @@ gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")
 - **Memorable**: Format looks like what you want
 - **Case-Insensitive**: No need to remember case rules
 - **Self-Documenting**: Format intent is clear
+- **Intuitive**: Natural patterns that developers expect
+- **Hackable**: Easy to experiment and build custom formats
 
-## IDFS Specification
+## NITES Specification
+
+> **⚠️ Note**: This is a practical implementation reference. The complete formal specification with EBNF grammar, semantic rules, and implementation guidelines is being prepared for academic publication.
 
 ### Case Insensitivity
 
-IDFS is completely case-insensitive. These are all equivalent:
+NITES is completely case-insensitive. These are all equivalent:
 ```go
 gotime.Format(dt, "YYYY-MM-DD")
 gotime.Format(dt, "yyyy-mm-dd")
@@ -208,7 +214,7 @@ func logWithTimestamp(message string) {
 }
 ```
 
-## Parsing with IDFS
+## Parsing with NITES
 
 The same format specifiers work for parsing:
 
@@ -286,7 +292,7 @@ gotime.Format(dt, "yyyy年mm月dd日")         // Japanese: 2025年07月07日
 
 ### Caching
 
-IDFS formats are cached internally for performance:
+NITES formats are cached internally for performance:
 ```go
 // First call converts and caches
 fmt1 := gotime.Format(dt, "yyyy-mm-dd")  // ~1200ns
@@ -379,7 +385,7 @@ formatted := gotime.Format(time.Now(), "wwww, mmmm dt, yyyy at h:ii aa")
 
 ## Summary
 
-IDFS makes date formatting intuitive by:
+NITES makes date formatting intuitive by:
 
 1. **Logical Patterns**: `yyyy` for year, `mm` for month, `dd` for day
 2. **Case Insensitivity**: No need to remember case rules
@@ -387,8 +393,20 @@ IDFS makes date formatting intuitive by:
 4. **Flexibility**: Rich set of specifiers for any need
 5. **Performance**: Cached conversions for efficiency
 
-**IDFS transforms cryptic format strings into readable, maintainable code.**
+**NITES transforms cryptic format strings into readable, maintainable code.**
+
+### Formal Specification
+
+The complete NITES specification includes:
+
+- **📋 Grammar Definition**: Formal EBNF grammar for all format specifiers
+- **📊 Performance Analysis**: Benchmarks against standard library and other systems
+- **🔬 Cognitive Load Study**: Research on developer comprehension and error rates
+- **🌐 Internationalization**: Unicode support and locale-aware formatting
+- **🔧 Implementation Guide**: Reference implementations for multiple languages
+
+**Coming Soon**: Watch for the official NITES specification paper for implementers and researchers.
 
 ---
 
-Next: Learn about [Design Philosophy](design-philosophy.md) or jump to [API Reference](../api-reference/) to see IDFS in action.
+Next: Learn about [Design Philosophy](design-philosophy.md) or jump to [API Reference](../api-reference/) to see NITES in action.

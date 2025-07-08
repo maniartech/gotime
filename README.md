@@ -1,5 +1,4 @@
-
-# GoTime 🕐🕑🕒 ![Tested](https://img.shields.io/badge/tests-100%25%20coverage%2C%20400%2B%20cases-brightgreen?style=flat-square)
+# GoTime 🕐🕑🕒 ![Tested](https://img.shields.io/badge/tests-100%25%20coverage%2C%20250%2B%20cases-brightgreen?style=flat-square)
 
 > **Intuitive time manipulation for Go** - Making date/time operations as simple as they should be.
 
@@ -45,11 +44,11 @@ gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")  // 😊
 
 | What You Get | Standard Go | GoTime |
 |-------------|-------------|---------|
-| **Format Clarity** | `2006-01-02` | `yyyy-mm-dd` |
-| **Case Sensitivity** | `MM` vs `mm` matters | Case-insensitive |
+| **Natural Syntax** | Cryptic `2006-01-02` | **[NITES](docs/core-concepts/nites.md)** `yyyy-mm-dd` |
 | **Relative Time** | 15+ lines of code | `TimeAgo()` |
 | **Format Conversion** | Parse + Format | `Convert()` |
 | **Date Arithmetic** | Complex calculations | `WorkDay()`, `Days()` |
+| **Business Logic** | Manual calculations | Built-in helpers |
 
 ### Perfect For
 
@@ -107,7 +106,7 @@ businessDaysCount := gotime.NetWorkDays(startDate, endDate)
 ### Quick Links
 - **[5-Minute Quick Start](docs/getting-started/quick-start.md)** - Get productive immediately
 - **[Why GoTime?](docs/core-concepts/why-gotime.md)** - Detailed comparison with standard library
-- **[Format Specifiers](docs/core-concepts/idfs.md)** - Complete IDFS reference
+- **[NITES Format Specifiers](docs/core-concepts/nites.md)** - Complete NITES reference
 - **[API Reference](docs/api-reference/)** - All functions with examples
 - **[Real-World Examples](docs/examples/common-use-cases.md)** - Web APIs, databases, business logic
 
@@ -121,7 +120,7 @@ businessDaysCount := gotime.NetWorkDays(startDate, endDate)
 ## Quality & Reliability
 
 - ![Test Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen?style=flat-square) **100% Test Coverage** — Every function is thoroughly tested
-- ![Test Cases](https://img.shields.io/badge/tests-400%2B%20cases-blue?style=flat-square) **400+ Automated Test Cases** — Industry-grade reliability
+- ![Test Cases](https://img.shields.io/badge/tests-250%2B%20cases-blue?style=flat-square) **250+ Automated Test Cases** — Industry-grade reliability
 - ✓ **Production Ready** — Used in real-world applications
 - ✓ **Zero Dependencies** — Only uses Go standard library
 - ✓ **TinyGo Compatible** — Works in embedded and WebAssembly*
