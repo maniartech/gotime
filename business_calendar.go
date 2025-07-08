@@ -2,9 +2,18 @@ package gotime
 
 import "time"
 
-// IsBusinessDay returns true if t is a business day (not a weekend or holiday).
-// weekends: a slice of time.Weekday considered weekends (e.g., []time.Weekday{time.Saturday, time.Sunday})
-// holidays: a slice of time.Time representing holidays (date only, time ignored)
+// IsBusinessDay reports whether t is a business day (not a weekend or holiday).
+//
+// The weekends parameter specifies which weekdays are considered weekends
+// (e.g., []time.Weekday{time.Saturday, time.Sunday}).
+// The holidays parameter is a slice of time.Time representing holidays
+// (only the date portion is considered, time is ignored).
+//
+// Example:
+//	weekends := []time.Weekday{time.Saturday, time.Sunday}
+//	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
+//	isBusiness := IsBusinessDay(time.Now(), weekends, holidays...)
+//	// isBusiness: true if today is not a weekend or holiday
 func IsBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time) bool {
 	for _, w := range weekends {
 		if t.Weekday() == w {
@@ -19,7 +28,13 @@ func IsBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time) 
 	return true
 }
 
-// NextBusinessDay returns the next business day after t (skipping weekends and holidays).
+// NextBusinessDay returns the next business day after t, skipping weekends and holidays.
+//
+// Example:
+//	weekends := []time.Weekday{time.Saturday, time.Sunday}
+//	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
+//	nextBiz := NextBusinessDay(time.Now(), weekends, holidays...)
+//	// nextBiz: the next date that is not a weekend or holiday
 func NextBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time) time.Time {
 	next := t.AddDate(0, 0, 1)
 	for !IsBusinessDay(next, weekends, holidays...) {
@@ -28,7 +43,13 @@ func NextBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time
 	return next
 }
 
-// PrevBusinessDay returns the previous business day before t (skipping weekends and holidays).
+// PrevBusinessDay returns the previous business day before t, skipping weekends and holidays.
+//
+// Example:
+//	weekends := []time.Weekday{time.Saturday, time.Sunday}
+//	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
+//	prevBiz := PrevBusinessDay(time.Now(), weekends, holidays...)
+//	// prevBiz: the previous date that is not a weekend or holiday
 func PrevBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time) time.Time {
 	prev := t.AddDate(0, 0, -1)
 	for !IsBusinessDay(prev, weekends, holidays...) {

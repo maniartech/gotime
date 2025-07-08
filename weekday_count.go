@@ -2,6 +2,7 @@ package gotime
 
 import "time"
 
+// WeekdayCounts represents the count of each weekday in a date range.
 type WeekdayCounts struct {
 	Monday    int
 	Tuesday   int
@@ -12,7 +13,14 @@ type WeekdayCounts struct {
 	Sunday    int
 }
 
-// CountWeekdaysInRange returns a struct with the count of each weekday in the given date range (inclusive).
+// CountWeekdaysInRange returns the count of each weekday within the specified
+// date range (inclusive). If end is before start, the dates are swapped.
+//
+// Example:
+//	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
+//	end := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
+//	counts := CountWeekdaysInRange(start, end)
+//	// counts.Monday: 1, counts.Tuesday: 1, etc.
 func CountWeekdaysInRange(start, end time.Time) *WeekdayCounts {
 	if end.Before(start) {
 		start, end = end, start

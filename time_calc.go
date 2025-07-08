@@ -14,15 +14,16 @@ var (
 	ErrInvalidDate   = errors.New("date cannot be zero value")
 )
 
-// DateValue returns the serial number of the given time.Time
+// DateValue returns the serial number representing the number of days
+// since January 1, 1900. This is compatible with Excel's date serial numbers.
 //
-// # Arguments
+// Example:
 //
-// date: (time.Time) The date to be converted to serial number
+//	serialNum := DateValue(time.Date(1900, 1, 1, 0, 0, 0, 0, time.UTC))
+//	// serialNum: 2
 //
-// # Note
-//
-// The serial number is the number of days from 1/1/1900
+//	serialNum = DateValue(time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC))
+//	// serialNum: 45252
 func DateValue(date time.Time) int {
 	// Use a specific implementation that matches the test case expectations
 	// For Jan 1, 1900: returns 2
@@ -50,7 +51,15 @@ func DateValue(date time.Time) int {
 	return days + 2 // Add 2 to match the expected test values
 }
 
-// Diff returns the difference between the given time.Time and the current time.Time in the given unit
+// Diff returns the difference between two times in the specified unit.
+// If rounded is true, the result is rounded to the nearest integer.
+//
+// Example:
+//
+//	t1 := time.Date(2025, 1, 1, 12, 0, 0, 0, time.UTC)
+//	t2 := time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC)
+//	diff := Diff(t1, t2, time.Hour)
+//	// diff: 2.0 (2 hours difference)
 func Diff(t1, t2 time.Time, unit time.Duration, rounded ...bool) float64 {
 	isRounded := false
 	if len(rounded) > 0 {
@@ -63,15 +72,15 @@ func Diff(t1, t2 time.Time, unit time.Duration, rounded ...bool) float64 {
 	return float64(t1.Sub(t2) / unit)
 }
 
-// Latest returns the latest time from the given time.Time list
+// Latest returns the latest (most recent) time from the given list of times.
 //
-// # Arguments
+// Example:
 //
-// t1: (time.Time) The first time to be compared
-//
-// t2: (time.Time) The second time to be compared
-//
-// tn: (time.Time) The rest of the times to be compared
+//	t1 := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+//	t2 := time.Date(2025, 1, 2, 0, 0, 0, 0, time.UTC)
+//	t3 := time.Date(2025, 1, 3, 0, 0, 0, 0, time.UTC)
+//	latest := Latest(t1, t2, t3)
+//	// latest: 2025-01-03 (t3)
 func Latest(t1, t2 time.Time, tn ...time.Time) time.Time {
 
 	timeStamps := make([]int64, len(tn)+2)
@@ -92,15 +101,15 @@ func Latest(t1, t2 time.Time, tn ...time.Time) time.Time {
 	return time.UnixMilli(max)
 }
 
-// Earliest returns the earliest time from the given time.Time list
+// Earliest returns the earliest (oldest) time from the given list of times.
 //
-// # Arguments
+// Example:
 //
-// t1: (time.Time) The first time to be compared
-//
-// t2: (time.Time) The second time to be compared
-//
-// tn: (time.Time) The rest of the times to be compared
+//	t1 := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
+//	t2 := time.Date(2025, 1, 2, 0, 0, 0, 0, time.UTC)
+//	t3 := time.Date(2025, 1, 3, 0, 0, 0, 0, time.UTC)
+//	earliest := Earliest(t1, t2, t3)
+//	// earliest: 2025-01-01 (t1)
 func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time {
 
 	timeStamps := make([]int64, len(tn)+2)
@@ -121,12 +130,14 @@ func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time {
 	return time.UnixMilli(min)
 }
 
-// TruncateTime truncates the time part of the given date. It returns
-// the tructed date.
+// TruncateTime truncates the time portion of a date, setting hours, minutes,
+// seconds, and nanoseconds to zero while preserving the date and timezone.
 //
-// # Arguments
+// Example:
 //
-// date: (time.Time) The date to be truncated
+//	dt := time.Date(2025, 7, 8, 14, 30, 45, 123456789, time.UTC)
+//	truncated := TruncateTime(dt)
+//	// truncated: 2025-07-08 00:00:00 +0000 UTC
 func TruncateTime(date time.Time) time.Time {
 	return time.Date(
 		date.Year(), date.Month(), date.Day(),
@@ -135,21 +146,19 @@ func TruncateTime(date time.Time) time.Time {
 	)
 }
 
-// WorkDay returns the date after the given number of working days
+// WorkDay returns the date after adding the specified number of working days
+// from the start date, excluding weekends and holidays.
 //
-// # Arguments
+// The workingDays parameter is an array representing which days of the week
+// are working days [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday].
 //
-// startDate: (time.Time) The date to start from
+// Example:
 //
-// days: (int) The number of working days to add
-//
-// workingDays: ([7]bool) The working days of the week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
-//
-// holidays: (...time.Time) The holidays to be excluded
-//
-// # Note
-//
-// The working days are the days that are not holidays and are in the working days of the week
+//	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC) // Tuesday
+//	workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
+//	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
+//	result, err := WorkDay(start, 5, workdays, holidays...)
+//	// result: 5 working days from start, excluding July 4th holiday
 func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) (time.Time, error) {
 	if days < 0 {
 		return time.Time{}, fmt.Errorf("%w: %d", ErrNegativeDays, days)
@@ -201,21 +210,16 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 	return currentDate, nil
 }
 
-// PrevWorkDay returns the date before the given number of working days
+// PrevWorkDay returns the date after subtracting the specified number of working days
+// from the start date, excluding weekends and holidays.
 //
-// # Arguments
+// Example:
 //
-// startDate: (time.Time) The date to start from
-//
-// days: (int) The number of working days to subtract
-//
-// workingDays: ([7]bool) The working days of the week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
-//
-// holidays: (...time.Time) The holidays to be excluded
-//
-// # Note
-//
-// The working days are the days that are not holidays and are in the working days of the week
+//	start := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC) // Thursday
+//	workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
+//	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
+//	result, err := PrevWorkDay(start, 5, workdays, holidays...)
+//	// result: 5 working days before start, excluding July 4th holiday
 func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) (time.Time, error) {
 	if days < 0 {
 		return time.Time{}, fmt.Errorf("%w: %d", ErrNegativeDays, days)
@@ -262,17 +266,20 @@ func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ..
 	return currentDate, nil
 }
 
-// NetWorkDays returns the number of working days between the given dates
+// NetWorkDays returns the number of working days between two dates (inclusive),
+// excluding weekends and holidays.
 //
-// # Arguments
+// If startDate is after endDate, the dates are swapped and a negative result
+// is returned to indicate the direction.
 //
-// startDate: (time.Time) The date to start from
+// Example:
 //
-// endDate: (time.Time) The date to end at
-//
-// workingDays: ([7]bool) The working days of the week (Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday)
-//
-// holidays: (...time.Time) The holidays to be excluded
+//	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
+//	end := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC)
+//	workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
+//	holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
+//	count, err := NetWorkDays(start, end, workdays, holidays...)
+//	// count: number of working days between start and end, excluding July 4th
 func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) (int, error) {
 	if startDate.IsZero() || endDate.IsZero() {
 		return 0, ErrInvalidDate

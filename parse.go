@@ -6,35 +6,32 @@ import (
 	"github.com/maniartech/gotime/internal/nites"
 )
 
-// Parse is a utility function that takes a date-time string and a format string
-// as input, then parses the date-time string according to the format. The
-// function returns a time.Time value and an error if the parsing fails.
+// Parse parses a date-time string according to the specified layout format.
+// The layout uses NITES (Natural and Intuitive Time Expression Syntax) format
+// specifiers like "yyyy-mm-dd" instead of Go's reference time format.
 //
-// Example usage:
+// Example:
 //
-//	parsedDate, err := Parse("yyyy-mm-dd", "2022-12-31")
+//	parsed, err := Parse("yyyy-mm-dd", "2022-12-31")
 //	if err != nil {
-//		log.Printf("Failed to parse date: %v", err)
-//		return
+//		// handle error
 //	}
-//	fmt.Println(parsedDate) // 2022-12-31 00:00:00 +0000 UTC
+//	// parsed: 2022-12-31 00:00:00 +0000 UTC
 func Parse(layout, value string) (time.Time, error) {
 	return nites.Parse(layout, value)
 }
 
-// ParseInLocation is a utility function that takes a date-time string, a format string
-// as input, then parses the date-time string according to the format. The function returns
-// a time.Time value and an error if the parsing fails. It also takes a location as input
-// and returns the time in that location.
+// ParseInLocation parses a date-time string according to the specified layout format
+// and returns the time in the specified location/timezone.
 //
-// Example usage:
+// Example:
 //
-//	parsedDate, err := ParseInLocation("yyyy-mm-dd", "2022-12-31", time.FixedZone("IST", 5.5*60*60))
+//	ist := time.FixedZone("IST", 5*60*60+30*60)
+//	parsed, err := ParseInLocation("yyyy-mm-dd", "2022-12-31", ist)
 //	if err != nil {
-//		log.Printf("Failed to parse date: %v", err)
-//		return
+//		// handle error
 //	}
-//	fmt.Println(parsedDate) // 2022-12-31 00:00:00 +0530 IST
+//	// parsed: 2022-12-31 00:00:00 +0530 IST
 func ParseInLocation(layout, value string, loc *time.Location) (time.Time, error) {
 	return nites.ParseInLocation(layout, value, loc)
 }

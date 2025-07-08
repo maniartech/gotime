@@ -6,14 +6,19 @@ import (
 	"github.com/maniartech/gotime/internal/nites"
 )
 
-// Format is a utility function that takes a time.Time value and a layout string
-// as input, then converts the time value to a formatted string based on the
-// layout. If the layout is empty, the function uses the RFC3339 layout by default.
+// Format converts a time.Time value to a formatted string using the specified layout.
+// If layout is empty, RFC3339 format is used by default.
 //
-// Example usage:
+// The layout uses NITES (Natural and Intuitive Time Expression Syntax) format
+// specifiers like "yyyy-mm-dd" instead of Go's reference time format.
 //
-//	formattedDate := Format(time.Now(), "yyyy-mm-dd")
-//	fmt.Println(formattedDate) // 2022-12-31
+// Example:
+//
+//	formatted := Format(time.Now(), "yyyy-mm-dd")
+//	// formatted: "2025-07-08"
+//
+//	formatted = Format(time.Now(), "mmmm dd, yyyy")
+//	// formatted: "July 08, 2025"
 func Format(dt time.Time, layout string) string {
 	if layout == "" {
 		// Layout is RFC3339 by default
@@ -22,19 +27,13 @@ func Format(dt time.Time, layout string) string {
 	return nites.Format(dt, layout)
 }
 
-// FormatUnix takes the Unix time in seconds and nanoseconds,
-// as well as a layout string, and returns a formatted string
-// based on the layout. If the layout is empty, the function uses
-// the RFC3339 layout by default.
+// FormatUnix converts Unix time (seconds and nanoseconds) to a formatted string
+// using the specified layout. If layout is empty, RFC3339 format is used by default.
 //
-// Example usage:
+// Example:
 //
-//	formattedDate, err := FormatUnix(1609459200, 0, "yyyy-mm-dd")
-//	if err != nil {
-//		log.Printf("Failed to format date: %v", err)
-//		return
-//	}
-//	fmt.Println(formattedDate) // 2021-01-01
+//	formatted := FormatUnix(1609459200, 0, "yyyy-mm-dd")
+//	// formatted: "2021-01-01"
 func FormatUnix(sec int64, nsec int64, layout string) string {
 	if layout == "" {
 		// Layout is RFC3339 by default
@@ -43,18 +42,13 @@ func FormatUnix(sec int64, nsec int64, layout string) string {
 	return nites.Format(time.Unix(sec, nsec), layout)
 }
 
-// FormatTimestamp takes a Unix timestamp in seconds and a layout string, then
-// returns a formatted string based on the layout. If the layout is empty, the
-// function uses the RFC3339 layout by default.
+// FormatTimestamp converts a Unix timestamp (seconds) to a formatted string
+// using the specified layout. If layout is empty, RFC3339 format is used by default.
 //
-// Example usage:
+// Example:
 //
-//	formattedDate, err := FormatTimestamp(1609459200, "yyyy-mm-dd")
-//	if err != nil {
-//		log.Printf("Failed to format date: %v", err)
-//		return
-//	}
-//	fmt.Println(formattedDate) // 2021-01-01
+//	formatted := FormatTimestamp(1609459200, "yyyy-mm-dd")
+//	// formatted: "2021-01-01"
 func FormatTimestamp(timestamp int64, layout string) string {
 	if layout == "" {
 		// Layout is RFC3339 by default

@@ -21,31 +21,26 @@ const (
 var hoursList = [5]float64{hoursInHour, hoursInDay, hoursInWeek, hoursInMonth, hoursInYear}
 var timeScale = [5]string{"hours", "days", "weeks", "months", "years"}
 
-// TimeAgo calculates the relative time difference between a given timestamp and the current time, and returns a string
-// that describes the time difference in human-readable terms. The function takes a time.Time object representing the
-// timestamp, and an optional baseTime parameter, which can be used to specify a different base time to use instead of the
-// current time. The function returns a string that describes the time difference in human-readable terms, such as "2 weeks
-// ago" or "In a few minutes".
+// TimeAgo returns a human-readable string describing the relative time difference
+// between t and the current time (or baseTime if provided).
 //
-// Example usage:
+// The function returns phrases like "Just now", "5 minutes ago", "Tomorrow",
+// "Last week", etc. If the given time is in the future, it returns phrases
+// like "In a few seconds", "In 5 minutes", "Tomorrow", etc.
 //
-//	// Create a time object representing one week ago
+// Example:
+//
 //	oneWeekAgo := time.Now().Add(-7 * 24 * time.Hour)
+//	result := TimeAgo(oneWeekAgo)
+//	// result: "Last week"
 //
-//	// Calculate the relative time difference between the timestamp and the current time
-//	timeAgo := TimeAgo(oneWeekAgo)
+//	threeHoursAgo := time.Now().Add(-3 * time.Hour)
+//	result = TimeAgo(threeHoursAgo)
+//	// result: "3 hours ago"
 //
-//	fmt.Println("One week ago:", timeAgo)
-//	// Output: One week ago: Last week
-//
-//	// Create a time object representing 3 hours and 45 minutes ago
-//	threeHoursAgo := time.Now().Add(-3 * time.Hour).Add(-45 * time.Minute)
-//
-//	// Calculate the relative time difference between the timestamp and the current time
-//	timeAgo = TimeAgo(threeHoursAgo)
-//
-//	fmt.Println("Three hours ago:", timeAgo)
-//	// Output: Three hours ago: 3 hours ago
+//	futureTime := time.Now().Add(30 * time.Minute)
+//	result = TimeAgo(futureTime)
+//	// result: "In a few minutes"
 func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	future := false
 	var timeSince time.Duration
@@ -86,7 +81,8 @@ func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	return calculateTimeVal(len(hoursList)-1, hours, future)
 }
 
-// calculateTimeVal calculates the time value and returns a string that describes the time difference in human-readable terms.
+// calculateTimeVal calculates the appropriate time value and returns a human-readable
+// string describing the time difference.
 func calculateTimeVal(scale int, hours float64, future bool) string {
 	timeVal := int(math.Round(hours / hoursList[scale]))
 	timeScaleVal := timeScale[scale]
@@ -97,7 +93,7 @@ func calculateTimeVal(scale int, hours float64, future bool) string {
 	return lastOrNext(timeScaleVal, timeVal, future)
 }
 
-// justNow returns the string "Just now" or "In a few seconds" depending on the future bool.
+// justNow returns "Just now" for past time or "In a few seconds" for future time.
 func justNow(future bool) string {
 	if future {
 		return "In a few seconds"
@@ -105,7 +101,7 @@ func justNow(future bool) string {
 	return "Just now"
 }
 
-// minuteAgo returns the string "A minute ago" or "In a minute" depending on the future bool.
+// minuteAgo returns "A minute ago" for past time or "In a minute" for future time.
 func minuteAgo(future bool) string {
 	if future {
 		return "In a minute"
@@ -113,7 +109,7 @@ func minuteAgo(future bool) string {
 	return "A minute ago"
 }
 
-// fewMinutesAgo returns the string "Few minutes ago" or "In a few minutes" depending on the future bool.
+// fewMinutesAgo returns "Few minutes ago" for past time or "In a few minutes" for future time.
 func fewMinutesAgo(future bool) string {
 	if future {
 		return "In a few minutes"
@@ -121,7 +117,8 @@ func fewMinutesAgo(future bool) string {
 	return "Few minutes ago"
 }
 
-// yesterdayOrTomorrow returns the string "Yesterday" or "Tomorrow" depending on the future bool.
+// yesterdayOrTomorrow returns "Yesterday" for past time or "Tomorrow" for future time
+// if the date falls within these ranges, otherwise returns an empty string.
 func yesterdayOrTomorrow(date time.Time, future bool) string {
 	now := time.Now().In(date.Location())
 	nowYear, nowMonth, nowDay := now.Date()
@@ -147,7 +144,8 @@ func yesterdayOrTomorrow(date time.Time, future bool) string {
 	return ""
 }
 
-// lastOrNextSingular returns the string "Last <timeScaleVal>" or "In a <timeScaleVal>" depending on the future bool.
+// lastOrNextSingular returns singular forms like "Last week" for past time
+// or "In a week" for future time.
 func lastOrNextSingular(timeScaleVal string, future bool) string {
 	if future {
 		return fmt.Sprintf("In a %s", timeScaleVal[:len(timeScaleVal)-1])
@@ -155,7 +153,8 @@ func lastOrNextSingular(timeScaleVal string, future bool) string {
 	return fmt.Sprintf("Last %s", timeScaleVal[:len(timeScaleVal)-1])
 }
 
-// lastOrNext returns the string "Last <timeScaleVal>" or "In <timeVal> <timeScaleVal>" depending on the future bool.
+// lastOrNext returns plural forms like "5 days ago" for past time
+// or "In 5 days" for future time.
 func lastOrNext(timeScaleVal string, timeVal int, future bool) string {
 	if future {
 		return fmt.Sprintf("In %d %s", timeVal, timeScaleVal)

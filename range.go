@@ -2,15 +2,15 @@ package gotime
 
 import "time"
 
-// IsBetween returns true if the given time.Time is between the given time.Time range
+// IsBetween reports whether t1 falls within the time range defined by t2 and t3 (inclusive).
+// The order of t2 and t3 doesn't matter - they will be automatically ordered.
 //
-// # Arguments
-//
-// t1: (time.Time) The date to be checked
-//
-// t2: (time.Time) The first date of the range
-//
-// t3: (time.Time) The second date of the range
+// Example:
+//	target := time.Date(2025, 7, 5, 12, 0, 0, 0, time.UTC)
+//	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
+//	end := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC)
+//	result := IsBetween(target, start, end)
+//	// result: true (July 5th is between July 1st and 10th)
 func IsBetween(t1, t2, t3 time.Time) bool {
 	t1Unix := t1.UnixMilli()
 	t2Unix := t2.UnixMilli()
@@ -24,9 +24,16 @@ func IsBetween(t1, t2, t3 time.Time) bool {
 	return t1Unix >= t2Unix && t1Unix <= t3Unix
 }
 
-// IsBetweenDates checks if the given time is in the range of the start and end
-// date. Before performing inclusive comparison, it sets the time to the start
-// of the day for the start date and the end of the day for the end date.
+// IsBetweenDates reports whether t1 falls within the date range defined by t2 and t3 (inclusive).
+// Unlike IsBetween, this function compares only the date portion by normalizing t2 to
+// start-of-day and t3 to end-of-day before comparison.
+//
+// Example:
+//	target := time.Date(2025, 7, 5, 23, 30, 0, 0, time.UTC)
+//	start := time.Date(2025, 7, 5, 10, 0, 0, 0, time.UTC)
+//	end := time.Date(2025, 7, 5, 14, 0, 0, 0, time.UTC)
+//	result := IsBetweenDates(target, start, end)
+//	// result: true (all dates are July 5th, regardless of time)
 func IsBetweenDates(t1, t2, t3 time.Time) bool {
 	sec1 := SoD(t1).Unix()
 	sec2 := SoD(t2).Unix()

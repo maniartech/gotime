@@ -3,15 +3,16 @@ package gotime
 import "time"
 
 //-----------------Year Functions-----------------
-// YearStart returns the first day of the year.
+// YearStart returns the first day of the year for the given date.
+// If no date is provided, it uses the current time.
 //
-// # Arguments
+// Example:
+//	start := YearStart() // First day of current year
+//	// start: 2025-01-01 00:00:00
 //
-// dt: (time.Time) The date to be used to calculate the first day of the year.
-//
-// # Note
-//
-// If the date is not provided, it will return the first day of the year from the current date.
+//	someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
+//	start = YearStart(someDate)
+//	// start: 2024-01-01 00:00:00
 func YearStart(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -24,15 +25,16 @@ func YearStart(dt ...time.Time) time.Time {
 	return start
 }
 
-// YearEnd returns the last day and the last second of the year.
+// YearEnd returns the last day and last second of the year for the given date.
+// If no date is provided, it uses the current time.
 //
-// # Arguments
+// Example:
+//	end := YearEnd() // Last day of current year
+//	// end: 2025-12-31 23:59:59.999999999
 //
-// dt: (time.Time) The date to be used to calculate the last day of the year.
-//
-// # Note
-//
-// If the date is not provided, it will return the last day of the year from the current date.
+//	someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
+//	end = YearEnd(someDate)
+//	// end: 2024-12-31 23:59:59.999999999
 func YearEnd(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -45,18 +47,17 @@ func YearEnd(dt ...time.Time) time.Time {
 	return end
 }
 
-// Years returns the date of the given number of years from the date provided,
-// If the date is not provided, it will return the date of the given number of years from the current date.
+// Years returns the date after adding the specified number of years to the given date.
+// If no date is provided, it uses the current time.
+// If years is 0, it returns the original date unchanged.
 //
-// # Arguments
+// Example:
+//	future := Years(2) // 2 years from now
+//	// future: 2027-07-08 (current time + 2 years)
 //
-// years: (int) The number of years to be added to the date.
-//
-// dt: (time.Time) The date to be used to calculate the date of the given number of year. (Only takes the first date if multiple dates are provided)
-//
-// # Note
-//
-// If the years parameter is 0 it will panic.
+//	someDate := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
+//	result := Years(5, someDate)
+//	// result: 2025-01-01
 func Years(years int, dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -70,27 +71,36 @@ func Years(years int, dt ...time.Time) time.Time {
 	return t.AddDate(years, 0, 0)
 }
 
-// LastYear returns the last year's time.Time corresponding to the current time.
+// LastYear returns the date one year ago from the current time.
+//
+// Example:
+//	lastYear := LastYear()
+//	// lastYear: 2024-07-08 (if current time is 2025-07-08)
 func LastYear() time.Time {
 	return time.Now().AddDate(-1, 0, 0)
 }
 
-// NextYear returns the next year's time.Time corresponding to the current time.
+// NextYear returns the date one year from the current time.
+//
+// Example:
+//	nextYear := NextYear()
+//	// nextYear: 2026-07-08 (if current time is 2025-07-08)
 func NextYear() time.Time {
 	return time.Now().AddDate(1, 0, 0)
 }
 
 //-----------------Month Functions-----------------
 
-// MonthStart returns the first day of the month.
+// MonthStart returns the first day of the month for the given date.
+// If no date is provided, it uses the current time.
 //
-// # Arguments
+// Example:
+//	start := MonthStart() // First day of current month
+//	// start: 2025-07-01 00:00:00
 //
-// dt: (time.Time) The date to be used to calculate the first day of the month.
-//
-// # Note
-//
-// If the date is not provided, it will return the first day of the month from the current date.
+//	someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
+//	start = MonthStart(someDate)
+//	// start: 2024-06-01 00:00:00
 func MonthStart(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -102,15 +112,16 @@ func MonthStart(dt ...time.Time) time.Time {
 	return start
 }
 
-// MonthEnd returns the last day and the last second of the month.
+// MonthEnd returns the last day and last second of the month for the given date.
+// If no date is provided, it uses the current time.
 //
-// # Arguments
+// Example:
+//	end := MonthEnd() // Last day of current month
+//	// end: 2025-07-31 23:59:59.999999999
 //
-// dt: (time.Time) The date to be used to calculate the last day of the month.
-//
-// # Note
-//
-// If the date is not provided, it will return the last day of the month from the current date.
+//	someDate := time.Date(2024, 2, 15, 0, 0, 0, 0, time.UTC)
+//	end = MonthEnd(someDate)
+//	// end: 2024-02-29 23:59:59.999999999 (leap year)
 func MonthEnd(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -122,27 +133,35 @@ func MonthEnd(dt ...time.Time) time.Time {
 	return end
 }
 
-// LastMonth returns the last month's time.Time corresponding to the current time.
+// LastMonth returns the date one month ago from the current time.
+//
+// Example:
+//	lastMonth := LastMonth()
+//	// lastMonth: 2025-06-08 (if current time is 2025-07-08)
 func LastMonth() time.Time {
 	return time.Now().AddDate(0, -1, 0)
 }
 
-// NextMonth returns the next month's time.Time corresponding to the current time.
+// NextMonth returns the date one month from the current time.
+//
+// Example:
+//	nextMonth := NextMonth()
+//	// nextMonth: 2025-08-08 (if current time is 2025-07-08)
 func NextMonth() time.Time {
 	return time.Now().AddDate(0, 1, 0)
 }
 
-// Months returns the date of the given number of months from the date provided,
+// Months returns the date after adding the specified number of months to the given date.
+// If no date is provided, it uses the current time.
+// If months is 0, it returns the original date unchanged.
 //
-// # Arguments
+// Example:
+//	future := Months(3) // 3 months from now
+//	// future: 2025-10-08 (current time + 3 months)
 //
-// months: (int) The number of months to be added to the date.
-//
-// dt: (time.Time) The date to be used to calculate the date of the given number of months. (Only takes the first date if multiple dates are provided)
-//
-// # Note
-//
-// If the months parameter is 0 it will panic.
+//	someDate := time.Date(2020, 1, 31, 0, 0, 0, 0, time.UTC)
+//	result := Months(1, someDate)
+//	// result: 2020-02-29 (handles month-end edge cases)
 func Months(months int, dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -158,15 +177,16 @@ func Months(months int, dt ...time.Time) time.Time {
 
 //-----------------Week Functions-----------------
 
-// WeekStart returns the first day of the week (Monday).
+// WeekStart returns the first day of the week (Sunday) for the given date.
+// If no date is provided, it uses the current time.
 //
-// # Arguments
+// Example:
+//	start := WeekStart() // Sunday of current week
+//	// start: 2025-07-06 00:00:00 (if current is 2025-07-08)
 //
-// dt: (time.Time) The date to be used to calculate the first day of the week.
-//
-// # Note
-//
-// If the date is not provided, it will return the first day of the week from the current date.
+//	someDate := time.Date(2025, 7, 10, 15, 30, 0, 0, time.UTC) // Thursday
+//	start = WeekStart(someDate)
+//	// start: 2025-07-06 00:00:00 (Sunday of that week)
 func WeekStart(dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {
@@ -178,17 +198,16 @@ func WeekStart(dt ...time.Time) time.Time {
 	return time.Date(start.Year(), start.Month(), start.Day(), 0, 0, 0, 0, start.Location())
 }
 
-// WeekStartOn returns the first day of the week on the given day.
+// WeekStartOn returns the first occurrence of the specified weekday for the given date's week.
+// If no date is provided, it uses the current time.
 //
-// # Arguments
+// Example:
+//	start := WeekStartOn(time.Monday) // Monday of current week
+//	// start: 2025-07-07 00:00:00 (if current is 2025-07-08)
 //
-// day: (time.Weekday) The day to be used to calculate the first day of the week.
-//
-// dt: (time.Time) The date to be used to calculate the first day of the week.
-//
-// # Note
-//
-// If the date is not provided, it will return the first day of the week from the current date.
+//	someDate := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC) // Thursday
+//	start = WeekStartOn(time.Wednesday, someDate)
+//	// start: 2025-07-09 00:00:00 (Wednesday of that week)
 func WeekStartOn(day time.Weekday, dt ...time.Time) time.Time {
 	var t time.Time
 	if len(dt) > 0 {

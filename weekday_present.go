@@ -2,7 +2,14 @@ package gotime
 
 import "time"
 
-// IsWeekdayPresentInRange returns true if any of the specified weekdays are present in the date range (inclusive).
+// IsWeekdayPresentInRange reports whether any of the specified weekdays
+// occur within the date range (inclusive). If end is before start, the dates are swapped.
+//
+// Example:
+//	start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC) // Tuesday
+//	end := time.Date(2025, 7, 5, 0, 0, 0, 0, time.UTC)   // Saturday
+//	present := IsWeekdayPresentInRange(start, end, time.Monday, time.Friday)
+//	// present: true (Friday occurs on July 4th)
 func IsWeekdayPresentInRange(start, end time.Time, weekdays ...time.Weekday) bool {
 	if len(weekdays) == 0 {
 		return false
