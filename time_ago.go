@@ -44,10 +44,13 @@ var timeScale = [5]string{"hours", "days", "weeks", "months", "years"}
 func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	future := false
 	var timeSince time.Duration
+	var now time.Time
 	if len(baseTime) > 0 {
 		timeSince = baseTime[0].Sub(t)
+		now = baseTime[0]
 	} else {
 		timeSince = time.Since(t)
+		now = time.Now()
 	}
 
 	// If timeSince is negative, then the date is in the future
@@ -66,7 +69,7 @@ func TimeAgo(t time.Time, baseTime ...time.Time) string {
 	}
 
 	//Checking if the date is yesterday or tomorrow
-	val := yesterdayOrTomorrow(t, future)
+	val := yesterdayOrTomorrow(t, future, now)
 	if val != "" {
 		return val
 	}
@@ -119,8 +122,8 @@ func fewMinutesAgo(future bool) string {
 
 // yesterdayOrTomorrow returns "Yesterday" for past time or "Tomorrow" for future time
 // if the date falls within these ranges, otherwise returns an empty string.
-func yesterdayOrTomorrow(date time.Time, future bool) string {
-	now := time.Now().In(date.Location())
+func yesterdayOrTomorrow(date time.Time, future bool, now time.Time) string {
+	now = now.In(date.Location())
 	nowYear, nowMonth, nowDay := now.Date()
 	if future {
 		dayAfterTomorrowMidnight := NewDate(nowYear, int(nowMonth), nowDay+2, date.Location())
