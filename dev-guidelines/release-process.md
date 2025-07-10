@@ -49,8 +49,16 @@ git push origin master
 ```bash
 # Replace vX.Y.Z with the new version
  git tag -a vX.Y.Z -m "Release vX.Y.Z: <short summary of major changes>"
+ git push origin master
  git push origin vX.Y.Z
 ```
+
+> **Why push both `master` and the tag?**
+>
+> - `git push origin master` updates the main branch with your latest commits, ensuring the codebase is current for all collaborators and CI/CD systems.
+> - `git push origin vX.Y.Z` pushes the release tag, creating an immutable reference to the exact commit for this release. This is what users and Go modules fetch for versioned installs.
+>
+> Both are required: the branch for ongoing development, and the tag for versioned releases.
 
 ## 6. Create GitHub Release
 
@@ -73,6 +81,19 @@ git push origin master
  go get github.com/maniartech/gotime@vX.Y.Z
  go list -m github.com/maniartech/gotime
 ```
+
+### Speeding up pkg.go.dev updates
+
+To speed up the appearance of your new version on pkg.go.dev:
+
+1. Visit: https://pkg.go.dev/github.com/maniartech/gotime@vX.Y.Z (replace with your version)
+2. Click the "Request" or "Refresh" button (if available) to trigger a re-index.
+3. Wait a few minutes and refresh the page.
+
+If it still doesn't update after 30–60 minutes:
+- Double-check that the tag is pushed and visible on GitHub.
+- Make sure the tag is annotated (not lightweight).
+- Ensure your repository is public.
 
 ## 8. Post-Release Tasks
 
