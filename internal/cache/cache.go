@@ -12,20 +12,20 @@ func init() {
 // number of datetime formats that are used. However, if you are using
 // unknown number of datetime formats, then you may want to disable
 // the cache. The cache is enabled by default. To reenable the cache,
-// use the EnableCache function.
+// use the Enable function.
 func Disable() {
 	cache = nil
 }
 
-// EnableCache enables the cache. By default, the cache is enabled.
-// This function useful when you want to enable the cache after it has been
-// disabled. See the DisableCache function for more information.
+// Enable enables the cache. By default, the cache is enabled.
+// This function is useful when you want to enable the cache after it has been
+// disabled. See the Disable function for more information.
 func Enable() {
 	cache = map[string]interface{}{}
 }
 
-// IsCacheEnabled returns true if the cache is enabled. The cache is
-// enabled by default. See the DisableCache function for more information.
+// IsEnabled returns true if the cache is enabled. The cache is
+// enabled by default. See the Disable function for more information.
 func IsEnabled() bool {
 	return cache != nil
 }

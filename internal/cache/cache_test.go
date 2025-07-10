@@ -65,6 +65,41 @@ func TestSetAndGetWithDisabledCache(t *testing.T) {
 	cache.Enable()
 }
 
+func TestCache_AllBranches(t *testing.T) {
+	cache.Enable()
+	cache.Set("k1", "v1")
+	if cache.Get("k1") != "v1" {
+		t.Errorf("Expected v1")
+	}
+	cache.Set("k2", []string{"a", "b"})
+	if got := cache.GetStrs("k2"); len(got) != 2 || got[0] != "a" || got[1] != "b" {
+		t.Errorf("Expected [a b], got %v", got)
+	}
+	cache.Set("k3", 123)
+	if got := cache.GetStrs("k3"); got != nil {
+		t.Errorf("Expected nil for non-string value")
+	}
+	cache.Disable()
+	if cache.IsEnabled() {
+		t.Errorf("Expected cache to be disabled")
+	}
+	if cache.Get("k1") != nil {
+		t.Errorf("Expected nil when cache is disabled")
+	}
+	if cache.GetStrs("k2") != nil {
+		t.Errorf("Expected nil when cache is disabled")
+	}
+	cache.Enable()
+}
+
+func TestGetStrs_DefaultBranch(t *testing.T) {
+	cache.Enable()
+	cache.Set("int_value", 42)
+	if got := cache.GetStrs("int_value"); got != nil {
+		t.Errorf("Expected nil for int value, got %v", got)
+	}
+}
+
 func BenchmarkDisableCache(b *testing.B) {
 	// Benchmarking for DisableCache function
 	for i := 0; i < b.N; i++ {
