@@ -168,7 +168,7 @@ package api
 
 import (
     "encoding/json"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -256,7 +256,7 @@ package logger
 
 import (
     "fmt"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -292,7 +292,7 @@ package db
 
 import (
     "database/sql"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -347,7 +347,7 @@ func (d Date) Value() (driver.Value, error) {
 package config
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 

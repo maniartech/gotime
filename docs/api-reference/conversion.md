@@ -92,7 +92,7 @@ normalized, err := normalizeUserDate("July 7th, 2025")
 ```go
 package localization
 
-import "github.com/maniartech/gotime"
+import "github.com/maniartech/gotime/v2"
 
 type DateLocalizer struct {
     formats map[string]string
@@ -232,7 +232,7 @@ package gateway
 
 import (
     "encoding/json"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "net/http"
 )
 
@@ -273,7 +273,7 @@ package migration
 
 import (
     "bufio"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "os"
     "strings"
 )
@@ -328,7 +328,7 @@ err := migrateDateFormats(
 package templates
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "html/template"
     "strings"
 )
@@ -364,7 +364,7 @@ func createTemplateFuncs() template.FuncMap {
 package config
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "gopkg.in/yaml.v2"
 )
 

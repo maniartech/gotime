@@ -13,7 +13,7 @@ package api
 
 import (
     "encoding/json"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "net/http"
     "time"
 )
@@ -111,7 +111,7 @@ func createArticleHandler(w http.ResponseWriter, r *http.Request) {
 package frontend
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -177,7 +177,7 @@ func FormatUserTimestamp(t time.Time) DisplayTimestamp {
 package forms
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -262,7 +262,7 @@ package models
 
 import (
     "database/sql/driver"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -349,7 +349,7 @@ type User struct {
 package database
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "strings"
     "time"
 )
@@ -438,7 +438,7 @@ query, params := NewQuery("orders").
 package billing
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -535,7 +535,7 @@ func (inv *Invoice) FormatForDisplay() map[string]string {
 package schedule
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -644,7 +644,7 @@ func (sm *ScheduleManager) GetWorkingDaysInMonth(year, month int) []time.Time {
 package projects
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -767,7 +767,7 @@ func (p *Project) getProjectStatus() string {
 package analytics
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -888,7 +888,7 @@ func (tsa *TimeSeriesAnalyzer) calculateDailyAverage() float64 {
 package monitoring
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "sync"
     "time"
 )
@@ -1024,7 +1024,7 @@ func (mc *MetricsCollector) calculateAverage(metrics []Metric) float64 {
 package cms
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 

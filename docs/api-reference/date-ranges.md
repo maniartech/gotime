@@ -89,7 +89,7 @@ result2 := gotime.IsBetweenDates(sameDay1, sameDay2, sameDay3)  // true
 package events
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -202,7 +202,7 @@ func ExampleEventScheduling() {
 package business
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -343,7 +343,7 @@ func ExampleBusinessHours() {
 package analytics
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -480,7 +480,7 @@ func (dra *DateRangeAnalyzer) GenerateRangeReport(start, end time.Time) map[stri
 package subscription
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 

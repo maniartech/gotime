@@ -370,7 +370,7 @@ gotime.PrevBusinessDay(time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC), weekends, ho
 package ui
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -405,7 +405,7 @@ func formatTimestamp(t time.Time) string {
 package scheduler
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -454,7 +454,7 @@ func scheduleConsecutiveMeetings(meetings []Meeting) {
 package scheduler
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -505,7 +505,7 @@ func (cs *ContentScheduler) scheduleAt(content string, when time.Time) error {
 package monitoring
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
     "context"
 )
@@ -574,7 +574,7 @@ func (pm *ProcessMonitor) GetProcessInfo(id string) map[string]interface{} {
 package reports
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -641,7 +641,7 @@ func GenerateReport(period ReportPeriod) *Report {
 package events
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -692,7 +692,7 @@ func (e *Event) GetUpcomingReminders() []string {
 package cache
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -758,7 +758,7 @@ package logging
 
 import (
     "fmt"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 

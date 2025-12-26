@@ -450,7 +450,7 @@ fmt.Println(gotime.QuarterOfYear()) // Quarter of current time
 package scheduling
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -528,7 +528,7 @@ func (s *AppointmentScheduler) GetReminders(appointmentTime time.Time) map[strin
 package shifts
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -610,7 +610,7 @@ func generateShiftID() string {
 package reporting
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -729,7 +729,7 @@ package registration
 
 import (
     "errors"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -795,7 +795,7 @@ func GetAgeGroup(birthDate time.Time) string {
 package insurance
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -881,7 +881,7 @@ func (ic *InsuranceCalculator) GetQuote(birthDate time.Time) map[string]interfac
 package benefits
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -984,7 +984,7 @@ func (e *Employee) GetBenefitsSummary() map[string]interface{} {
 package medical
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -1346,7 +1346,7 @@ if today.Equal(targetDate) {
 package timeline
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -1414,7 +1414,7 @@ func (pc *ProjectCalculator) GetMilestones(startDate time.Time, totalDays int) (
 package benchmark
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -1489,7 +1489,7 @@ func BenchmarkFunction() {
 package sla
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
@@ -1561,7 +1561,7 @@ func (sla *SLAMonitor) GetSLAStatus(requestTime time.Time, slaHours int) map[str
 package retention
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 

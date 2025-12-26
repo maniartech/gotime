@@ -162,7 +162,7 @@ package main
 import (
     "fmt"
     "time"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
 )
 
 func displayFormats(dt time.Time) {

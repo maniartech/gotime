@@ -359,7 +359,7 @@ func (gm *GlobalMeeting) GetLocalTimes() map[string]string {
 package batch
 
 import (
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
     "time"
 )
 
