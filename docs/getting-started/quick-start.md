@@ -7,7 +7,7 @@ Get started with GoTime in just a few minutes! This guide will walk you through 
 ## Installation
 
 ```bash
-go get github.com/maniartech/gotime/v2@v2.0.2
+go get github.com/maniartech/gotime/v2@v2.0.3
 ```
 
 ## Basic Operations

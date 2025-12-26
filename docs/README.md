@@ -154,7 +154,7 @@ weekEnd := gotime.WeekEnd()
 ## Installation
 
 ```bash
-go get github.com/maniartech/gotime/v2@v2.0.2
+go get github.com/maniartech/gotime/v2@v2.0.3
 ```
 
 **Requirements:**

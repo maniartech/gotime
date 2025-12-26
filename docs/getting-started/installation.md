@@ -17,7 +17,7 @@ GoTime is designed to be easy to install and integrate into your Go projects.
 For projects using Go modules (Go 1.11+):
 
 ```bash
-go get github.com/maniartech/gotime/v2@v2.0.2
+go get github.com/maniartech/gotime/v2@v2.0.3
 ```
 
 This will automatically download and install the latest version of GoTime and make it available in your project.
@@ -35,7 +35,7 @@ go get -u github.com/maniartech/gotime/v2
 To install a specific version:
 
 ```bash
-go get github.com/maniartech/gotime/v2@v2.0.2
+go get github.com/maniartech/gotime/v2@v2.0.3
 ```
 
 ## Verify Installation
@@ -109,7 +109,7 @@ For a new project, initialize Go modules first:
 mkdir my-time-app
 cd my-time-app
 go mod init my-time-app
-go get github.com/maniartech/gotime/v2@v2.0.2
+go get github.com/maniartech/gotime/v2@v2.0.3
 ```
 
 ### 2. Existing Project
@@ -118,7 +118,7 @@ For an existing project with Go modules:
 
 ```bash
 cd your-project
-go get github.com/maniartech/gotime/v2@v2.0.2
+go get github.com/maniartech/gotime/v2@v2.0.3
 ```
 
 The package will be added to your `go.mod` file automatically.

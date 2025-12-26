@@ -2,38 +2,21 @@
 
 ## Version 2.0.3 (v2.0.3) - December 26, 2025
 
-### Hotpatch
+## Summary
 
-- Documentation and examples now consistently import `github.com/maniartech/gotime/v2`.
-- No code or API changes; behavior identical to v2.0.2.
+Docs-only hotpatch to finish the v2 module path migration. No API or behavior changes. Supersedes v2.0.2.
 
-### Upgrade
+## What’s fixed
+
+- Normalized all internal imports to `github.com/maniartech/gotime/v2` (nites/cache/utils already in code; this finalizes docs/examples).
+- Updated all docs and examples to use the v2 module path and current install command.
+- Confirmed full test suite passes.
+
+## Upgrade
 
 ```bash
 go get github.com/maniartech/gotime/v2@v2.0.3
 ```
-
----
-
-## Version 2.0.2 (v2.0.2) - December 26, 2025
-
-### Maintenance and Fixes
-
-- Fixed incorrect internal import paths after v2 migration:
-  - Updated references to `internal/nites`, `internal/cache`, and `internal/utils` to use the v2 module path (`github.com/maniartech/gotime/v2/...`).
-- Updated documentation and examples to use the v2 import path and install commands:
-  - `go get github.com/maniartech/gotime/v2@v2.0.2`
-  - `import "github.com/maniartech/gotime/v2"`
-- Verified build and tests for all packages: `go test ./...` passes.
-
-### Upgrade
-
-```bash
-go get github.com/maniartech/gotime/v2@v2.0.2
-```
-
-No API changes. This release only corrects module path imports and documentation.
-# GoTime Release Notes
 
 ## Version 2.0.0 (v2.0.0) - July 10, 2025
 
