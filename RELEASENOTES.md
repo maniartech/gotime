@@ -1,12 +1,12 @@
 # GoTime Release Notes
 
-## Version 2.0.0 (v2.0.0) - July 8, 2025
+## Version 2.0.0 (v2.0.0) - July 10, 2025
 
 ### 🎉 Major Release: Complete Architectural Modernization
 
 **Tag**: v2.0.0
 **Previous Version**: v1.1.0
-**Release Date**: July 8, 2025
+**Release Date**: July 10, 2025
 
 ### 🚀 **Major Changes**
 
@@ -377,7 +377,7 @@ Special thanks to all contributors who helped with the NITES migration and conti
 ### 📄 **Release Information**
 
 - **Version**: v2.0.0
-- **Release Date**: July 8, 2025
+- **Release Date**: July 10, 2025
 - **License**: MIT
 - **Go Version**: 1.19+
 - **Dependencies**: None
