@@ -1,5 +1,20 @@
 # GoTime Release Notes
 
+## Version 2.0.3 (v2.0.3) - December 26, 2025
+
+### Hotpatch
+
+- Documentation and examples now consistently import `github.com/maniartech/gotime/v2`.
+- No code or API changes; behavior identical to v2.0.2.
+
+### Upgrade
+
+```bash
+go get github.com/maniartech/gotime/v2@v2.0.3
+```
+
+---
+
 ## Version 2.0.2 (v2.0.2) - December 26, 2025
 
 ### Maintenance and Fixes
