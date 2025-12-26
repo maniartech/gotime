@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/gotime/internal/utils"
+	"github.com/maniartech/gotime/v2/internal/utils"
 )
 
 func TestAge(t *testing.T) {

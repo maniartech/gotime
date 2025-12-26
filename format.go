@@ -3,7 +3,7 @@ package gotime
 import (
 	"time"
 
-	"github.com/maniartech/gotime/internal/nites"
+	"github.com/maniartech/gotime/v2/internal/nites"
 )
 
 // Format converts a time.Time value to a formatted string using the specified layout.
