@@ -69,7 +69,7 @@
 				
 				<option value="file6">github.com/maniartech/gotime/format.go (100.0%)</option>
 				
-				<option value="file7">github.com/maniartech/gotime/internal/cache/cache.go (52.6%)</option>
+				<option value="file7">github.com/maniartech/gotime/internal/cache/cache.go (94.7%)</option>
 				
 				<option value="file8">github.com/maniartech/gotime/internal/nites/convert.go (100.0%)</option>
 				
@@ -77,9 +77,9 @@
 				
 				<option value="file10">github.com/maniartech/gotime/internal/nites/parse.go (100.0%)</option>
 				
-				<option value="file11">github.com/maniartech/gotime/internal/utils/assert.go (0.0%)</option>
+				<option value="file11">github.com/maniartech/gotime/internal/utils/assert.go (92.9%)</option>
 				
-				<option value="file12">github.com/maniartech/gotime/internal/utils/runtime.go (0.0%)</option>
+				<option value="file12">github.com/maniartech/gotime/internal/utils/runtime.go (100.0%)</option>
 				
 				<option value="file13">github.com/maniartech/gotime/misc.go (100.0%)</option>
 				
@@ -129,7 +129,7 @@ import (
 //
 //        birthDate := time.Date(1990, 5, 15, 0, 0, 0, 0, time.UTC)
 //        asOf := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
-//        years, months, days := Age(birthDate, asOf)
+//        years, months, days := gotime.Age(birthDate, asOf)
 //        // Returns: 35, 1, 23 (35 years, 1 month, 23 days)
 func Age(birthDate time.Time, asOf ...time.Time) (years, months, days int) <span class="cov8" title="1">{
         var ref time.Time
@@ -185,7 +185,7 @@ func Age(birthDate time.Time, asOf ...time.Time) (years, months, days int) <span
 //
 //        start := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
 //        end := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
-//        years := YearsBetween(start, end)
+//        years := gotime.YearsBetween(start, end)
 //        // Returns: approximately 5.5 years
 func YearsBetween(start, end time.Time) float64 <span class="cov8" title="1">{
         // Ensure start is before end
@@ -209,7 +209,7 @@ func YearsBetween(start, end time.Time) float64 <span class="cov8" title="1">{
 //
 //        start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //        end := time.Date(2025, 7, 15, 0, 0, 0, 0, time.UTC)
-//        months := MonthsBetween(start, end)
+//        months := gotime.MonthsBetween(start, end)
 //        // Returns: approximately 6.5 months
 func MonthsBetween(start, end time.Time) float64 <span class="cov8" title="1">{
         // Ensure start is before end
@@ -233,7 +233,7 @@ func MonthsBetween(start, end time.Time) float64 <span class="cov8" title="1">{
 //
 //        start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //        end := time.Date(2025, 1, 8, 0, 0, 0, 0, time.UTC)
-//        days := DaysBetween(start, end)
+//        days := gotime.DaysBetween(start, end)
 //        // Returns: 7
 func DaysBetween(start, end time.Time) int <span class="cov8" title="1">{
         // Ensure start is before end
@@ -252,7 +252,7 @@ func DaysBetween(start, end time.Time) int <span class="cov8" title="1">{
 //
 //        start := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //        end := time.Date(2025, 1, 11, 0, 0, 0, 0, time.UTC)
-//        weeks := WeeksBetween(start, end)
+//        weeks := gotime.WeeksBetween(start, end)
 //        // Returns: approximately 1.43 weeks
 func WeeksBetween(start, end time.Time) float64 <span class="cov8" title="1">{
         // Ensure start is before end
@@ -272,7 +272,7 @@ func WeeksBetween(start, end time.Time) float64 <span class="cov8" title="1">{
 // Example:
 //
 //        d := 2*time.Hour + 30*time.Minute
-//        result := DurationInWords(d)
+//        result := gotime.DurationInWords(d)
 //        // Returns: "2 hours 30 minutes"
 func DurationInWords(d time.Duration) string <span class="cov8" title="1">{
         if d == 0 </span><span class="cov8" title="1">{
@@ -355,7 +355,7 @@ func DurationInWords(d time.Duration) string <span class="cov8" title="1">{
 // Example:
 //
 //        birthDate := time.Date(1990, 5, 15, 0, 0, 0, 0, time.UTC)
-//        valid := IsValidAge(birthDate)
+//        valid := gotime.IsValidAge(birthDate)
 //        // Returns: true
 func IsValidAge(birthDate time.Time, asOf ...time.Time) bool <span class="cov8" title="1">{
         var ref time.Time
@@ -392,7 +392,7 @@ import "time"
 // Example:
 //        weekends := []time.Weekday{time.Saturday, time.Sunday}
 //        holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//        isBusiness := IsBusinessDay(time.Now(), weekends, holidays...)
+//        isBusiness := gotime.IsBusinessDay(time.Now(), weekends, holidays...)
 //        // isBusiness: true if today is not a weekend or holiday
 func IsBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time) bool <span class="cov8" title="1">{
         for _, w := range weekends </span><span class="cov8" title="1">{
@@ -413,7 +413,7 @@ func IsBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time) 
 // Example:
 //        weekends := []time.Weekday{time.Saturday, time.Sunday}
 //        holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//        nextBiz := NextBusinessDay(time.Now(), weekends, holidays...)
+//        nextBiz := gotime.NextBusinessDay(time.Now(), weekends, holidays...)
 //        // nextBiz: the next date that is not a weekend or holiday
 func NextBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time) time.Time <span class="cov8" title="1">{
         next := t.AddDate(0, 0, 1)
@@ -428,7 +428,7 @@ func NextBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time
 // Example:
 //        weekends := []time.Weekday{time.Saturday, time.Sunday}
 //        holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//        prevBiz := PrevBusinessDay(time.Now(), weekends, holidays...)
+//        prevBiz := gotime.PrevBusinessDay(time.Now(), weekends, holidays...)
 //        // prevBiz: the previous date that is not a weekend or holiday
 func PrevBusinessDay(t time.Time, weekends []time.Weekday, holidays ...time.Time) time.Time <span class="cov8" title="1">{
         prev := t.AddDate(0, 0, -1)
@@ -509,7 +509,7 @@ import "github.com/maniartech/gotime/internal/nites"
 // (Natural and Intuitive Time Expression Syntax) format specifiers.
 //
 // Example:
-//        converted, err := Convert("2022-12-31", "yyyy-mm-dd", "dt mmmm, yyyy")
+//        converted, err := gotime.Convert("2022-12-31", "yyyy-mm-dd", "dt mmmm, yyyy")
 //        if err != nil {
 //                // handle error
 //        }
@@ -641,10 +641,10 @@ import (
 //
 // Example:
 //
-//        formatted := Format(time.Now(), "yyyy-mm-dd")
+//        formatted := gotime.Format(time.Now(), "yyyy-mm-dd")
 //        // formatted: "2025-07-08"
 //
-//        formatted = Format(time.Now(), "mmmm dd, yyyy")
+//        formatted = gotime.Format(time.Now(), "mmmm dd, yyyy")
 //        // formatted: "July 08, 2025"
 func Format(dt time.Time, layout string) string <span class="cov8" title="1">{
         if layout == "" </span><span class="cov8" title="1">{
@@ -659,7 +659,7 @@ func Format(dt time.Time, layout string) string <span class="cov8" title="1">{
 //
 // Example:
 //
-//        formatted := FormatUnix(1609459200, 0, "yyyy-mm-dd")
+//        formatted := gotime.FormatUnix(1609459200, 0, "yyyy-mm-dd")
 //        // formatted: "2021-01-01"
 func FormatUnix(sec int64, nsec int64, layout string) string <span class="cov8" title="1">{
         if layout == "" </span><span class="cov8" title="1">{
@@ -674,7 +674,7 @@ func FormatUnix(sec int64, nsec int64, layout string) string <span class="cov8" 
 //
 // Example:
 //
-//        formatted := FormatTimestamp(1609459200, "yyyy-mm-dd")
+//        formatted := gotime.FormatTimestamp(1609459200, "yyyy-mm-dd")
 //        // formatted: "2021-01-01"
 func FormatTimestamp(timestamp int64, layout string) string <span class="cov8" title="1">{
         if layout == "" </span><span class="cov8" title="1">{
@@ -699,20 +699,20 @@ func init() <span class="cov8" title="1">{
 // number of datetime formats that are used. However, if you are using
 // unknown number of datetime formats, then you may want to disable
 // the cache. The cache is enabled by default. To reenable the cache,
-// use the EnableCache function.
+// use the Enable function.
 func Disable() <span class="cov8" title="1">{
         cache = nil
 }</span>
 
-// EnableCache enables the cache. By default, the cache is enabled.
-// This function useful when you want to enable the cache after it has been
-// disabled. See the DisableCache function for more information.
+// Enable enables the cache. By default, the cache is enabled.
+// This function is useful when you want to enable the cache after it has been
+// disabled. See the Disable function for more information.
 func Enable() <span class="cov8" title="1">{
         cache = map[string]interface{}{}
 }</span>
 
-// IsCacheEnabled returns true if the cache is enabled. The cache is
-// enabled by default. See the DisableCache function for more information.
+// IsEnabled returns true if the cache is enabled. The cache is
+// enabled by default. See the Disable function for more information.
 func IsEnabled() bool <span class="cov8" title="1">{
         return cache != nil
 }</span>
@@ -735,20 +735,20 @@ func Get(key string) interface{} <span class="cov8" title="1">{
         <span class="cov8" title="1">return cache[key]</span>
 }
 
-func GetStrs(key string) []string <span class="cov0" title="0">{
-        if cache == nil </span><span class="cov0" title="0">{
+func GetStrs(key string) []string <span class="cov8" title="1">{
+        if cache == nil </span><span class="cov8" title="1">{
                 return nil
         }</span>
-        <span class="cov0" title="0">value, exists := cache[key]
+        <span class="cov8" title="1">value, exists := cache[key]
         if !exists </span><span class="cov0" title="0">{
                 return nil
         }</span>
-        <span class="cov0" title="0">switch v := value.(type) </span>{
-        case []string:<span class="cov0" title="0">
+        <span class="cov8" title="1">switch v := value.(type) </span>{
+        case []string:<span class="cov8" title="1">
                 return v</span>
-        case string:<span class="cov0" title="0">
+        case string:<span class="cov8" title="1">
                 return []string{v}</span>
-        default:<span class="cov0" title="0">
+        default:<span class="cov8" title="1">
                 return nil</span>
         }
 }
@@ -1089,39 +1089,39 @@ import (
         "time"
 )
 
-func AssertEqual(t *testing.T, expected interface{}, actual interface{}) <span class="cov0" title="0">{
+func AssertEqual(t *testing.T, expected interface{}, actual interface{}) <span class="cov8" title="1">{
         switch e := expected.(type) </span>{
-        case time.Time:<span class="cov0" title="0">
+        case time.Time:<span class="cov8" title="1">
                 a, ok := actual.(time.Time)
                 if !ok || !e.Equal(a) </span><span class="cov0" title="0">{
                         t.Errorf("Expected %v but got %v", e, actual)
                 }</span>
-        default:<span class="cov0" title="0">
-                if !reflect.DeepEqual(expected, actual) </span><span class="cov0" title="0">{
+        default:<span class="cov8" title="1">
+                if !reflect.DeepEqual(expected, actual) </span><span class="cov8" title="1">{
                         t.Errorf("Expected %v but got %v", expected, actual)
                 }</span>
         }
 }
 
-func AssertNotEqual(t *testing.T, expected interface{}, actual interface{}) <span class="cov0" title="0">{
-        if expected == actual </span><span class="cov0" title="0">{
+func AssertNotEqual(t *testing.T, expected interface{}, actual interface{}) <span class="cov8" title="1">{
+        if expected == actual </span><span class="cov8" title="1">{
                 t.Errorf("Expected %v to not equal %v", expected, actual)
         }</span>
 }
 
-func AssertNoError(t *testing.T, err error) <span class="cov0" title="0">{
-        if err != nil </span><span class="cov0" title="0">{
+func AssertNoError(t *testing.T, err error) <span class="cov8" title="1">{
+        if err != nil </span><span class="cov8" title="1">{
                 t.Errorf("Expected no error but got %v", err)
         }</span>
 }
 
-func AssertPanics(t *testing.T, f func()) <span class="cov0" title="0">{
-        defer func() </span><span class="cov0" title="0">{
-                if r := recover(); r == nil </span><span class="cov0" title="0">{
+func AssertPanics(t *testing.T, f func()) <span class="cov8" title="1">{
+        defer func() </span><span class="cov8" title="1">{
+                if r := recover(); r == nil </span><span class="cov8" title="1">{
                         t.Errorf("Expected panic but got none")
                 }</span>
         }()
-        <span class="cov0" title="0">f()</span>
+        <span class="cov8" title="1">f()</span>
 }
 </pre>
 		
@@ -1135,7 +1135,7 @@ import (
 
 var RuntimeVersion int
 
-func init() <span class="cov0" title="0">{
+func init() <span class="cov8" title="1">{
 
         // Calculate the current version of the Go runtime. It fetches
         // the version from the runtime.Version() function. It generates
@@ -1164,7 +1164,7 @@ import "time"
 // A leap year is a year that is evenly divisible by 4, but not by 100 unless it is also divisible by 400.
 //
 // Example:
-//   isLeap := IsLeapYear(2024)
+//   isLeap := gotime.IsLeapYear(2024)
 //   // isLeap == true
 func IsLeapYear(year int) bool <span class="cov8" title="1">{
         return year%4 == 0 &amp;&amp; (year%100 != 0 || year%400 == 0)
@@ -1177,7 +1177,7 @@ func IsLeapYear(year int) bool <span class="cov8" title="1">{
 // For all other months, the number of days is 31.
 //
 // Example:
-//   days := DaysInMonth(2022, 2)
+//   days := gotime.DaysInMonth(2022, 2)
 //   // days == 28
 func DaysInMonth(year, month int) int <span class="cov8" title="1">{
         switch month </span>{
@@ -1198,7 +1198,7 @@ func DaysInMonth(year, month int) int <span class="cov8" title="1">{
 // If the year is a leap year, it returns 366, otherwise it returns 365.
 //
 // Example:
-//   days := DaysInYear(2022)
+//   days := gotime.DaysInYear(2022)
 //   // days == 365
 func DaysInYear(year int) int <span class="cov8" title="1">{
         if IsLeapYear(year) </span><span class="cov8" title="1">{
@@ -1216,7 +1216,7 @@ func DaysInYear(year int) int <span class="cov8" title="1">{
 // Q4: Oct (31) + Nov (30) + Dec (31) = 92 days
 //
 // Example:
-//   days := DaysInQuarter(2022, 1)
+//   days := gotime.DaysInQuarter(2022, 1)
 //   // days == 90
 func DaysInQuarter(year, quarter int) int <span class="cov8" title="1">{
         switch quarter </span>{
@@ -1237,7 +1237,7 @@ func DaysInQuarter(year, quarter int) int <span class="cov8" title="1">{
 // second, and nanosecond fields to 0. It also sets the location field to time.UTC.
 //
 // Example:
-//   date := NewDate(2022, 4, 15)
+//   date := gotime.NewDate(2022, 4, 15)
 //   // date == time.Date(2022, time.April, 15, 0, 0, 0, 0, time.UTC)
 func NewDate(year, month, day int, loc *time.Location) time.Time <span class="cov8" title="1">{
         return time.Date(year, time.Month(month), day, 0, 0, 0, 0, loc)
@@ -1249,7 +1249,7 @@ func NewDate(year, month, day int, loc *time.Location) time.Time <span class="co
 // and day fields to 0. It also sets the location field to time.UTC.
 //
 // Example:
-//   timeObj := NewTime(12, 30, 0)
+//   timeObj := gotime.NewTime(12, 30, 0)
 //   // timeObj == time.Date(0, 1, 1, 12, 30, 0, 0, time.UTC)
 func NewTime(hour, minute, second int, loc *time.Location) time.Time <span class="cov8" title="1">{
         return time.Date(0, 0, 0, hour, minute, second, 0, loc)
@@ -1260,7 +1260,7 @@ func NewTime(hour, minute, second int, loc *time.Location) time.Time <span class
 //
 // Example:
 //   date := time.Date(2022, time.April, 15, 12, 30, 0, 0, time.UTC)
-//   newDate := ReplaceDate(date, 2023, 5, 20)
+//   newDate := gotime.ReplaceDate(date, 2023, 5, 20)
 //   // newDate == time.Date(2023, time.May, 20, 12, 30, 0, 0, time.UTC)
 func ReplaceDate(t time.Time, year, month, day int) time.Time <span class="cov8" title="1">{
         return time.Date(year, time.Month(month), day, t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), t.Location())
@@ -1271,7 +1271,7 @@ func ReplaceDate(t time.Time, year, month, day int) time.Time <span class="cov8"
 //
 // Example:
 //   date := time.Date(2022, time.April, 15, 12, 30, 0, 0, time.UTC)
-//   newTime := ReplaceTime(date, 15, 45, 0)
+//   newTime := gotime.ReplaceTime(date, 15, 45, 0)
 //   // newTime == time.Date(2022, time.April, 15, 15, 45, 0, 0, time.UTC)
 func ReplaceTime(t time.Time, hour, minute, second int) time.Time <span class="cov8" title="1">{
         return time.Date(t.Year(), t.Month(), t.Day(), hour, minute, second, t.Nanosecond(), t.Location())
@@ -1292,7 +1292,7 @@ import (
 //
 // Example:
 //
-//        parsed, err := Parse("yyyy-mm-dd", "2022-12-31")
+//        parsed, err := gotime.Parse("yyyy-mm-dd", "2022-12-31")
 //        if err != nil {
 //                // handle error
 //        }
@@ -1307,7 +1307,7 @@ func Parse(layout, value string) (time.Time, error) <span class="cov8" title="1"
 // Example:
 //
 //        ist := time.FixedZone("IST", 5*60*60+30*60)
-//        parsed, err := ParseInLocation("yyyy-mm-dd", "2022-12-31", ist)
+//        parsed, err := gotime.ParseInLocation("yyyy-mm-dd", "2022-12-31", ist)
 //        if err != nil {
 //                // handle error
 //        }
@@ -1325,7 +1325,7 @@ import "time"
 // If no time is provided, it uses the current time.
 //
 // Example:
-//   q1Start := QuarterStart(time.Date(2025, 3, 15, 0, 0, 0, 0, time.UTC))
+//   q1Start := gotime.QuarterStart(time.Date(2025, 3, 15, 0, 0, 0, 0, time.UTC))
 //   // Returns: 2025-01-01 00:00:00 +0000 UTC
 func QuarterStart(dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1344,7 +1344,7 @@ func QuarterStart(dt ...time.Time) time.Time <span class="cov8" title="1">{
 // If no time is provided, it uses the current time.
 //
 // Example:
-//   q1End := QuarterEnd(time.Date(2025, 2, 15, 0, 0, 0, 0, time.UTC))
+//   q1End := gotime.QuarterEnd(time.Date(2025, 2, 15, 0, 0, 0, 0, time.UTC))
 //   // Returns: 2025-03-31 23:59:59.999999999 +0000 UTC
 func QuarterEnd(dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1366,7 +1366,7 @@ func QuarterEnd(dt ...time.Time) time.Time <span class="cov8" title="1">{
 // This is equivalent to Quarters(-1).
 //
 // Example:
-//   lastQ := LastQuarter() // If current is 2025-07-15, returns 2025-04-15
+//   lastQ := gotime.LastQuarter() // If current is 2025-07-15, returns 2025-04-15
 func LastQuarter() time.Time <span class="cov8" title="1">{
         return Quarters(-1)
 }</span>
@@ -1375,7 +1375,7 @@ func LastQuarter() time.Time <span class="cov8" title="1">{
 // This is equivalent to Quarters(1).
 //
 // Example:
-//   nextQ := NextQuarter() // If current is 2025-07-15, returns 2025-10-15
+//   nextQ := gotime.NextQuarter() // If current is 2025-07-15, returns 2025-10-15
 func NextQuarter() time.Time <span class="cov8" title="1">{
         return Quarters(1)
 }</span>
@@ -1384,9 +1384,9 @@ func NextQuarter() time.Time <span class="cov8" title="1">{
 // If no time is provided, it uses the current time. Negative values subtract quarters.
 //
 // Example:
-//   futureQuarter := Quarters(2, someTime)  // 2 quarters (6 months) after someTime
-//   pastQuarter := Quarters(-1, someTime)   // 1 quarter (3 months) before someTime
-//   noChange := Quarters(0)                 // same as time.Now()
+//   futureQuarter := gotime.Quarters(2, someTime)  // 2 quarters (6 months) after someTime
+//   pastQuarter := gotime.Quarters(-1, someTime)   // 1 quarter (3 months) before someTime
+//   noChange := gotime.Quarters(0)                 // same as time.Now()
 func Quarters(quarters int, dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
         if len(dt) &gt; 0 </span><span class="cov8" title="1">{
@@ -1403,7 +1403,7 @@ func Quarters(quarters int, dt ...time.Time) time.Time <span class="cov8" title=
 // If no time is provided, it uses the current time.
 //
 // Example:
-//   quarter := QuarterOfYear(time.Date(2025, 7, 15, 0, 0, 0, 0, time.UTC))
+//   quarter := gotime.QuarterOfYear(time.Date(2025, 7, 15, 0, 0, 0, 0, time.UTC))
 //   // Returns: 3 (July is in Q3)
 func QuarterOfYear(dt ...time.Time) int <span class="cov8" title="1">{
         var t time.Time
@@ -1428,7 +1428,7 @@ import "time"
 //        target := time.Date(2025, 7, 5, 12, 0, 0, 0, time.UTC)
 //        start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
 //        end := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC)
-//        result := IsBetween(target, start, end)
+//        result := gotime.IsBetween(target, start, end)
 //        // result: true (July 5th is between July 1st and 10th)
 func IsBetween(t1, t2, t3 time.Time) bool <span class="cov8" title="1">{
         t1Unix := t1.UnixMilli()
@@ -1451,7 +1451,7 @@ func IsBetween(t1, t2, t3 time.Time) bool <span class="cov8" title="1">{
 //        target := time.Date(2025, 7, 5, 23, 30, 0, 0, time.UTC)
 //        start := time.Date(2025, 7, 5, 10, 0, 0, 0, time.UTC)
 //        end := time.Date(2025, 7, 5, 14, 0, 0, 0, time.UTC)
-//        result := IsBetweenDates(target, start, end)
+//        result := gotime.IsBetweenDates(target, start, end)
 //        // result: true (all dates are July 5th, regardless of time)
 func IsBetweenDates(t1, t2, t3 time.Time) bool <span class="cov8" title="1">{
         sec1 := SoD(t1).Unix()
@@ -1471,16 +1471,17 @@ func IsBetweenDates(t1, t2, t3 time.Time) bool <span class="cov8" title="1">{
 
 import "time"
 
-//-----------------Year Functions-----------------
+// -----------------Year Functions-----------------
 // YearStart returns the first day of the year for the given date.
 // If no date is provided, it uses the current time.
 //
 // Example:
-//        start := YearStart() // First day of current year
+//
+//        start := gotime.YearStart() // First day of current year
 //        // start: 2025-01-01 00:00:00
 //
 //        someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
-//        start = YearStart(someDate)
+//        start = gotime.YearStart(someDate)
 //        // start: 2024-01-01 00:00:00
 func YearStart(dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1498,11 +1499,12 @@ func YearStart(dt ...time.Time) time.Time <span class="cov8" title="1">{
 // If no date is provided, it uses the current time.
 //
 // Example:
-//        end := YearEnd() // Last day of current year
+//
+//        end := gotime.YearEnd() // Last day of current year
 //        // end: 2025-12-31 23:59:59.999999999
 //
 //        someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
-//        end = YearEnd(someDate)
+//        end = gotime.YearEnd(someDate)
 //        // end: 2024-12-31 23:59:59.999999999
 func YearEnd(dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1521,11 +1523,12 @@ func YearEnd(dt ...time.Time) time.Time <span class="cov8" title="1">{
 // If years is 0, it returns the original date unchanged.
 //
 // Example:
-//        future := Years(2) // 2 years from now
+//
+//        future := gotime.Years(2) // 2 years from now
 //        // future: 2027-07-08 (current time + 2 years)
 //
 //        someDate := time.Date(2020, 1, 1, 0, 0, 0, 0, time.UTC)
-//        result := Years(5, someDate)
+//        result := gotime.Years(5, someDate)
 //        // result: 2025-01-01
 func Years(years int, dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1543,7 +1546,8 @@ func Years(years int, dt ...time.Time) time.Time <span class="cov8" title="1">{
 // LastYear returns the date one year ago from the current time.
 //
 // Example:
-//        lastYear := LastYear()
+//
+//        lastYear := gotime.LastYear()
 //        // lastYear: 2024-07-08 (if current time is 2025-07-08)
 func LastYear() time.Time <span class="cov8" title="1">{
         return time.Now().AddDate(-1, 0, 0)
@@ -1552,7 +1556,8 @@ func LastYear() time.Time <span class="cov8" title="1">{
 // NextYear returns the date one year from the current time.
 //
 // Example:
-//        nextYear := NextYear()
+//
+//        nextYear := gotime.NextYear()
 //        // nextYear: 2026-07-08 (if current time is 2025-07-08)
 func NextYear() time.Time <span class="cov8" title="1">{
         return time.Now().AddDate(1, 0, 0)
@@ -1564,11 +1569,12 @@ func NextYear() time.Time <span class="cov8" title="1">{
 // If no date is provided, it uses the current time.
 //
 // Example:
-//        start := MonthStart() // First day of current month
+//
+//        start := gotime.MonthStart() // First day of current month
 //        // start: 2025-07-01 00:00:00
 //
 //        someDate := time.Date(2024, 6, 15, 0, 0, 0, 0, time.UTC)
-//        start = MonthStart(someDate)
+//        start = gotime.MonthStart(someDate)
 //        // start: 2024-06-01 00:00:00
 func MonthStart(dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1585,11 +1591,12 @@ func MonthStart(dt ...time.Time) time.Time <span class="cov8" title="1">{
 // If no date is provided, it uses the current time.
 //
 // Example:
-//        end := MonthEnd() // Last day of current month
+//
+//        end := gotime.MonthEnd() // Last day of current month
 //        // end: 2025-07-31 23:59:59.999999999
 //
 //        someDate := time.Date(2024, 2, 15, 0, 0, 0, 0, time.UTC)
-//        end = MonthEnd(someDate)
+//        end = gotime.MonthEnd(someDate)
 //        // end: 2024-02-29 23:59:59.999999999 (leap year)
 func MonthEnd(dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1605,7 +1612,8 @@ func MonthEnd(dt ...time.Time) time.Time <span class="cov8" title="1">{
 // LastMonth returns the date one month ago from the current time.
 //
 // Example:
-//        lastMonth := LastMonth()
+//
+//        lastMonth := gotime.LastMonth()
 //        // lastMonth: 2025-06-08 (if current time is 2025-07-08)
 func LastMonth() time.Time <span class="cov8" title="1">{
         return time.Now().AddDate(0, -1, 0)
@@ -1614,7 +1622,8 @@ func LastMonth() time.Time <span class="cov8" title="1">{
 // NextMonth returns the date one month from the current time.
 //
 // Example:
-//        nextMonth := NextMonth()
+//
+//        nextMonth := gotime.NextMonth()
 //        // nextMonth: 2025-08-08 (if current time is 2025-07-08)
 func NextMonth() time.Time <span class="cov8" title="1">{
         return time.Now().AddDate(0, 1, 0)
@@ -1625,11 +1634,12 @@ func NextMonth() time.Time <span class="cov8" title="1">{
 // If months is 0, it returns the original date unchanged.
 //
 // Example:
-//        future := Months(3) // 3 months from now
+//
+//        future := gotime.Months(3) // 3 months from now
 //        // future: 2025-10-08 (current time + 3 months)
 //
 //        someDate := time.Date(2020, 1, 31, 0, 0, 0, 0, time.UTC)
-//        result := Months(1, someDate)
+//        result := gotime.Months(1, someDate)
 //        // result: 2020-02-29 (handles month-end edge cases)
 func Months(months int, dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1650,11 +1660,12 @@ func Months(months int, dt ...time.Time) time.Time <span class="cov8" title="1">
 // If no date is provided, it uses the current time.
 //
 // Example:
-//        start := WeekStart() // Sunday of current week
+//
+//        start := gotime.WeekStart() // Sunday of current week
 //        // start: 2025-07-06 00:00:00 (if current is 2025-07-08)
 //
 //        someDate := time.Date(2025, 7, 10, 15, 30, 0, 0, time.UTC) // Thursday
-//        start = WeekStart(someDate)
+//        start = gotime.WeekStart(someDate)
 //        // start: 2025-07-06 00:00:00 (Sunday of that week)
 func WeekStart(dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
@@ -1671,7 +1682,8 @@ func WeekStart(dt ...time.Time) time.Time <span class="cov8" title="1">{
 // If no date is provided, it uses the current time.
 //
 // Example:
-//        start := WeekStartOn(time.Monday) // Monday of current week
+//
+//        start := gotime.WeekStartOn(time.Monday) // Monday of current week
 //        // start: 2025-07-07 00:00:00 (if current is 2025-07-08)
 //
 //        someDate := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC) // Thursday
@@ -1775,9 +1787,10 @@ func Weeks(weeks int, dt ...time.Time) time.Time <span class="cov8" title="1">{
 // since the SoD function returns the first nanosecond of the day.
 //
 // Example:
-//   t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
-//   endOfDay := EoD(t)
-//   // endOfDay == time.Date(2022, time.December, 30, 23, 59, 59, 999999999, time.UTC)
+//
+//        t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
+//        endOfDay := gotime.EoD(t)
+//        // endOfDay == time.Date(2022, time.December, 30, 23, 59, 59, 999999999, time.UTC)
 func EoD(t ...time.Time) time.Time <span class="cov8" title="1">{
         var dt time.Time
         if len(t) &gt; 0 </span><span class="cov8" title="1">{
@@ -1801,9 +1814,10 @@ func EoD(t ...time.Time) time.Time <span class="cov8" title="1">{
 // for the given time.
 //
 // Example:
-//   t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
-//   startOfDay := SoD(t)
-//   // startOfDay == time.Date(2022, time.December, 30, 0, 0, 0, 0, time.UTC)
+//
+//        t := time.Date(2022, time.December, 30, 16, 30, 0, 0, time.UTC)
+//        startOfDay := gotime.SoD(t)
+//        // startOfDay == time.Date(2022, time.December, 30, 0, 0, 0, 0, time.UTC)
 func SoD(t ...time.Time) time.Time <span class="cov8" title="1">{
         if len(t) &gt; 0 </span><span class="cov8" title="1">{
                 return time.Date(t[0].Year(), t[0].Month(), t[0].Day(), 0, 0, 0, 0, t[0].Location())
@@ -1881,23 +1895,26 @@ var timeScale = [5]string{"hours", "days", "weeks", "months", "years"}
 // Example:
 //
 //        oneWeekAgo := time.Now().Add(-7 * 24 * time.Hour)
-//        result := TimeAgo(oneWeekAgo)
+//        result := gotime.TimeAgo(oneWeekAgo)
 //        // result: "Last week"
 //
 //        threeHoursAgo := time.Now().Add(-3 * time.Hour)
-//        result = TimeAgo(threeHoursAgo)
+//        result = gotime.TimeAgo(threeHoursAgo)
 //        // result: "3 hours ago"
 //
 //        futureTime := time.Now().Add(30 * time.Minute)
-//        result = TimeAgo(futureTime)
+//        result = gotime.TimeAgo(futureTime)
 //        // result: "In a few minutes"
 func TimeAgo(t time.Time, baseTime ...time.Time) string <span class="cov8" title="1">{
         future := false
         var timeSince time.Duration
+        var now time.Time
         if len(baseTime) &gt; 0 </span><span class="cov8" title="1">{
                 timeSince = baseTime[0].Sub(t)
+                now = baseTime[0]
         }</span> else<span class="cov8" title="1"> {
                 timeSince = time.Since(t)
+                now = time.Now()
         }</span>
 
         // If timeSince is negative, then the date is in the future
@@ -1916,7 +1933,7 @@ func TimeAgo(t time.Time, baseTime ...time.Time) string <span class="cov8" title
         }</span>
 
         //Checking if the date is yesterday or tomorrow
-        <span class="cov8" title="1">val := yesterdayOrTomorrow(t, future)
+        <span class="cov8" title="1">val := yesterdayOrTomorrow(t, future, now)
         if val != "" </span><span class="cov8" title="1">{
                 return val
         }</span>
@@ -1969,8 +1986,8 @@ func fewMinutesAgo(future bool) string <span class="cov8" title="1">{
 
 // yesterdayOrTomorrow returns "Yesterday" for past time or "Tomorrow" for future time
 // if the date falls within these ranges, otherwise returns an empty string.
-func yesterdayOrTomorrow(date time.Time, future bool) string <span class="cov8" title="1">{
-        now := time.Now().In(date.Location())
+func yesterdayOrTomorrow(date time.Time, future bool, now time.Time) string <span class="cov8" title="1">{
+        now = now.In(date.Location())
         nowYear, nowMonth, nowDay := now.Date()
         if future </span><span class="cov8" title="1">{
                 dayAfterTomorrowMidnight := NewDate(nowYear, int(nowMonth), nowDay+2, date.Location())
@@ -2021,9 +2038,9 @@ import "time"
 // If no time is provided, it uses the current time. Negative values subtract hours.
 //
 // Example:
-//   futureTime := Hours(5)           // 5 hours from now
-//   pastTime := Hours(-2, someTime)  // 2 hours before someTime
-//   noChange := Hours(0)             // same as time.Now()
+//   futureTime := gotime.Hours(5)           // 5 hours from now
+//   pastTime := gotime.Hours(-2, someTime)  // 2 hours before someTime
+//   noChange := gotime.Hours(0)             // same as time.Now()
 func Hours(hours int, dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
         if len(dt) &gt; 0 </span><span class="cov8" title="1">{
@@ -2038,9 +2055,9 @@ func Hours(hours int, dt ...time.Time) time.Time <span class="cov8" title="1">{
 // If no time is provided, it uses the current time. Negative values subtract minutes.
 //
 // Example:
-//   futureTime := Minutes(30)           // 30 minutes from now
-//   pastTime := Minutes(-15, someTime)  // 15 minutes before someTime
-//   noChange := Minutes(0)              // same as time.Now()
+//   futureTime := gotime.Minutes(30)           // 30 minutes from now
+//   pastTime := gotime.Minutes(-15, someTime)  // 15 minutes before someTime
+//   noChange := gotime.Minutes(0)              // same as time.Now()
 func Minutes(minutes int, dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
         if len(dt) &gt; 0 </span><span class="cov8" title="1">{
@@ -2055,9 +2072,9 @@ func Minutes(minutes int, dt ...time.Time) time.Time <span class="cov8" title="1
 // If no time is provided, it uses the current time. Negative values subtract seconds.
 //
 // Example:
-//   futureTime := Seconds(45)           // 45 seconds from now
-//   pastTime := Seconds(-30, someTime)  // 30 seconds before someTime
-//   noChange := Seconds(0)              // same as time.Now()
+//   futureTime := gotime.Seconds(45)           // 45 seconds from now
+//   pastTime := gotime.Seconds(-30, someTime)  // 30 seconds before someTime
+//   noChange := gotime.Seconds(0)              // same as time.Now()
 func Seconds(seconds int, dt ...time.Time) time.Time <span class="cov8" title="1">{
         var t time.Time
         if len(dt) &gt; 0 </span><span class="cov8" title="1">{
@@ -2090,10 +2107,10 @@ var (
 //
 // Example:
 //
-//        serialNum := DateValue(time.Date(1900, 1, 1, 0, 0, 0, 0, time.UTC))
+//        serialNum := gotime.DateValue(time.Date(1900, 1, 1, 0, 0, 0, 0, time.UTC))
 //        // serialNum: 2
 //
-//        serialNum = DateValue(time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC))
+//        serialNum = gotime.DateValue(time.Date(2024, 1, 1, 0, 0, 0, 0, time.UTC))
 //        // serialNum: 45252
 func DateValue(date time.Time) int <span class="cov8" title="1">{
         // Use a specific implementation that matches the test case expectations
@@ -2129,7 +2146,7 @@ func DateValue(date time.Time) int <span class="cov8" title="1">{
 //
 //        t1 := time.Date(2025, 1, 1, 12, 0, 0, 0, time.UTC)
 //        t2 := time.Date(2025, 1, 1, 10, 0, 0, 0, time.UTC)
-//        diff := Diff(t1, t2, time.Hour)
+//        diff := gotime.Diff(t1, t2, time.Hour)
 //        // diff: 2.0 (2 hours difference)
 func Diff(t1, t2 time.Time, unit time.Duration, rounded ...bool) float64 <span class="cov8" title="1">{
         isRounded := false
@@ -2150,7 +2167,7 @@ func Diff(t1, t2 time.Time, unit time.Duration, rounded ...bool) float64 <span c
 //        t1 := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //        t2 := time.Date(2025, 1, 2, 0, 0, 0, 0, time.UTC)
 //        t3 := time.Date(2025, 1, 3, 0, 0, 0, 0, time.UTC)
-//        latest := Latest(t1, t2, t3)
+//        latest := gotime.Latest(t1, t2, t3)
 //        // latest: 2025-01-03 (t3)
 func Latest(t1, t2 time.Time, tn ...time.Time) time.Time <span class="cov8" title="1">{
 
@@ -2179,7 +2196,7 @@ func Latest(t1, t2 time.Time, tn ...time.Time) time.Time <span class="cov8" titl
 //        t1 := time.Date(2025, 1, 1, 0, 0, 0, 0, time.UTC)
 //        t2 := time.Date(2025, 1, 2, 0, 0, 0, 0, time.UTC)
 //        t3 := time.Date(2025, 1, 3, 0, 0, 0, 0, time.UTC)
-//        earliest := Earliest(t1, t2, t3)
+//        earliest := gotime.Earliest(t1, t2, t3)
 //        // earliest: 2025-01-01 (t1)
 func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time <span class="cov8" title="1">{
 
@@ -2207,7 +2224,7 @@ func Earliest(t1, t2 time.Time, tn ...time.Time) time.Time <span class="cov8" ti
 // Example:
 //
 //        dt := time.Date(2025, 7, 8, 14, 30, 45, 123456789, time.UTC)
-//        truncated := TruncateTime(dt)
+//        truncated := gotime.TruncateTime(dt)
 //        // truncated: 2025-07-08 00:00:00 +0000 UTC
 func TruncateTime(date time.Time) time.Time <span class="cov8" title="1">{
         return time.Date(
@@ -2228,7 +2245,7 @@ func TruncateTime(date time.Time) time.Time <span class="cov8" title="1">{
 //        start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC) // Tuesday
 //        workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
 //        holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//        result, err := WorkDay(start, 5, workdays, holidays...)
+//        result, err := gotime.WorkDay(start, 5, workdays, holidays...)
 //        // result: 5 working days from start, excluding July 4th holiday
 func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) (time.Time, error) <span class="cov8" title="1">{
         if days &lt; 0 </span><span class="cov8" title="1">{
@@ -2289,7 +2306,7 @@ func WorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...tim
 //        start := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC) // Thursday
 //        workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
 //        holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//        result, err := PrevWorkDay(start, 5, workdays, holidays...)
+//        result, err := gotime.PrevWorkDay(start, 5, workdays, holidays...)
 //        // result: 5 working days before start, excluding July 4th holiday
 func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ...time.Time) (time.Time, error) <span class="cov8" title="1">{
         if days &lt; 0 </span><span class="cov8" title="1">{
@@ -2349,7 +2366,7 @@ func PrevWorkDay(startDate time.Time, days int, workingDays [7]bool, holidays ..
 //        end := time.Date(2025, 7, 10, 0, 0, 0, 0, time.UTC)
 //        workdays := [7]bool{false, true, true, true, true, true, false} // Mon-Fri
 //        holidays := []time.Time{time.Date(2025, 7, 4, 0, 0, 0, 0, time.UTC)}
-//        count, err := NetWorkDays(start, end, workdays, holidays...)
+//        count, err := gotime.NetWorkDays(start, end, workdays, holidays...)
 //        // count: number of working days between start and end, excluding July 4th
 func NetWorkDays(startDate, endDate time.Time, workingDays [7]bool, holidays ...time.Time) (int, error) <span class="cov8" title="1">{
         if startDate.IsZero() || endDate.IsZero() </span><span class="cov8" title="1">{
@@ -2430,7 +2447,7 @@ type WeekdayCounts struct {
 // Example:
 //        start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC)
 //        end := time.Date(2025, 7, 7, 0, 0, 0, 0, time.UTC)
-//        counts := CountWeekdaysInRange(start, end)
+//        counts := gotime.CountWeekdaysInRange(start, end)
 //        // counts.Monday: 1, counts.Tuesday: 1, etc.
 func CountWeekdaysInRange(start, end time.Time) WeekdayCounts <span class="cov8" title="1">{
         if end.Before(start) </span><span class="cov8" title="1">{
@@ -2472,7 +2489,7 @@ import "time"
 // Example:
 //        start := time.Date(2025, 7, 1, 0, 0, 0, 0, time.UTC) // Tuesday
 //        end := time.Date(2025, 7, 5, 0, 0, 0, 0, time.UTC)   // Saturday
-//        present := IsWeekdayPresentInRange(start, end, time.Monday, time.Friday)
+//        present := gotime.IsWeekdayPresentInRange(start, end, time.Monday, time.Friday)
 //        // present: true (Friday occurs on July 4th)
 func IsWeekdayPresentInRange(start, end time.Time, weekdays ...time.Weekday) bool <span class="cov8" title="1">{
         if len(weekdays) == 0 </span><span class="cov8" title="1">{

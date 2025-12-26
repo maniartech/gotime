@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/gotime"
+	"github.com/maniartech/gotime/v2"
 )
 
 func TestWIP(t *testing.T) {

@@ -111,6 +111,19 @@ If it still doesn't update after 30–60 minutes:
 # Fix issues and re-release as vX.Y.Z or increment to vX.Y.(Z+1) if needed
 ```
 
+### Deleting Invalid or Obsolete Releases
+
+If you need to remove a release (for example, if a tag was created with an incorrect module path or for any other reason):
+
+1. Delete the tag locally and remotely as shown above.
+2. Go to your repository’s "Releases" page on GitHub.
+3. Find the release associated with the tag you want to remove.
+4. Click "Delete" (trash icon or "Delete this release").
+5. Confirm the deletion.
+
+After correcting the issue (such as updating the module path or fixing release content), create a new tag and draft a new GitHub release as usual. This ensures only valid, working releases are visible to users and tools like pkg.go.dev.
+```
+
 ## 10. Success Criteria
 
 - [ ] Tag `vX.Y.Z` exists on GitHub

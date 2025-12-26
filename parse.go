@@ -3,7 +3,7 @@ package gotime
 import (
 	"time"
 
-	"github.com/maniartech/gotime/internal/nites"
+	"github.com/maniartech/gotime/v2/internal/nites"
 )
 
 // Parse parses a date-time string according to the specified layout format.

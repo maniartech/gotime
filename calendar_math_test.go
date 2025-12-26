@@ -4,7 +4,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/maniartech/gotime"
+	"github.com/maniartech/gotime/v2"
 )
 
 func TestDayOfYear(t *testing.T) {
