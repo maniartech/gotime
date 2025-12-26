@@ -7,7 +7,7 @@ Welcome to the comprehensive documentation for GoTime - a powerful, intuitive ti
 New to GoTime? Start here:
 
 ```go
-import "github.com/maniartech/gotime"
+import "github.com/maniartech/gotime/v2"
 
 // Format dates intuitively
 formatted := gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")
@@ -154,7 +154,7 @@ weekEnd := gotime.WeekEnd()
 ## Installation
 
 ```bash
-go get github.com/maniartech/gotime
+go get github.com/maniartech/gotime/v2@v2.0.2
 ```
 
 **Requirements:**

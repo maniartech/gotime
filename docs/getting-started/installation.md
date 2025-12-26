@@ -17,7 +17,7 @@ GoTime is designed to be easy to install and integrate into your Go projects.
 For projects using Go modules (Go 1.11+):
 
 ```bash
-go get github.com/maniartech/gotime
+go get github.com/maniartech/gotime/v2@v2.0.2
 ```
 
 This will automatically download and install the latest version of GoTime and make it available in your project.
@@ -27,7 +27,7 @@ This will automatically download and install the latest version of GoTime and ma
 For older Go versions or GOPATH-based projects:
 
 ```bash
-go get -u github.com/maniartech/gotime
+go get -u github.com/maniartech/gotime/v2
 ```
 
 ### 3. Specific Version
@@ -35,7 +35,7 @@ go get -u github.com/maniartech/gotime
 To install a specific version:
 
 ```bash
-go get github.com/maniartech/gotime@v1.0.0
+go get github.com/maniartech/gotime/v2@v2.0.2
 ```
 
 ## Verify Installation
@@ -49,7 +49,7 @@ package main
 import (
     "fmt"
     "time"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
 )
 
 func main() {
@@ -85,7 +85,7 @@ Parsed date: 2024-01-01 00:00:00 +0000 UTC
 Once installed, import GoTime in your Go files:
 
 ```go
-import "github.com/maniartech/gotime"
+import "github.com/maniartech/gotime/v2"
 ```
 
 ### Alternative Import with Alias
@@ -93,7 +93,7 @@ import "github.com/maniartech/gotime"
 If you prefer a shorter alias:
 
 ```go
-import gt "github.com/maniartech/gotime"
+import gt "github.com/maniartech/gotime/v2"
 
 // Usage
 formatted := gt.Format(time.Now(), "yyyy-mm-dd")
@@ -109,7 +109,7 @@ For a new project, initialize Go modules first:
 mkdir my-time-app
 cd my-time-app
 go mod init my-time-app
-go get github.com/maniartech/gotime
+go get github.com/maniartech/gotime/v2@v2.0.2
 ```
 
 ### 2. Existing Project
@@ -118,7 +118,7 @@ For an existing project with Go modules:
 
 ```bash
 cd your-project
-go get github.com/maniartech/gotime
+go get github.com/maniartech/gotime/v2@v2.0.2
 ```
 
 The package will be added to your `go.mod` file automatically.
@@ -145,7 +145,7 @@ Most modern Go IDEs will automatically handle Go modules and provide:
 
 #### 1. Module Not Found
 
-**Error**: `module github.com/maniartech/gotime: not found`
+**Error**: `module github.com/maniartech/gotime/v2: not found`
 
 **Solutions**:
 - Ensure you have internet connectivity
@@ -157,7 +157,7 @@ Most modern Go IDEs will automatically handle Go modules and provide:
 **Error**: Version conflicts with other dependencies
 
 **Solutions**:
-- Update to the latest version: `go get -u github.com/maniartech/gotime`
+- Update to the latest version: `go get -u github.com/maniartech/gotime/v2`
 - Check `go.mod` for version constraints
 - Use `go mod tidy` to clean up dependencies
 
@@ -166,7 +166,7 @@ Most modern Go IDEs will automatically handle Go modules and provide:
 **Error**: Package not found in imports
 
 **Solutions**:
-- Ensure the import path is correct: `github.com/maniartech/gotime`
+- Ensure the import path is correct: `github.com/maniartech/gotime/v2`
 - Run `go mod download` to download dependencies
 - Check that your Go version supports modules
 

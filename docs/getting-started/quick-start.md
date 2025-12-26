@@ -7,7 +7,7 @@ Get started with GoTime in just a few minutes! This guide will walk you through 
 ## Installation
 
 ```bash
-go get github.com/maniartech/gotime
+go get github.com/maniartech/gotime/v2@v2.0.2
 ```
 
 ## Basic Operations
@@ -15,7 +15,7 @@ go get github.com/maniartech/gotime
 ### Import the Package
 
 ```go
-import "github.com/maniartech/gotime"
+import "github.com/maniartech/gotime/v2"
 ```
 
 ### 1. Format Dates with Human-Friendly Specifiers
@@ -26,7 +26,7 @@ package main
 import (
     "fmt"
     "time"
-    "github.com/maniartech/gotime"
+    "github.com/maniartech/gotime/v2"
 )
 
 func main() {

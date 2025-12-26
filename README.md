@@ -7,7 +7,7 @@ GoTime extends Go's standard `time` package with human-friendly operations that 
 ## Quick Example
 
 ```go
-import "github.com/maniartech/gotime"
+import "github.com/maniartech/gotime/v2"
 
 // Intuitive formatting - no more "2006-01-02"!
 formatted := gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")
@@ -61,7 +61,7 @@ gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")  // 😊
 ## Installation
 
 ```bash
-go get github.com/maniartech/gotime
+go get github.com/maniartech/gotime/v2@v2.0.2
 ```
 
 **Requirements:** Go 1.13+ • Zero dependencies • TinyGo compatible*

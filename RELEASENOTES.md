@@ -1,5 +1,25 @@
 # GoTime Release Notes
 
+## Version 2.0.2 (v2.0.2) - December 26, 2025
+
+### Maintenance and Fixes
+
+- Fixed incorrect internal import paths after v2 migration:
+  - Updated references to `internal/nites`, `internal/cache`, and `internal/utils` to use the v2 module path (`github.com/maniartech/gotime/v2/...`).
+- Updated documentation and examples to use the v2 import path and install commands:
+  - `go get github.com/maniartech/gotime/v2@v2.0.2`
+  - `import "github.com/maniartech/gotime/v2"`
+- Verified build and tests for all packages: `go test ./...` passes.
+
+### Upgrade
+
+```bash
+go get github.com/maniartech/gotime/v2@v2.0.2
+```
+
+No API changes. This release only corrects module path imports and documentation.
+# GoTime Release Notes
+
 ## Version 2.0.0 (v2.0.0) - July 10, 2025
 
 ### 🎉 Major Release: Complete Architectural Modernization
