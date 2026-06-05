@@ -540,3 +540,44 @@ func ExampleIsValidAge() {
 	fmt.Println(valid)
 	// Output: true
 }
+
+// TestCalendarBetween verifies whole-unit, calendar-accurate, signed month and
+// year differences (truncated toward zero), distinct from the fractional
+// MonthsBetween/YearsBetween.
+func TestCalendarBetween(t *testing.T) {
+	d := func(y, m, day int) time.Time {
+		return time.Date(y, time.Month(m), day, 0, 0, 0, 0, time.UTC)
+	}
+
+	monthCases := []struct {
+		a, b time.Time
+		want int
+	}{
+		{d(2024, 1, 15), d(2024, 3, 10), 1},  // second month incomplete
+		{d(2024, 1, 15), d(2024, 3, 15), 2},  // exactly two months
+		{d(2024, 1, 15), d(2024, 3, 20), 2},  // past two months
+		{d(2024, 1, 31), d(2024, 2, 29), 1},  // clamp target reached
+		{d(2024, 1, 31), d(2024, 2, 28), 0},  // clamp target not reached
+		{d(2024, 3, 10), d(2024, 1, 15), -1}, // reversed -> negative
+		{d(2024, 6, 1), d(2024, 6, 1), 0},    // equal
+		{d(2020, 1, 1), d(2024, 1, 1), 48},   // multi-year span
+	}
+	for _, c := range monthCases {
+		utils.AssertEqual(t, c.want, CalendarMonthsBetween(c.a, c.b))
+	}
+
+	yearCases := []struct {
+		a, b time.Time
+		want int
+	}{
+		{d(2020, 6, 1), d(2024, 5, 1), 3},   // fourth year incomplete
+		{d(2020, 6, 1), d(2024, 6, 1), 4},   // exactly four years
+		{d(2020, 6, 1), d(2024, 7, 1), 4},   // past four years
+		{d(2024, 2, 29), d(2025, 2, 28), 1}, // clamped anniversary reached (inverse of addYears)
+		{d(2024, 5, 1), d(2020, 6, 1), -3},  // reversed -> negative
+		{d(2024, 1, 1), d(2024, 1, 1), 0},   // equal
+	}
+	for _, c := range yearCases {
+		utils.AssertEqual(t, c.want, CalendarYearsBetween(c.a, c.b))
+	}
+}

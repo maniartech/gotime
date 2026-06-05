@@ -2,6 +2,35 @@ package gotime
 
 import "time"
 
+// addMonthsClamped adds the given number of months to t using calendar-aware
+// end-of-month clamping: if the original day-of-month does not exist in the
+// target month, the day is clamped to the last valid day of that month.
+//
+// This differs from the standard library's time.AddDate, which normalizes
+// overflow instead (e.g. Jan 31 + 1 month yields Mar 2/3). Clamping
+// (Jan 31 + 1 month yields Feb 28/29) matches the behavior of .NET AddMonths,
+// java.time plusMonths, SQL DATEADD, Python dateutil.relativedelta, and most
+// date libraries. The time-of-day and location are preserved.
+func addMonthsClamped(t time.Time, months int) time.Time {
+	// Compute the target year and 1-based month.
+	total := t.Year()*12 + (int(t.Month()) - 1) + months
+	year := total / 12
+	month := total%12 + 1
+	// Go's truncated modulo can yield a non-positive month for negative totals;
+	// normalize into the 1..12 range.
+	if month < 1 {
+		month += 12
+		year--
+	}
+	// Clamp the day to the last valid day of the target month.
+	day := t.Day()
+	if maxDay := DaysInMonth(year, month); day > maxDay {
+		day = maxDay
+	}
+	return time.Date(year, time.Month(month), day,
+		t.Hour(), t.Minute(), t.Second(), t.Nanosecond(), t.Location())
+}
+
 // -----------------Year Functions-----------------
 // YearStart returns the first day of the year for the given date.
 // If no date is provided, it uses the current time.
@@ -71,7 +100,7 @@ func Years(years int, dt ...time.Time) time.Time {
 	if years == 0 {
 		return t
 	}
-	return t.AddDate(years, 0, 0)
+	return addMonthsClamped(t, years*12)
 }
 
 // LastYear returns the date one year ago from the current time.
@@ -81,7 +110,7 @@ func Years(years int, dt ...time.Time) time.Time {
 //	lastYear := gotime.LastYear()
 //	// lastYear: 2024-07-08 (if current time is 2025-07-08)
 func LastYear() time.Time {
-	return time.Now().AddDate(-1, 0, 0)
+	return Years(-1)
 }
 
 // NextYear returns the date one year from the current time.
@@ -91,7 +120,7 @@ func LastYear() time.Time {
 //	nextYear := gotime.NextYear()
 //	// nextYear: 2026-07-08 (if current time is 2025-07-08)
 func NextYear() time.Time {
-	return time.Now().AddDate(1, 0, 0)
+	return Years(1)
 }
 
 //-----------------Month Functions-----------------
@@ -147,7 +176,7 @@ func MonthEnd(dt ...time.Time) time.Time {
 //	lastMonth := gotime.LastMonth()
 //	// lastMonth: 2025-06-08 (if current time is 2025-07-08)
 func LastMonth() time.Time {
-	return time.Now().AddDate(0, -1, 0)
+	return Months(-1)
 }
 
 // NextMonth returns the date one month from the current time.
@@ -157,7 +186,7 @@ func LastMonth() time.Time {
 //	nextMonth := gotime.NextMonth()
 //	// nextMonth: 2025-08-08 (if current time is 2025-07-08)
 func NextMonth() time.Time {
-	return time.Now().AddDate(0, 1, 0)
+	return Months(1)
 }
 
 // Months returns the date after adding the specified number of months to the given date.
@@ -182,7 +211,7 @@ func Months(months int, dt ...time.Time) time.Time {
 	if months == 0 {
 		return t
 	}
-	return t.AddDate(0, months, 0)
+	return addMonthsClamped(t, months)
 }
 
 //-----------------Week Functions-----------------

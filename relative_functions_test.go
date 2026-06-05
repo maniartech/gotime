@@ -30,17 +30,9 @@ func TestYear(t *testing.T) {
 	functionDate = gotime.YearEnd()
 	utils.AssertEqual(t, expectedDate, functionDate)
 
-	// LastYear
-	expectedDate = time.Now().AddDate(-1, 0, 0)
-	functionDate = gotime.LastYear()
-
-	utils.AssertEqual(t, expectedDate, functionDate)
-
-	// NextYear
-	expectedDate = time.Now().AddDate(1, 0, 0)
-	functionDate = gotime.NextYear()
-
-	utils.AssertEqual(t, expectedDate, functionDate)
+	// LastYear / NextYear delegate to the (clamped) Years function.
+	utils.AssertEqual(t, trunccateSecond(gotime.Years(-1)), trunccateSecond(gotime.LastYear()))
+	utils.AssertEqual(t, trunccateSecond(gotime.Years(1)), trunccateSecond(gotime.NextYear()))
 
 	// Years
 	testRange := []int{-3, -2, -1, 1, 2, 3}
@@ -89,17 +81,9 @@ func TestMonth(t *testing.T) {
 	functionDate = gotime.MonthEnd()
 	utils.AssertEqual(t, expectedDate, functionDate)
 
-	// LastMonth
-	expectedDate = time.Now().AddDate(0, -1, 0)
-	functionDate = gotime.LastMonth()
-
-	utils.AssertEqual(t, expectedDate, functionDate)
-
-	// NextMonth
-	expectedDate = time.Now().AddDate(0, 1, 0)
-	functionDate = gotime.NextMonth()
-
-	utils.AssertEqual(t, expectedDate, functionDate)
+	// LastMonth / NextMonth delegate to the (clamped) Months function.
+	utils.AssertEqual(t, trunccateSecond(gotime.Months(-1)), trunccateSecond(gotime.LastMonth()))
+	utils.AssertEqual(t, trunccateSecond(gotime.Months(1)), trunccateSecond(gotime.NextMonth()))
 
 	// Months
 	testRange := []int{-3, -2, -1, 1, 2, 3}
@@ -124,6 +108,56 @@ func TestMonth(t *testing.T) {
 
 func trunccateSecond(t time.Time) time.Time {
 	return t.Truncate(time.Second)
+}
+
+// TestMonthYearClamp verifies that Months and Years apply calendar-aware
+// end-of-month clamping instead of the standard library's overflow
+// normalization. For example, Jan 31 + 1 month must yield Feb 28/29, not
+// Mar 2/3. This matches .NET AddMonths, java.time plusMonths, and SQL DATEADD.
+func TestMonthYearClamp(t *testing.T) {
+	d := func(y, m, day int) time.Time {
+		return time.Date(y, time.Month(m), day, 0, 0, 0, 0, time.UTC)
+	}
+
+	monthCases := []struct {
+		in   time.Time
+		n    int
+		want time.Time
+	}{
+		{d(2020, 1, 31), 1, d(2020, 2, 29)},  // leap year -> Feb 29
+		{d(2023, 1, 31), 1, d(2023, 2, 28)},  // non-leap -> Feb 28
+		{d(2024, 3, 31), 1, d(2024, 4, 30)},  // 31 -> 30-day month
+		{d(2024, 5, 31), 1, d(2024, 6, 30)},  // 31 -> 30-day month
+		{d(2024, 1, 31), 13, d(2025, 2, 28)}, // span >12 months
+		{d(2024, 3, 31), -1, d(2024, 2, 29)}, // negative shift clamps too
+		{d(2024, 1, 15), 1, d(2024, 2, 15)},  // no clamp needed
+		{d(2024, 1, 31), 0, d(2024, 1, 31)},  // zero is a no-op
+	}
+	for _, c := range monthCases {
+		got := gotime.Months(c.n, c.in)
+		utils.AssertEqual(t, c.want, got)
+	}
+
+	yearCases := []struct {
+		in   time.Time
+		n    int
+		want time.Time
+	}{
+		{d(2024, 2, 29), 1, d(2025, 2, 28)},  // leap -> non-leap clamps
+		{d(2024, 2, 29), 4, d(2028, 2, 29)},  // leap -> leap stays
+		{d(2024, 2, 29), -1, d(2023, 2, 28)}, // negative shift clamps
+		{d(2024, 6, 15), 2, d(2026, 6, 15)},  // no clamp needed
+	}
+	for _, c := range yearCases {
+		got := gotime.Years(c.n, c.in)
+		utils.AssertEqual(t, c.want, got)
+	}
+
+	// Time-of-day and sub-second components must be preserved.
+	withTime := time.Date(2024, 1, 31, 13, 45, 30, 123456789, time.UTC)
+	got := gotime.Months(1, withTime)
+	want := time.Date(2024, 2, 29, 13, 45, 30, 123456789, time.UTC)
+	utils.AssertEqual(t, want, got)
 }
 
 func TestWeek(t *testing.T) {

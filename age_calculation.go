@@ -111,6 +111,58 @@ func MonthsBetween(start, end time.Time) float64 {
 	return duration.Hours() / hoursPerMonth
 }
 
+// CalendarMonthsBetween returns the number of complete calendar months from
+// start to end, truncated toward zero. Unlike MonthsBetween (which returns a
+// fractional, nominal-average value), this counts whole calendar months using
+// the actual calendar, matching java.time ChronoUnit.MONTHS.between and SQL
+// DATEDIFF(month, ...). The result is negative when end precedes start.
+//
+// Example:
+//
+//	a := time.Date(2024, 1, 15, 0, 0, 0, 0, time.UTC)
+//	b := time.Date(2024, 3, 10, 0, 0, 0, 0, time.UTC)
+//	gotime.CalendarMonthsBetween(a, b) // 1 (the second month is incomplete)
+func CalendarMonthsBetween(start, end time.Time) int {
+	if start.Equal(end) {
+		return 0
+	}
+	sign, a, b := 1, start, end
+	if a.After(b) {
+		sign, a, b = -1, end, start
+	}
+	months := (b.Year()-a.Year())*12 + int(b.Month()) - int(a.Month())
+	if addMonthsClamped(a, months).After(b) {
+		months--
+	}
+	return sign * months
+}
+
+// CalendarYearsBetween returns the number of complete calendar years from start
+// to end, truncated toward zero. Unlike YearsBetween (which returns a
+// fractional, nominal-average value), this counts whole calendar years using
+// the actual calendar, matching java.time ChronoUnit.YEARS.between and SQL
+// DATEDIFF(year, ...). The result is negative when end precedes start.
+//
+// Example:
+//
+//	a := time.Date(2020, 6, 1, 0, 0, 0, 0, time.UTC)
+//	b := time.Date(2024, 5, 1, 0, 0, 0, 0, time.UTC)
+//	gotime.CalendarYearsBetween(a, b) // 3 (the fourth year is incomplete)
+func CalendarYearsBetween(start, end time.Time) int {
+	if start.Equal(end) {
+		return 0
+	}
+	sign, a, b := 1, start, end
+	if a.After(b) {
+		sign, a, b = -1, end, start
+	}
+	years := b.Year() - a.Year()
+	if addMonthsClamped(a, years*12).After(b) {
+		years--
+	}
+	return sign * years
+}
+
 // DaysBetween calculates the number of days between two dates.
 // This is a convenience function that returns the integer number of days.
 //
