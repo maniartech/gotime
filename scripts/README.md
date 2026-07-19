@@ -93,6 +93,39 @@ Focused benchmark execution script.
 - `--cpuprofile`: Generate CPU profile
 - `-h, --help`: Show help message
 
+### `release.sh`
+One-pass release script: validates the version and its release notes, runs the
+quality gates, then tags, pushes, and publishes the GitHub release.
+
+The version is passed **without** the leading `v` (e.g. `2.0.4`); the script
+derives the `v2.0.4` tag. It refuses to release unless `docs/releases/v<version>.md`
+exists and the install commands in `README.md`/`docs/` already pin the new version.
+Run it with no arguments for guided next-version suggestions.
+
+**Usage:**
+```bash
+# Show guidance and suggested next versions (patch/minor/major)
+./scripts/release.sh
+
+# Validate everything without making changes
+./scripts/release.sh 2.0.4 --dry-run
+
+# Perform the release
+./scripts/release.sh 2.0.4
+```
+
+**Options:**
+- `--dry-run`: Run all checks and print the plan, but make no changes
+- `--no-push`: Create the tag locally but do not push branch or tag
+- `--no-github`: Do not create a GitHub release (via `gh`)
+- `--race`: Include `-race` in the test gate
+- `--skip-tests`: Skip the build/vet/test gates (not recommended)
+- `--allow-dirty`: Proceed even with uncommitted changes
+- `--allow-branch`: Proceed even if not on master/main
+- `--remote NAME`: Git remote to push to (default: `origin`)
+- `-y, --yes`: Skip the confirmation prompt
+- `-h, --help`: Show help message
+
 ## Test Statistics
 
 The GoTime library has comprehensive test coverage with:
