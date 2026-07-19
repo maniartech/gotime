@@ -106,3 +106,5 @@ These are settled; the rest of the docs elaborate them.
 - [Locale Implementer Guide](implementing-locales.md) — how to add a locale
   (author/extract the JSON), plural/ordinal rules, presets, required tests.
 - [Roadmap](roadmap.md) — phased, solo-maintainer-friendly delivery plan.
+- [Implementation Plan](implementation-plan.md) — implementation-ready, staged,
+  idempotent build plan with frozen decisions and per-stage acceptance gates.

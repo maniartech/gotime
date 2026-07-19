@@ -126,8 +126,8 @@ naturally into `map[string]any`, which is exactly UExL's context shape.
     "rules": {                   // authored in UExL expression syntax; UExL host
                                  // evaluates these with CLDR operands (n,i,v,w,f,t)
                                  // supplied as context. GoTime ignores them.
-      "one":  "i == 1 and v == 0",
-      "few":  "v == 0 and (i % 10) >= 2 and (i % 10) <= 4 and not ((i % 100) >= 12 and (i % 100) <= 14)",
+      "one":  "i == 1 && v == 0",
+      "few":  "v == 0 && (i % 10) >= 2 && (i % 10) <= 4 && !((i % 100) >= 12 && (i % 100) <= 14)",
       "many": "true"
     }
   },
@@ -151,6 +151,10 @@ naturally into `map[string]any`, which is exactly UExL's context shape.
   evaluate them by supplying the CLDR operands (`n, i, v, w, f, t`) as context;
   GoTime ignores them and uses `plural.id` (§5). Authoring in UExL syntax (not
   raw CLDR notation like `2..4`) is required so UExL can parse them directly.
+  Note the operator vocabulary: UExL uses `&&` / `||` / `!` and `==` — the words
+  `and` / `or` / `not` and single `=` are **not** UExL operators (they lex as
+  identifiers) and must not appear in rules. The extractor (Stage 0) is
+  responsible for translating CLDR rule notation into this valid-UExL form.
 
 ### 4.2 Stage 0 — extract (maintainer, rare)
 

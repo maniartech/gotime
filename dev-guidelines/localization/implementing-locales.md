@@ -40,8 +40,8 @@ Names are data; **plural selection is logic** and lives once in
 ```jsonc
 "plural": {
   "id": "west-slavic",
-  "rules": { "one": "i = 1 and v = 0",
-             "few": "v = 0 and i % 10 = 2..4 and i % 100 != 12..14",
+  "rules": { "one": "i == 1 && v == 0",
+             "few": "v == 0 && (i % 10) >= 2 && (i % 10) <= 4 && !((i % 100) >= 12 && (i % 100) <= 14)",
              "many": "true" }
 }
 ```
