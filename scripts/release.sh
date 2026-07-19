@@ -110,7 +110,7 @@ guide() {
     echo "    1. Release notes exist at docs/releases/v<version>.md"
     echo "    2. RELEASENOTES.md has a section for the version"
     echo "    3. Install commands in README.md and docs/ pin the new version"
-    echo "    4. Your changes are committed and you are on master/main"
+    echo "    4. Your changes are committed AND pushed, and you are on master/main"
     echo ""
     echo "Recommended flow:"
     echo "    ./scripts/release.sh <version> --dry-run   # confirm all checks pass"
@@ -244,10 +244,41 @@ if [ "$ALLOW_BRANCH" = false ] && [ "$CURRENT_BRANCH" != "master" ] && [ "$CURRE
     exit 1
 fi
 
-if [ "$ALLOW_DIRTY" = false ] && [ -n "$(git status --porcelain)" ]; then
-    print_error "Working tree has uncommitted changes. Commit or stash them first (or use --allow-dirty)."
-    git status --short
-    exit 1
+if [ -n "$(git status --porcelain)" ]; then
+    if [ "$ALLOW_DIRTY" = false ]; then
+        print_error "Working tree has uncommitted changes. Commit or stash them first (or use --allow-dirty)."
+        git status --short
+        exit 1
+    fi
+    print_warning "Working tree has uncommitted changes; proceeding due to --allow-dirty."
+else
+    print_success "Working tree is clean."
+fi
+
+# No pending (unpushed) commits: the tag must point at a commit that is already on
+# the remote, so the published release matches what everyone else can fetch. This
+# also catches a branch that has fallen behind the remote.
+UPSTREAM="$(git rev-parse --abbrev-ref --symbolic-full-name '@{upstream}' 2>/dev/null || true)"
+if [ -z "$UPSTREAM" ]; then
+    print_warning "No upstream tracking branch for '${CURRENT_BRANCH}'; skipping unpushed-commit check."
+else
+    git fetch --quiet "$REMOTE" 2>/dev/null || print_warning "Could not fetch ${REMOTE}; unpushed-commit check may be stale."
+    AHEAD="$(git rev-list --count "${UPSTREAM}..HEAD" 2>/dev/null || echo 0)"
+    BEHIND="$(git rev-list --count "HEAD..${UPSTREAM}" 2>/dev/null || echo 0)"
+    if [ "$BEHIND" -gt 0 ]; then
+        print_error "Local ${CURRENT_BRANCH} is behind ${UPSTREAM} by ${BEHIND} commit(s). Pull/rebase before releasing."
+        exit 1
+    fi
+    if [ "$AHEAD" -gt 0 ] && [ "$ALLOW_UNPUSHED" = false ]; then
+        print_error "${AHEAD} unpushed commit(s) on ${CURRENT_BRANCH}. Push them first (or use --allow-unpushed)."
+        git log --oneline "${UPSTREAM}..HEAD"
+        exit 1
+    fi
+    if [ "$AHEAD" -gt 0 ]; then
+        print_warning "${AHEAD} unpushed commit(s); they will be pushed as part of this release (--allow-unpushed)."
+    else
+        print_success "No unpushed commits — ${CURRENT_BRANCH} is in sync with ${UPSTREAM}."
+    fi
 fi
 
 # Tag must not already exist locally...

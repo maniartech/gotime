@@ -121,6 +121,7 @@ Run it with no arguments for guided next-version suggestions.
 - `--race`: Include `-race` in the test gate
 - `--skip-tests`: Skip the build/vet/test gates (not recommended)
 - `--allow-dirty`: Proceed even with uncommitted changes
+- `--allow-unpushed`: Proceed even if the branch has commits not yet on the remote
 - `--allow-branch`: Proceed even if not on master/main
 - `--remote NAME`: Git remote to push to (default: `origin`)
 - `-y, --yes`: Skip the confirmation prompt
