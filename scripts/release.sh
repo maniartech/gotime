@@ -4,7 +4,7 @@
 #
 # Validates everything first, then performs the release in a single pass:
 #   1. Validate version + that release notes exist
-#   2. Verify clean tree, correct branch, tag not already used
+#   2. Verify clean tree, no unpushed commits, correct branch, tag not already used
 #   3. Run quality gates (build, vet, tests)
 #   4. Create the annotated vX.Y.Z tag
 #   5. Push branch + tag
@@ -27,6 +27,7 @@
 #   --race           Include -race in the test gate (needs a C toolchain)
 #   --skip-tests     Skip build/vet/test gates (NOT recommended)
 #   --allow-dirty    Proceed even if the working tree has uncommitted changes
+#   --allow-unpushed Proceed even if the branch has commits not yet on the remote
 #   --allow-branch   Proceed even if not on master/main
 #   --remote NAME    Git remote to push to (default: origin)
 #   --yes, -y        Do not prompt for confirmation before releasing
@@ -49,7 +50,8 @@ print_warning() { echo -e "${YELLOW}[WARNING]${NC} $1"; }
 print_error()   { echo -e "${RED}[ERROR]${NC} $1" >&2; }
 
 usage() {
-    sed -n '3,40p' "$0" | sed 's/^# \{0,1\}//'
+    # Print the leading comment block (from line 3 to the first non-comment line).
+    awk 'NR>=3 { if (/^#/) { sub(/^# ?/, ""); print; next } else { exit } }' "$0"
     exit "${1:-0}"
 }
 
@@ -128,6 +130,7 @@ DO_GITHUB=true
 USE_RACE=false
 SKIP_TESTS=false
 ALLOW_DIRTY=false
+ALLOW_UNPUSHED=false
 ALLOW_BRANCH=false
 ASSUME_YES=false
 REMOTE="origin"
@@ -139,8 +142,9 @@ while [ $# -gt 0 ]; do
         --no-github)    DO_GITHUB=false ;;
         --race)         USE_RACE=true ;;
         --skip-tests)   SKIP_TESTS=true ;;
-        --allow-dirty)  ALLOW_DIRTY=true ;;
-        --allow-branch) ALLOW_BRANCH=true ;;
+        --allow-dirty)    ALLOW_DIRTY=true ;;
+        --allow-unpushed) ALLOW_UNPUSHED=true ;;
+        --allow-branch)   ALLOW_BRANCH=true ;;
         --yes|-y)       ASSUME_YES=true ;;
         --remote)       shift; REMOTE="${1:-}"; [ -n "$REMOTE" ] || { print_error "--remote needs a value"; exit 1; } ;;
         -h|--help)      usage 0 ;;
