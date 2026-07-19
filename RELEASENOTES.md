@@ -1,5 +1,22 @@
 # GoTime Release Notes
 
+## Version 2.0.4 (v2.0.4) - July 19, 2026
+
+## Summary
+
+Patch release fixing a concurrency bug in the internal format-conversion cache. No API or behavior changes. Recommended for anyone using gotime from concurrent code.
+
+## What's fixed
+
+- **Race condition in the format cache** — the cache backing `Format`, `Parse`, and `Convert` was an unsynchronized Go map. Under concurrent use (formatting or parsing many values in parallel from multiple goroutines) this could trigger `fatal error: concurrent map writes` and crash the process. The cache is now guarded by a `sync.RWMutex`: reads on the hot path run concurrently, writes are exclusive, and `Enable`/`Disable` no longer race with in-flight `Get`/`Set` calls.
+- Added concurrency tests, verified with the Go race detector (`go test -race`).
+
+## Upgrade
+
+```bash
+go get github.com/maniartech/gotime/v2@v2.0.4
+```
+
 ## Version 2.0.3 (v2.0.3) - December 26, 2025
 
 ## Summary

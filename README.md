@@ -61,7 +61,7 @@ gotime.Format(time.Now(), "yyyy-mm-dd hh:ii:ss")  // 😊
 ## Installation
 
 ```bash
-go get github.com/maniartech/gotime/v2@v2.0.3
+go get github.com/maniartech/gotime/v2@v2.0.4
 ```
 
 **Requirements:** Go 1.13+ • Zero dependencies • TinyGo compatible*
